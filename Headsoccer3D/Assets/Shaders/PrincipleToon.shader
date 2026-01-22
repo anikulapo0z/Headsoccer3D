@@ -3,7 +3,7 @@ Shader "Saphead Studios/Principle Toon"
     Properties
 	{
 		//Base
-		_ColorTexture("Color Texture", 2D) = "white" {}
+		_BaseMap("Color Texture", 2D) = "white" {}
 		_BaseColor ("Base Tint", Color) = (1, 1, 1, 1)
 
 		//AO
@@ -22,12 +22,16 @@ Shader "Saphead Studios/Principle Toon"
 			"Queue"="Geometry" 
 			"RenderPipeline" = "UniversalPipeline" 
              }
-
+        
 		Pass
 		{
 			Tags{ "LightMode" = "UniversalForward" }
 
 			HLSLPROGRAM
+            
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Assets/Shaders/PrincipleToonInitData.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/AmbientOcclusion.hlsl"
 
@@ -52,11 +56,9 @@ Shader "Saphead Studios/Principle Toon"
                 surfaceData.alpha = 1.0h;
                 surfaceData.normalTS = half3(0.0h,0.0h,1.0h);
                 surfaceData.occlusion = 1.0h;
-    
-	
             }
 
-			Varyings PrincipleToonVertexLit(Attributes i)
+			Varyings PrincipleToonVertexLit(Attributes input)
 			{
 				Varyings output = (Varyings)0;
 
@@ -69,7 +71,7 @@ Shader "Saphead Studios/Principle Toon"
 
                 half fogFactor = 0;
 
-                output.uv = TRANSFORM_TEX(i.uv, _ColorTexture);
+                output.uv = TRANSFORM_TEX(input.texcoord, _BaseMap);
                 output.positionWS.xyz = vertexInput.positionWS;
                 output.positionCS = vertexInput.positionCS;
 
@@ -107,23 +109,24 @@ Shader "Saphead Studios/Principle Toon"
 
 
 				half4 color = UniversalFragmentBlinnPhong(inputData, surfaceData);
-				//return color;
 
-                
 				//------------------------------AO
 				//sample ssao manually, cue copy pasta source code from ShaderLibrary/AmbientOcclusion.hlsl
 				float ssao = saturate(SampleAmbientOcclusion(GetNormalizedScreenSpaceUV(i.positionCS)) + (1.0 - _AmbientOcclusionParam.x));
 				//even building AmbientOcclusionFactor manually
 				AmbientOcclusionFactor aoFactor;
 				aoFactor.indirectAmbientOcclusion = ssao;
-				aoFactor.directAmbientOcclusion = lerp(1.0, ssao, _AmbientOcclusionParam.w);
+				aoFactor.directAmbientOcclusion = lerp(1.0h, ssao, _AmbientOcclusionParam.w);
 
 				//move the AO with uv
 				float2 screenUV = GetNormalizedScreenSpaceUV(i.positionCS);
 
-				float aoStylized = SAMPLE_TEXTURE2D(_AOTexture, sampler_AOTexture, (i.uv * _AOFrequency) + (screenUV * 0.5)).r;
-				float aoPattern = lerp(aoStylized, 1.0, aoFactor.directAmbientOcclusion);
+				half aoStylized = SAMPLE_TEXTURE2D(_AOTexture, sampler_AOTexture, (i.uv * _AOFrequency) + (screenUV * 0.5)).r;
+				half aoPattern = lerp(aoStylized, 1.0, aoFactor.directAmbientOcclusion);
 
+				return half4( color.rgb * aoPattern, 1.0h);
+
+                /*
 				//------------------------------Shadow
 				Light mainLight = GetMainLight(i.shadowCoord);
 				float shadow = mainLight.shadowAttenuation;
@@ -132,7 +135,7 @@ Shader "Saphead Studios/Principle Toon"
 				float shadowStylized = SAMPLE_TEXTURE2D(_ShadowTex, sampler_ShadowTex, shadowUV).r;
 				float shadowPattern = lerp(1.0, shadowStylized, 1.0 - shadow);
 
-				return float4( color.rgb * aoPattern, 1.0);
+				return float4( color.rgb * aoPattern, 1.0);*/
 				//return float4( color * shadow * aoPattern, 1.0);
 			}
 
