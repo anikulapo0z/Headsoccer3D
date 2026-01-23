@@ -3,9 +3,10 @@ Shader "Saphead Studios/Principle Toon"
     Properties
 	{
 		//Base
-		_BaseMap("Color Texture", 2D) = "white" {}
+		_BaseMap("Surface Texture", 2D) = "white" {}
 		_BaseColor ("Base Tint", Color) = (1, 1, 1, 1)
-
+		_BaseStrength("Surface Texture Lightness", Range(0,1)) = 0
+        [Toggle(_AMBIENTLIGHTING)] _AmbientToggle ("Use Ambient Light", Float) = 0
 		//AO
 		_AOTexture("AO Texture", 2D) = "black" {}
 		_AOFrequency("AO Frequency", Float) = 1
@@ -31,13 +32,17 @@ Shader "Saphead Studios/Principle Toon"
             
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Assets/Shaders/SapheadLighting.hlsl"
             #include "Assets/Shaders/PrincipleToonInitData.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/AmbientOcclusion.hlsl"
 
 			#pragma vertex PrincipleToonVertexLit
 			#pragma fragment PrincipleToonFragmentLit
 
+            //Shader speciific
+            #pragma shader_feature_local_fragment _AMBIENTLIGHTING
+
+            //From Simple Lit
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
             #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
             #pragma multi_compile _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX
@@ -58,9 +63,7 @@ Shader "Saphead Studios/Principle Toon"
             {
                 surfaceData = (SurfaceData) 0; // avoids "not completely initalized" errors
 
-                half4 albedoAlpha = SampleAlbedoAlpha(i.uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
-    
-                surfaceData.albedo = albedoAlpha.rgb * _BaseColor.rgb;
+                surfaceData.albedo = 1.0h;
                 surfaceData.alpha = 1.0h;
                 surfaceData.normalTS = half3(0.0h,0.0h,1.0h);
                 surfaceData.occlusion = 1.0h;
@@ -111,12 +114,14 @@ Shader "Saphead Studios/Principle Toon"
 				//Calc BlinnPhong
 				SurfaceData surfaceData;
 				InitializeSurfaceData(i, surfaceData);
-
 				InputData inputData;
 				InitializeInputData(i, surfaceData.normalTS, inputData);
-
-
+                half3 ambientLight = 0.0h;
+                #if _AMBIENTLIGHTING
+					ambientLight = GetBakedGIData(i, inputData);
+				#endif
 				half4 color = UniversalFragmentBlinnPhong(inputData, surfaceData);
+                
 
 				//------------------------------AO
 				//sample ssao manually, cue copy pasta source code from ShaderLibrary/AmbientOcclusion.hlsl
@@ -131,20 +136,33 @@ Shader "Saphead Studios/Principle Toon"
 
 				half aoStylized = SAMPLE_TEXTURE2D(_AOTexture, sampler_AOTexture, (i.uv * _AOFrequency) + (screenUV * 0.5)).r;
 				half aoPattern = lerp(aoStylized, 1.0, aoFactor.directAmbientOcclusion);
+                aoPattern = smoothstep(0.7, 0.9, aoPattern);
+				//return half4( color.rgb * aoPattern, 1.0h);
 
-				return half4( color.rgb * aoPattern, 1.0h);
-
-                /*
+                
 				//------------------------------Shadow
-				Light mainLight = GetMainLight(i.shadowCoord);
-				float shadow = mainLight.shadowAttenuation;
+				Light mainLight = GetMainLight(inputData, CalculateShadowMask(inputData), aoFactor);
+				float shadow = saturate((mainLight.shadowAttenuation * mainLight.distanceAttenuation) + color.r + color.g + color.b);
 				//manipulate the UV too
 				float2 shadowUV = i.uv * _ShadowFrequency;
-				float shadowStylized = SAMPLE_TEXTURE2D(_ShadowTex, sampler_ShadowTex, shadowUV).r;
-				float shadowPattern = lerp(1.0, shadowStylized, 1.0 - shadow);
 
-				return float4( color.rgb * aoPattern, 1.0);*/
-				//return float4( color * shadow * aoPattern, 1.0);
+                //------------------Blend base and shadow
+				half shadowStylized = SAMPLE_TEXTURE2D(_ShadowTex, sampler_ShadowTex, shadowUV).r;
+				half baseTexture = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, i.uv).r;
+				float shadowPattern = lerp(1.0, shadowStylized, 1 - shadow);
+                //harsher shadow
+                //shadowPattern =  smoothstep(0.1, 0.3, shadowPattern);
+
+				half basePattern = lerp(baseTexture, 1.0, 
+                                        saturate(color.r + color.g + color.b + _BaseStrength));
+
+                //return basePattern * shadowPattern;
+
+                half3 baseLitPattern = (color.rgb + ambientLight) * basePattern;
+
+                half4 finalPattern = half4 (shadowPattern * baseLitPattern, 1.0h);
+
+				return finalPattern * aoPattern;
 			}
 
 
@@ -241,8 +259,6 @@ Shader "Saphead Studios/Principle Toon"
             #include "Packages/com.unity.render-pipelines.universal/Shaders/DepthOnlyPass.hlsl"
             ENDHLSL
         }
-
-
     }
 
     Fallback  "Hidden/Universal Render Pipeline/FallbackError"

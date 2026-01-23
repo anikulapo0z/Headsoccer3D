@@ -1,7 +1,7 @@
 #ifndef PRINCIPLE_TOON_INIT_DATA_INCLUDED
 #define PRINCIPLE_TOON_INIT_DATA_INCLUDED
 
-#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+#include "Assets/Shaders/SapheadLighting.hlsl"
 #if defined(LOD_FADE_CROSSFADE)
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
 #endif
@@ -12,7 +12,7 @@
     //TEXTURE2D(_BaseMap);
     //SAMPLER(sampler_BaseMap);
     float4 _BaseColor;
-
+    float _BaseStrength;
     //AO
     float4 _AOTexture_ST;
     TEXTURE2D(_AOTexture);
@@ -143,77 +143,21 @@ void InitializeBakedGIData(Varyings input, inout InputData inputData)
 #endif
 }
 
-
-/*
-#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
-#include "Assets/Shaders/SapheadLighting.hlsl"
-
-//CBUFFER perhaps?
-    //Color
-    float4 _ColorTexture_ST;
-    TEXTURE2D(_ColorTexture);
-    SAMPLER(sampler_ColorTexture);
-    float4 _BaseColor;
-
-    //AO
-    float4 _AOTexture_ST;
-    TEXTURE2D(_AOTexture);
-    SAMPLER(sampler_AOTexture);
-    float _AOFrequency;
-
-    //Shadow
-    float4 _ShadowTex_ST;
-    TEXTURE2D(_ShadowTex);
-    SAMPLER(sampler_ShadowTex);
-    float _ShadowFrequency;
-
-struct Attributes
+half3 GetBakedGIData(Varyings input, InputData inputData)
 {
-    float4 positionOS : POSITION;
-    float2 uv : TEXCOORD0;
-    float3 normalOS : NORMAL;
-    float2 lightmapUV : TEXCOORD1;
-};
-
-struct Varyings
-{
-    float4 positionCS : SV_POSITION;
-    float3 positionWS : TEXCOORD0;
-    float2 uv : TEXCOORD1;
-    float3 normalWS : TEXCOORD2;
-    float3 viewWS : TEXCOORD3;
-    //lightmap and shadow related data
-    DECLARE_LIGHTMAP_OR_SH(lightmapUV, vertexSH, 4);
-    float4 shadowCoord : TEXCOORD5;
-
-};
-
-void InitializeInputData(Varyings input, half3 normalTS, out InputData inputData)
-{
-    inputData = (InputData) 0; // avoids "not completely initalized" errors
-
-    inputData.positionWS = input.positionWS;
-
-    half3 viewDirWS = GetWorldSpaceNormalizeViewDir(inputData.positionWS);
-    inputData.normalWS = input.normalWS;
-
-    inputData.normalWS = NormalizeNormalPerPixel(inputData.normalWS);
-
-    viewDirWS = SafeNormalize(viewDirWS);
-    inputData.viewDirectionWS = viewDirWS;
-
-#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
-					inputData.shadowCoord = input.shadowCoord;
-#elif defined(MAIN_LIGHT_CALCULATE_SHADOWS)
-					inputData.shadowCoord = TransformWorldToShadowCoord(inputData.positionWS);
+#if defined(DYNAMICLIGHTMAP_ON)
+    return SAMPLE_GI(input.staticLightmapUV, input.dynamicLightmapUV, input.vertexSH, inputData.normalWS);
+    
+#elif !defined(LIGHTMAP_ON) && (defined(PROBE_VOLUMES_L1) || defined(PROBE_VOLUMES_L2))
+    return SAMPLE_GI(input.vertexSH,
+        GetAbsolutePositionWS(inputData.positionWS),
+        inputData.normalWS,
+        inputData.viewDirectionWS,
+        input.positionCS.xy,
+        input.probeOcclusion,
+        inputData.shadowMask);
 #else
-    inputData.shadowCoord = float4(0, 0, 0, 0);
+    return SAMPLE_GI(input.staticLightmapUV, input.vertexSH, inputData.normalWS);
 #endif
-
-    inputData.bakedGI = SAMPLE_GI(input.lightmapUV, input.vertexSH, inputData.normalWS);
-    inputData.normalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(input.positionCS);
-    inputData.shadowMask = SAMPLE_SHADOWMASK(input.lightmapUV);
 }
-*/
 #endif // PRINCIPLE_TOON_INIT_DATA_INCLUDED

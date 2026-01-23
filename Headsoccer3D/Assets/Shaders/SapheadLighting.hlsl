@@ -235,33 +235,29 @@ LightingData CreateLightingData(InputData inputData, SurfaceData surfaceData)
     return lightingData;
 }
 
+//Main clac here?
 half3 CalculateBlinnPhong(Light light, InputData inputData, SurfaceData surfaceData)
 {
     half3 attenuatedLightColor = light.color * (light.distanceAttenuation * light.shadowAttenuation);
     half3 lightDiffuseColor = LightingLambert(attenuatedLightColor, light.direction, inputData.normalWS);
 
     half3 lightSpecularColor = half3(0,0,0);
+    
     #if defined(_SPECGLOSSMAP) || defined(_SPECULAR_COLOR)
-    half smoothness = exp2(10 * surfaceData.smoothness + 1);
-
-    lightSpecularColor += LightingSpecular(attenuatedLightColor, light.direction, inputData.normalWS, inputData.viewDirectionWS, half4(surfaceData.specular, 1), smoothness);
+        half smoothness = exp2(10 * surfaceData.smoothness + 1);
+        lightSpecularColor += LightingSpecular(attenuatedLightColor, light.direction, inputData.normalWS, inputData.viewDirectionWS, half4(surfaceData.specular, 1), smoothness);
     #endif
 
-#if _ALPHAPREMULTIPLY_ON
-    return lightDiffuseColor * surfaceData.albedo * surfaceData.alpha + lightSpecularColor;
-#else
-    return lightDiffuseColor * surfaceData.albedo + lightSpecularColor;
-#endif
+    #if _ALPHAPREMULTIPLY_ON
+        return lightDiffuseColor * surfaceData.albedo * surfaceData.alpha + lightSpecularColor;
+    #else
+        return lightDiffuseColor * surfaceData.albedo + lightSpecularColor;
+    #endif
 }
 
-///////////////////////////////////////////////////////////////////////////////
-//                      Fragment Functions                                   //
-//       Used by ShaderGraph and others builtin renderers                    //
-///////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////////
-/// Phong lighting...
-////////////////////////////////////////////////////////////////////////////////
+//Phong lighting
+//This is called and mostly checks for main light and additional lights
+//Math itself happens in CalculateBlinnPhong() above
 half4 UniversalFragmentBlinnPhong(InputData inputData, SurfaceData surfaceData)
 {
     #if defined(DEBUG_DISPLAY)
@@ -275,53 +271,136 @@ half4 UniversalFragmentBlinnPhong(InputData inputData, SurfaceData surfaceData)
 
     uint meshRenderingLayers = GetMeshRenderingLayer();
     half4 shadowMask = CalculateShadowMask(inputData);
+    
+    //Understandably we use AO here and 
     AmbientOcclusionFactor aoFactor = CreateAmbientOcclusionFactor(inputData, surfaceData);
+    
+    //We will calculate the main light blinn phong ourselves in frag of each shader
+    
     Light mainLight = GetMainLight(inputData, shadowMask, aoFactor);
-
+    //check how much is just ambient light and how much is direct lighting
     MixRealtimeAndBakedGI(mainLight, inputData.normalWS, inputData.bakedGI, aoFactor);
 
     inputData.bakedGI *= surfaceData.albedo;
 
     LightingData lightingData = CreateLightingData(inputData, surfaceData);
-#ifdef _LIGHT_LAYERS
-    if (IsMatchingLightLayer(mainLight.layerMask, meshRenderingLayers))
-#endif
-    {
-        lightingData.mainLightColor += CalculateBlinnPhong(mainLight, inputData, surfaceData);
-    }
-
-    #if defined(_ADDITIONAL_LIGHTS)
-    uint pixelLightCount = GetAdditionalLightsCount();
-
-    #if USE_FORWARD_PLUS
-    [loop] for (uint lightIndex = 0; lightIndex < min(URP_FP_DIRECTIONAL_LIGHTS_COUNT, MAX_VISIBLE_LIGHTS); lightIndex++)
-    {
-        FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK
-
-        Light light = GetAdditionalLight(lightIndex, inputData, shadowMask, aoFactor);
-#ifdef _LIGHT_LAYERS
-        if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
-#endif
-        {
-            lightingData.additionalLightsColor += CalculateBlinnPhong(light, inputData, surfaceData);
-        }
-    }
+    #ifdef _LIGHT_LAYERS
+        if (IsMatchingLightLayer(mainLight.layerMask, meshRenderingLayers))
     #endif
+    {
+        //lightingData.mainLightColor += CalculateBlinnPhong(mainLight, inputData, surfaceData);
+        lightingData.mainLightColor += 0.0h;
+    }
+    
+    
+    //More lights.
+    //So skipping the lights saves a lot of calculation
+    //Since each light goes through the same blinnPhong
+    #if defined(_ADDITIONAL_LIGHTS)
+        uint pixelLightCount = GetAdditionalLightsCount();
 
-    LIGHT_LOOP_BEGIN(pixelLightCount)
-        Light light = GetAdditionalLight(lightIndex, inputData, shadowMask, aoFactor);
-#ifdef _LIGHT_LAYERS
-        if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
-#endif
-        {
-            lightingData.additionalLightsColor += CalculateBlinnPhong(light, inputData, surfaceData);
-        }
-    LIGHT_LOOP_END
+        #if USE_FORWARD_PLUS
+            [loop] for (uint lightIndex = 0; lightIndex < min(URP_FP_DIRECTIONAL_LIGHTS_COUNT, MAX_VISIBLE_LIGHTS); lightIndex++)
+            {
+                FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK
+
+                Light light = GetAdditionalLight(lightIndex, inputData, shadowMask, aoFactor);
+                #ifdef _LIGHT_LAYERS
+                        if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
+                #endif
+                {
+                    lightingData.additionalLightsColor += CalculateBlinnPhong(light, inputData, surfaceData);
+                }
+            }
+        #endif
+
+        LIGHT_LOOP_BEGIN(pixelLightCount)
+            Light light = GetAdditionalLight(lightIndex, inputData, shadowMask, aoFactor);
+            #ifdef _LIGHT_LAYERS
+                    if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
+            #endif
+            {
+                lightingData.additionalLightsColor += CalculateBlinnPhong(light, inputData, surfaceData);
+            }
+        LIGHT_LOOP_END
     #endif
 
     #if defined(_ADDITIONAL_LIGHTS_VERTEX)
-    lightingData.vertexLightingColor += inputData.vertexLighting * surfaceData.albedo;
+        lightingData.vertexLightingColor += inputData.vertexLighting * surfaceData.albedo;
     #endif
+
+    return CalculateFinalColor(lightingData, surfaceData.alpha);
+}
+
+half4 UniversalFragmentBlinnPhongMainLight(InputData inputData, SurfaceData surfaceData)
+{
+#if defined(DEBUG_DISPLAY)
+    half4 debugColor;
+
+    if (CanDebugOverrideOutputColor(inputData, surfaceData, debugColor))
+    {
+        return debugColor;
+    }
+#endif
+
+    uint meshRenderingLayers = GetMeshRenderingLayer();
+    half4 shadowMask = CalculateShadowMask(inputData);
+    
+    //Understandably we use AO here and 
+    AmbientOcclusionFactor aoFactor = CreateAmbientOcclusionFactor(inputData, surfaceData);
+    
+    //We will calculate the main light blinn phong ourselves in frag of each shader
+    
+    Light mainLight = GetMainLight(inputData, shadowMask, aoFactor);
+    //check how much is just ambient light and how much is direct lighting
+    MixRealtimeAndBakedGI(mainLight, inputData.normalWS, inputData.bakedGI, aoFactor);
+
+    inputData.bakedGI *= surfaceData.albedo;
+
+    LightingData lightingData = CreateLightingData(inputData, surfaceData);
+    #ifdef _LIGHT_LAYERS
+        if (IsMatchingLightLayer(mainLight.layerMask, meshRenderingLayers))
+    #endif
+    {
+        lightingData.mainLightColor += CalculateBlinnPhong(mainLight, inputData, surfaceData);
+    }
+    
+    
+    //More lights.
+    //So skipping the lights saves a lot of calculation
+    //Since each light goes through the same blinnPhong
+#if defined(_ADDITIONAL_LIGHTS)
+        uint pixelLightCount = GetAdditionalLightsCount();
+
+#if USE_FORWARD_PLUS
+            [loop] for (uint lightIndex = 0; lightIndex < min(URP_FP_DIRECTIONAL_LIGHTS_COUNT, MAX_VISIBLE_LIGHTS); lightIndex++)
+            {
+                FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK
+
+                Light light = GetAdditionalLight(lightIndex, inputData, shadowMask, aoFactor);
+#ifdef _LIGHT_LAYERS
+                        if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
+#endif
+                {
+                    lightingData.additionalLightsColor += CalculateBlinnPhong(light, inputData, surfaceData);
+                }
+            }
+#endif
+
+        LIGHT_LOOP_BEGIN(pixelLightCount)
+            Light light = GetAdditionalLight(lightIndex, inputData, shadowMask, aoFactor);
+#ifdef _LIGHT_LAYERS
+                    if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
+#endif
+            {
+                lightingData.additionalLightsColor += CalculateBlinnPhong(light, inputData, surfaceData);
+            }
+        LIGHT_LOOP_END
+#endif
+
+#if defined(_ADDITIONAL_LIGHTS_VERTEX)
+        lightingData.vertexLightingColor += inputData.vertexLighting * surfaceData.albedo;
+#endif
 
     return CalculateFinalColor(lightingData, surfaceData.alpha);
 }
