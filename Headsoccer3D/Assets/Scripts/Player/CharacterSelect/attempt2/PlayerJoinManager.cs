@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
-using UnityEngine.UI;
 
 public class PlayerJoinManager : MonoBehaviour
 {
@@ -16,14 +15,19 @@ public class PlayerJoinManager : MonoBehaviour
     [SerializeField] int maxPlayers = 4;
 
     [Header("Cursor")]
-    [SerializeField] GameObject[] cursorPrefab;
-    [SerializeField] RectTransform cursorParent;
+    [SerializeField] GameObject[] characterCursorPrefab;
+    [SerializeField] RectTransform characterCursorParent;
     [SerializeField] RectTransform startingCharacterButton;
+
 
     [Header("Input")]
     [SerializeField] InputActionAsset inputActions;
     [SerializeField] string actionMapName;
     [SerializeField] string joinActionName = "Join";
+
+    [Space(10)]
+    [SerializeField] MapSelectionManager mapSelectionManager;
+    [SerializeField] List<PlayerInputController> inputControllers = new List<PlayerInputController>();
 
     bool characterSelectOpen;
     bool isLocked;
@@ -72,6 +76,7 @@ public class PlayerJoinManager : MonoBehaviour
         isLocked = false;
 
         joinAction.Enable();
+        CharacterSelectManager.Instance.StartCountDown();
     }
 
     void OnJoinPerformed(InputAction.CallbackContext ctx)
@@ -90,12 +95,15 @@ public class PlayerJoinManager : MonoBehaviour
         int playerIndex = players.Count;
 
         PlayerInputController controller = CreatePlayerController(playerIndex, device);
+        mapSelectionManager.inputControllers = inputControllers;
+
         IPlayerControllable cursor = CreateCursor(playerIndex);
 
         controller.SetControlledObject(cursor);
         players.Add(device, controller);
 
         Debug.Log($"Player {playerIndex + 1} joined using {device.displayName}");
+        CharacterSelectManager.Instance.totalPlayerCount = players.Count;
     }
 
     PlayerInputController CreatePlayerController(int index, InputDevice device)
@@ -104,13 +112,14 @@ public class PlayerJoinManager : MonoBehaviour
         PlayerInputController controller = playerObj.AddComponent<PlayerInputController>();
 
         controller.Initialize(index, device, inputActions, actionMapName);
+        inputControllers.Add(controller);
 
         return controller;
     }
 
     IPlayerControllable CreateCursor(int playerIndex)
     {
-        GameObject cursorObj = Instantiate(cursorPrefab[playerIndex], cursorParent);
+        GameObject cursorObj = Instantiate(characterCursorPrefab[playerIndex], characterCursorParent);
 
         SelectionCursor cursor = cursorObj.GetComponent<SelectionCursor>();
         if (cursor == null)
@@ -118,6 +127,7 @@ public class PlayerJoinManager : MonoBehaviour
             Debug.LogError("Cursor prefab missing SelectionCursor!");
             return null;
         }
+        cursor.playerIndex = playerIndex;
 
         if (startingCharacterButton != null)
         {

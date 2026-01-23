@@ -1,11 +1,18 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterButton : MonoBehaviour
 {
-    // attached to each character selection
     public int characterID;
 
+    [Space(10)]
+    [Header("Current Character Info")]
+    public string characterName;
+    public Sprite selectedImage; 
+
     // for cursor navigation
+    [Space(10)]
+    [Header("Adjacent Characters")]
     public RectTransform selectionAbove;
     public RectTransform selectionBelow;
     public RectTransform selectionLeft;

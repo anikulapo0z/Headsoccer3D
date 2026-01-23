@@ -1,10 +1,15 @@
+using NUnit.Framework;
+using System.Collections.Generic;
+using System.Net.Sockets;
 using UnityEngine;
 
-public class SelectionCursor : MonoBehaviour, IPlayerControllable
+public class MapSelectionCursor : MonoBehaviour, IPlayerControllable
 {
-    public RectTransform parent;
     bool locked = false;
+    public RectTransform parent;
     public int playerIndex;
+
+
 
     public void OnMove(Vector2 dir)
     {
@@ -44,31 +49,17 @@ public class SelectionCursor : MonoBehaviour, IPlayerControllable
             transform.SetParent(targetButton, false);
             transform.localPosition = Vector3.zero;
             parent = targetButton;
-
-            CharacterSelectionPreview.Instance.SetPortraitInfo(
-                playerIndex,
-                parent.GetComponent<CharacterButton>().selectedImage,
-                parent.GetComponent<CharacterButton>().characterName
-                );
         }
-    }
-
-    public void OnConfirm()
-    {
-        CharacterSelectManager.Instance.CheckPlayerConfirm(locked);
-        locked = true;
-        CharacterSelectionPreview.Instance.SetPortraitInfo(
-            playerIndex,
-            parent.GetComponent<CharacterButton>().selectedImage,
-            parent.GetComponent<CharacterButton>().characterName
-            );
     }
 
     public void OnCancel()
     {
-        CharacterSelectManager.Instance.PlayerCancel(locked);
         locked = false;
-        Debug.Log($"{name} Cancel");
+    }
+
+    public void OnConfirm()
+    {
+        locked = true;
     }
 
 }
