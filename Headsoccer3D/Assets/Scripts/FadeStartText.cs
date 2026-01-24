@@ -1,7 +1,6 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class FadeStartText : MonoBehaviour
 {
@@ -15,7 +14,7 @@ public class FadeStartText : MonoBehaviour
     Color startColor;
     float currentTime;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         startColor = textToFlash.color;
@@ -51,12 +50,7 @@ public class FadeStartText : MonoBehaviour
                     currentTime = 0;
                 }
             }
-            Debug.Log(alpha);
             yield return new WaitForSeconds(updateRate);
-           
-
         }
-
-        //yield return null;
     }
 }
