@@ -13,6 +13,11 @@ public class PlayerInputController : MonoBehaviour
     InputAction moveAction;
     InputAction confirmAction;
     InputAction cancelAction;
+    InputAction joinAction;
+    InputAction jumpAction;
+    InputAction kickAction;
+    InputAction abilityAction;
+
 
     public void Initialize(
         int playerIndex,
@@ -36,9 +41,19 @@ public class PlayerInputController : MonoBehaviour
         confirmAction = map.FindAction("Confirm");
         cancelAction = map.FindAction("Cancel");
 
+        joinAction = map.FindAction("Join");
+        jumpAction = map.FindAction("Jump");
+        kickAction = map.FindAction("Kick");
+        abilityAction = map.FindAction("Ability");
+
         moveAction.performed += OnMove;
         confirmAction.performed += OnConfirm;
         cancelAction.performed += OnCancel;
+
+        joinAction.performed += OnJoin;
+        jumpAction.performed += OnJump;
+        kickAction.performed += OnKick;
+        abilityAction.performed += OnAbility;
 
         map.Enable();
     }
@@ -62,6 +77,27 @@ public class PlayerInputController : MonoBehaviour
     {
         controlledObject?.OnCancel();
     }
+
+    void OnJump(InputAction.CallbackContext ctx)
+    {
+        controlledObject?.OnJump();
+    }
+
+    void OnKick(InputAction.CallbackContext ctx)
+    {
+        controlledObject?.OnKick();
+    }
+
+    void OnJoin(InputAction.CallbackContext ctx)
+    {
+        controlledObject?.OnJoin();
+    }
+    void OnAbility(InputAction.CallbackContext ctx)
+    {
+        controlledObject?.OnAbility();
+    }
+
+
 
     void OnDestroy()
     {

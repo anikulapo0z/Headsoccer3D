@@ -81,4 +81,9 @@ public class MapSelectionCursor : MonoBehaviour, IPlayerControllable
     {
         throw new System.NotImplementedException();
     }
+
+    public void OnAbility()
+    {
+        throw new System.NotImplementedException();
+    }
 }

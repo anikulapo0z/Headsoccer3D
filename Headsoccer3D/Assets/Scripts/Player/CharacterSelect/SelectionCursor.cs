@@ -85,4 +85,9 @@ public class SelectionCursor : MonoBehaviour, IPlayerControllable
     {
         throw new System.NotImplementedException();
     }
+
+    public void OnAbility()
+    {
+        throw new System.NotImplementedException();
+    }
 }

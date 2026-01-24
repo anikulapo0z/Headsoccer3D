@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IPlayerControllable
 {
+    public void OnAbility()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void OnCancel()
     {
         throw new System.NotImplementedException();

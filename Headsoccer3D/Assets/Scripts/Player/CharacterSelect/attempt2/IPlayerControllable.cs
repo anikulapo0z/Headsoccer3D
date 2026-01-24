@@ -6,6 +6,7 @@ public interface IPlayerControllable
     void OnJoin();
     void OnConfirm();
     void OnCancel();
+    void OnAbility();
     void OnMove(Vector2 input);
 
 }
