@@ -25,12 +25,12 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AOTexture:
-        m_Texture: {fileID: 2800000, guid: 81446ed0ece35c041a864b75ecc69767, type: 3}
+        m_Texture: {fileID: 2800000, guid: 59380a8c482907548898ef5ffad0bff6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 59380a8c482907548898ef5ffad0bff6, type: 3}
-        m_Scale: {x: 3, y: 3}
+        m_Texture: {fileID: 2800000, guid: 266ce12a5869bcb478757fb4dae44c80, type: 3}
+        m_Scale: {x: 4.89, y: 4.89}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
@@ -49,7 +49,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ShadowTex:
-        m_Texture: {fileID: 2800000, guid: 59380a8c482907548898ef5ffad0bff6, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5a061fc6455b7db4fb0e29eab26806d8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -70,7 +70,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AOFrequency: 1
+    - _AOFrequency: 0.91
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
     - _AlphaClipToggle: 0
@@ -87,7 +87,7 @@ Material:
     - _GlossinessSource: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _ShadowFrequency: 1.67
+    - _ShadowFrequency: 1.21
     - _Shininess: 0
     - _Smoothness: 0.5
     - _SmoothnessSource: 0

@@ -162,7 +162,7 @@ Shader "Saphead Studios/Principle Toon"
 
                 half4 finalPattern = half4 (shadowPattern * baseLitPattern, 1.0h);
 
-				return finalPattern * aoPattern;
+				return finalPattern * aoPattern * _BaseColor;
 			}
 
 
