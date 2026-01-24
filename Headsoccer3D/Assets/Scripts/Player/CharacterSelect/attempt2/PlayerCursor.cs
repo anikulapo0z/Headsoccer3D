@@ -26,4 +26,34 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
     {
         Debug.Log($"{name} Cancel");
     }
+
+    void IPlayerControllable.OnJump()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    void IPlayerControllable.OnKick()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    void IPlayerControllable.OnJoin()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    void IPlayerControllable.OnConfirm()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    void IPlayerControllable.OnCancel()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    void IPlayerControllable.OnMove(Vector2 input)
+    {
+        throw new System.NotImplementedException();
+    }
 }

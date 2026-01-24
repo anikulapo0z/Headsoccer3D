@@ -1,5 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapSelectionManager : MonoBehaviour
 {
@@ -7,10 +10,23 @@ public class MapSelectionManager : MonoBehaviour
     [SerializeField] List<GameObject> mapCursors = new List<GameObject>();
     public List<PlayerInputController> inputControllers = new List<PlayerInputController>();
 
+    float currentCountDownTime;
+    [SerializeField] float maxCountDownTime;
+    Coroutine countDownCoroutine;
+    [SerializeField] TMP_Text countDownText;
+    public string selectedScene = "";
+    public static MapSelectionManager Instance;
+    [SerializeField] int lockedPlayerCount = 0;
+    [SerializeField] int totalPlayerCount = 0;
+    [SerializeField] string menuSceneName;
 
 
+    bool canMoveToNextScene = false;
 
-
+    private void Start()
+    {
+        Instance = this;
+    }
 
     public void SetPlayers()
     {
@@ -20,6 +36,7 @@ public class MapSelectionManager : MonoBehaviour
             print(i.name);
             i.SetControlledObject(cursor);
         }
+        StartCountDown();
     }
 
     IPlayerControllable CreateCursor(int playerIndex)
@@ -41,4 +58,68 @@ public class MapSelectionManager : MonoBehaviour
         return cursor;
 
     }
+
+    public void StartCountDown()
+    {
+        totalPlayerCount = inputControllers.Count;
+        currentCountDownTime = maxCountDownTime;
+        countDownCoroutine = StartCoroutine(CountDownRoutine());
+    }
+
+    IEnumerator CountDownRoutine()
+    {
+        while (currentCountDownTime > 0)
+        {
+            currentCountDownTime--;
+            countDownText.text = currentCountDownTime.ToString();
+            yield return new WaitForSeconds(1);
+        }
+        StopCoroutine(countDownCoroutine);
+        LoadScene(selectedScene);
+    }
+
+    void LoadScene(string sceneName)
+    {
+        SceneManager.LoadSceneAsync(sceneName);
+        SceneManager.UnloadSceneAsync(menuSceneName);
+    }
+
+
+
+
+
+
+    public void CheckPlayerConfirm(bool isLocked)
+    {
+        if (!isLocked)
+        {
+            lockedPlayerCount++;
+            if (lockedPlayerCount == totalPlayerCount)
+            {
+                canMoveToNextScene = true;
+                //pressConfirmPrompt.SetActive(true);
+            }
+            return;
+        }
+
+        if (canMoveToNextScene)
+        {
+            LoadScene(selectedScene);
+            StopCoroutine(countDownCoroutine);
+        }
+    }
+
+    public void PlayerCancel(bool isLocked)
+    {
+        if (isLocked)
+        {
+            if (canMoveToNextScene)
+            {
+                canMoveToNextScene = false;
+                //pressConfirmPrompt.SetActive(false);
+            }
+            lockedPlayerCount--;
+        }
+    }
+
 }

@@ -5,6 +5,7 @@ public class PlayerInputController : MonoBehaviour
 {
     public int PlayerIndex { get; private set; }
     public InputDevice AssignedDevice { get; private set; }
+    public int selectedCharacterID = -1;
 
     IPlayerControllable controlledObject;
 

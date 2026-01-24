@@ -158,6 +158,12 @@ MonoBehaviour:
   - {fileID: 587420913324717821, guid: cf1d2d13ed9412f438bdbda222c8e5b8, type: 3}
   - {fileID: 587420913324717821, guid: c4939c982e0f15c45a9a77cb6ae7bdb5, type: 3}
   inputControllers: []
+  maxCountDownTime: 5
+  countDownText: {fileID: 1929247445}
+  selectedScene: 
+  lockedPlayerCount: 0
+  totalPlayerCount: 0
+  menuSceneName: MainMenu
 --- !u!114 &247253209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -506,6 +512,7 @@ MonoBehaviour:
   characterID: 0
   characterName: c1
   selectedImage: {fileID: 21300000, guid: a32ba558ec882884b87308fedfde9d1f, type: 3}
+  sceneName: Map1
   selectionAbove: {fileID: 0}
   selectionBelow: {fileID: 0}
   selectionLeft: {fileID: 0}
@@ -601,6 +608,7 @@ MonoBehaviour:
   characterID: 1
   characterName: c2
   selectedImage: {fileID: 21300000, guid: 569ba9f491efd8545bfb14e3c4c73463, type: 3}
+  sceneName: 
   selectionAbove: {fileID: 0}
   selectionBelow: {fileID: 1898562948}
   selectionLeft: {fileID: 616584588}
@@ -1182,6 +1190,7 @@ MonoBehaviour:
   characterID: 0
   characterName: c1
   selectedImage: {fileID: 21300000, guid: a32ba558ec882884b87308fedfde9d1f, type: 3}
+  sceneName: 
   selectionAbove: {fileID: 0}
   selectionBelow: {fileID: 1693677935}
   selectionLeft: {fileID: 0}
@@ -1398,6 +1407,7 @@ MonoBehaviour:
   characterID: 1
   characterName: c2
   selectedImage: {fileID: 21300000, guid: 569ba9f491efd8545bfb14e3c4c73463, type: 3}
+  sceneName: Map2
   selectionAbove: {fileID: 0}
   selectionBelow: {fileID: 0}
   selectionLeft: {fileID: 451900202}
@@ -1452,7 +1462,7 @@ GameObject:
   - component: {fileID: 1158005321}
   - component: {fileID: 1158005320}
   m_Layer: 5
-  m_Name: CharacterGrid
+  m_Name: MapGrid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1573,7 +1583,7 @@ MonoBehaviour:
   characterCursorParent: {fileID: 616584588}
   startingCharacterButton: {fileID: 616584588}
   inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  actionMapName: UI
+  actionMapName: Player
   joinActionName: Join
   mapSelectionManager: {fileID: 247253208}
   inputControllers: []
@@ -2763,6 +2773,7 @@ MonoBehaviour:
   characterID: 3
   characterName: c4
   selectedImage: {fileID: 21300000, guid: 8c373e83f086c294abe94a60b057325f, type: 3}
+  sceneName: 
   selectionAbove: {fileID: 616584588}
   selectionBelow: {fileID: 0}
   selectionLeft: {fileID: 0}
@@ -2934,6 +2945,7 @@ MonoBehaviour:
   characterID: 2
   characterName: c3
   selectedImage: {fileID: 21300000, guid: f60c8d73a649add4abc0d8bf12a8057f, type: 3}
+  sceneName: 
   selectionAbove: {fileID: 0}
   selectionBelow: {fileID: 2021690950}
   selectionLeft: {fileID: 461016763}
@@ -3240,6 +3252,7 @@ MonoBehaviour:
   characterID: 4
   characterName: c5
   selectedImage: {fileID: 21300000, guid: b3afcaafbea804d408e61be2c4319013, type: 3}
+  sceneName: 
   selectionAbove: {fileID: 461016763}
   selectionBelow: {fileID: 0}
   selectionLeft: {fileID: 1693677935}
@@ -3471,6 +3484,7 @@ MonoBehaviour:
   characterID: 5
   characterName: c6
   selectedImage: {fileID: 21300000, guid: e8f7ad53292d86a48906a78b465b36b6, type: 3}
+  sceneName: 
   selectionAbove: {fileID: 1735706296}
   selectionBelow: {fileID: 0}
   selectionLeft: {fileID: 1898562948}

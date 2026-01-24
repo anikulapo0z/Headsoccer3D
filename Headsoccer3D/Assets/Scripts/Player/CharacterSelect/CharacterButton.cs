@@ -8,7 +8,8 @@ public class CharacterButton : MonoBehaviour
     [Space(10)]
     [Header("Current Character Info")]
     public string characterName;
-    public Sprite selectedImage; 
+    public Sprite selectedImage;
+    public string sceneName;
 
     // for cursor navigation
     [Space(10)]

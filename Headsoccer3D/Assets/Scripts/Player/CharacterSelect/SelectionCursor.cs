@@ -71,4 +71,18 @@ public class SelectionCursor : MonoBehaviour, IPlayerControllable
         Debug.Log($"{name} Cancel");
     }
 
+    public void OnJump()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnKick()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnJoin()
+    {
+        throw new System.NotImplementedException();
+    }
 }

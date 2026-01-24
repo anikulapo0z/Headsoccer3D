@@ -1,7 +1,11 @@
 using UnityEngine;
 public interface IPlayerControllable
 {
-    void OnMove(Vector2 input);
+    void OnJump();
+    void OnKick();
+    void OnJoin();
     void OnConfirm();
     void OnCancel();
+    void OnMove(Vector2 input);
+
 }

@@ -1,6 +1,3 @@
-using NUnit.Framework;
-using System.Collections.Generic;
-using System.Net.Sockets;
 using UnityEngine;
 
 public class MapSelectionCursor : MonoBehaviour, IPlayerControllable
@@ -8,6 +5,7 @@ public class MapSelectionCursor : MonoBehaviour, IPlayerControllable
     bool locked = false;
     public RectTransform parent;
     public int playerIndex;
+    string sceneName;
 
 
 
@@ -49,17 +47,38 @@ public class MapSelectionCursor : MonoBehaviour, IPlayerControllable
             transform.SetParent(targetButton, false);
             transform.localPosition = Vector3.zero;
             parent = targetButton;
+            sceneName = targetButton.GetComponent<CharacterButton>().sceneName;
+            if(playerIndex == 0)
+                MapSelectionManager.Instance.selectedScene = sceneName;
         }
     }
 
     public void OnCancel()
     {
+        MapSelectionManager.Instance.PlayerCancel(locked);
+
         locked = false;
     }
 
     public void OnConfirm()
     {
+        MapSelectionManager.Instance.CheckPlayerConfirm(locked);
+
         locked = true;
     }
 
+    public void OnJump()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnKick()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnJoin()
+    {
+        throw new System.NotImplementedException();
+    }
 }
