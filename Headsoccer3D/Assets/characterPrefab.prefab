@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 909526382676242523}
   - component: {fileID: 87823349313922562}
-  - component: {fileID: 7991841749106332850}
+  - component: {fileID: 4571959248089919183}
   - component: {fileID: 5715509517818701763}
-  - component: {fileID: 248328973882781094}
   m_Layer: 0
   m_Name: characterPrefab
   m_TagString: Untagged
@@ -58,15 +57,15 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
+  m_Height: 0.2
+  m_Radius: 0.05
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &7991841749106332850
-SphereCollider:
+  m_Center: {x: 0, y: 0.025, z: 0}
+--- !u!136 &4571959248089919183
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -83,9 +82,11 @@ SphereCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.065
-  m_Center: {x: 0, y: 0.03, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.05
+  m_Height: 0.15
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.025, z: 0}
 --- !u!114 &5715509517818701763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,18 +97,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aab1aac9d0bb6ed4b80164fd0c827344, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &248328973882781094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2105791413608084587}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58e1a2877a38c534383a768801009cc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 7

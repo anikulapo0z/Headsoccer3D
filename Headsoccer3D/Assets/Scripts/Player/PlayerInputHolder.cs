@@ -9,11 +9,6 @@ public class PlayerInputHolder : MonoBehaviour
 
     private void Start()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject); // kill duplicates
-            return;
-        }
         Instance = this;
         DontDestroyOnLoad(this);
     }
