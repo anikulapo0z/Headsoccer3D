@@ -102,7 +102,7 @@ public class PlayerJoinManager : MonoBehaviour
         controller.SetControlledObject(cursor);
         players.Add(device, controller);
 
-        PlayerInputHolder.Instance.playerList.Add(controller);
+        //PlayerInputHolder.Instance.playerList.Add(controller);
         DontDestroyOnLoad(controller);
 
         Debug.Log($"Player {playerIndex + 1} joined using {device.displayName}");
