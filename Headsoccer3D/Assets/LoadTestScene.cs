@@ -21,8 +21,11 @@ public class LoadTestScene : MonoBehaviour
     {
         GameObject t = Instantiate(player, spawnPosition, Quaternion.identity);
         PlayerController p = t.GetComponent<PlayerController>();
-        playerInputController = FindObjectOfType<PlayerInputController>();
+        //playerInputController = FindObjectOfType<PlayerInputController>();
         playerInputController.SetControlledObject(p);
+
+        //var mover = t.GetComponent<PlayerMovement>();
+        //playerInputController.SetControlledObject(mover);
     }
 
 }

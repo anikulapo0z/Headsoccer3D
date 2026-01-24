@@ -1,16 +1,14 @@
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IPlayerControllable
 {
-    [Header("Player")]
-    [Tooltip("1 = WASD, 2 = Arrow Keys")]
-    public int playerIndex = 1;
+    [SerializeField] private float moveSpeed = 7f;
+    [SerializeField] private float rotationSpeed = 12f;
 
-    [Header("Movement")]
-    public float moveSpeed = 6f;
-    public float turnSpeed = 12f;
+    [SerializeField] private bool rotateToMovement = true;
 
     private CharacterController controller;
+    private Vector2 moveInput;
 
     void Awake()
     {
@@ -19,50 +17,40 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Vector2 input = GetMoveInput();
-        Vector3 moveDir = new Vector3(input.x, 0f, input.y);
+        Vector3 moveDir = new Vector3(moveInput.x, 0f, moveInput.y);
 
-        // Prevent faster diagonal movement
-        if (moveDir.magnitude > 1f)
+        // Prevent faster diagonal speed
+        if (moveDir.sqrMagnitude > 1f)
             moveDir.Normalize();
 
-        // Move
+        // Apply movement
         controller.Move(moveDir * moveSpeed * Time.deltaTime);
 
         // Face movement direction
-        if (moveDir.sqrMagnitude > 0.001f)
+        if (rotateToMovement && moveDir.sqrMagnitude > 0.001f)
         {
-            Quaternion targetRot = Quaternion.LookRotation(moveDir);
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation,
-                targetRot,
-                turnSpeed * Time.deltaTime
-            );
+            Quaternion target = Quaternion.LookRotation(moveDir, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, target, rotationSpeed * Time.deltaTime);
         }
     }
 
-    Vector2 GetMoveInput()
+    // ===== IPlayerControllable =====
+    public void OnMove(Vector2 input)
     {
-        float x = 0f;
-        float y = 0f;
-
-        if (playerIndex == 1)
-        {
-            if (Input.GetKey(KeyCode.A)) x = -1;
-            if (Input.GetKey(KeyCode.D)) x = 1;
-            if (Input.GetKey(KeyCode.S)) y = -1;
-            if (Input.GetKey(KeyCode.W)) y = 1;
-        }
-        else // Player 2
-        {
-            
-            if (Input.GetKey(KeyCode.LeftArrow)) x = -1;
-            if (Input.GetKey(KeyCode.RightArrow)) x = 1;
-            if (Input.GetKey(KeyCode.DownArrow)) y = -1;
-            if (Input.GetKey(KeyCode.UpArrow)) y = 1;
-
-            
-        }
-        return new Vector2(x, y);
+        moveInput = input;
+        Debug.Log($"P Move: {moveInput}"); // optional
     }
+
+    public void OnJump() { }     // handled elsewhere
+    public void OnKick() { }
+    public void OnAbility() { }
+    public void OnConfirm() { }
+    public void OnCancel() { }
+    public void OnJoin() { }
+
+    void OnDisable()
+    {
+        moveInput = Vector2.zero;
+    }
+
 }

@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     public void OnMove(Vector2 input)
     {
+        Debug.Log("Moving: " + input);
         throw new System.NotImplementedException();
     }
 }
