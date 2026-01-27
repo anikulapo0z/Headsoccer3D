@@ -58,7 +58,7 @@ public class BallController : MonoBehaviour
 
         ballPositionIndicator.transform.rotation = Quaternion.Euler(
             90f,
-            transform.eulerAngles.y + Time.time * positionIndicatorSpeed,
+            ballPositionIndicator.transform.eulerAngles.y + Time.time * positionIndicatorSpeed,
             0f
             );
         if(Physics.Raycast(transform.position, Vector3.down, out hit, 100, layerToShowBallPositionOn))
