@@ -35,7 +35,7 @@ public class BallController : MonoBehaviour
             transform.eulerAngles.y + Time.time * positionIndicatorSpeed,
             0f
             );
-        if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 100, layerToShowBallPositionOn))
+        if(Physics.Raycast(transform.position, Vector3.down, out hit, 100, layerToShowBallPositionOn))
         {
             ballPositionIndicator.transform.position = hit.point;
             lr.SetPosition(0, transform.position);
