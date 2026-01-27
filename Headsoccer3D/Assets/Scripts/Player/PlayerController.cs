@@ -38,6 +38,12 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     private readonly HashSet<Rigidbody> ballsInHeadRange = new HashSet<Rigidbody>();
     private readonly HashSet<Rigidbody> ballsInKickRange = new HashSet<Rigidbody>();
 
+
+    // owen vars
+    bool isPlayerLocked = false;
+    public Vector3 startingPos;
+
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -188,5 +194,14 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         ballsInHeadRange.Remove(rb);
     }
     #endregion
+
+    public void LockPlayerMove()
+    {
+        Debug.Log("locking player");
+    }
+    public void UnlockPlayerMove()
+    {
+
+    }
 
 }

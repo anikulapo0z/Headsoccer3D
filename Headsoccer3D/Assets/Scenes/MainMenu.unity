@@ -607,7 +607,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterID: 1
   characterName: c2
-  selectedImage: {fileID: 21300000, guid: 569ba9f491efd8545bfb14e3c4c73463, type: 3}
+  selectedImage: {fileID: 21300000, guid: a32ba558ec882884b87308fedfde9d1f, type: 3}
   sceneName: 
   selectionAbove: {fileID: 0}
   selectionBelow: {fileID: 1898562948}
@@ -626,7 +626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7843138, g: 0.21568629, b: 0.23529413, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1189,7 +1189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterID: 0
   characterName: c1
-  selectedImage: {fileID: 21300000, guid: a32ba558ec882884b87308fedfde9d1f, type: 3}
+  selectedImage: {fileID: 21300000, guid: f60c8d73a649add4abc0d8bf12a8057f, type: 3}
   sceneName: 
   selectionAbove: {fileID: 0}
   selectionBelow: {fileID: 1693677935}
@@ -1208,7 +1208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.19607845, g: 0.20784315, b: 0.79215693, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2491,6 +2491,51 @@ MonoBehaviour:
   mapSelectCanvas: {fileID: 247253207}
   characterSelectCanvas: {fileID: 1464221324}
   pressConfirmPrompt: {fileID: 1733324982}
+--- !u!1 &1476048537
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1476048539}
+  - component: {fileID: 1476048538}
+  m_Layer: 0
+  m_Name: PlayerInputHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1476048538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476048537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee003b6198f91914f85af155020e7909, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerList: []
+--- !u!4 &1476048539
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476048537}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.4261463, y: -2.5958872, z: 7.5511703}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1522218992
 GameObject:
   m_ObjectHideFlags: 0
@@ -3020,7 +3065,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.19215688, g: 0.7686275, b: 0.78823537, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3173,7 +3218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterID: 2
   characterName: c3
-  selectedImage: {fileID: 21300000, guid: f60c8d73a649add4abc0d8bf12a8057f, type: 3}
+  selectedImage: {fileID: 21300000, guid: b3afcaafbea804d408e61be2c4319013, type: 3}
   sceneName: 
   selectionAbove: {fileID: 0}
   selectionBelow: {fileID: 2021690950}
@@ -3192,7 +3237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.227451, g: 0.7254902, b: 0.24313727, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3480,7 +3525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterID: 4
   characterName: c5
-  selectedImage: {fileID: 21300000, guid: b3afcaafbea804d408e61be2c4319013, type: 3}
+  selectedImage: {fileID: 21300000, guid: 569ba9f491efd8545bfb14e3c4c73463, type: 3}
   sceneName: 
   selectionAbove: {fileID: 461016763}
   selectionBelow: {fileID: 0}
@@ -3499,7 +3544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7176471, g: 0.227451, b: 0.64705884, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3731,7 +3776,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.77647066, g: 0.78823537, b: 0.22352943, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4114,3 +4159,4 @@ SceneRoots:
   - {fileID: 247253212}
   - {fileID: 1192239880}
   - {fileID: 1269041966}
+  - {fileID: 1476048539}

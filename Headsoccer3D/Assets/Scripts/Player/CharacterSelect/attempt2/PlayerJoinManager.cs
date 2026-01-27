@@ -102,7 +102,7 @@ public class PlayerJoinManager : MonoBehaviour
         controller.SetControlledObject(cursor);
         players.Add(device, controller);
 
-        //PlayerInputHolder.Instance.playerList.Add(controller);
+        PlayerInputHolder.Instance.playerList.Add(controller);
         DontDestroyOnLoad(controller);
 
         Debug.Log($"Player {playerIndex + 1} joined using {device.displayName}");
@@ -130,6 +130,7 @@ public class PlayerJoinManager : MonoBehaviour
             Debug.LogError("Cursor prefab missing SelectionCursor!");
             return null;
         }
+        cursor.playerInputController = inputControllers[playerIndex];
         cursor.playerIndex = playerIndex;
 
         if (startingCharacterButton != null)

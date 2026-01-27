@@ -9,6 +9,8 @@ public class GameSceneManager : MonoBehaviour
     public List<PlayerInputController> inputControllers = new List<PlayerInputController>();
     
     public List<GameObject> characterList = new List<GameObject>();
+    public List<GameObject> FourP_SpawnPoints = new List<GameObject>();
+    public List<GameObject> TwoP_SpawnPoints = new List<GameObject>();
 
     // starting countdown
     [SerializeField] int currentStartCoundown = 0;
@@ -31,6 +33,16 @@ public class GameSceneManager : MonoBehaviour
 
     bool canScore = false;
 
+
+
+
+    [SerializeField] float delayBeforeResetBall;
+    [SerializeField] float delayBeforeUnlockPlayer;
+    [SerializeField] GameObject ballPrefab;
+    [SerializeField] GameObject ballObject;
+    [SerializeField] Transform ballStartingPos;
+
+
     void Start()
     {
         Instance = this;
@@ -41,6 +53,9 @@ public class GameSceneManager : MonoBehaviour
     {
         inputControllers = PlayerInputHolder.Instance.playerList;
         CreatePlayers();
+
+
+        ballObject = Instantiate(ballPrefab, ballStartingPos.position, Quaternion.identity);
         StartCoroutine(StartGameCountDown());
     }
 
@@ -49,8 +64,17 @@ public class GameSceneManager : MonoBehaviour
     {
         foreach (var player in inputControllers)
         {
-            //IPlayerControllable playerPrefab = characterList[player.selectedCharacterID];
-            //player.SetControlledObject(playerPrefab);
+            GameObject playerObj = Instantiate(characterList[player.selectedCharacterID]);
+            PlayerController playerController = playerObj.GetComponent<PlayerController>();
+
+            player.SetControlledObject(playerController);
+
+            if(inputControllers.Count > 2)
+                playerObj.transform.position = FourP_SpawnPoints[inputControllers.IndexOf(player)].transform.position;
+            else
+                playerObj.transform.position = TwoP_SpawnPoints[inputControllers.IndexOf(player)].transform.position;
+
+            playerController.LockPlayerMove();
         }
     }
 
@@ -110,5 +134,43 @@ public class GameSceneManager : MonoBehaviour
         yield return new WaitForSeconds(delayBeforeScoreScreen);
         // load csore screen
     }
+
+
+
+    public IEnumerator ResetBall()
+    {
+        yield return new WaitForSeconds(delayBeforeResetBall);
+        foreach(var chars in inputControllers)
+        {
+            chars.GetComponent<PlayerController>().LockPlayerMove();
+            chars.transform.position = GetComponent<PlayerController>().startingPos;
+        }
+        LockBall();
+
+        yield return new WaitForSeconds(delayBeforeUnlockPlayer);
+        foreach (var chars in inputControllers)
+        {
+            chars.GetComponent<PlayerController>().UnlockPlayerMove();
+        }
+        UnlockBall();
+        TossBall();
+    }
+    void TossBall()
+    {
+
+    }
+    void LockBall()
+    {
+        ballObject.GetComponent<SphereCollider>().enabled = false;
+        ballObject.GetComponent<Rigidbody>().isKinematic = true;
+    }
+    void UnlockBall()
+    {
+        ballObject.GetComponent<SphereCollider>().enabled = true;
+        ballObject.GetComponent<Rigidbody>().isKinematic = false;
+        ballObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+    }
+
+
 
 }

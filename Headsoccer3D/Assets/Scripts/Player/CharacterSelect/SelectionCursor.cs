@@ -5,6 +5,7 @@ public class SelectionCursor : MonoBehaviour, IPlayerControllable
     public RectTransform parent;
     bool locked = false;
     public int playerIndex;
+    public PlayerInputController playerInputController;
 
     public void OnMove(Vector2 dir)
     {
@@ -57,6 +58,7 @@ public class SelectionCursor : MonoBehaviour, IPlayerControllable
     {
         CharacterSelectManager.Instance.CheckPlayerConfirm(locked);
         locked = true;
+        playerInputController.selectedCharacterID = parent.GetComponent<CharacterButton>().characterID;
         CharacterSelectionPreview.Instance.SetPortraitInfo(
             playerIndex,
             parent.GetComponent<CharacterButton>().selectedImage,
@@ -73,21 +75,21 @@ public class SelectionCursor : MonoBehaviour, IPlayerControllable
 
     public void OnJump()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("OnJumpPressed");
     }
 
     public void OnKick()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("OnKickPressed");
     }
 
     public void OnJoin()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("OnJoinPressed");
     }
 
     public void OnAbility()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("OnAbilityPressed");
     }
 }

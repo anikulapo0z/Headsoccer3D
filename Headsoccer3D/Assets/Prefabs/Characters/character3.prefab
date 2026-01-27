@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 374959338324389693}
   - component: {fileID: 5715509517818701763}
   m_Layer: 0
-  m_Name: characterPrefab
+  m_Name: character3
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -159,6 +159,7 @@ MonoBehaviour:
   feetTrigger: {fileID: 2793015957598444669}
   headingForce: 5
   headCooldown: 0.5
+  startingPos: {x: 0, y: 0, z: 0}
 --- !u!1 &2578436691414235925
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,7 +482,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8748892135801146194, guid: 2bba21d2e274eb6499e2825f895dd235, type: 3}
+  - {fileID: 2100000, guid: 5e70c3953c1b06d4d9ad5b85a53cca34, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
