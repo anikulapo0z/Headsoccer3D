@@ -94,6 +94,11 @@ public class Raumdeuter : MonoBehaviour
                 float _xPos = charactersToLookFor[i].position.x;
                 float _zPos = charactersToLookFor[i].position.z;
 
+                if (charactersToLookFor[i].GetComponent<CPUEnemy>())
+                {
+                    charactersToLookFor[i].GetComponent<CPUEnemy>().RaumdeuterCallToAssessPosition();
+                }
+
                 //if within Bounds
                 if (_xPos < topRightPoint.position.x && _xPos > topLeftPoint.position.x
                     &&
@@ -120,7 +125,6 @@ public class Raumdeuter : MonoBehaviour
         //floor(dist(topLeftPoint.position.x, _xPos)/(lengthOfX/3))
         int _xIndex = Mathf.FloorToInt(Mathf.Abs(_xPos - topLeftPoint.position.x) / (sizeX / 3));
         int _zIndex = Mathf.FloorToInt(Mathf.Abs(topLeftPoint.position.z - _zPos) / (sizeZ / 3));
-
         return new Vector2(_xIndex, _zIndex);
     }
 

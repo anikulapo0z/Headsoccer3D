@@ -27,7 +27,7 @@ public class CPUEnemy : MonoBehaviour
     //Teamplay
     [Space(10)]
     [Header("Teamplay")]
-    public CPURole thisCPURole;
+    //public CPURole thisCPURole;
     public bool iHaveTheBall = false;
     private bool teamPossession = false;
     public Transform ball;
@@ -39,7 +39,7 @@ public class CPUEnemy : MonoBehaviour
     [Header("Internal")]
     public float distanceToBall = 0;
     private bool previousPossession = false;
-    private Raumdeuter thomasMuller;
+    [SerializeField] private Raumdeuter thomasMuller;
     private NavMeshAgent agent;
     private Vector2 gridPos;
     [SerializeField] private HorizontalSpace horizontalSpace;
@@ -51,7 +51,6 @@ public class CPUEnemy : MonoBehaviour
     {
         myTeammates = GameObject.FindObjectsByType<CPUEnemy>(FindObjectsSortMode.None);
         ball = GameObject.FindWithTag("Ball").transform;
-        thomasMuller = FindFirstObjectByType<Raumdeuter>();
         agent = GetComponent<NavMeshAgent>();
         onRestart();
     }
@@ -63,9 +62,10 @@ public class CPUEnemy : MonoBehaviour
 
     private void Update()
     {
+        transform.LookAt(ball.transform);
+
         haveBallTimer -= Time.deltaTime;
         if (haveBallTimer < 0) iHaveTheBall = false;
-
         //first, update the team possession
         teamPossession = false;
         for (int i = 0; i < myTeammates.Length; i++)
@@ -190,17 +190,23 @@ public class CPUEnemy : MonoBehaviour
         }
     }
 
+    public void RaumdeuterCallToAssessPosition()
+    {
+        assessPosition();
+    }
+
     //asks Thomas Muller, "Muller-dono, watashiwa on which space?"
     private void assessPosition()
     {
         gridPos = thomasMuller.convertToSpaceGrid(transform.position.x, transform.position.z);
         horizontalSpace = (HorizontalSpace)(int)gridPos.x;
         verticalSpace = (VerticalSpace)(int)gridPos.y;
-        checkDistanceFromBallAndSetRole();
+        //checkDistanceFromBallAndSetRole();
     }
 
     private void checkDistanceFromBallAndSetRole()
     {
+        /*
         if (index > 1) return;
         float _closestDistance = Mathf.Infinity;
         float _dist = 0;
@@ -218,7 +224,7 @@ public class CPUEnemy : MonoBehaviour
             }
         }
         //closest dude is the attacker (chasing the ball/pressing)
-        myTeammates[_closestDude].thisCPURole = CPURole.Attacker;
+        myTeammates[_closestDude].thisCPURole = CPURole.Attacker;*/
     }
 
     private bool tryShoot()
