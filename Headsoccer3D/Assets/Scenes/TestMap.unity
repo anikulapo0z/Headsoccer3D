@@ -181,7 +181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4522559835550113459, guid: f92da3af570d9fb4ebcc5ce991ca56c7, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -4522559835550113459, guid: f92da3af570d9fb4ebcc5ce991ca56c7, type: 3}
       propertyPath: m_TagString
@@ -1484,7 +1484,7 @@ SphereCollider:
   m_Material: {fileID: 13400000, guid: 8a1c6fa48350bfd4f8fe71cf8635956e, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1578,10 +1578,11 @@ MonoBehaviour:
   airDrag: 0.15
   layerToShowBallPositionOn:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   ballPositionIndicatorPrefab: {fileID: 2676624550782573642, guid: a1738e5fbeb5eaf4d88a18098627de29, type: 3}
   ballPositionIndicator: {fileID: 0}
   positionIndicatorSpeed: 50
+  predictionTime: 1
 --- !u!120 &1106081074
 LineRenderer:
   serializedVersion: 2

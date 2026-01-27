@@ -11,6 +11,9 @@ public class BallController : MonoBehaviour
     [SerializeField] GameObject ballPositionIndicator;
     [SerializeField] float positionIndicatorSpeed;
 
+    [SerializeField] float predictionTime;
+
+
     LineRenderer lr;
     private void Update()
     {
@@ -25,9 +28,32 @@ public class BallController : MonoBehaviour
         lr = GetComponent<LineRenderer>();
         rb = GetComponent<Rigidbody>();
     }
+    
+    Vector3 GetPredictionPosition()
+    {
+        Vector3 pred = rb.linearVelocity;
+        //pred.y = 0f;
+
+        return transform.position + pred * predictionTime * airDrag;
+
+    }
+
+    void OnDrawGizmos()
+    {
+        Vector3 start = transform.position;
+        Vector3 end = GetPredictionPosition();
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(start, end);
+        Gizmos.DrawSphere(end, 0.1f);
+    }
+
+
 
     void FixedUpdate()
     {
+        GetPredictionPosition();
+
         RaycastHit hit;
 
         ballPositionIndicator.transform.rotation = Quaternion.Euler(
