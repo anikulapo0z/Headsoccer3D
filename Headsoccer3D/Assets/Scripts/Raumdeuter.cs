@@ -155,12 +155,12 @@ public class Raumdeuter : MonoBehaviour
             for (int j = -1; j <= 1; j++)
             {
                 //up, center, amd bottom of the current grid space
-                _z = Mathf.Clamp((int)_onGrid.x - i, 0, 2);
+                _z = Mathf.Clamp((int)_onGrid.y - j, 0, 2);
                 //only for the spaces not itself is in
                 if (!(i == 0  && j == 0))
                 {
                     //if that is a free space
-                    if (spaces[i,j] == false)
+                    if (spaces[_x,_z] == false)
                     {
                         _possibleSpaces.Add((i * 10) + j);
                     }
