@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class GoalRaycastTrigger : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class GoalRaycastTrigger : MonoBehaviour
 
     [Header("Score Settings")]
     [SerializeField] private int maxGoals = 3;
+    [SerializeField] private float goalCooldownSeconds = 2f;
 
     [Header("Score Text")]
     [SerializeField] private TextMeshPro leftScoreText;
@@ -31,11 +33,12 @@ public class GoalRaycastTrigger : MonoBehaviour
     [SerializeField] private TextMeshPro rightWinnerText;
 
     private bool ballCurrentlyInGoal = false;
+    private bool raycastsEnabled = true;
     private bool matchOver = false;
 
     private void Update()
     {
-        if (matchOver) return;
+        if (matchOver || !raycastsEnabled) return;
 
         CastGoalRays();
     }
@@ -61,6 +64,7 @@ public class GoalRaycastTrigger : MonoBehaviour
                     {
                         Debug.Log($"GOAL scored on {goalSide} side!");
                         RegisterGoal();
+                        StartCoroutine(GoalCooldown());
                     }
 
                     break;
@@ -72,7 +76,6 @@ public class GoalRaycastTrigger : MonoBehaviour
             }
         }
 
-        // Reset once the ball leaves the goal area
         ballCurrentlyInGoal = ballDetectedThisFrame;
     }
 
@@ -110,6 +113,7 @@ public class GoalRaycastTrigger : MonoBehaviour
         if (score < maxGoals) return;
 
         matchOver = true;
+        raycastsEnabled = false;
 
         Debug.Log("MATCH OVER");
 
@@ -121,6 +125,19 @@ public class GoalRaycastTrigger : MonoBehaviour
 
         if (scoringSide == LeftOrRight.Right && rightWinnerText != null)
             rightWinnerText.text = "RIGHT TEAM WINS!";
+    }
+
+    private IEnumerator GoalCooldown()
+    {
+        raycastsEnabled = false;
+        Debug.Log("Goal cooldown started");
+
+        yield return new WaitForSeconds(goalCooldownSeconds);
+
+        ballCurrentlyInGoal = false;
+        raycastsEnabled = true;
+
+        Debug.Log("Goal cooldown ended");
     }
 
     /* =======================
