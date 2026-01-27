@@ -83,6 +83,7 @@ public class PlayerJoinManager : MonoBehaviour
     {
         if (!characterSelectOpen)
             return;
+        Debug.Log(players.Count);
 
         if (players.Count >= maxPlayers)
             return;

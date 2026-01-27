@@ -43,6 +43,13 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] Transform ballStartingPos;
 
 
+    // ai stuff
+    [SerializeField] Raumdeuter raumdeuter;
+    [SerializeField] CPUEnemy cpu1;
+    [SerializeField] CPUEnemy cpu2;
+
+
+
     void Start()
     {
         Instance = this;
@@ -52,10 +59,11 @@ public class GameSceneManager : MonoBehaviour
     public void LoadGameStart()
     {
         inputControllers = PlayerInputHolder.Instance.playerList;
+        ballObject = Instantiate(ballPrefab, ballStartingPos.position, Quaternion.identity);
+
         CreatePlayers();
 
 
-        ballObject = Instantiate(ballPrefab, ballStartingPos.position, Quaternion.identity);
         StartCoroutine(StartGameCountDown());
     }
 
@@ -69,13 +77,22 @@ public class GameSceneManager : MonoBehaviour
 
             player.SetControlledObject(playerController);
 
-            if(inputControllers.Count > 2)
+            if (inputControllers.Count > 2)
                 playerObj.transform.position = FourP_SpawnPoints[inputControllers.IndexOf(player)].transform.position;
             else
+            {
+                raumdeuter.charactersToLookFor[inputControllers.IndexOf(player)] = playerObj.transform;
+                cpu1.realPlayers[inputControllers.IndexOf(player)] = playerObj.transform;
+                cpu2.realPlayers[inputControllers.IndexOf(player)] = playerObj.transform;
+                cpu1.ball = ballObject.transform;
+                cpu1.ball = ballObject.transform;
+
                 playerObj.transform.position = TwoP_SpawnPoints[inputControllers.IndexOf(player)].transform.position;
+            }
 
             playerController.LockPlayerMove();
         }
+
     }
 
     void StartGame()
