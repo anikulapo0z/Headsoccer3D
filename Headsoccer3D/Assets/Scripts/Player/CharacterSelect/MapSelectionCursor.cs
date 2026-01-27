@@ -69,21 +69,22 @@ public class MapSelectionCursor : MonoBehaviour, IPlayerControllable
 
     public void OnJump()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("OnJumpPressed");
     }
 
     public void OnKick()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("OnKickPressed");
     }
 
     public void OnJoin()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("OnJoinPressed");
+
     }
 
     public void OnAbility()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("OnAbilityPressed");
     }
 }

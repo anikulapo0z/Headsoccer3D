@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     [Header("Kicking Settings")]
     [SerializeField] private float kickForce = 10f;
+    [SerializeField] private float startingKickHeight = 1f;
+    [SerializeField] private float currentKickHeight;
     [SerializeField] private Collider kickTrigger;
     [SerializeField] private float kickCooldown = 0.5f;
     private bool kickUsesFacingDirection = true;
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     [Header("Heading Settings")]
     [SerializeField] private Collider headTrigger;
+    [SerializeField] private Collider feetTrigger;
     [SerializeField] private float headingForce = 5f;
     [SerializeField] private float headCooldown = 0.5f;
 
@@ -35,9 +38,16 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     private readonly HashSet<Rigidbody> ballsInHeadRange = new HashSet<Rigidbody>();
     private readonly HashSet<Rigidbody> ballsInKickRange = new HashSet<Rigidbody>();
 
+
+    // owen vars
+    bool isPlayerLocked = false;
+    public Vector3 startingPos;
+
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
+        currentKickHeight = startingKickHeight;
     }
 
     void Update()
@@ -134,6 +144,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         targetBall.linearVelocity = Vector3.zero;
         targetBall.AddForce(kickDirection * kickForce, ForceMode.Impulse);
+        targetBall.AddForce(new Vector3(0, currentKickHeight, 0), ForceMode.Impulse);
     }
 
     #region Kicking Logic
@@ -167,6 +178,9 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         if (headTrigger.bounds.Intersects(other.bounds))
             ballsInHeadRange.Add(rb);
+
+        if (feetTrigger.bounds.Intersects(other.bounds))
+            ballsInHeadRange.Add(rb);
     }
 
     private void OnTriggerExit(Collider other)
@@ -180,5 +194,14 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         ballsInHeadRange.Remove(rb);
     }
     #endregion
+
+    public void LockPlayerMove()
+    {
+        Debug.Log("locking player");
+    }
+    public void UnlockPlayerMove()
+    {
+
+    }
 
 }
