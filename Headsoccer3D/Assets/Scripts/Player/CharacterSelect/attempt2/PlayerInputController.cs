@@ -56,6 +56,8 @@ public class PlayerInputController : MonoBehaviour
         abilityAction.performed += OnAbility;
 
         map.Enable();
+
+        moveAction.canceled += OnMoveCancelled;
     }
 
     public void SetControlledObject(IPlayerControllable obj)
@@ -66,6 +68,10 @@ public class PlayerInputController : MonoBehaviour
     void OnMove(InputAction.CallbackContext ctx)
     {
         controlledObject?.OnMove(ctx.ReadValue<Vector2>());
+    }
+    void OnMoveCancelled(InputAction.CallbackContext ctx)
+    {
+        controlledObject?.OnMove(Vector2.zero);
     }
 
     void OnConfirm(InputAction.CallbackContext ctx)

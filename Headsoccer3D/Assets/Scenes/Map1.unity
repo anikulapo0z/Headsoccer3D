@@ -894,6 +894,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1172707216
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 909526382676242523, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.9507668
+      objectReference: {fileID: 0}
+    - target: {fileID: 909526382676242523, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.444
+      objectReference: {fileID: 0}
+    - target: {fileID: 909526382676242523, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.8927107
+      objectReference: {fileID: 0}
+    - target: {fileID: 909526382676242523, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.23775679
+      objectReference: {fileID: 0}
+    - target: {fileID: 909526382676242523, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 909526382676242523, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.97132474
+      objectReference: {fileID: 0}
+    - target: {fileID: 909526382676242523, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 909526382676242523, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 909526382676242523, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -152.492
+      objectReference: {fileID: 0}
+    - target: {fileID: 909526382676242523, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2105791413608084587, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
+      propertyPath: m_Name
+      value: characterPrefab
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
 --- !u!1 &1606826442
 GameObject:
   m_ObjectHideFlags: 0
@@ -906,13 +963,14 @@ GameObject:
   - component: {fileID: 1606826445}
   - component: {fileID: 1606826444}
   - component: {fileID: 1606826443}
+  - component: {fileID: 1606826447}
   m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!135 &1606826443
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -995,13 +1053,38 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1606826442}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.46888655, y: 0.6060874, z: -0.14327557, w: 0.62631905}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.496, y: 1.1, z: -3.716}
   m_LocalScale: {x: 2.0086727, y: 2.0086727, z: 2.0086727}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 49.554, y: 105.594, z: 36.833}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!143 &1606826447
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606826442}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 1
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1951291689
 GameObject:
   m_ObjectHideFlags: 0
@@ -1032,6 +1115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputControllers: []
+  characterList: []
   currentStartCoundown: 0
   maxStartCoundown: 0
   startCountdownText: {fileID: 0}
@@ -1068,3 +1152,4 @@ SceneRoots:
   - {fileID: 858951524}
   - {fileID: 255451901}
   - {fileID: 1951291691}
+  - {fileID: 1172707216}
