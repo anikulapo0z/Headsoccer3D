@@ -62,13 +62,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 0.11
-  m_Radius: 0.05
+  m_Height: 0.08
+  m_Radius: 0.03
   m_SlopeLimit: 45
   m_StepOffset: 0
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.025, z: 0}
+  m_Center: {x: 0, y: 0.04, z: 0}
 --- !u!136 &4571959248089919183
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -133,7 +133,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.1, y: 0.1, z: 0.1}
-  m_Center: {x: 0, y: -0.015, z: 0.03}
+  m_Center: {x: 0, y: 0, z: 0.05}
 --- !u!114 &5715509517818701763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
-  rotationSpeed: 15
+  rotationSpeed: 20
   rotateToMovement: 1
   kickForce: 10
   startingKickHeight: 4
@@ -161,7 +161,7 @@ MonoBehaviour:
   headingForce: 5
   headCooldown: 0.5
   startingPos: {x: 0, y: 0, z: 0}
-  ballVelocityPercent: 0.4
+  ballVelocityPercent: 0.5
   playerVelocityPercent: 0.9
 --- !u!136 &7509819557382073035
 CapsuleCollider:
