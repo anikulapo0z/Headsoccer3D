@@ -11,6 +11,7 @@ public class LoadTestScene : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+        //PlayerInputHolder p = FindObjectOfType<PlayerInputHolderInstance.scene = gameObject;
     }
 
     public void LoadScene()

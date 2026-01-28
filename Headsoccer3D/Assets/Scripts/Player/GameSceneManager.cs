@@ -113,23 +113,33 @@ public class GameSceneManager : MonoBehaviour
     void StartGame()
     {
         currentGameTime = maxGameTime;
+        startCountdownText.text = currentGameTime.ToString();
+
         UnlockPlayers();
         UnlockBall();
         scoreTracker.canScore = true;
+
         gameTimeCoroutine = StartCoroutine(GameTimer());
     }
 
+
     public void PauseTimer()
     {
-        pausedGameTime = currentGameTime;
-        UnlockPlayers();
-        StopCoroutine(gameTimeCoroutine);
+        if (gameTimeCoroutine != null)
+        {
+            StopCoroutine(gameTimeCoroutine);
+            gameTimeCoroutine = null;
+        }
     }
+
     public void ResumeTimer()
     {
-        currentGameTime = pausedGameTime;
-        StartCoroutine("gameTimeCoroutine");
+        if (gameTimeCoroutine == null)
+        {
+            gameTimeCoroutine = StartCoroutine(GameTimer());
+        }
     }
+
 
 
     IEnumerator StartGameCountDown()
@@ -184,13 +194,16 @@ public class GameSceneManager : MonoBehaviour
     {
         while (currentGameTime > 0)
         {
+            yield return new WaitForSeconds(1);
+
             currentGameTime--;
             startCountdownText.text = currentGameTime.ToString();
-
-            yield return new WaitForSeconds(1);
         }
+
+        gameTimeCoroutine = null;
         TryEndGame();
     }
+
 
     void TryEndGame()
     {
@@ -200,7 +213,7 @@ public class GameSceneManager : MonoBehaviour
 
     IEnumerator EndGame()
     {
-        canScore = false;
+        scoreTracker.canScore = false;
         StopCoroutine(gameTimeCoroutine);
         yield return new WaitForSeconds(delayBeforeScoreScreen);
         // load score screen
@@ -223,10 +236,13 @@ public class GameSceneManager : MonoBehaviour
 
     public void GoalScored()
     {
+        PauseTimer();
+        scoreTracker.canScore = false;
         StartCoroutine(ResetBall());
     }
     void TossBall()
     {
+        ResumeTimer();
         scoreTracker.canScore = true;
         ballObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
     }
