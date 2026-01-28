@@ -94,6 +94,9 @@ public class Raumdeuter : MonoBehaviour
 
             for (int i = 0; i < charactersToLookFor.Length; i++)
             {
+                if (charactersToLookFor[i] == null)
+                    continue;
+
                 float _xPos = charactersToLookFor[i].position.x;
                 float _zPos = charactersToLookFor[i].position.z;
 

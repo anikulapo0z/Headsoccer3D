@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -51,6 +52,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     [SerializeField] bool isHeaderAcive = false;
     [SerializeField] GameObject kickCollider;
+    Material kickDisplayMat;
 
     void Awake()
     {
@@ -58,6 +60,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         currentKickHeight = startingKickHeight;
         if(!anim)
             anim = GetComponentInChildren<Animator>();
+
+        kickDisplayMat = kickCollider.GetComponent<Renderer>().material;
     }
 
     void Update()
@@ -146,16 +150,32 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         moveInput = input;
         //throw new System.NotImplementedException();
     }
-    void ResetKickVisual()
+    IEnumerator KickVisualAndReset(float _time)
     {
+        float timer = 0;
+        do
+        {
+            kickDisplayMat.SetFloat("_ScrollValue", timer);
+            Debug.Log(Mathf.Lerp(0f, 0.92f, timer));
+
+            yield return null;
+
+            timer += Time.deltaTime;
+
+        } while (timer < _time);
+
+        //Reset
         kickCollider.SetActive(false);
+        kickDisplayMat.SetFloat("_ScrollValue", 0f);
     }
     public void OnKick()
     {
         if (Time.time < nextKickTime) return;
         nextKickTime = Time.time + kickCooldown;
         kickCollider.SetActive(true);
-        Invoke("ResetKickVisual", 0.3f);
+        kickDisplayMat.SetFloat("_ScrollValue", 0f);
+        StartCoroutine(KickVisualAndReset(0.3f));
+
         Rigidbody targetBall = GetClosest(ballsInKickRange);
         if (targetBall == null) return;
 
