@@ -2284,8 +2284,8 @@ Transform:
   m_GameObject: {fileID: 5407269015863952220}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.9490246, z: -0, w: -0.31520194}
-  m_LocalPosition: {x: 0.435, y: -0.0021316449, z: 0.859}
-  m_LocalScale: {x: 0.23684947, y: 0.23684943, z: 0.23684947}
+  m_LocalPosition: {x: 0.47360367, y: -0.0021316449, z: 0.7773126}
+  m_LocalScale: {x: 0.3088754, y: 0.30887535, z: 0.3088754}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8685188107924670747}
@@ -2323,7 +2323,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 0.743
+  m_Speed: 2.229
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 30
@@ -2357,11 +2357,10 @@ MonoBehaviour:
   - {fileID: 5359544742074212631}
   - {fileID: 5025510620993539889}
   defendingPost: {fileID: 5560915164215803212}
-  iHaveTheBall: 0
+  thisCPURole: 0
   ball: {fileID: 0}
-  myTeammates: []
+  myTeammate: {fileID: 0}
   runningDestination: {x: 0, y: 0, z: 0}
-  distanceToBall: 0
   thomasMuller: {fileID: 9197570256899620607}
   horizontalSpace: 0
   verticalSpace: 0
@@ -3816,8 +3815,8 @@ Transform:
   m_GameObject: {fileID: 9082644537197897751}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.96556664, z: -0, w: 0.26015595}
-  m_LocalPosition: {x: 0.025396276, y: -0.0021316449, z: 1.1626874}
-  m_LocalScale: {x: 0.23684943, y: 0.23684943, z: 0.23684943}
+  m_LocalPosition: {x: 0.064, y: -0.0021316449, z: 1.081}
+  m_LocalScale: {x: 0.30887535, y: 0.30887535, z: 0.30887535}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2324663288787288622}
@@ -3855,7 +3854,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 0.7983
+  m_Speed: 2.3949
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 30
@@ -3889,11 +3888,10 @@ MonoBehaviour:
   - {fileID: 5359544742074212631}
   - {fileID: 5025510620993539889}
   defendingPost: {fileID: 5560915164215803212}
-  iHaveTheBall: 0
+  thisCPURole: 0
   ball: {fileID: 0}
-  myTeammates: []
+  myTeammate: {fileID: 0}
   runningDestination: {x: 0, y: 0, z: 0}
-  distanceToBall: 0
   thomasMuller: {fileID: 9197570256899620607}
   horizontalSpace: 0
   verticalSpace: 0

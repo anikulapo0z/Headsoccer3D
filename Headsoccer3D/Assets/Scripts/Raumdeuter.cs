@@ -25,7 +25,9 @@ public class Raumdeuter : MonoBehaviour
     public Transform topRightPoint;
     public Transform bottomRightPoint;
     
-    private bool[,] spaces;
+    private bool[,] spaces = new bool[,]{{ false, false, false},
+                             { false, false, false },
+                             { false, false, false } };
     /* SPACES EXPLAINED
      * 
      * Direction of Attack -------------------> 
@@ -42,6 +44,7 @@ public class Raumdeuter : MonoBehaviour
     private float sizeX, sizeZ;
     void Start()
     {
+        Random.InitState(System.DateTime.Now.Millisecond);
         spaces = new bool[,]{{ false, false, false}, 
                              { false, false, false }, 
                              { false, false, false } };
@@ -93,11 +96,6 @@ public class Raumdeuter : MonoBehaviour
             {
                 float _xPos = charactersToLookFor[i].position.x;
                 float _zPos = charactersToLookFor[i].position.z;
-
-                if (charactersToLookFor[i].GetComponent<CPUEnemy>())
-                {
-                    charactersToLookFor[i].GetComponent<CPUEnemy>().RaumdeuterCallToAssessPosition();
-                }
 
                 //if within Bounds
                 if (_xPos < topRightPoint.position.x && _xPos > topLeftPoint.position.x
@@ -155,12 +153,12 @@ public class Raumdeuter : MonoBehaviour
             for (int j = -1; j <= 1; j++)
             {
                 //up, center, amd bottom of the current grid space
-                _z = Mathf.Clamp((int)_onGrid.x - i, 0, 2);
+                _z = Mathf.Clamp((int)_onGrid.y - j, 0, 2);
                 //only for the spaces not itself is in
                 if (!(i == 0  && j == 0))
                 {
                     //if that is a free space
-                    if (spaces[i,j] == false)
+                    if (spaces[_x,_z] == false)
                     {
                         _possibleSpaces.Add((i * 10) + j);
                     }
