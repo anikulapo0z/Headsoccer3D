@@ -41,9 +41,11 @@ public class CharacterSelectManager : MonoBehaviour
         MoveToNextScreen();
     }
 
-    public void PlayerJoined()
+    public void PlayerJoined(int count)
     {
-        totalPlayerCount++;
+        totalPlayerCount = count;
+        canMoveToNextScreen = false;
+        pressConfirmPrompt.SetActive(false);
     }
 
     public void CheckPlayerConfirm(bool isLocked)

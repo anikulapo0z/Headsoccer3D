@@ -83,7 +83,6 @@ public class PlayerJoinManager : MonoBehaviour
     {
         if (!characterSelectOpen)
             return;
-        //Debug.Log(players.Count);
 
         if (players.Count >= maxPlayers)
             return;
@@ -107,7 +106,7 @@ public class PlayerJoinManager : MonoBehaviour
         DontDestroyOnLoad(controller);
 
         Debug.Log($"Player {playerIndex + 1} joined using {device.displayName}");
-        CharacterSelectManager.Instance.totalPlayerCount = players.Count;
+        CharacterSelectManager.Instance.PlayerJoined(players.Count);
     }
 
     PlayerInputController CreatePlayerController(int index, InputDevice device)
@@ -131,7 +130,6 @@ public class PlayerJoinManager : MonoBehaviour
             Debug.LogError("Cursor prefab missing SelectionCursor!");
             return null;
         }
-        cursor.playerInputController = inputControllers[playerIndex];
         cursor.playerIndex = playerIndex;
 
         if (startingCharacterButton != null)
@@ -140,7 +138,7 @@ public class PlayerJoinManager : MonoBehaviour
             cursorObj.transform.localPosition = Vector3.zero;
 
             cursor.parent = startingCharacterButton;
-            cursor.SetStartValue();
+            cursor.playerInputController = inputControllers[playerIndex];
         }
 
         return cursor;

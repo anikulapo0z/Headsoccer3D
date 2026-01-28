@@ -69,6 +69,7 @@ public class SelectionCursor : MonoBehaviour, IPlayerControllable
     {
         CharacterSelectManager.Instance.CheckPlayerConfirm(locked);
         locked = true;
+        Debug.Log(playerInputController);
         playerInputController.selectedCharacterID = parent.GetComponent<CharacterButton>().characterID;
         CharacterSelectionPreview.Instance.SetPortraitInfo(
             playerIndex,
