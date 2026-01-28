@@ -25,7 +25,9 @@ public class Raumdeuter : MonoBehaviour
     public Transform topRightPoint;
     public Transform bottomRightPoint;
     
-    private bool[,] spaces;
+    private bool[,] spaces = new bool[,]{{ false, false, false},
+                             { false, false, false },
+                             { false, false, false } };
     /* SPACES EXPLAINED
      * 
      * Direction of Attack -------------------> 
@@ -42,6 +44,7 @@ public class Raumdeuter : MonoBehaviour
     private float sizeX, sizeZ;
     void Start()
     {
+        Random.InitState(System.DateTime.Now.Millisecond);
         spaces = new bool[,]{{ false, false, false}, 
                              { false, false, false }, 
                              { false, false, false } };
@@ -93,11 +96,6 @@ public class Raumdeuter : MonoBehaviour
             {
                 float _xPos = charactersToLookFor[i].position.x;
                 float _zPos = charactersToLookFor[i].position.z;
-
-                if (charactersToLookFor[i].GetComponent<CPUEnemy>())
-                {
-                    charactersToLookFor[i].GetComponent<CPUEnemy>().RaumdeuterCallToAssessPosition();
-                }
 
                 //if within Bounds
                 if (_xPos < topRightPoint.position.x && _xPos > topLeftPoint.position.x
