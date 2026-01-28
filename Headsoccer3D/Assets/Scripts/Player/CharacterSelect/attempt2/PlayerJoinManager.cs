@@ -140,6 +140,7 @@ public class PlayerJoinManager : MonoBehaviour
             cursorObj.transform.localPosition = Vector3.zero;
 
             cursor.parent = startingCharacterButton;
+            cursor.SetStartValue();
         }
 
         return cursor;
