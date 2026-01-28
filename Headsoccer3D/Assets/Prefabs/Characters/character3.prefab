@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7103126948410158059}
   - component: {fileID: 374959338324389693}
   - component: {fileID: 5715509517818701763}
+  - component: {fileID: -1740727119444977801}
   m_Layer: 7
   m_Name: character3
   m_TagString: Player
@@ -109,7 +110,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.045
   m_Center: {x: 0, y: 0.05, z: 0}
@@ -157,7 +158,7 @@ MonoBehaviour:
   jumpVelocity: 10
   gravity: -35
   groundStick: -0.6
-  headTrigger: {fileID: 7103126948410158059}
+  headTrigger: {fileID: -1740727119444977801}
   headingForce: 5
   headCooldown: 0.5
   anim: {fileID: 0}
@@ -165,7 +166,30 @@ MonoBehaviour:
   ballVelocityPercent: 0.5
   playerVelocityPercent: 0.9
   isHeaderAcive: 0
-  kickCollider: {fileID: 0}
+  kickCollider: {fileID: 7632555361099720380}
+--- !u!136 &-1740727119444977801
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105791413608084587}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.08
+  m_Height: 0.2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2578436691414235925
 GameObject:
   m_ObjectHideFlags: 0
