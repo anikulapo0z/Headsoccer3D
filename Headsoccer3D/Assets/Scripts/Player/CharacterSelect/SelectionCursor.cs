@@ -7,6 +7,17 @@ public class SelectionCursor : MonoBehaviour, IPlayerControllable
     public int playerIndex;
     public PlayerInputController playerInputController;
 
+
+
+    public void SetStartValue()
+    {
+        CharacterSelectionPreview.Instance.SetPortraitInfo(
+    playerIndex,
+    parent.GetComponent<CharacterButton>().selectedImage,
+    parent.GetComponent<CharacterButton>().characterName
+    );
+    }
+
     public void OnMove(Vector2 dir)
     {
         if (locked)
@@ -58,6 +69,7 @@ public class SelectionCursor : MonoBehaviour, IPlayerControllable
     {
         CharacterSelectManager.Instance.CheckPlayerConfirm(locked);
         locked = true;
+        Debug.Log(playerInputController);
         playerInputController.selectedCharacterID = parent.GetComponent<CharacterButton>().characterID;
         CharacterSelectionPreview.Instance.SetPortraitInfo(
             playerIndex,

@@ -12,6 +12,7 @@ public class BallController : MonoBehaviour
     [SerializeField] float positionIndicatorSpeed;
 
     [SerializeField] float predictionTime;
+    [SerializeField] Vector3 canvasOffset;
 
 
     LineRenderer lr;
@@ -58,12 +59,12 @@ public class BallController : MonoBehaviour
 
         ballPositionIndicator.transform.rotation = Quaternion.Euler(
             90f,
-            ballPositionIndicator.transform.eulerAngles.y + Time.time * positionIndicatorSpeed,
+            ballPositionIndicator.transform.eulerAngles.y + positionIndicatorSpeed,
             0f
             );
         if(Physics.Raycast(transform.position, Vector3.down, out hit, 100, layerToShowBallPositionOn))
         {
-            ballPositionIndicator.transform.position = hit.point;
+            ballPositionIndicator.transform.position = hit.point + canvasOffset;
             lr.SetPosition(0, transform.position);
             lr.SetPosition(1, hit.point);
         }

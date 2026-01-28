@@ -23,7 +23,7 @@ public class MapSelectionManager : MonoBehaviour
 
     bool canMoveToNextScene = false;
 
-    private void Start()
+    private void Awake()
     {
         Instance = this;
     }
@@ -33,7 +33,6 @@ public class MapSelectionManager : MonoBehaviour
         foreach (PlayerInputController i in inputControllers)
         {
             IPlayerControllable cursor = CreateCursor(i.PlayerIndex);
-            print(i.name);
             i.SetControlledObject(cursor);
         }
         StartCountDown();
@@ -54,6 +53,7 @@ public class MapSelectionManager : MonoBehaviour
         cursorObj.transform.localPosition = Vector3.zero;
         
         cursor.parent = startingMapSelection;
+        cursor.SetStartValue();
 
         return cursor;
 
