@@ -50,7 +50,7 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] Raumdeuter raumdeuter;
     [SerializeField] CPUEnemy cpu1;
     [SerializeField] CPUEnemy cpu2;
-
+    char sideThatScored;
 
 
     void Start()
@@ -234,15 +234,24 @@ public class GameSceneManager : MonoBehaviour
         TossBall();
     }
 
-    public void GoalScored()
+    public void GoalScored(char c)
     {
         PauseTimer();
+        if (c == ' ') sideThatScored = ' ';
+        else sideThatScored = c;
         scoreTracker.canScore = false;
         StartCoroutine(ResetBall());
     }
     void TossBall()
     {
         ResumeTimer();
+        if (sideThatScored == 'l')
+            ballObject.GetComponent<Rigidbody>().AddForce(new Vector3(-1.5f, 0, 0), ForceMode.Impulse);
+        else if (sideThatScored == 'r')
+            ballObject.GetComponent<Rigidbody>().AddForce(new Vector3(1.5f, 0, 0), ForceMode.Impulse);
+        else
+            ballObject.GetComponent<Rigidbody>().AddForce(Vector3.zero, ForceMode.Impulse);
+        sideThatScored = ' ';
         scoreTracker.canScore = true;
         ballObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
     }
