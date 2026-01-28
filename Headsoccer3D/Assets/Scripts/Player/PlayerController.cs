@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,7 +26,6 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     [Header("Heading Settings")]
     [SerializeField] private Collider headTrigger;
-    [SerializeField] private Collider feetTrigger;
     [SerializeField] private float headingForce = 5f;
     [SerializeField] private float headCooldown = 0.5f;
 
@@ -42,7 +42,11 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     // owen vars
     bool isPlayerLocked = false;
     public Vector3 startingPos;
+    [SerializeField, Range(0f, 1f)] float ballVelocityPercent;
+    [SerializeField, Range(0f, 1f)] float playerVelocityPercent;
 
+    [SerializeField] bool isHeaderAcive = false;
+    [SerializeField] GameObject kickCollider;
 
     void Awake()
     {
@@ -54,7 +58,10 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     {
         //Grounding and gravity logic
         if (controller.isGrounded && verticalVelocity < 0f)
+        {
             verticalVelocity = groundStick;
+            isHeaderAcive = false;
+        }
 
         verticalVelocity += gravity * Time.deltaTime;
 
@@ -65,8 +72,10 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             moveDir.Normalize();
 
         // Apply movement
-        if(controller.enabled)
-            controller.Move(moveDir * moveSpeed * Time.deltaTime);
+        Vector3 velocity = (moveDir * moveSpeed) + (Vector3.up * verticalVelocity);
+
+        if (controller.enabled)
+            controller.Move(velocity * Time.deltaTime);
 
         // Face movement direction
         if (rotateToMovement && moveDir.sqrMagnitude > 0.001f)
@@ -98,18 +107,25 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     public void OnJump()
     {
         //throw new System.NotImplementedException();
+        Debug.Log
+            (
+        $"[JUMP] Fired | grounded: {controller.isGrounded} | verticalVelocity before: {verticalVelocity}"
+        );
+
         if (controller.isGrounded)
         {
+            // setting header active
+            isHeaderAcive = true;
+
             verticalVelocity = jumpVelocity;
+            Debug.Log($"[JUMP] APPLY jumpVelocity = {jumpVelocity}");
         }
-        if(Time.time < nextHeadTime) return;
-        nextHeadTime = Time.time + headCooldown;
+        else
+        {
+            Debug.Log("[JUMP] Blocked – not grounded");
+        }
 
-        Rigidbody ball = GetClosest(ballsInHeadRange);
-        if (ball == null) return;
-
-        ball.linearVelocity = Vector3.zero;
-        ball.AddForce(Vector3.up * headingForce, ForceMode.Impulse);
+        HeaderBall();
     }
     public void OnMove(Vector2 input)
     {
@@ -117,12 +133,16 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         moveInput = input;
         //throw new System.NotImplementedException();
     }
-
+    void ResetKickVisual()
+    {
+        kickCollider.SetActive(false);
+    }
     public void OnKick()
     {
         if (Time.time < nextKickTime) return;
         nextKickTime = Time.time + kickCooldown;
-
+        kickCollider.SetActive(true);
+        Invoke("ResetKickVisual", 0.3f);
         Rigidbody targetBall = GetClosest(ballsInKickRange);
         if (targetBall == null) return;
 
@@ -147,6 +167,47 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         targetBall.AddForce(kickDirection * kickForce, ForceMode.Impulse);
         targetBall.AddForce(new Vector3(0, currentKickHeight, 0), ForceMode.Impulse);
     }
+
+    void HeaderBall()
+    {
+        foreach (var t in ballsInHeadRange)
+        {
+            Debug.Log("after func call: " + t.name);
+        }
+
+
+        if (!isHeaderAcive) return;
+        if (ballsInHeadRange.Count == 0) return;
+
+        if (Time.time < nextHeadTime) return;
+        nextHeadTime = Time.time + headCooldown;
+
+
+        foreach (var t in ballsInHeadRange)
+        {
+            Debug.Log(t.name);
+        }
+        Debug.Log("hgjkhgkj");
+
+        //Rigidbody ball = GetClosest(ballsInHeadRange);
+        Rigidbody ball = ballsInHeadRange.FirstOrDefault();
+
+
+        if (ball == null) return;
+        Debug.Log("aaaaaaaaaaaaaaaaaaaaaa");
+
+
+        Vector3 startingVel = ball.linearVelocity;
+        Vector3 newVel = (startingVel * ballVelocityPercent) + (controller.velocity * playerVelocityPercent);
+        newVel.y = 0f;
+
+
+        ball.linearVelocity = Vector3.zero;
+        ball.AddForce((Vector3.up * headingForce) + newVel, ForceMode.Impulse);
+
+
+    }
+
 
     #region Kicking Logic
     private Rigidbody GetClosest(HashSet<Rigidbody> set)
@@ -178,10 +239,17 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             ballsInKickRange.Add(rb);
 
         if (headTrigger.bounds.Intersects(other.bounds))
+        {
+            Debug.Log("adding ball to head range");
             ballsInHeadRange.Add(rb);
+            foreach (var t in ballsInHeadRange)
+            {
+                Debug.Log("after adding to list: " + t.name);
+            }
+            HeaderBall();
 
-        if (feetTrigger.bounds.Intersects(other.bounds))
-            ballsInHeadRange.Add(rb);
+        }
+
     }
 
     private void OnTriggerExit(Collider other)
