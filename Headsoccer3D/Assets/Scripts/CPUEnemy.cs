@@ -25,27 +25,22 @@ public class CPUEnemy : MonoBehaviour
     [Space(10)]
     [Header("Teamplay")]
     public CPURole thisCPURole;
-    public bool iHaveTheBall = false;
-    [SerializeField] private bool teamPossession = false;
     public Transform ball;
     [SerializeField] private CPUEnemy myTeammate;
     [HideInInspector] public Vector3 runningDestination;
-    public bool iAmChasingBall = false;
-    public bool teamIsChasingBall = false;
 
     //Internal
     [Space(10)]
     [Header("Internal")]
-    [SerializeField] private bool ballAtFeet = false; 
-    public float distanceToBall = 0;
+    private float distanceToBall = 0;
     private bool previousPossession = false;
     [SerializeField] private Raumdeuter thomasMuller;
     private NavMeshAgent agent;
     private Vector2 gridPos;
     [SerializeField] private HorizontalSpace horizontalSpace;
     [SerializeField] private VerticalSpace verticalSpace;
-    private float haveBallTimer = 0;
-    //private CPUEnemy ballHolder = null;
+    private bool pauseForAMoment = false;
+    private bool movingToRecieve = false;
 
     private void Start()
     {
@@ -62,6 +57,15 @@ public class CPUEnemy : MonoBehaviour
         onRestart();
         StartCoroutine(assessPositionEveryFewFrames());
     }
+    IEnumerator assessPositionEveryFewFrames()
+    {
+        yield return new WaitForSeconds(1.0647f);
+        do
+        {
+            assessPosition();
+            yield return new WaitForSeconds(0.6812f);
+        } while (true);
+    }
 
     public void onRestart()
     {
@@ -71,179 +75,70 @@ public class CPUEnemy : MonoBehaviour
     private void Update()
     {
         //rotation
-        if(!iHaveTheBall)
-            transform.rotation = Quaternion.LookRotation((new Vector3
+        transform.rotation = Quaternion.LookRotation((new Vector3
                     (ball.position.x, transform.position.y, ball.position.z) - transform.position).normalized 
                                 , Vector3.up);
 
-        //Crucial Infos--------------------------------------------------------------------------
-        //ball at feet is at feet range
-        //ballAtFeet = Vector3.Dot(transform.position, ball.position) > 0.34891f 
-        //            && (ball.position - transform.position).sqrMagnitude < 0.49f;
-
-        //how long to hold on to ball
-        haveBallTimer -= Time.deltaTime;
-        if (haveBallTimer < 0) iHaveTheBall = false;
-        //and update having ball with ballAtFeet
-        iHaveTheBall = iHaveTheBall || ballAtFeet;
-
-        //update the team possession and ball chase
-        teamPossession = iHaveTheBall || myTeammate.iHaveTheBall;
-        teamIsChasingBall = iAmChasingBall || myTeammate.iAmChasingBall;
-
-        //if you dont have the ball and the ball is within some range
-        //break all rules and chase it
-        //and team is notchasing the ball
-        distanceToBall = (ball.transform.position - transform.position).sqrMagnitude;
-        if (iHaveTheBall == false 
-            && (ball.transform.position - transform.position).sqrMagnitude < 3 
-            && !teamIsChasingBall
-            && thisCPURole == CPURole.Attacker)
+        //------------------------------------------------------------------------------------------------
+        
+        if (pauseForAMoment) return;
+        if(movingToRecieve)
         {
-            Debug.Log(gameObject.name + " is breaking all rules and chasing ball");
             runningDestination = ball.position;
             agent.SetDestination(runningDestination);
-            iAmChasingBall = true; //set this to true
+            if (agent.remainingDistance < 0.102f)
+                movingToRecieve = false;
             return;
         }
-        iAmChasingBall = false;
-
-        //------------------------------------------------------------------------------------------------
-        //if agent is near the ball, or reached the free space
-        if (agent.remainingDistance < 0.05f)
+        //sets runningDestination
+        if (thisCPURole == CPURole.Attacker)
             CPUAttackingBehaviour();
-
-        //regardless of agentDistance, we press sonce we actively need to set ball chase
-        if(!teamPossession)
+        if(thisCPURole == CPURole.Defender)
             CPUDefenseBehaviour();
 
-        //on possession change
-        if (previousPossession != teamPossession)
-        {
-            Debug.Log(gameObject.name + " recognizes possession change.");
-            assessPosition();
-            moveToNewFreeSpace();
-        }
+        agent.SetDestination(runningDestination);
 
-        previousPossession = teamPossession;
     }
 
     //Behaviour Tree
     void CPUAttackingBehaviour()
     {
-        //WITH THE BALL POSSESSION, THE BALL HOLDER WILL DRIBBLE or LOOK FOR PASS OR SHOOTING
-        //AND NOT BALL HOLDER WILL RUN TO FREE SPACE AND CALL FOR THROUGH PASS OR REGULAR PASS
-        if (iHaveTheBall)
-        {
-            //dribble kinda
-            Debug.Log(gameObject.name + " moving to new space");
-            assessPosition();
-            moveToNewFreeSpace();
-
-            if (haveBallTimer < 1f && ballAtFeet)
-            {
-                if (tryShoot())
-                {
-                    //if we shoot
-                    Debug.Log(gameObject.name + " just shot the ball.");
-                    assessPosition();
-                    //I have lost the ball
-                }
-                else
-                {
-                    //through pass or simple pass
-                    Debug.Log(gameObject.name + " attempting pass.");
-
-                    kickBallTowards(Random.value > 0.5f ?
-                                    myTeammate.runningDestination
-                                : myTeammate.transform.position);
-                    assessPosition();
-                    moveToNewFreeSpace();
-                }
-
-            }
-        }
-        else
-        {
-            //if we reach destination
-            // ask for pass
-            if(myTeammate.passCall(transform))
-            {
-                //stay put for a while
-                iHaveTheBall = true;
-                haveBallTimer = 1.9234f;
-            }
-            else
-            {
-                assessPosition();
-                moveToNewFreeSpace();
-            }
-        }
+        runningDestination = ball.position;
     }
     
     void CPUDefenseBehaviour()
     {
-        //here the role of attacker and defencer is more set
-        //attacker presses, defender shields goal
-        if (thisCPURole == CPURole.Defender)
-        {
-
-            // if you are close to the goal post, shield closer to the post
-            runningDestination = Vector3.Lerp(defendingPost.transform.position, ball.position,
-               horizontalSpace == HorizontalSpace.Attacking && verticalSpace == VerticalSpace.Central
-               ? 0.8861f : 0.513694f);
-        }
-        else
-        {
-            //if you are attacker, you press
-            runningDestination = ball.position;
-        }
-        agent.SetDestination(runningDestination);
+        // if you are close to the goal post, shield closer to the post
+        runningDestination = Vector3.Lerp(defendingPost.transform.position, ball.position,
+           horizontalSpace == HorizontalSpace.Attacking && verticalSpace == VerticalSpace.Central
+           ? 0.8861f : 0.513694f);
     }
 
     //kicking and team play----------------------------------------------------------------------
-    private void kickBallTowards(Vector3 _target)
+    private void kickBallTowards(Vector3 _target, bool _switchRoles = false)
     {
-        if (!ballAtFeet)
-        {
-            Debug.Log("Ball is not at feet. Cannot perform kick");
-            return;
-        }
+        Debug.Log(gameObject.name + "to kick the ball");
+
+        StartCoroutine(larpAsJudeBelligoalAgainstBarca());
 
         Rigidbody _brb = ball.GetComponent<Rigidbody>();
 
         Vector3 _dir = (_target - ball.position).normalized;
 
         _brb.linearVelocity = Vector3.zero;
+        _dir.y = Random.Range(0.234f, 1.5f);
         _brb.AddForce(_dir * 5.8467f, ForceMode.VelocityChange);
-    }
-    public bool passCall(Transform _receiver)
-    {
-        //oi mate, barking at wrong tree
-        if (!ballAtFeet) return false;
 
-        //I shot the ball
-        if (tryShoot()) return false;
+        if (_switchRoles)
+            myTeammate.moveToRecievePass();
 
-        Vector3 _dir = (_receiver.position - ball.position);
-        float _dist = _dir.magnitude; //well sqrMag is more cost efficient but we need this here for physics
-
-        //yaycast to see if pass lane is clear
-        RaycastHit _hit;
-        if (Physics.Raycast(ball.position, _dir.normalized, out _hit, _dist * 1.05f))
-        {
-            //only pass if the reciever is in sight
-            if (_hit.transform == _receiver)
-            {
-                Debug.Log(gameObject.name + " is passing to " + _receiver.gameObject.name);
-                kickBallTowards(_receiver.position);
-            }
-        }
-
-        return true;
     }
     private bool tryShoot()
     {
+        //behind the player
+        if (Vector3.Dot((ball.position - goalPost.transform.position), transform.forward) < 0.1f)
+            return false;
+
         //near some distance
         if ((ball.position - goalPost.transform.position).sqrMagnitude > 45.274)
             return false;
@@ -297,15 +192,28 @@ public class CPUEnemy : MonoBehaviour
             return false;
         }
     }
-    //called when someone recieves the ball
-    //or of ball touches real players but CPU doesnt get it back until a second
-    public void thisCPULoseBall()
+    private bool tryPass()
     {
-        Debug.Log(gameObject.name + " no longer has the ball.");
-        haveBallTimer = -1f;
-        iHaveTheBall = false;
-        assessPosition();
-        moveToNewFreeSpace();
+        //random decision
+        Vector3 _dirToTeammate = Random.value > 0.5f ? myTeammate.transform.position : myTeammate.runningDestination;
+
+        //its behind
+        if (Vector3.Dot((_dirToTeammate - ball.position), transform.forward) < 0.1f)
+            return false;
+
+        kickBallTowards(_dirToTeammate);
+        return true;
+    }
+    private void yeetTheBallCloseToOtherCPU()
+    {
+        //random decision
+        Vector3 _dirToTeammate = Random.value > 0.5f ? myTeammate.transform.position : myTeammate.runningDestination;
+        kickBallTowards(_dirToTeammate);
+    }
+    public void moveToRecievePass()
+    {
+        movingToRecieve = true;
+        runningDestination = ball.position;
     }
 
     //Space and Movement-------------------------------------------------------------------
@@ -318,26 +226,6 @@ public class CPUEnemy : MonoBehaviour
 
         //and check distance and set role
         //only one player will do this part of the code
-        //if (index > 1) return;
-
-        /*
-        if (teamIsChasingBall)
-        {
-            if (myTeammate.iAmChasingBall)
-            {
-                myTeammate.thisCPURole = CPURole.Attacker;
-                thisCPURole = CPURole.Defender;
-                return;
-            }
-            if (iAmChasingBall)
-            {
-                myTeammate.thisCPURole = CPURole.Defender;
-                thisCPURole = CPURole.Attacker;
-                return;
-            }
-        }*/
-
-        //if we reach here, we do dist check
         bool amICloser = (ball.transform.position - myTeammate.transform.position).sqrMagnitude <
             (ball.transform.position - myTeammate.transform.position).sqrMagnitude;
 
@@ -352,57 +240,49 @@ public class CPUEnemy : MonoBehaviour
             thisCPURole = CPURole.Defender;
         }
     }
+    //declares Thomas Muller, "Sire Muller, thou wish is my command", or something
     private void moveToNewFreeSpace()
     {
         runningDestination = thomasMuller.getPointOnFreeSpace(transform);
         agent.SetDestination(runningDestination);
     }
+    //even in videogame, being like Messi is a cheat code smh.
     IEnumerator stopBeingMessi()
     {
-        yield return new WaitForSeconds(1.0647f);
+        yield return new WaitForSeconds(0.5647f);
         ball.parent = null;
-    }
-    IEnumerator assessPositionEveryFewFrames()
-    {
-        yield return new WaitForSeconds(1.0647f);
-        do
+        //try shooting
+        if (!tryShoot())
         {
-            assessPosition();
-            yield return new WaitForSeconds(0.6812f);
-        } while (true);
+            if (!tryPass())
+            {
+                yeetTheBallCloseToOtherCPU();
+            }
+        }
     }
 
+    IEnumerator larpAsJudeBelligoalAgainstBarca()
+    {
+        pauseForAMoment = true;
+        yield return new WaitForSeconds(0.5647f);
+        pauseForAMoment = false;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Ball")
         {
-            iHaveTheBall = true;
-            ballAtFeet = true;
-            haveBallTimer = 2.4391f;
-
-            //kickBallTowards(myTeammate.transform.position);
-            //return;
-
             //shoot check on recieve ball
             if(!tryShoot())
             {
-                //if failed, dribble
-                ball.parent = transform;
-                moveToNewFreeSpace();
-                StartCoroutine(stopBeingMessi());
+                if(!tryPass())
+                {
+                    //if failed, dribble
+                    ball.parent = transform;
+                    moveToNewFreeSpace();
+                    StartCoroutine(stopBeingMessi());
+                }
             }
-            //tell other they dont have the ball
-            Debug.Log(gameObject.name + " has the ball now and the other person no longer has ball");
-            myTeammate.thisCPULoseBall();
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Ball")
-        {
-            ballAtFeet = false;
         }
     }
 }
