@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7070185, z: 0, w: 0.70719504}
   m_LocalPosition: {x: 0.054480102, y: 0.05691208, z: 0.018934352}
-  m_LocalScale: {x: 0.11842473, y: 0.11842471, z: 0.11842473}
+  m_LocalScale: {x: 0.45, y: 0.45, z: 0.45}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -156,8 +156,9 @@ MonoBehaviour:
     m_Bits: 64
   ballPositionIndicatorPrefab: {fileID: 2676624550782573642, guid: a1738e5fbeb5eaf4d88a18098627de29, type: 3}
   ballPositionIndicator: {fileID: 0}
-  positionIndicatorSpeed: 50
+  positionIndicatorSpeed: 4
   predictionTime: 1
+  canvasOffset: {x: 0, y: 0.01, z: 0}
 --- !u!120 &6248723573310751419
 LineRenderer:
   serializedVersion: 2

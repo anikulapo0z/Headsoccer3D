@@ -83,7 +83,7 @@ public class PlayerJoinManager : MonoBehaviour
     {
         if (!characterSelectOpen)
             return;
-        Debug.Log(players.Count);
+        //Debug.Log(players.Count);
 
         if (players.Count >= maxPlayers)
             return;
@@ -140,6 +140,7 @@ public class PlayerJoinManager : MonoBehaviour
             cursorObj.transform.localPosition = Vector3.zero;
 
             cursor.parent = startingCharacterButton;
+            cursor.SetStartValue();
         }
 
         return cursor;

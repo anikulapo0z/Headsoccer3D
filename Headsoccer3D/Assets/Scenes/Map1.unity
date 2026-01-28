@@ -893,17 +893,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 121180679605582305, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: gameSceneManager
+      value: 
+      objectReference: {fileID: 1951291690}
     - target: {fileID: 4575460859845439653, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_Name
       value: Field
-      objectReference: {fileID: 0}
-    - target: {fileID: 5407269015863952220, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7925777708139515814, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8048290065717349228, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_LocalPosition.x
@@ -944,10 +940,6 @@ PrefabInstance:
     - target: {fileID: 8048290065717349228, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9082644537197897751, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1413,6 +1405,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
+--- !u!114 &1226518549 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 121180679605582305, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+  m_PrefabInstance: {fileID: 605910383}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee31208cddd4ee4faac8661cd223a97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1606826442
 GameObject:
   m_ObjectHideFlags: 0
@@ -1577,6 +1580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputControllers: []
+  playerCharacters: []
   characterList:
   - {fileID: 2105791413608084587, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
   - {fileID: 2105791413608084587, guid: d5aef5cdce136b04db2f658155fbdc9e, type: 3}
@@ -1600,11 +1604,12 @@ MonoBehaviour:
   maxGameTime: 30
   pausedGameTime: 0
   delayBeforeScoreScreen: 0
-  delayBeforeResetBall: 0
-  delayBeforeUnlockPlayer: 0
+  delayBeforeResetBall: 1
+  delayBeforeUnlockPlayer: 3
   ballPrefab: {fileID: 675428509796539959, guid: 6688fa3a43bf09e4c9431f052111079a, type: 3}
   ballObject: {fileID: 0}
   ballStartingPos: {fileID: 605910384}
+  scoreTracker: {fileID: 1226518549}
   raumdeuter: {fileID: 341759070}
   cpu1: {fileID: 341759071}
   cpu2: {fileID: 341759069}

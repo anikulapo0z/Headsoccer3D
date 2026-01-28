@@ -65,7 +65,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             moveDir.Normalize();
 
         // Apply movement
-        controller.Move(moveDir * moveSpeed * Time.deltaTime);
+        if(controller.enabled)
+            controller.Move(moveDir * moveSpeed * Time.deltaTime);
 
         // Face movement direction
         if (rotateToMovement && moveDir.sqrMagnitude > 0.001f)
@@ -197,11 +198,11 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     public void LockPlayerMove()
     {
-        Debug.Log("locking player");
+        GetComponent<CharacterController>().enabled = false;
     }
     public void UnlockPlayerMove()
     {
-
+        GetComponent<CharacterController>().enabled = true;
     }
 
 }

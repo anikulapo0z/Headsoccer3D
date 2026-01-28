@@ -8,6 +8,13 @@ public class MapSelectionCursor : MonoBehaviour, IPlayerControllable
     string sceneName;
 
 
+    public void SetStartValue()
+    {
+        sceneName = parent.GetComponent<CharacterButton>().sceneName;
+        Debug.Log(sceneName);
+        if (playerIndex == 0)
+            MapSelectionManager.Instance.selectedScene = sceneName;
+    }
 
     public void OnMove(Vector2 dir)
     {

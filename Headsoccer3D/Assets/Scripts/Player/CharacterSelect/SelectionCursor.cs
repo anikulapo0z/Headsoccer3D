@@ -7,6 +7,17 @@ public class SelectionCursor : MonoBehaviour, IPlayerControllable
     public int playerIndex;
     public PlayerInputController playerInputController;
 
+
+
+    public void SetStartValue()
+    {
+        CharacterSelectionPreview.Instance.SetPortraitInfo(
+    playerIndex,
+    parent.GetComponent<CharacterButton>().selectedImage,
+    parent.GetComponent<CharacterButton>().characterName
+    );
+    }
+
     public void OnMove(Vector2 dir)
     {
         if (locked)
