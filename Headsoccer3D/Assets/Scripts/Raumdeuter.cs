@@ -126,7 +126,7 @@ public class Raumdeuter : MonoBehaviour
         return new Vector2(_xIndex, _zIndex);
     }
 
-    public Vector3 getPointOnFreeSpace(Transform _newMovement)
+    public Vector3 getPointOnFreeSpace(Transform _newMovement, Vector3 _teamMatePosition)
     {
         int _freeSpaceIndex = GetRandomClosestFreeSpace(_newMovement);
 
