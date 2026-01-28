@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,6 +30,10 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] private float headingForce = 5f;
     [SerializeField] private float headCooldown = 0.5f;
 
+    [Header("Animator")]
+    [SerializeField] private Animator anim;
+
+
     private CharacterController controller;
     private Vector2 moveInput;
 
@@ -44,19 +50,28 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField, Range(0f, 1f)] float ballVelocityPercent;
     [SerializeField, Range(0f, 1f)] float playerVelocityPercent;
 
+    [SerializeField] bool isHeaderAcive = false;
+    [SerializeField] GameObject kickCollider;
+    Material kickDisplayMat;
 
     void Awake()
     {
         controller = GetComponent<CharacterController>();
         currentKickHeight = startingKickHeight;
+        if(!anim)
+            anim = GetComponentInChildren<Animator>();
+
+        kickDisplayMat = kickCollider.GetComponent<Renderer>().material;
     }
 
     void Update()
     {
         //Grounding and gravity logic
         if (controller.isGrounded && verticalVelocity < 0f)
+        {
             verticalVelocity = groundStick;
-
+            isHeaderAcive = false;
+        }
         verticalVelocity += gravity * Time.deltaTime;
 
         Vector3 moveDir = new Vector3(moveInput.x, 0f, moveInput.y);
@@ -67,6 +82,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         // Apply movement
         Vector3 velocity = (moveDir * moveSpeed) + (Vector3.up * verticalVelocity);
+        anim.SetFloat("Velocity", Mathf.Abs(velocity.x) + Mathf.Abs(velocity.z));
+        anim.SetBool("onGround", controller.isGrounded);
 
         if (controller.enabled)
             controller.Move(velocity * Time.deltaTime);
@@ -78,6 +95,12 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             transform.rotation = Quaternion.Slerp(transform.rotation, target, rotationSpeed * Time.deltaTime);
         }
     }
+
+    private void FixedUpdate()
+    {
+        
+    }
+
     public void OnAbility()
     {
         //throw new System.NotImplementedException();
@@ -108,6 +131,9 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         if (controller.isGrounded)
         {
+            // setting header active
+            isHeaderAcive = true;
+
             verticalVelocity = jumpVelocity;
             Debug.Log($"[JUMP] APPLY jumpVelocity = {jumpVelocity}");
         }
@@ -115,20 +141,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         {
             Debug.Log("[JUMP] Blocked – not grounded");
         }
-        if (Time.time < nextHeadTime) return;
-        nextHeadTime = Time.time + headCooldown;
 
-        Rigidbody ball = GetClosest(ballsInHeadRange);
-        if (ball == null) return;
-
-
-        Vector3 startingVel = ball.linearVelocity;
-        Vector3 newVel = (startingVel * ballVelocityPercent) + (controller.velocity * playerVelocityPercent);
-        newVel.y = 0f;
-
-
-        ball.linearVelocity = Vector3.zero;
-        ball.AddForce((Vector3.up * headingForce) + newVel, ForceMode.Impulse);
+        HeaderBall();
     }
     public void OnMove(Vector2 input)
     {
@@ -136,11 +150,31 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         moveInput = input;
         //throw new System.NotImplementedException();
     }
+    IEnumerator KickVisualAndReset(float _time)
+    {
+        float timer = 0;
+        do
+        {
+            kickDisplayMat.SetFloat("_ScrollValue", timer);
+            Debug.Log(Mathf.Lerp(0f, 0.92f, timer));
 
+            yield return null;
+
+            timer += Time.deltaTime;
+
+        } while (timer < _time);
+
+        //Reset
+        kickCollider.SetActive(false);
+        kickDisplayMat.SetFloat("_ScrollValue", 0f);
+    }
     public void OnKick()
     {
         if (Time.time < nextKickTime) return;
         nextKickTime = Time.time + kickCooldown;
+        kickCollider.SetActive(true);
+        kickDisplayMat.SetFloat("_ScrollValue", 0f);
+        StartCoroutine(KickVisualAndReset(0.3f));
 
         Rigidbody targetBall = GetClosest(ballsInKickRange);
         if (targetBall == null) return;
@@ -166,6 +200,47 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         targetBall.AddForce(kickDirection * kickForce, ForceMode.Impulse);
         targetBall.AddForce(new Vector3(0, currentKickHeight, 0), ForceMode.Impulse);
     }
+
+    void HeaderBall()
+    {
+        foreach (var t in ballsInHeadRange)
+        {
+            Debug.Log("after func call: " + t.name);
+        }
+
+
+        if (!isHeaderAcive) return;
+        if (ballsInHeadRange.Count == 0) return;
+
+        if (Time.time < nextHeadTime) return;
+        nextHeadTime = Time.time + headCooldown;
+
+
+        foreach (var t in ballsInHeadRange)
+        {
+            Debug.Log(t.name);
+        }
+        Debug.Log("hgjkhgkj");
+
+        //Rigidbody ball = GetClosest(ballsInHeadRange);
+        Rigidbody ball = ballsInHeadRange.FirstOrDefault();
+
+
+        if (ball == null) return;
+        Debug.Log("aaaaaaaaaaaaaaaaaaaaaa");
+
+
+        Vector3 startingVel = ball.linearVelocity;
+        Vector3 newVel = (startingVel * ballVelocityPercent) + (controller.velocity * playerVelocityPercent);
+        newVel.y = 0f;
+
+
+        ball.linearVelocity = Vector3.zero;
+        ball.AddForce((Vector3.up * headingForce) + newVel, ForceMode.Impulse);
+
+
+    }
+
 
     #region Kicking Logic
     private Rigidbody GetClosest(HashSet<Rigidbody> set)
@@ -197,7 +272,17 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             ballsInKickRange.Add(rb);
 
         if (headTrigger.bounds.Intersects(other.bounds))
+        {
+            Debug.Log("adding ball to head range");
             ballsInHeadRange.Add(rb);
+            foreach (var t in ballsInHeadRange)
+            {
+                Debug.Log("after adding to list: " + t.name);
+            }
+            HeaderBall();
+
+        }
+
     }
 
     private void OnTriggerExit(Collider other)

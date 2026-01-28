@@ -94,6 +94,9 @@ public class Raumdeuter : MonoBehaviour
 
             for (int i = 0; i < charactersToLookFor.Length; i++)
             {
+                if (charactersToLookFor[i] == null)
+                    continue;
+
                 float _xPos = charactersToLookFor[i].position.x;
                 float _zPos = charactersToLookFor[i].position.z;
 
@@ -126,7 +129,7 @@ public class Raumdeuter : MonoBehaviour
         return new Vector2(_xIndex, _zIndex);
     }
 
-    public Vector3 getPointOnFreeSpace(Transform _newMovement)
+    public Vector3 getPointOnFreeSpace(Transform _newMovement, Vector3 _teamMatePosition)
     {
         int _freeSpaceIndex = GetRandomClosestFreeSpace(_newMovement);
 

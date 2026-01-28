@@ -33,7 +33,6 @@ public class CPUEnemy : MonoBehaviour
     [Space(10)]
     [Header("Internal")]
     private float distanceToBall = 0;
-    private bool previousPossession = false;
     [SerializeField] private Raumdeuter thomasMuller;
     private NavMeshAgent agent;
     private Vector2 gridPos;
@@ -82,6 +81,7 @@ public class CPUEnemy : MonoBehaviour
         //------------------------------------------------------------------------------------------------
         
         if (pauseForAMoment) return;
+
         if(movingToRecieve)
         {
             runningDestination = ball.position;
@@ -126,7 +126,7 @@ public class CPUEnemy : MonoBehaviour
         Vector3 _dir = (_target - ball.position).normalized;
 
         _brb.linearVelocity = Vector3.zero;
-        _dir.y = Random.Range(0.234f, 1.5f);
+        _dir.y = Random.Range(0.234f, 1.5f) / _forceMult; //more force should not affect y
         _brb.AddForce(_dir * 5.8467f * _forceMult, ForceMode.VelocityChange);
 
         if (_switchRoles)
@@ -152,7 +152,7 @@ public class CPUEnemy : MonoBehaviour
         }
 
         //near some distance
-        if ((ball.position - goalPost.transform.position).sqrMagnitude > 64.274f)
+        if ((ball.position - goalPost.transform.position).sqrMagnitude > 49.274f)
         {
             Debug.Log("ITS OFODIGUSSGUJ FARRRRRRRRRR");
             return false;
@@ -223,6 +223,7 @@ public class CPUEnemy : MonoBehaviour
     {
         movingToRecieve = true;
         runningDestination = ball.position;
+        StartCoroutine(stopBeingGattuso());
     }
 
     //Space and Movement-------------------------------------------------------------------
@@ -252,7 +253,7 @@ public class CPUEnemy : MonoBehaviour
     //declares Thomas Muller, "Sire Muller, thou wish is my command", or something
     private void moveToNewFreeSpace()
     {
-        runningDestination = thomasMuller.getPointOnFreeSpace(transform);
+        runningDestination = thomasMuller.getPointOnFreeSpace(transform, myTeammate.runningDestination);
         agent.SetDestination(runningDestination);
     }
     //even in videogame, being like Messi is a cheat code smh.
@@ -268,6 +269,14 @@ public class CPUEnemy : MonoBehaviour
                 yeetTheBallCloseToOtherCPU();
             }
         }
+    }
+    //dont chase the ball anymore and think of CPURole
+    IEnumerator stopBeingGattuso()
+    {
+        yield return new WaitForSeconds(1.1966f);
+        movingToRecieve = false;
+        assessPosition();
+        moveToNewFreeSpace();
     }
 
     IEnumerator larpAsJudeBelligoalAgainstBarca()
@@ -287,9 +296,8 @@ public class CPUEnemy : MonoBehaviour
                 if(!tryPass())
                 {
                     //if failed, dribble
-                    ball.parent = transform;
+                    yeetTheBallCloseToOtherCPU();
                     moveToNewFreeSpace();
-                    StartCoroutine(stopBeingMessi());
                 }
             }
         }
