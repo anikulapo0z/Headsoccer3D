@@ -18,7 +18,7 @@ public class ScoreTracker : MonoBehaviour
             return;
         leftScore++;
         leftScoreText.text = leftScore.ToString();
-        gameSceneManager.GoalScored();
+        gameSceneManager.GoalScored('l');
 
     }
     public void PointForRight()
@@ -27,6 +27,6 @@ public class ScoreTracker : MonoBehaviour
             return;
         rightScore++;
         rightScoreText.text = rightScore.ToString();
-        gameSceneManager.GoalScored();
+        gameSceneManager.GoalScored('r');
     }
 }
