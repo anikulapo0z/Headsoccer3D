@@ -136,12 +136,18 @@ public class CPUEnemy : MonoBehaviour
     private bool tryShoot()
     {
         //behind the player
-        if (Vector3.Dot((ball.position - goalPost.transform.position), transform.forward) < 0.1f)
+        if (Vector3.Dot((ball.position - goalPost.transform.position), (ball.position - transform.position)) < 0f)
+        {
+            Debug.Log("GOAL BEHIND PLAYER");
             return false;
+        }
 
         //near some distance
-        if ((ball.position - goalPost.transform.position).sqrMagnitude > 45.274)
+        if ((ball.position - goalPost.transform.position).sqrMagnitude > 64.274f)
+        {
+            Debug.Log("ITS OFODIGUSSGUJ FARRRRRRRRRR");
             return false;
+        }
 
         Vector3 _nearestPost = goalPost.ClosestPointOnBounds(ball.transform.position);
         //if goal is open
@@ -172,7 +178,7 @@ public class CPUEnemy : MonoBehaviour
                     //criteris one, goal post must not be at the side
                     //criteria two, player infront
                     //criteria three, outside threshold of the player
-                    if (_angle > 0.2f && _angleToPlayers[i] > 0.3f && _angle - _angleToPlayers[i] > 0.39354f)
+                    if (_angle > 0.2f && _angleToPlayers[j] > 0.3f && _angle - _angleToPlayers[j] > 0.39354f)
                     {
                         //angle found
                         kickBallTowards(goalAngles[i].position);
@@ -183,12 +189,13 @@ public class CPUEnemy : MonoBehaviour
 
             //no shooting chance
             //random between shoot wildly or not shoot
-            if (Random.value > 0.7f) // 30% chance
+            if (Random.value < 0.7f) // 70% chance
             {
                 kickBallTowards(_nearestPost);
                 return true;
             }
 
+            Debug.Log("NOTHINGGGGGGGGGGGGGGGGGGG");
             return false;
         }
     }
@@ -198,7 +205,7 @@ public class CPUEnemy : MonoBehaviour
         Vector3 _dirToTeammate = Random.value > 0.5f ? myTeammate.transform.position : myTeammate.runningDestination;
 
         //its behind
-        if (Vector3.Dot((_dirToTeammate - ball.position), transform.forward) < 0.1f)
+        if (Vector3.Dot((_dirToTeammate - ball.position), (ball.position - transform.position)) < 0.1f)
             return false;
 
         kickBallTowards(_dirToTeammate);
