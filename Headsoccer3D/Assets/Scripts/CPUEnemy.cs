@@ -29,7 +29,7 @@ public class CPUEnemy : MonoBehaviour
     [SerializeField] private bool teamPossession = false;
     public Transform ball;
     [SerializeField] private CPUEnemy myTeammate;
-    public Vector3 runningDestination;
+    [HideInInspector] public Vector3 runningDestination;
     public bool iAmChasingBall = false;
     public bool teamIsChasingBall = false;
 
@@ -78,8 +78,8 @@ public class CPUEnemy : MonoBehaviour
 
         //Crucial Infos--------------------------------------------------------------------------
         //ball at feet is at feet range
-        ballAtFeet = Vector3.Dot(transform.position, ball.position) > 0.34891f 
-                    && (ball.position - transform.position).sqrMagnitude < 0.49f;
+        //ballAtFeet = Vector3.Dot(transform.position, ball.position) > 0.34891f 
+        //            && (ball.position - transform.position).sqrMagnitude < 0.49f;
 
         //how long to hold on to ball
         haveBallTimer -= Time.deltaTime;
@@ -318,8 +318,9 @@ public class CPUEnemy : MonoBehaviour
 
         //and check distance and set role
         //only one player will do this part of the code
-        if (index > 1) return;
+        //if (index > 1) return;
 
+        /*
         if (teamIsChasingBall)
         {
             if (myTeammate.iAmChasingBall)
@@ -334,7 +335,7 @@ public class CPUEnemy : MonoBehaviour
                 thisCPURole = CPURole.Attacker;
                 return;
             }
-        }
+        }*/
 
         //if we reach here, we do dist check
         bool amICloser = (ball.transform.position - myTeammate.transform.position).sqrMagnitude <
@@ -377,6 +378,7 @@ public class CPUEnemy : MonoBehaviour
         if (other.tag == "Ball")
         {
             iHaveTheBall = true;
+            ballAtFeet = true;
             haveBallTimer = 2.4391f;
 
             //kickBallTowards(myTeammate.transform.position);
@@ -393,6 +395,14 @@ public class CPUEnemy : MonoBehaviour
             //tell other they dont have the ball
             Debug.Log(gameObject.name + " has the ball now and the other person no longer has ball");
             myTeammate.thisCPULoseBall();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Ball")
+        {
+            ballAtFeet = false;
         }
     }
 }
