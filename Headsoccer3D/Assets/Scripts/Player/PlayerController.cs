@@ -25,7 +25,6 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     [Header("Heading Settings")]
     [SerializeField] private Collider headTrigger;
-    [SerializeField] private Collider feetTrigger;
     [SerializeField] private float headingForce = 5f;
     [SerializeField] private float headCooldown = 0.5f;
 
@@ -42,6 +41,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     // owen vars
     bool isPlayerLocked = false;
     public Vector3 startingPos;
+    [SerializeField, Range(0f, 1f)] float ballVelocityPercent;
+    [SerializeField, Range(0f, 1f)] float playerVelocityPercent;
 
 
     void Awake()
@@ -108,8 +109,14 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         Rigidbody ball = GetClosest(ballsInHeadRange);
         if (ball == null) return;
 
+
+        Vector3 startingVel = ball.linearVelocity;
+        Vector3 newVel = (startingVel * ballVelocityPercent) + (controller.velocity * playerVelocityPercent);
+        newVel.y = 0f;
+
+
         ball.linearVelocity = Vector3.zero;
-        ball.AddForce(Vector3.up * headingForce, ForceMode.Impulse);
+        ball.AddForce((Vector3.up * headingForce) + newVel, ForceMode.Impulse);
     }
     public void OnMove(Vector2 input)
     {
@@ -178,9 +185,6 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             ballsInKickRange.Add(rb);
 
         if (headTrigger.bounds.Intersects(other.bounds))
-            ballsInHeadRange.Add(rb);
-
-        if (feetTrigger.bounds.Intersects(other.bounds))
             ballsInHeadRange.Add(rb);
     }
 

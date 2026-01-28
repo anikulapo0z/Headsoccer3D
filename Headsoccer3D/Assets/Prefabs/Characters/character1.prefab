@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 7103126948410158059}
   - component: {fileID: 374959338324389693}
   - component: {fileID: 5715509517818701763}
-  m_Layer: 0
+  - component: {fileID: 7509819557382073035}
+  m_Layer: 7
   m_Name: character1
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -55,7 +56,7 @@ CharacterController:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 384
   m_LayerOverridePriority: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
@@ -107,7 +108,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.045
   m_Center: {x: 0, y: 0.05, z: 0}
@@ -144,7 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aab1aac9d0bb6ed4b80164fd0c827344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4.3
+  moveSpeed: 3
   rotationSpeed: 15
   rotateToMovement: 1
   kickForce: 10
@@ -155,11 +156,35 @@ MonoBehaviour:
   jumpVelocity: 8
   gravity: -15
   groundStick: -2
-  headTrigger: {fileID: 7103126948410158059}
-  feetTrigger: {fileID: 2793015957598444669}
+  headTrigger: {fileID: 7509819557382073035}
   headingForce: 5
   headCooldown: 0.5
   startingPos: {x: 0, y: 0, z: 0}
+  ballVelocityPercent: 0.4
+  playerVelocityPercent: 0.9
+--- !u!136 &7509819557382073035
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105791413608084587}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.08
+  m_Height: 0.2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2578436691414235925
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,7 +196,7 @@ GameObject:
   - component: {fileID: 2659487847552978484}
   - component: {fileID: 3882448606203470677}
   - component: {fileID: 596894208285580173}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: rt_hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,7 +282,7 @@ GameObject:
   - component: {fileID: 4355408443491119889}
   - component: {fileID: 7219887445637689767}
   - component: {fileID: 2553428348210833418}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: rt_foot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -343,7 +368,7 @@ GameObject:
   - component: {fileID: 2969554561851593612}
   - component: {fileID: 111394364170787400}
   - component: {fileID: 289203420129252741}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: lf_hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -429,7 +454,7 @@ GameObject:
   - component: {fileID: 7521134623584359656}
   - component: {fileID: 5005883678023485468}
   - component: {fileID: 2598358404820466958}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -515,7 +540,7 @@ GameObject:
   - component: {fileID: 7129907279154775225}
   - component: {fileID: 4173043393424053969}
   - component: {fileID: 4609344862635114032}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: lf_foot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -661,6 +686,14 @@ PrefabInstance:
     - target: {fileID: 8292051271508773614, guid: a39703449d235a24699913158e9813f8, type: 3}
       propertyPath: m_Name
       value: CollisionCylinder
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292051271508773614, guid: a39703449d235a24699913158e9813f8, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292051271508773614, guid: a39703449d235a24699913158e9813f8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
