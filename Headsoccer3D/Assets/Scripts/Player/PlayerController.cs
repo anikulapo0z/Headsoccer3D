@@ -29,6 +29,10 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] private float headingForce = 5f;
     [SerializeField] private float headCooldown = 0.5f;
 
+    [Header("Animator")]
+    [SerializeField] private Animator anim;
+
+
     private CharacterController controller;
     private Vector2 moveInput;
 
@@ -52,6 +56,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     {
         controller = GetComponent<CharacterController>();
         currentKickHeight = startingKickHeight;
+        if(!anim)
+            anim = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -62,7 +68,6 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             verticalVelocity = groundStick;
             isHeaderAcive = false;
         }
-
         verticalVelocity += gravity * Time.deltaTime;
 
         Vector3 moveDir = new Vector3(moveInput.x, 0f, moveInput.y);
@@ -73,6 +78,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         // Apply movement
         Vector3 velocity = (moveDir * moveSpeed) + (Vector3.up * verticalVelocity);
+        anim.SetFloat("Velocity", Mathf.Abs(velocity.x) + Mathf.Abs(velocity.z));
+        anim.SetBool("onGround", controller.isGrounded);
 
         if (controller.enabled)
             controller.Move(velocity * Time.deltaTime);
@@ -84,6 +91,12 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             transform.rotation = Quaternion.Slerp(transform.rotation, target, rotationSpeed * Time.deltaTime);
         }
     }
+
+    private void FixedUpdate()
+    {
+        
+    }
+
     public void OnAbility()
     {
         //throw new System.NotImplementedException();
