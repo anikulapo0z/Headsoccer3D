@@ -66,8 +66,10 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             moveDir.Normalize();
 
         // Apply movement
-        if(controller.enabled)
-            controller.Move(moveDir * moveSpeed * Time.deltaTime);
+        Vector3 velocity = (moveDir * moveSpeed) + (Vector3.up * verticalVelocity);
+
+        if (controller.enabled)
+            controller.Move(velocity * Time.deltaTime);
 
         // Face movement direction
         if (rotateToMovement && moveDir.sqrMagnitude > 0.001f)
@@ -99,11 +101,21 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     public void OnJump()
     {
         //throw new System.NotImplementedException();
+        Debug.Log
+            (
+        $"[JUMP] Fired | grounded: {controller.isGrounded} | verticalVelocity before: {verticalVelocity}"
+        );
+
         if (controller.isGrounded)
         {
             verticalVelocity = jumpVelocity;
+            Debug.Log($"[JUMP] APPLY jumpVelocity = {jumpVelocity}");
         }
-        if(Time.time < nextHeadTime) return;
+        else
+        {
+            Debug.Log("[JUMP] Blocked – not grounded");
+        }
+        if (Time.time < nextHeadTime) return;
         nextHeadTime = Time.time + headCooldown;
 
         Rigidbody ball = GetClosest(ballsInHeadRange);
