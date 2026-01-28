@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.9713255, z: 0, w: 0.23775366}
   m_LocalPosition: {x: 1.9507668, y: 0, z: -2.8927107}
-  m_LocalScale: {x: 12, y: 12, z: 12}
+  m_LocalScale: {x: 10.5, y: 10.5, z: 10.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2110785505017032657}
@@ -146,22 +146,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
-  rotationSpeed: 20
+  rotationSpeed: 25
   rotateToMovement: 1
   kickForce: 10
   startingKickHeight: 4
   currentKickHeight: 0
   kickTrigger: {fileID: 374959338324389693}
   kickCooldown: 0.5
-  jumpVelocity: 8
-  gravity: -15
-  groundStick: -2
+  jumpVelocity: 10
+  gravity: -35
+  groundStick: -0.6
   headTrigger: {fileID: 7103126948410158059}
   headingForce: 5
   headCooldown: 0.5
   startingPos: {x: 0, y: 0, z: 0}
   ballVelocityPercent: 0.5
   playerVelocityPercent: 0.9
+  isHeaderAcive: 0
 --- !u!1 &2578436691414235925
 GameObject:
   m_ObjectHideFlags: 0

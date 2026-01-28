@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -44,6 +45,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField, Range(0f, 1f)] float ballVelocityPercent;
     [SerializeField, Range(0f, 1f)] float playerVelocityPercent;
 
+    [SerializeField] bool isHeaderAcive = false;
+    [SerializeField] GameObject kickCollider;
 
     void Awake()
     {
@@ -55,7 +58,10 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     {
         //Grounding and gravity logic
         if (controller.isGrounded && verticalVelocity < 0f)
+        {
             verticalVelocity = groundStick;
+            isHeaderAcive = false;
+        }
 
         verticalVelocity += gravity * Time.deltaTime;
 
@@ -108,6 +114,9 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         if (controller.isGrounded)
         {
+            // setting header active
+            isHeaderAcive = true;
+
             verticalVelocity = jumpVelocity;
             Debug.Log($"[JUMP] APPLY jumpVelocity = {jumpVelocity}");
         }
@@ -115,20 +124,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         {
             Debug.Log("[JUMP] Blocked – not grounded");
         }
-        if (Time.time < nextHeadTime) return;
-        nextHeadTime = Time.time + headCooldown;
 
-        Rigidbody ball = GetClosest(ballsInHeadRange);
-        if (ball == null) return;
-
-
-        Vector3 startingVel = ball.linearVelocity;
-        Vector3 newVel = (startingVel * ballVelocityPercent) + (controller.velocity * playerVelocityPercent);
-        newVel.y = 0f;
-
-
-        ball.linearVelocity = Vector3.zero;
-        ball.AddForce((Vector3.up * headingForce) + newVel, ForceMode.Impulse);
+        HeaderBall();
     }
     public void OnMove(Vector2 input)
     {
@@ -136,12 +133,16 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         moveInput = input;
         //throw new System.NotImplementedException();
     }
-
+    void ResetKickVisual()
+    {
+        kickCollider.SetActive(false);
+    }
     public void OnKick()
     {
         if (Time.time < nextKickTime) return;
         nextKickTime = Time.time + kickCooldown;
-
+        kickCollider.SetActive(true);
+        Invoke("ResetKickVisual", 0.3f);
         Rigidbody targetBall = GetClosest(ballsInKickRange);
         if (targetBall == null) return;
 
@@ -166,6 +167,47 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         targetBall.AddForce(kickDirection * kickForce, ForceMode.Impulse);
         targetBall.AddForce(new Vector3(0, currentKickHeight, 0), ForceMode.Impulse);
     }
+
+    void HeaderBall()
+    {
+        foreach (var t in ballsInHeadRange)
+        {
+            Debug.Log("after func call: " + t.name);
+        }
+
+
+        if (!isHeaderAcive) return;
+        if (ballsInHeadRange.Count == 0) return;
+
+        if (Time.time < nextHeadTime) return;
+        nextHeadTime = Time.time + headCooldown;
+
+
+        foreach (var t in ballsInHeadRange)
+        {
+            Debug.Log(t.name);
+        }
+        Debug.Log("hgjkhgkj");
+
+        //Rigidbody ball = GetClosest(ballsInHeadRange);
+        Rigidbody ball = ballsInHeadRange.FirstOrDefault();
+
+
+        if (ball == null) return;
+        Debug.Log("aaaaaaaaaaaaaaaaaaaaaa");
+
+
+        Vector3 startingVel = ball.linearVelocity;
+        Vector3 newVel = (startingVel * ballVelocityPercent) + (controller.velocity * playerVelocityPercent);
+        newVel.y = 0f;
+
+
+        ball.linearVelocity = Vector3.zero;
+        ball.AddForce((Vector3.up * headingForce) + newVel, ForceMode.Impulse);
+
+
+    }
+
 
     #region Kicking Logic
     private Rigidbody GetClosest(HashSet<Rigidbody> set)
@@ -197,7 +239,17 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             ballsInKickRange.Add(rb);
 
         if (headTrigger.bounds.Intersects(other.bounds))
+        {
+            Debug.Log("adding ball to head range");
             ballsInHeadRange.Add(rb);
+            foreach (var t in ballsInHeadRange)
+            {
+                Debug.Log("after adding to list: " + t.name);
+            }
+            HeaderBall();
+
+        }
+
     }
 
     private void OnTriggerExit(Collider other)
