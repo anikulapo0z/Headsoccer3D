@@ -115,7 +115,7 @@ public class CPUEnemy : MonoBehaviour
     }
 
     //kicking and team play----------------------------------------------------------------------
-    private void kickBallTowards(Vector3 _target, bool _switchRoles = false)
+    private void kickBallTowards(Vector3 _target, bool _switchRoles = false, float _forceMult = 1.0f)
     {
         Debug.Log(gameObject.name + "to kick the ball");
 
@@ -127,7 +127,7 @@ public class CPUEnemy : MonoBehaviour
 
         _brb.linearVelocity = Vector3.zero;
         _dir.y = Random.Range(0.234f, 1.5f);
-        _brb.AddForce(_dir * 5.8467f, ForceMode.VelocityChange);
+        _brb.AddForce(_dir * 5.8467f * _forceMult, ForceMode.VelocityChange);
 
         if (_switchRoles)
             myTeammate.moveToRecievePass();
@@ -136,10 +136,19 @@ public class CPUEnemy : MonoBehaviour
     private bool tryShoot()
     {
         //behind the player
-        if (Vector3.Dot((ball.position - goalPost.transform.position), (ball.position - transform.position)) < 0f)
+        if (Vector3.Dot((goalPost.transform.position - ball.position), (ball.position - transform.position)) < 0f)
         {
             Debug.Log("GOAL BEHIND PLAYER");
             return false;
+        }
+
+        Vector3 _nearestPost = goalPost.ClosestPointOnBounds(ball.transform.position);
+        //if goal is open
+        if (thomasMuller.isGridSPaceOccupied(0, 1))
+        {
+            //with force
+            kickBallTowards(_nearestPost, false, 2.0127f);
+            return true;
         }
 
         //near some distance
@@ -148,14 +157,7 @@ public class CPUEnemy : MonoBehaviour
             Debug.Log("ITS OFODIGUSSGUJ FARRRRRRRRRR");
             return false;
         }
-
-        Vector3 _nearestPost = goalPost.ClosestPointOnBounds(ball.transform.position);
-        //if goal is open
-        if (thomasMuller.isGridSPaceOccupied(0, 1))
-        {
-            kickBallTowards(_nearestPost);
-            return true;
-        }
+        
         //otherwise, find the angle
         else
         {
