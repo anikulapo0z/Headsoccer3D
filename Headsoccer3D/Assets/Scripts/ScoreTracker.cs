@@ -1,3 +1,4 @@
+using System.Xml.Schema;
 using TMPro;
 using UnityEngine;
 
@@ -11,6 +12,9 @@ public class ScoreTracker : MonoBehaviour
     [SerializeField] GameSceneManager gameSceneManager;
     public bool canScore = false;
 
+    [SerializeField] ParticleSystem[] leftGoalParticles;
+    [SerializeField] ParticleSystem[] rightGoalParticles;
+
 
     public void PointForLeft()
     {
@@ -20,6 +24,12 @@ public class ScoreTracker : MonoBehaviour
         leftScoreText.text = leftScore.ToString();
         gameSceneManager.GoalScored('l');
 
+        Debug.LogWarning(leftGoalParticles.Length);
+        foreach (ParticleSystem p in leftGoalParticles)
+        {
+            Debug.LogWarning(p.name);
+            p.Play();
+        }
     }
     public void PointForRight()
     {
@@ -28,5 +38,11 @@ public class ScoreTracker : MonoBehaviour
         rightScore++;
         rightScoreText.text = rightScore.ToString();
         gameSceneManager.GoalScored('r');
+
+        foreach (ParticleSystem p in rightGoalParticles)
+        {
+            Debug.LogWarning(p.name);
+            p.Play();
+        }
     }
 }
