@@ -3,7 +3,7 @@ public interface IPlayerControllable
 {
     void OnSprint(bool held);
     void OnJump();
-    void OnKick();
+    void OnKick(bool held);
     void OnJoin();
     void OnConfirm();
     void OnCancel();

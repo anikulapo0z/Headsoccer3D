@@ -90,7 +90,7 @@ public class SelectionCursor : MonoBehaviour, IPlayerControllable
         Debug.Log("OnJumpPressed");
     }
 
-    public void OnKick()
+    public void OnKick(bool held)
     {
         Debug.Log("OnKickPressed");
     }

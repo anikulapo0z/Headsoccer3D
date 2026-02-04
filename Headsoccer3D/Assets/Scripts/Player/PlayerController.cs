@@ -20,6 +20,18 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] private Collider kickTrigger;
     [SerializeField] private float kickCooldown = 0.5f;
     private bool kickUsesFacingDirection = true;
+    [Header("Charge Kick")]
+    [SerializeField] private bool useChargeKick = true;
+    [SerializeField] private float chargeTime2 = 0.5f;
+    [SerializeField] private float chargeTime3 = 1.5f;
+
+    [SerializeField] private float kickMult1 = 1f;
+    [SerializeField] private float kickMult2 = 2f;
+    [SerializeField] private float kickMult3 = 4f;
+    [SerializeField] private float tapTime = 0.1f;
+    private bool kickHeld;
+    private float kickHoldTime;
+    private int kickChargeLevel = 1;
 
     [Header("Jumping Settings")]
     [SerializeField] private float jumpVelocity = 8f;
@@ -107,7 +119,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         isSprinting = sprintHeld && hasMoveInput && controller.isGrounded && currentStamina > 0.1f;
         if (isSprinting)
         {
-            currentStamina -= staminaDrainRate * Time.deltaTime;
+            currentStamina -= staminaDrainRate * Time.fixedDeltaTime;
             regenTimer = staminaRegenDelay;
             if (currentStamina < 0f) currentStamina = 0f;
         }
@@ -133,13 +145,21 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             staminaBar.value = currentStamina / maxStamina;
 
         if (controller.enabled)
-            controller.Move(velocity * Time.deltaTime);
+            controller.Move(velocity * Time.fixedDeltaTime);
 
         // Face movement direction
         if (rotateToMovement && moveDir.sqrMagnitude > 0.001f)
         {
             Quaternion target = Quaternion.LookRotation(moveDir, Vector3.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, target, rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, target, rotationSpeed * Time.fixedDeltaTime);
+        }
+        if (useChargeKick && kickHeld)
+        {
+            kickHoldTime += Time.fixedDeltaTime;
+
+            if (kickHoldTime >= chargeTime3) kickChargeLevel = 3;
+            else if (kickHoldTime >= chargeTime2) kickChargeLevel = 2;
+            else kickChargeLevel = 1;
         }
     }
 
@@ -213,39 +233,33 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         kickCollider.SetActive(false);
         kickDisplayMat.SetFloat("_ScrollValue", 0f);
     }
-    public void OnKick()
+    public void OnKick(bool held)
     {
-        if (Time.time < nextKickTime) return;
-        nextKickTime = Time.time + kickCooldown;
-        kickCollider.SetActive(true);
-        kickDisplayMat.SetFloat("_ScrollValue", 0f);
-        StartCoroutine(KickVisualAndReset(0.3f));
-
-        Rigidbody targetBall = GetClosest(ballsInKickRange);
-        if (targetBall == null) return;
-
-        Vector3 kickDirection;
-
-        if (kickUsesFacingDirection)
+        if (!useChargeKick)
         {
-            kickDirection = transform.forward;
+            if (held) ChargeKick(1);
+            return;
+        }
+
+        if (held)
+        {
+            // start charging
+            kickHeld = true;
+            kickHoldTime = 0f;
+            kickChargeLevel = 1;
         }
         else
         {
-            kickDirection = (targetBall.worldCenterOfMass - transform.position);
+            // release -> perform kick
+            kickHeld = false;
+
+            int levelToUse = (kickHoldTime <= tapTime) ? 1 : kickChargeLevel;
+            ChargeKick(levelToUse);
+
+            kickHoldTime = 0f;
+            kickChargeLevel = 1;
         }
-
-        kickDirection.y = 0f;
-        if (kickDirection.sqrMagnitude < 0.0001f)
-            kickDirection = transform.forward;
-
-        kickDirection.Normalize();
-
-        targetBall.linearVelocity = Vector3.zero;
-        targetBall.AddForce(kickDirection * kickForce, ForceMode.Impulse);
-        targetBall.AddForce(new Vector3(0, currentKickHeight, 0), ForceMode.Impulse);
     }
-
     void HeaderBall()
     {
         foreach (var t in ballsInHeadRange)
@@ -339,6 +353,44 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         ballsInKickRange.Remove(rb);
         ballsInHeadRange.Remove(rb);
+    }
+    void ChargeKick(int level)
+    {
+        if (Time.time < nextKickTime) return;
+        nextKickTime = Time.time + kickCooldown;
+        kickCollider.SetActive(true);
+        kickDisplayMat.SetFloat("_ScrollValue", 0f);
+        StartCoroutine(KickVisualAndReset(0.3f));
+
+        Rigidbody targetBall = GetClosest(ballsInKickRange);
+        if (targetBall == null) return;
+
+        Vector3 kickDirection;
+
+        if (kickUsesFacingDirection)
+        {
+            kickDirection = transform.forward;
+        }
+        else
+        {
+            kickDirection = (targetBall.worldCenterOfMass - transform.position);
+        }
+
+        kickDirection.y = 0f;
+        if (kickDirection.sqrMagnitude < 0.01f)
+            kickDirection = transform.forward;
+
+        kickDirection.Normalize();
+
+        float mult = kickMult1;
+        if (level == 2) mult = kickMult2;
+        else if(level == 3) mult = kickMult3;
+        float finalForce = kickForce * mult;
+
+        targetBall.linearVelocity = Vector3.zero;
+        targetBall.AddForce(kickDirection * finalForce, ForceMode.Impulse);
+        targetBall.AddForce(new Vector3(0, currentKickHeight, 0), ForceMode.Impulse);
+        Debug.Log($"KICK! Level: {level} | Force: {finalForce} | hold: {kickHoldTime:F2}S");
     }
     #endregion
 

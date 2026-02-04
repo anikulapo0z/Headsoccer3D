@@ -62,6 +62,7 @@ public class PlayerInputController : MonoBehaviour
 
         moveAction.canceled += OnMoveCancelled;
         sprintAction.canceled += OnSprint;
+        kickAction.canceled += OnKick;
     }
 
     public void SetControlledObject(IPlayerControllable obj)
@@ -95,7 +96,8 @@ public class PlayerInputController : MonoBehaviour
 
     void OnKick(InputAction.CallbackContext ctx)
     {
-        controlledObject?.OnKick();
+        if (ctx.performed) controlledObject?.OnKick(true);
+        else if (ctx.canceled) controlledObject?.OnKick(false);
     }
 
     void OnJoin(InputAction.CallbackContext ctx)

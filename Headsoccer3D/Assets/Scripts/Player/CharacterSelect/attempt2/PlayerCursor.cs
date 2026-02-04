@@ -32,7 +32,7 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
         throw new System.NotImplementedException();
     }
 
-    void IPlayerControllable.OnKick()
+    void IPlayerControllable.OnKick(bool held)
     {
         throw new System.NotImplementedException();
     }
