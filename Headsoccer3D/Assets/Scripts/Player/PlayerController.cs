@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, IPlayerControllable
 {
@@ -54,6 +55,20 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] GameObject kickCollider;
     Material kickDisplayMat;
 
+    [Header("Sprint Settings")]
+    [SerializeField] private float sprintMultiplier = 2f;
+    [SerializeField] private float maxStamina = 10f;
+    [SerializeField] private float staminaDrainRate = 1f;
+    [SerializeField] private float staminaRegenRate = 0.8f;
+    [SerializeField] private float staminaRegenDelay = 2f;
+    [SerializeField] private Slider staminaBar;
+
+    private float currentStamina;
+    private float regenTimer;
+    private bool isSprinting = false;
+    private bool sprintHeld;
+
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -62,9 +77,17 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             anim = GetComponentInChildren<Animator>();
 
         kickDisplayMat = kickCollider.GetComponent<Renderer>().material;
+
+        currentStamina = maxStamina;
+        if (staminaBar)
+        {
+            staminaBar.minValue = 0f;
+            staminaBar.maxValue = 1f;
+            staminaBar.value = 1f;
+        }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         //Grounding and gravity logic
         if (controller.isGrounded && verticalVelocity < 0f)
@@ -72,7 +95,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             verticalVelocity = groundStick;
             isHeaderAcive = false;
         }
-        verticalVelocity += gravity * Time.deltaTime;
+        verticalVelocity += gravity * Time.fixedDeltaTime;
 
         Vector3 moveDir = new Vector3(moveInput.x, 0f, moveInput.y);
 
@@ -80,10 +103,34 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         if (moveDir.sqrMagnitude > 1f)
             moveDir.Normalize();
 
+        bool hasMoveInput = moveDir.sqrMagnitude > 0.001f;
+        isSprinting = sprintHeld && hasMoveInput && controller.isGrounded && currentStamina > 0.1f;
+        if (isSprinting)
+        {
+            currentStamina -= staminaDrainRate * Time.deltaTime;
+            regenTimer = staminaRegenDelay;
+            if (currentStamina < 0f) currentStamina = 0f;
+        }
+        else
+        {
+            if (regenTimer > 0f)
+            {
+                regenTimer -= Time.deltaTime;
+            }
+            else
+            {
+                currentStamina += staminaRegenRate * Time.fixedDeltaTime;
+                if (currentStamina > maxStamina) currentStamina = maxStamina;
+            }
+        }
         // Apply movement
+        float moveSpeed = isSprinting ? this.moveSpeed * sprintMultiplier : this.moveSpeed;
         Vector3 velocity = (moveDir * moveSpeed) + (Vector3.up * verticalVelocity);
         anim.SetFloat("Velocity", Mathf.Abs(velocity.x) + Mathf.Abs(velocity.z));
         anim.SetBool("onGround", controller.isGrounded);
+
+        if (staminaBar)
+            staminaBar.value = currentStamina / maxStamina;
 
         if (controller.enabled)
             controller.Move(velocity * Time.deltaTime);
@@ -94,11 +141,6 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             Quaternion target = Quaternion.LookRotation(moveDir, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, rotationSpeed * Time.deltaTime);
         }
-    }
-
-    private void FixedUpdate()
-    {
-        
     }
 
     public void OnAbility()
@@ -120,7 +162,10 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     {
         //throw new System.NotImplementedException();
     }
-
+    public void OnSprint(bool held)
+    {
+        sprintHeld = held;
+    }
     public void OnJump()
     {
         //throw new System.NotImplementedException();
@@ -156,7 +201,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         do
         {
             kickDisplayMat.SetFloat("_ScrollValue", timer);
-            Debug.Log(Mathf.Lerp(0f, 0.92f, timer));
+            //Debug.Log(Mathf.Lerp(0f, 0.92f, timer));
 
             yield return null;
 

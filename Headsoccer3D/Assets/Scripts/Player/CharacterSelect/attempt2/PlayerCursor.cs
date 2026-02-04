@@ -37,6 +37,10 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
         throw new System.NotImplementedException();
     }
 
+    void IPlayerControllable.OnSprint(bool held)
+    {
+        throw new System.NotImplementedException();
+    }
     void IPlayerControllable.OnJoin()
     {
         throw new System.NotImplementedException();

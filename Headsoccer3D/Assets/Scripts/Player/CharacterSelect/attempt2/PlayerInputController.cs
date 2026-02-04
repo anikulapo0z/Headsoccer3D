@@ -17,6 +17,7 @@ public class PlayerInputController : MonoBehaviour
     InputAction jumpAction;
     InputAction kickAction;
     InputAction abilityAction;
+    InputAction sprintAction;
 
 
     public void Initialize(
@@ -45,6 +46,7 @@ public class PlayerInputController : MonoBehaviour
         jumpAction = map.FindAction("Jump");
         kickAction = map.FindAction("Kick");
         abilityAction = map.FindAction("Ability");
+        sprintAction = map.FindAction("Sprint");
 
         moveAction.performed += OnMove;
         confirmAction.performed += OnConfirm;
@@ -54,10 +56,12 @@ public class PlayerInputController : MonoBehaviour
         jumpAction.performed += OnJump;
         kickAction.performed += OnKick;
         abilityAction.performed += OnAbility;
+        sprintAction.performed += OnSprint;
 
         map.Enable();
 
         moveAction.canceled += OnMoveCancelled;
+        sprintAction.canceled += OnSprint;
     }
 
     public void SetControlledObject(IPlayerControllable obj)
@@ -102,7 +106,11 @@ public class PlayerInputController : MonoBehaviour
     {
         controlledObject?.OnAbility();
     }
-
+    void OnSprint(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed) controlledObject?.OnSprint(true);
+        else if (ctx.canceled) controlledObject?.OnSprint(false);
+    }
 
 
     void OnDestroy()

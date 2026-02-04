@@ -104,4 +104,9 @@ public class SelectionCursor : MonoBehaviour, IPlayerControllable
     {
         Debug.Log("OnAbilityPressed");
     }
+
+    public void OnSprint(bool held)
+    {
+        Debug.Log("OnSprintPressed");
+    }
 }

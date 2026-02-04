@@ -1,6 +1,7 @@
 using UnityEngine;
 public interface IPlayerControllable
 {
+    void OnSprint(bool held);
     void OnJump();
     void OnKick();
     void OnJoin();
