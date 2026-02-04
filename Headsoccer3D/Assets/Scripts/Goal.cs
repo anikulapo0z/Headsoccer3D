@@ -21,6 +21,9 @@ public class Goal : MonoBehaviour
             {
                 scoreTracker.PointForLeft();
             }
+
+            other.GetComponent<SoccerBall>().resetBallParent();
+
         }
     }
 
