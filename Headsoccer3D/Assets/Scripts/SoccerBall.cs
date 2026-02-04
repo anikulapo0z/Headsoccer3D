@@ -12,25 +12,26 @@ public class SoccerBall : MonoBehaviour
 
     public void resetBallParent()
     {
+        if (activeBallPlayer.tag.Contains("CPU"))
+            activeBallPlayer.GetComponent<CPUEnemy>().holdingBall = false;
+
+        activeBallPlayer = null;
         transform.parent = null;
+        
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        
-        
-        //return if same player
-        if(activeBallPlayer == collision.transform)
-        {
-            //return;
-        }
-
         if(collision.gameObject.tag.Contains("Team") || collision.gameObject.tag.Contains("Player"))
         {
             transform.parent = collision.transform;
-            
+
             //set the player
+            resetBallParent();
             activeBallPlayer = collision.transform;
+            if (activeBallPlayer.tag.Contains("CPU"))
+                activeBallPlayer.GetComponent<CPUEnemy>().holdingBall = true;
+
             //physics
             Vector3 _dir = (transform.position - collision.transform.position);
             float _playerBallDot = Vector3.Dot(collision.transform.forward, _dir);
@@ -49,7 +50,7 @@ public class SoccerBall : MonoBehaviour
     {
         if (collision.gameObject.tag.Contains("Team") || collision.gameObject.tag.Contains("Player"))
         {
-            transform.parent = null;
+            resetBallParent();
         }
 
     }

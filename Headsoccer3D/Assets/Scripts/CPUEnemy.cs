@@ -4,6 +4,7 @@ using System.Collections;
 public enum CPURole
 {
     Attacker,
+    Runner,
     Defender
 };
 
@@ -24,6 +25,8 @@ public class CPUEnemy : MonoBehaviour
     //Teamplay
     [Space(10)]
     [Header("Teamplay")]
+    public bool holdingBall = false; //set from SoccerBall script
+    private bool teamPossession = true;
     public CPURole thisCPURole;
     public Transform ball;
     [SerializeField] private CPUEnemy myTeammate;
@@ -32,7 +35,6 @@ public class CPUEnemy : MonoBehaviour
     //Internal
     [Space(10)]
     [Header("Internal")]
-    private float distanceToBall = 0;
     [SerializeField] private Raumdeuter thomasMuller;
     private NavMeshAgent agent;
     private Vector2 gridPos;
@@ -79,9 +81,12 @@ public class CPUEnemy : MonoBehaviour
                                 , Vector3.up);
 
         //------------------------------------------------------------------------------------------------
-        
+        teamPossession = holdingBall || myTeammate.holdingBall;
+
         if (pauseForAMoment) return;
 
+
+        //go get ball
         if(movingToRecieve)
         {
             runningDestination = ball.position;
@@ -90,10 +95,13 @@ public class CPUEnemy : MonoBehaviour
                 movingToRecieve = false;
             return;
         }
-        //sets runningDestination
+
+        //sets running destination
         if (thisCPURole == CPURole.Attacker)
             CPUAttackingBehaviour();
-        if(thisCPURole == CPURole.Defender)
+        if (thisCPURole == CPURole.Runner)
+            CPURunningBehaviour();
+        if (thisCPURole == CPURole.Defender)
             CPUDefenseBehaviour();
 
         agent.SetDestination(runningDestination);
@@ -103,9 +111,21 @@ public class CPUEnemy : MonoBehaviour
     //Behaviour Tree
     void CPUAttackingBehaviour()
     {
-        runningDestination = ball.position;
+        if(holdingBall)
+        {
+
+        }
+            if (agent.remainingDistance < 0.62f)
+                moveToNewFreeSpace();
+        else
+            runningDestination = ball.position;
     }
-    
+    void CPURunningBehaviour()
+    {
+        if (agent.remainingDistance < 0.62f)
+            moveToNewFreeSpace();
+    }
+
     void CPUDefenseBehaviour()
     {
         // if you are close to the goal post, shield closer to the post
@@ -126,14 +146,17 @@ public class CPUEnemy : MonoBehaviour
         Vector3 _dir = (_target - ball.position).normalized;
 
         _brb.linearVelocity = Vector3.zero;
-        _dir.y = Random.Range(0.234f, 0.9f) / _forceMult; //more force should not affect y
+        _dir.y = Random.Range(0.234f, 0.76674f) / _forceMult; //more force should not affect y
         _brb.AddForce(_dir * 5.8467f * _forceMult, ForceMode.VelocityChange);
 
         if (_switchRoles)
+        {
+            StartCoroutine(larpAsJudeBelligoalAgainstBarca());
             myTeammate.moveToRecievePass();
+        }
 
     }
-    private bool tryShoot()
+    private bool tryShoot(bool _directGoal = false)
     {
         //behind the player
         if (Vector3.Dot((goalPost.transform.position - ball.position), (ball.position - transform.position)) < 0f)
@@ -144,7 +167,7 @@ public class CPUEnemy : MonoBehaviour
 
         Vector3 _nearestPost = goalPost.ClosestPointOnBounds(ball.transform.position);
         //if goal is open
-        if (thomasMuller.isGridSPaceOccupied(0, 1))
+        if (thomasMuller.isGridSPaceOccupied(0, 1) || _directGoal)
         {
             //with force
             kickBallTowards(_nearestPost, false, 2.0127f);
@@ -210,7 +233,7 @@ public class CPUEnemy : MonoBehaviour
         if (Vector3.Dot((_dirToTeammate - ball.position), (ball.position - transform.position)) < 0.1f)
             return false;
 
-        kickBallTowards(_dirToTeammate, true, 0.879f);
+        kickBallTowards(_dirToTeammate, true);
         return true;
     }
     private void yeetTheBallCloseToOtherCPU()
@@ -230,6 +253,14 @@ public class CPUEnemy : MonoBehaviour
     //asks Thomas Muller, "Muller-dono, watashiwa on which space?"
     private void assessPosition()
     {
+        if(teamPossession)
+        {
+            thisCPURole = holdingBall ? CPURole.Attacker : CPURole.Runner;
+            myTeammate.thisCPURole = holdingBall ? CPURole.Runner : CPURole.Attacker;
+            return;
+        }
+        
+
         gridPos = thomasMuller.convertToSpaceGrid(transform.position.x, transform.position.z);
         horizontalSpace = (HorizontalSpace)(int)gridPos.x;
         verticalSpace = (VerticalSpace)(int)gridPos.y;
@@ -256,6 +287,7 @@ public class CPUEnemy : MonoBehaviour
         runningDestination = thomasMuller.getPointOnFreeSpace(transform, myTeammate.runningDestination);
         agent.SetDestination(runningDestination);
     }
+
     //even in videogame, being like Messi is a cheat code smh.
     IEnumerator stopBeingMessi()
     {
@@ -284,6 +316,7 @@ public class CPUEnemy : MonoBehaviour
         pauseForAMoment = true;
         yield return new WaitForSeconds(0.5647f);
         pauseForAMoment = false;
+        assessPosition();
     }
 
     private void OnTriggerEnter(Collider other)
