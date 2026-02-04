@@ -79,7 +79,7 @@ public class MapSelectionCursor : MonoBehaviour, IPlayerControllable
         Debug.Log("OnJumpPressed");
     }
 
-    public void OnKick()
+    public void OnKick(bool held)
     {
         Debug.Log("OnKickPressed");
     }
@@ -93,5 +93,10 @@ public class MapSelectionCursor : MonoBehaviour, IPlayerControllable
     public void OnAbility()
     {
         Debug.Log("OnAbilityPressed");
+    }
+
+    public void OnSprint(bool held)
+    {
+        Debug.Log("OnSprintPressed");
     }
 }

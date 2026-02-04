@@ -90,7 +90,7 @@ public class SelectionCursor : MonoBehaviour, IPlayerControllable
         Debug.Log("OnJumpPressed");
     }
 
-    public void OnKick()
+    public void OnKick(bool held)
     {
         Debug.Log("OnKickPressed");
     }
@@ -103,5 +103,10 @@ public class SelectionCursor : MonoBehaviour, IPlayerControllable
     public void OnAbility()
     {
         Debug.Log("OnAbilityPressed");
+    }
+
+    public void OnSprint(bool held)
+    {
+        Debug.Log("OnSprintPressed");
     }
 }
