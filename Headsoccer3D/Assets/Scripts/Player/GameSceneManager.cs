@@ -457,31 +457,6 @@ public class GameSceneManager : MonoBehaviour
 
         }
 
-
-
-
-
-/*        if (inputControllers.Count > 2)
-        {
-            cpu1.gameObject.SetActive(false);
-            cpu2.gameObject.SetActive(false);
-
-            playerObj.transform.position = FourP_SpawnPoints[inputControllers.IndexOf(player)].transform.position;
-            playerObj.transform.rotation = Quaternion.Euler(FourP_SpawnPoints[inputControllers.IndexOf(player)].transform.eulerAngles);
-        }
-        else
-        {
-            raumdeuter.charactersToLookFor[inputControllers.IndexOf(player)] = playerObj.transform;
-            cpu1.realPlayers[inputControllers.IndexOf(player)] = playerObj.transform;
-            cpu2.realPlayers[inputControllers.IndexOf(player)] = playerObj.transform;
-            cpu1.ball = ballObject.transform;
-            cpu2.ball = ballObject.transform;
-
-            playerObj.transform.position = TwoP_SpawnPoints[inputControllers.IndexOf(player)].transform.position;
-            playerObj.transform.rotation = Quaternion.Euler(TwoP_SpawnPoints[inputControllers.IndexOf(player)].transform.eulerAngles);
-        }*/
-
-
     }
 
 }
