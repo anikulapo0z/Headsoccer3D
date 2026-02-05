@@ -6,7 +6,6 @@ public class PlayerInputController : MonoBehaviour
     public int PlayerIndex { get; private set; }
     public InputDevice AssignedDevice { get; private set; }
 
-    // Persistent controller identity
     public string ControllerId { get; private set; }
     public bool IsConnected { get; private set; }
 
