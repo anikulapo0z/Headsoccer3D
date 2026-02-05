@@ -48,10 +48,7 @@ public class PlayerJoinManager : MonoBehaviour
     {
         InputSystem.onAnyButtonPress.Call(OnAnyButtonPressed);
     }
-/*    void OnDisable()
-    {
-        InputSystem.onAnyButtonPress.Dispose();
-    }*/
+
 
 
     void OnDestroy()
@@ -97,7 +94,6 @@ public class PlayerJoinManager : MonoBehaviour
 
         string controllerId = BuildControllerId(device);
 
-        // Try reconnect by controller ID
         foreach (var controller in inputControllers)
         {
             if (!controller.IsConnected &&
@@ -109,7 +105,6 @@ public class PlayerJoinManager : MonoBehaviour
             }
         }
 
-        // First available disconnected slot
         foreach (var controller in inputControllers)
         {
             if (!controller.IsConnected)
@@ -120,7 +115,6 @@ public class PlayerJoinManager : MonoBehaviour
             }
         }
 
-        //  New player
         if (inputControllers.Count >= maxPlayers)
             return;
 
