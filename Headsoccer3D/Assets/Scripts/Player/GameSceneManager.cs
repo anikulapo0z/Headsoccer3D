@@ -1,8 +1,9 @@
-using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using System.Collections;
+using UnityEngine;
 using UnityEngine.AI;
+using static MenuManager;
 
 public class GameSceneManager : MonoBehaviour
 {
@@ -51,20 +52,21 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] CPUEnemy cpu1;
     [SerializeField] CPUEnemy cpu2;
     char sideThatScored;
-
+    [SerializeField] int numOfAIs = 0;
 
     void Start()
     {
         Instance = this;
-        LoadGameStart();
+        SetUpGameLevel(MenuManager.Instance.GetTeamSize(), MenuManager.Instance.GetGameMode());
+        //LoadGameStart();
     }
 
-    public void LoadGameStart()
+    void LoadGameStart()
     {
         inputControllers = PlayerInputHolder.Instance.playerList;
         ballObject = Instantiate(ballPrefab, ballStartingPos.position, Quaternion.identity);
 
-        CreatePlayers();
+        //CreatePlayers();
 
 
         StartCoroutine(StartGameCountDown());
@@ -165,28 +167,39 @@ public class GameSceneManager : MonoBehaviour
 
         foreach (var player in playerCharacters)
         {
-            if (inputControllers.Count > 2)
-            {
-                player.transform.position = FourP_SpawnPoints[playerCharacters.IndexOf(player)].transform.position;
-                player.transform.rotation = Quaternion.Euler(FourP_SpawnPoints[playerCharacters.IndexOf(player)].transform.eulerAngles);
-            }
+
+            if (MenuManager.Instance.GetTeamSize() == MenuManager.TeamSizes.v1)
+                player.transform.position = TwoP_SpawnPoints[playerCharacters.IndexOf(player)].transform.position;
             else
-            {
                 player.transform.position = FourP_SpawnPoints[playerCharacters.IndexOf(player)].transform.position;
-                player.transform.rotation = Quaternion.Euler(FourP_SpawnPoints[playerCharacters.IndexOf(player)].transform.eulerAngles);
 
-                cpu1.enabled = false;
-                cpu1.GetComponent<NavMeshAgent>().enabled = false;
+            
+        }
+
+        // only 2 AI's rn
+        if (numOfAIs == 0 || numOfAIs == 1 || numOfAIs == 3)
+        {
+            cpu1.gameObject.SetActive(false);
+            cpu2.gameObject.SetActive(false);
+            return;
+        }
+
+        // only made for 2 AI rn, CHANGE in future
+        for (int i = 0; i < numOfAIs; i++)
+        {
+            if (MenuManager.Instance.GetTeamSize() == MenuManager.TeamSizes.v2)
+            {
+
                 cpu1.transform.position = FourP_SpawnPoints[2].transform.position;
-                cpu1.transform.rotation = Quaternion.Euler(FourP_SpawnPoints[2].transform.eulerAngles);
-
-                cpu2.enabled = false;
-                cpu2.GetComponent<NavMeshAgent>().enabled = false;
                 cpu2.transform.position = FourP_SpawnPoints[3].transform.position;
-                cpu2.transform.rotation = Quaternion.Euler(FourP_SpawnPoints[3].transform.eulerAngles);
+
 
             }
+
+
         }
+
+
     }
 
 
@@ -296,5 +309,178 @@ public class GameSceneManager : MonoBehaviour
     }
 
 
+
+    public void SetUpGameLevel(MenuManager.TeamSizes teamSize, MenuManager.GameMode mode)
+    {
+        LoadGameStart();
+
+        SetupTeamSize(teamSize);
+        SetupGameMode(mode);
+
+    }
+
+    void SetupTeamSize(MenuManager.TeamSizes teamSize)
+    {
+        int playerCount = PlayerInputHolder.Instance.playerList.Count;
+        switch (teamSize)
+        {
+            case MenuManager.TeamSizes.v1:
+
+                //foreach(var t in playerCharacters) { }
+
+                if(playerCount == 1)
+                {
+                    // 1 AI
+                    InstanPlayers(MenuManager.TeamSizes.v1, 1);
+                }
+                else
+                {
+                    InstanPlayers(MenuManager.TeamSizes.v1, 0);
+
+                    // no AI
+                }
+                break;
+
+            case MenuManager.TeamSizes.v2:
+                if(playerCount == 1)
+                {
+                    // 3 AI
+                    InstanPlayers(MenuManager.TeamSizes.v2, 3);
+
+                }
+                else if(playerCount == 2)
+                {
+                    // 2 AI
+                    InstanPlayers(MenuManager.TeamSizes.v2, 2);
+
+                }
+                else if(playerCount == 3)
+                {
+                    // 1 AI
+                    InstanPlayers(MenuManager.TeamSizes.v2, 1);
+
+                }
+                else
+                {
+                    // no AI
+                    InstanPlayers(MenuManager.TeamSizes.v2, 0);
+
+                }
+                break;
+
+            default:
+                Debug.LogError("Team size isnt valid");
+                break;
+
+        }
+    }
+
+    void SetupGameMode(MenuManager.GameMode mode)
+    {
+        switch (mode)
+        {
+            case MenuManager.GameMode.Classic:
+                break;
+
+            case MenuManager.GameMode.RandomBall:
+                break;
+
+            case MenuManager.GameMode.StageHazards:
+                break;
+
+            case MenuManager.GameMode.RandomBallAndStageHazards:
+                break;
+
+            default:
+                Debug.LogError("O GOD O GOD O GOD, THE GAMEMODE ISNT VALID!");
+                break;
+        }
+    }
+
+    void InstanPlayers(MenuManager.TeamSizes teamSizes, int aiCount)
+    {
+        numOfAIs = aiCount;
+        foreach (var player in inputControllers)
+        {
+            //Debug.LogError(player.selectedCharacterID);
+            GameObject playerObj = Instantiate(characterList[player.selectedCharacterID]);
+            playerCharacters.Add(playerObj);
+
+            PlayerController playerController = playerObj.GetComponent<PlayerController>();
+
+            // disable so we can set position and rotation
+            playerObj.GetComponent<CharacterController>().enabled = false;
+
+            // set player position
+            if (teamSizes == MenuManager.TeamSizes.v1)
+                playerObj.transform.position = TwoP_SpawnPoints[inputControllers.IndexOf(player)].transform.position;
+            else
+                playerObj.transform.position = FourP_SpawnPoints[inputControllers.IndexOf(player)].transform.position;
+
+
+            if (aiCount == 2)
+            {
+                cpu1.realPlayers[inputControllers.IndexOf(player)] = playerObj.transform;
+                cpu2.realPlayers[inputControllers.IndexOf(player)] = playerObj.transform;
+                cpu1.ball = ballObject.transform;
+                cpu2.ball = ballObject.transform;
+                raumdeuter.charactersToLookFor[inputControllers.IndexOf(player)] = playerObj.transform;
+            }
+
+            player.SetControlledObject(playerController);
+
+            playerObj.GetComponent<CharacterController>().enabled = true;
+        }
+
+        // only 2 AI's rn
+        if (aiCount == 0 || aiCount == 1 || aiCount == 3)
+        {
+            Debug.LogError("turning off ai");
+            cpu1.gameObject.SetActive(false);
+            cpu2.gameObject.SetActive(false);
+            return;
+        }
+        
+        // only made for 2 AI rn, CHANGE in future
+        for (int i = 0; i < aiCount; i++)
+        {
+            if (teamSizes == MenuManager.TeamSizes.v2)
+            {
+
+                cpu1.transform.position = FourP_SpawnPoints[2].transform.position;
+                cpu2.transform.position = FourP_SpawnPoints[3].transform.position;
+
+
+            }
+
+
+        }
+
+
+
+
+
+/*        if (inputControllers.Count > 2)
+        {
+            cpu1.gameObject.SetActive(false);
+            cpu2.gameObject.SetActive(false);
+
+            playerObj.transform.position = FourP_SpawnPoints[inputControllers.IndexOf(player)].transform.position;
+            playerObj.transform.rotation = Quaternion.Euler(FourP_SpawnPoints[inputControllers.IndexOf(player)].transform.eulerAngles);
+        }
+        else
+        {
+            raumdeuter.charactersToLookFor[inputControllers.IndexOf(player)] = playerObj.transform;
+            cpu1.realPlayers[inputControllers.IndexOf(player)] = playerObj.transform;
+            cpu2.realPlayers[inputControllers.IndexOf(player)] = playerObj.transform;
+            cpu1.ball = ballObject.transform;
+            cpu2.ball = ballObject.transform;
+
+            playerObj.transform.position = TwoP_SpawnPoints[inputControllers.IndexOf(player)].transform.position;
+            playerObj.transform.rotation = Quaternion.Euler(TwoP_SpawnPoints[inputControllers.IndexOf(player)].transform.eulerAngles);
+        }*/
+
+
+    }
 
 }
