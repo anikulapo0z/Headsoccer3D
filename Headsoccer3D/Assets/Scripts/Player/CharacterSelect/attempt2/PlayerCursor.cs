@@ -1,47 +1,145 @@
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using System.Collections;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
+[RequireComponent(typeof(RectTransform))]
 public class PlayerCursor : MonoBehaviour, IPlayerControllable
 {
-    [SerializeField] private float moveSpeed = 800f;
-    private RectTransform rect;
+    [Header("Cursor Settings")]
+    public int playerIndex;
+    public float moveSpeed = 1200f;
 
-    private void Awake()
+    RectTransform cursorRect;
+    RectTransform canvasRect;
+    Canvas canvas;
+    GraphicRaycaster raycaster;
+    EventSystem eventSystem;
+
+    [SerializeField]IMenuItem currentItem;
+
+    Vector2 moveInput;
+    public bool isLocked = false;
+
+    void Awake()
     {
-        rect = GetComponent<RectTransform>();
+        cursorRect = GetComponent<RectTransform>();
+
+        canvas = GetComponentInParent<Canvas>();
+
+        canvasRect = canvas.GetComponent<RectTransform>();
+        raycaster = canvas.GetComponent<GraphicRaycaster>();
+        eventSystem = EventSystem.current;
+
+        if (raycaster == null)
+            Debug.LogError("canvas missing GraphicRaycaster");
+
+        if (TryGetComponent<Graphic>(out var g))
+            g.raycastTarget = false;
     }
 
-    public void OnMove(Vector2 input)
+    void FixedUpdate()
     {
-        rect.anchoredPosition += input * moveSpeed * Time.deltaTime;
+
+        if (isLocked) return;
+        if (moveInput.sqrMagnitude > 0.1f)
+        {
+            MoveCursor(moveInput);
+            RaycastForMenuItem();
+        }
+    }
+
+
+    public void OnMove(Vector2 dir)
+    {
+        moveInput = dir;
+    }
+
+    void MoveCursor(Vector2 dir)
+    {
+        Vector2 delta = dir * moveSpeed * Time.unscaledDeltaTime;
+        cursorRect.anchoredPosition += delta;
+
+        ClampToCanvas();
+    }
+
+    void ClampToCanvas()
+    {
+        Vector2 canvasSize = canvasRect.rect.size;
+        Vector2 cursorSize = cursorRect.rect.size;
+
+        Vector2 min = -canvasSize * 0.5f + cursorSize * 0.5f;
+        Vector2 max = canvasSize * 0.5f - cursorSize * 0.5f;
+
+        Vector2 pos = cursorRect.anchoredPosition;
+        pos.x = Mathf.Clamp(pos.x, min.x, max.x);
+        pos.y = Mathf.Clamp(pos.y, min.y, max.y);
+
+        cursorRect.anchoredPosition = pos;
+    }
+
+    void RaycastForMenuItem()
+    {
+        if (raycaster == null || eventSystem == null)
+            return;
+
+        PointerEventData pointerData = new PointerEventData(eventSystem)
+        {
+            position = RectTransformUtility.WorldToScreenPoint(
+                canvas.worldCamera,
+                cursorRect.position
+            )
+        };
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        raycaster.Raycast(pointerData, results);
+
+        IMenuItem hitItem = null;
+
+        if (results.Count == 0 && currentItem != null)
+        {
+            currentItem?.OnHoverExit(playerIndex);
+            currentItem = null;
+        }
+
+        foreach (var r in results)
+        {
+            hitItem = r.gameObject.GetComponent<IMenuItem>();
+            if (hitItem != null)
+                break;
+        }
+
+        if (hitItem != currentItem)
+        {
+            currentItem?.OnHoverExit(playerIndex);
+            currentItem = hitItem;
+            currentItem?.OnHoverEnter(playerIndex);
+        }
     }
 
     public void OnConfirm()
     {
-        Debug.Log($"{name} Confirm");
+        if (currentItem != null)
+        {
+            currentItem.OnConfirm(playerIndex);
+
+            MenuManager.Instance.CheckPlayerConfirm(isLocked);
+            isLocked = true;
+            currentItem.OnConfirm(playerIndex);
+        }
     }
+
 
     public void OnCancel()
     {
-        Debug.Log($"{name} Cancel");
-    }
-
-    void IPlayerControllable.OnJump()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    void IPlayerControllable.OnKick(bool held)
-    {
-        throw new System.NotImplementedException();
+        MenuManager.Instance.PlayerCancel(isLocked);
+        isLocked = false;
+        currentItem?.OnHoverExit(playerIndex);
+        currentItem = null;
     }
 
     void IPlayerControllable.OnSprint(bool held)
-    {
-        throw new System.NotImplementedException();
-    }
-    void IPlayerControllable.OnJoin()
     {
         throw new System.NotImplementedException();
     }
@@ -61,8 +159,8 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
         throw new System.NotImplementedException();
     }
 
-    public void OnAbility()
-    {
-        throw new System.NotImplementedException();
-    }
+    public void OnJump() { }
+    public void OnKick() { }
+    public void OnJoin() { }
+    public void OnAbility() { }
 }

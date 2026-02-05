@@ -26,7 +26,7 @@ public class MapSelectionCursor : MonoBehaviour, IPlayerControllable
 
         RectTransform targetButton = null;
 
-        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+/*        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
         {
             if (dir.x < 0)
             {
@@ -47,7 +47,7 @@ public class MapSelectionCursor : MonoBehaviour, IPlayerControllable
             {
                 targetButton = currentButton.selectionAbove;
             }
-        }
+        }*/
 
         if (targetButton != null)
         {
