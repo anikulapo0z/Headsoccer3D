@@ -4,7 +4,6 @@ using System.Collections;
 public enum CPURole
 {
     Attacker,
-    Runner,
     Defender
 };
 
@@ -75,8 +74,9 @@ public class CPUEnemy : MonoBehaviour
 
     private void Update()
     {
-        //rotation
-        transform.rotation = Quaternion.LookRotation((new Vector3
+        //rotation only if not holding ball
+        if(!holdingBall)
+            transform.rotation = Quaternion.LookRotation((new Vector3
                     (ball.position.x, transform.position.y, ball.position.z) - transform.position).normalized 
                                 , Vector3.up);
 
@@ -91,16 +91,16 @@ public class CPUEnemy : MonoBehaviour
         {
             runningDestination = ball.position;
             agent.SetDestination(runningDestination);
-            if (agent.remainingDistance < 0.102f)
+            if (agent.remainingDistance < 0.1486f)
+            {
                 movingToRecieve = false;
+            }
             return;
         }
 
         //sets running destination
         if (thisCPURole == CPURole.Attacker)
             CPUAttackingBehaviour();
-        if (thisCPURole == CPURole.Runner)
-            CPURunningBehaviour();
         if (thisCPURole == CPURole.Defender)
             CPUDefenseBehaviour();
 
@@ -113,25 +113,34 @@ public class CPUEnemy : MonoBehaviour
     {
         if(holdingBall)
         {
-
-        }
             if (agent.remainingDistance < 0.62f)
+            {
                 moveToNewFreeSpace();
+            }
+        }
         else
+        {
             runningDestination = ball.position;
-    }
-    void CPURunningBehaviour()
-    {
-        if (agent.remainingDistance < 0.62f)
-            moveToNewFreeSpace();
+        }
     }
 
     void CPUDefenseBehaviour()
     {
-        // if you are close to the goal post, shield closer to the post
-        runningDestination = Vector3.Lerp(defendingPost.transform.position, ball.position,
-           horizontalSpace == HorizontalSpace.Attacking && verticalSpace == VerticalSpace.Central
-           ? 0.8861f : 0.513694f);
+
+        if (holdingBall)
+        {
+            if (agent.remainingDistance < 0.22f)
+            {
+                myTeammate.tryPass();
+            }
+        }
+        else
+        {
+            // if you are close to the goal post, shield closer to the post
+            runningDestination = Vector3.Lerp(defendingPost.transform.position, ball.position,
+               horizontalSpace == HorizontalSpace.Attacking && verticalSpace == VerticalSpace.Central
+               ? 0.8861f : 0.513694f);
+        }
     }
 
     //kicking and team play----------------------------------------------------------------------
@@ -152,10 +161,14 @@ public class CPUEnemy : MonoBehaviour
         if (_switchRoles)
         {
             StartCoroutine(larpAsJudeBelligoalAgainstBarca());
+            //and litelly switch roles
+            myTeammate.thisCPURole = CPURole.Attacker;
+            thisCPURole = CPURole.Defender;
             myTeammate.moveToRecievePass();
         }
 
     }
+
     private bool tryShoot(bool _directGoal = false)
     {
         //behind the player
@@ -171,6 +184,7 @@ public class CPUEnemy : MonoBehaviour
         {
             //with force
             kickBallTowards(_nearestPost, false, 2.0127f);
+            ball.GetComponent<SoccerBall>().resetBallParent();
             return true;
         }
 
@@ -188,6 +202,9 @@ public class CPUEnemy : MonoBehaviour
             float[] _angleToPlayers = new float[realPlayers.Length];
             for (int i = 0; i < realPlayers.Length; i++)
             {
+                if (realPlayers[i] == null)
+                    continue;
+
                 _angleToPlayers[i] = Vector3.Dot(ball.transform.position, realPlayers[i].position);
             }
 
@@ -207,6 +224,7 @@ public class CPUEnemy : MonoBehaviour
                     {
                         //angle found
                         kickBallTowards(goalAngles[i].position);
+                        ball.GetComponent<SoccerBall>().resetBallParent();
                         return true;
                     }
                 }
@@ -217,24 +235,35 @@ public class CPUEnemy : MonoBehaviour
             if (Random.value < 0.7f) // 70% chance
             {
                 kickBallTowards(_nearestPost);
+                ball.GetComponent<SoccerBall>().resetBallParent();
                 return true;
             }
 
-            Debug.Log("NOTHINGGGGGGGGGGGGGGGGGGG");
             return false;
         }
     }
-    private bool tryPass()
+    private void tryPass()
     {
+        //get current position
         //random decision
         Vector3 _dirToTeammate = Random.value > 0.5f ? myTeammate.transform.position : myTeammate.runningDestination;
 
+        //dont pass if teammate is in defensive line
+        int _XLine = (int)thomasMuller.convertToSpaceGrid(myTeammate.transform.position.x, myTeammate.transform.position.z).x;
+
+        if (_XLine == 2)
+        {
+            tryShoot();
+        }
+
         //its behind
         if (Vector3.Dot((_dirToTeammate - ball.position), (ball.position - transform.position)) < 0.1f)
-            return false;
+        {
+            yeetTheBallCloseToOtherCPU();
+            return;
+        }
 
         kickBallTowards(_dirToTeammate, true);
-        return true;
     }
     private void yeetTheBallCloseToOtherCPU()
     {
@@ -242,10 +271,22 @@ public class CPUEnemy : MonoBehaviour
         Vector3 _dirToTeammate = Random.value > 0.5f ? myTeammate.transform.position : myTeammate.runningDestination;
         kickBallTowards(_dirToTeammate, true);
     }
-    public void moveToRecievePass()
+
+    private void passToFreeSpace()
+    {
+        Vector3 _dirToSpace = thomasMuller.getPointOnFreeSpace(transform, myTeammate.transform.position);
+        //dont pass towards goal
+        Vector2 _zone = thomasMuller.convertToSpaceGrid(_dirToSpace.x, _dirToSpace.z);
+        if (_zone.x == 2 && _zone.y == 1)
+            return;
+
+        kickBallTowards(_dirToSpace, true);
+    }
+    public void moveToRecievePass(bool sprintToBall = false)
     {
         movingToRecieve = true;
         runningDestination = ball.position;
+        agent.speed *= 2;
         StartCoroutine(stopBeingGattuso());
     }
 
@@ -253,10 +294,12 @@ public class CPUEnemy : MonoBehaviour
     //asks Thomas Muller, "Muller-dono, watashiwa on which space?"
     private void assessPosition()
     {
+        if (pauseForAMoment) return;
+
         if(teamPossession)
         {
-            thisCPURole = holdingBall ? CPURole.Attacker : CPURole.Runner;
-            myTeammate.thisCPURole = holdingBall ? CPURole.Runner : CPURole.Attacker;
+            thisCPURole = holdingBall ? CPURole.Attacker : CPURole.Defender;
+            myTeammate.thisCPURole = holdingBall ? CPURole.Defender : CPURole.Attacker;
             return;
         }
         
@@ -288,25 +331,12 @@ public class CPUEnemy : MonoBehaviour
         agent.SetDestination(runningDestination);
     }
 
-    //even in videogame, being like Messi is a cheat code smh.
-    IEnumerator stopBeingMessi()
-    {
-        yield return new WaitForSeconds(0.5647f);
-        ball.parent = null;
-        //try shooting
-        if (!tryShoot())
-        {
-            if (!tryPass())
-            {
-                yeetTheBallCloseToOtherCPU();
-            }
-        }
-    }
     //dont chase the ball anymore and think of CPURole
     IEnumerator stopBeingGattuso()
     {
         yield return new WaitForSeconds(1.1966f);
         movingToRecieve = false;
+        agent.speed /= 2;
         assessPosition();
         moveToNewFreeSpace();
     }
@@ -319,20 +349,12 @@ public class CPUEnemy : MonoBehaviour
         assessPosition();
     }
 
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Ball")
         {
-            //shoot check on recieve ball
-            if(!tryShoot())
-            {
-                if(!tryPass())
-                {
-                    //if failed, dribble
-                    yeetTheBallCloseToOtherCPU();
-                    moveToNewFreeSpace();
-                }
-            }
+            tryShoot(); //one touch finish
         }
     }
 }
