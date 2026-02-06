@@ -9,5 +9,4 @@ public interface IPlayerControllable
     void OnCancel();
     void OnAbility();
     void OnMove(Vector2 input);
-
 }

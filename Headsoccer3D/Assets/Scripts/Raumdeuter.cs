@@ -131,7 +131,7 @@ public class Raumdeuter : MonoBehaviour
 
     public Vector3 getPointOnFreeSpace(Transform _newMovement, Vector3 _teamMatePosition)
     {
-        int _freeSpaceIndex = GetRandomClosestFreeSpace(_newMovement);
+        int _freeSpaceIndex = GetRandomClosestFreeSpace(_newMovement, _teamMatePosition);
 
         float _xIndex = Mathf.Floor(_freeSpaceIndex/10);
         float _zIndex = _freeSpaceIndex - _xIndex;
@@ -142,9 +142,11 @@ public class Raumdeuter : MonoBehaviour
         return new Vector3(_randX, _newMovement.position.y, _randZ);
     }
 
-    private int GetRandomClosestFreeSpace(Transform _point)
+    private int GetRandomClosestFreeSpace(Transform _point, Vector3 _teamMatePosition)
     {
+        Vector2 _teammateGrid = convertToSpaceGrid(_teamMatePosition.x, _teamMatePosition.z);
         Vector2 _onGrid = convertToSpaceGrid(_point.position.x, _point.position.z);
+
         int _x = (int)_onGrid.x;
         int _z = (int)_onGrid.y;
         List<int> _possibleSpaces = new List<int>();
@@ -153,6 +155,10 @@ public class Raumdeuter : MonoBehaviour
         {
             //left, center and right of the current grid pos
             _x = Mathf.Clamp((int)_onGrid.x - i, 0, 2);
+
+            if(_x == _teammateGrid.x)
+                continue;
+
             for (int j = -1; j <= 1; j++)
             {
                 //up, center, amd bottom of the current grid space

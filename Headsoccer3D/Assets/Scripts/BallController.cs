@@ -13,14 +13,9 @@ public class BallController : MonoBehaviour
 
     [SerializeField] float predictionTime;
     [SerializeField] Vector3 canvasOffset;
-
+    [SerializeField] float lerpSpeed = 12f;
 
     LineRenderer lr;
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-            rb.AddForce(t, ForceMode.Impulse);
-    }
 
 
     void Awake()
@@ -39,6 +34,7 @@ public class BallController : MonoBehaviour
 
     }
 
+    // predicting balls future position
     void OnDrawGizmos()
     {
         Vector3 start = transform.position;
@@ -64,7 +60,10 @@ public class BallController : MonoBehaviour
             );
         if(Physics.Raycast(transform.position, Vector3.down, out hit, 100, layerToShowBallPositionOn))
         {
-            ballPositionIndicator.transform.position = hit.point + canvasOffset;
+            ballPositionIndicator.transform.position = Vector3.Lerp(
+                ballPositionIndicator.transform.position,
+                hit.point + canvasOffset,
+                Time.deltaTime * lerpSpeed);
             lr.SetPosition(0, transform.position);
             lr.SetPosition(1, hit.point);
         }

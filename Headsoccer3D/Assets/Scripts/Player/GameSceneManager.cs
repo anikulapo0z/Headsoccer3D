@@ -312,6 +312,7 @@ public class GameSceneManager : MonoBehaviour
         ballObject.GetComponent<SphereCollider>().enabled = true;
         ballObject.GetComponent<Rigidbody>().isKinematic = false;
         ballObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+        ballObject.GetComponent<SoccerBall>().resetBallParent();
     }
 
 

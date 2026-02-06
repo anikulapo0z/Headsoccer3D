@@ -239,8 +239,8 @@ MonoBehaviour:
   target: {fileID: 2745452100233998954}
   cameraPivot: {fileID: 0}
   rotationLerpSpeed: 5
-  maxLeftRightAngle: 3
-  maxUpDownAngle: 3
+  maxLeftRightAngle: 2
+  maxUpDownAngle: 2
   shakeDuration: 0
   shakeStrength: 0
   shakeVibrato: 0
@@ -1467,7 +1467,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.007, y: 0.0016, z: 0.003}
-  m_Center: {x: 0.000022621125, y: -0.001, z: 0.0018427629}
+  m_Center: {x: 0.000022621125, y: -0.0008, z: 0.0018427629}
 --- !u!65 &8263222122247348896
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2195,6 +2195,16 @@ MonoBehaviour:
   - {fileID: 4305443445794157789}
   testConfett: {fileID: 6740487426046320134}
   timeUntilTurnParticlesOff: 3
+  cameraController: {fileID: 0}
+  shakeDuration: 0.1
+  shakeStrength: 0.05
+  shakeVibrato: 30
+  littleShakeMultiplier: 1
+  bigShakeMultiplier: 3
+  massiveShakeMultiplier: 5
+  littleShakeSpeed: 1
+  bigShakeSpeed: 3
+  massiveShakeSpeed: 5
 --- !u!1 &4672032881618193271
 GameObject:
   m_ObjectHideFlags: 0
@@ -2666,6 +2676,7 @@ MonoBehaviour:
   - {fileID: 5359544742074212631}
   - {fileID: 5025510620993539889}
   defendingPost: {fileID: 5560915164215803212}
+  holdingBall: 0
   thisCPURole: 0
   ball: {fileID: 0}
   myTeammate: {fileID: 0}
@@ -4086,7 +4097,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.007, y: 0.0016, z: 0.003}
-  m_Center: {x: 0.000022621125, y: -0.001, z: 0.0018427629}
+  m_Center: {x: 0.000022621125, y: -0.0008, z: 0.0018427629}
 --- !u!65 &6211768167094441699
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4266,6 +4277,7 @@ MonoBehaviour:
   - {fileID: 5359544742074212631}
   - {fileID: 5025510620993539889}
   defendingPost: {fileID: 5560915164215803212}
+  holdingBall: 0
   thisCPURole: 0
   ball: {fileID: 0}
   myTeammate: {fileID: 0}

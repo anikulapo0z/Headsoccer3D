@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 
 public class ScoreTracker : MonoBehaviour
 {
@@ -17,6 +18,24 @@ public class ScoreTracker : MonoBehaviour
 
     [SerializeField] private ParticleSystem testConfett;
     [SerializeField] float timeUntilTurnParticlesOff;
+
+    [SerializeField] CameraController cameraController;
+
+    [Space(10)]
+    [Header("Camera Shake Values")]
+    [SerializeField] float shakeDuration;
+    [SerializeField] float shakeStrength;
+    [SerializeField] int shakeVibrato;
+
+    [Space(5)]
+    [SerializeField] float littleShakeMultiplier;
+    [SerializeField] float bigShakeMultiplier;
+    [SerializeField] float massiveShakeMultiplier;
+
+    [Space(5)]
+    [SerializeField] float littleShakeSpeed;
+    [SerializeField] float bigShakeSpeed;
+    [SerializeField] float massiveShakeSpeed;
 
     public void PointForLeft()
     {
@@ -74,6 +93,34 @@ public class ScoreTracker : MonoBehaviour
         foreach(var t in rightGoalParticles)
         {
             t.gameObject.SetActive(false);
+        }
+    }
+
+    public void ShakeCamera(float ballSpeed)
+    {
+        if (ballSpeed > massiveShakeSpeed)
+        {
+            cameraController.ShakeCamera(
+                shakeDuration * massiveShakeMultiplier,
+                shakeStrength * massiveShakeMultiplier,
+                (int)(shakeVibrato * massiveShakeMultiplier));
+            return;
+        }
+        if (ballSpeed > bigShakeSpeed)
+        {
+            cameraController.ShakeCamera(
+                shakeDuration * bigShakeMultiplier,
+                shakeStrength * bigShakeMultiplier,
+                (int)(shakeVibrato * bigShakeMultiplier));
+            return;
+        }
+        if (ballSpeed > littleShakeSpeed)
+        {
+            cameraController.ShakeCamera(
+                shakeDuration * littleShakeMultiplier,
+                shakeStrength * littleShakeMultiplier,
+                (int)(shakeVibrato * littleShakeMultiplier));
+            return;
         }
     }
 
