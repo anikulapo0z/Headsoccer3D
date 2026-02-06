@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
+
 
 [RequireComponent(typeof(RectTransform))]
 public class PlayerCursor : MonoBehaviour, IPlayerControllable
@@ -17,10 +17,15 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
     GraphicRaycaster raycaster;
     EventSystem eventSystem;
 
-    [SerializeField]IMenuItem currentItem;
+    [SerializeField] IMenuItem currentItem;
+
+
+
 
     Vector2 moveInput;
     public bool isLocked = false;
+
+
 
     void Awake()
     {
@@ -139,28 +144,9 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
         currentItem = null;
     }
 
-    void IPlayerControllable.OnSprint(bool held)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    void IPlayerControllable.OnConfirm()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    void IPlayerControllable.OnCancel()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    void IPlayerControllable.OnMove(Vector2 input)
-    {
-        throw new System.NotImplementedException();
-    }
-
     public void OnJump() { }
-    public void OnKick() { }
+    public void OnKick(bool val) { }
+    public void OnSprint(bool val) { }
     public void OnJoin() { }
     public void OnAbility() { }
 }
