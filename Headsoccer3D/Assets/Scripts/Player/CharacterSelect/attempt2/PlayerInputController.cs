@@ -121,7 +121,11 @@ public class PlayerInputController : MonoBehaviour
     void OnConfirm(InputAction.CallbackContext ctx) => controlledObject?.OnConfirm();
     void OnCancel(InputAction.CallbackContext ctx) => controlledObject?.OnCancel();
     void OnJump(InputAction.CallbackContext ctx) => controlledObject?.OnJump();
-    void OnKick(InputAction.CallbackContext ctx) => controlledObject?.OnKick();
+    void OnKick(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed) controlledObject?.OnKick(true);
+        else if (ctx.canceled) controlledObject?.OnKick(false);
+    }
     void OnJoin(InputAction.CallbackContext ctx) => controlledObject?.OnJoin();
     void OnAbility(InputAction.CallbackContext ctx) => controlledObject?.OnAbility();
 
