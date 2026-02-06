@@ -1,6 +1,6 @@
-using System.Xml.Schema;
 using TMPro;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class ScoreTracker : MonoBehaviour
 {
@@ -12,9 +12,11 @@ public class ScoreTracker : MonoBehaviour
     [SerializeField] GameSceneManager gameSceneManager;
     public bool canScore = false;
 
-    [SerializeField] ParticleSystem[] leftGoalParticles;
-    [SerializeField] ParticleSystem[] rightGoalParticles;
+    [SerializeField] List<GameObject> leftGoalParticles = new List<GameObject>();
+    [SerializeField] List<GameObject> rightGoalParticles = new List<GameObject>();
 
+    [SerializeField] private ParticleSystem testConfett;
+    [SerializeField] float timeUntilTurnParticlesOff;
 
     public void PointForLeft()
     {
@@ -24,12 +26,21 @@ public class ScoreTracker : MonoBehaviour
         leftScoreText.text = leftScore.ToString();
         gameSceneManager.GoalScored('l');
 
-        Debug.LogWarning(leftGoalParticles.Length);
-        foreach (ParticleSystem p in leftGoalParticles)
+        Debug.LogWarning(leftGoalParticles.Count);
+
+        //leftGoalParticles[0].Play();
+        //testConfett.Play();
+
+
+
+        var particles = leftGoalParticles;
+
+        foreach (var p in particles)
         {
-            Debug.LogWarning(p.name);
-            p.Play();
+            p.SetActive(true);
         }
+        Invoke("TurnOffParticles", timeUntilTurnParticlesOff);
+
     }
     public void PointForRight()
     {
@@ -39,10 +50,31 @@ public class ScoreTracker : MonoBehaviour
         rightScoreText.text = rightScore.ToString();
         gameSceneManager.GoalScored('r');
 
-        foreach (ParticleSystem p in rightGoalParticles)
+        //rightGoalParticles[0].Play();
+
+        //testConfett.Play();
+
+
+
+        var particles = rightGoalParticles;
+
+        foreach (var p in particles)
         {
-            Debug.LogWarning(p.name);
-            p.Play();
+            p.SetActive(true);
+        }
+        Invoke("TurnOffParticles", timeUntilTurnParticlesOff);
+    }
+    
+    void TurnOffParticles()
+    {
+        foreach(var t in leftGoalParticles)
+        {
+            t.gameObject.SetActive(false);
+        }
+        foreach(var t in rightGoalParticles)
+        {
+            t.gameObject.SetActive(false);
         }
     }
+
 }

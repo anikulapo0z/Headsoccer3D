@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
 using static MenuManager;
@@ -54,6 +55,9 @@ public class GameSceneManager : MonoBehaviour
     char sideThatScored;
     [SerializeField] int numOfAIs = 0;
 
+    [SerializeField] CameraController camera;
+
+
     void Start()
     {
         Instance = this;
@@ -65,6 +69,8 @@ public class GameSceneManager : MonoBehaviour
     {
         inputControllers = PlayerInputHolder.Instance.playerList;
         ballObject = Instantiate(ballPrefab, ballStartingPos.position, Quaternion.identity);
+        camera.target = ballObject.transform;
+
 
         //CreatePlayers();
 
