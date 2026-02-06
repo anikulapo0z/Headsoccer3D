@@ -9,10 +9,13 @@ public class Goal : MonoBehaviour
 
 
 
+
+
     public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ball"))
         {
+            scoreTracker.ShakeCamera(other.GetComponent<Rigidbody>().linearVelocity.magnitude);
             if(side == GoalSide.Right)
             {
                 scoreTracker.PointForRight();

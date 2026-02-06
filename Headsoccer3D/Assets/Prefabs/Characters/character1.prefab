@@ -165,6 +165,7 @@ GameObject:
   - component: {fileID: 374959338324389693}
   - component: {fileID: 5715509517818701763}
   - component: {fileID: 7509819557382073035}
+  - component: {fileID: 2982971697010060558}
   m_Layer: 7
   m_Name: character1
   m_TagString: Player
@@ -180,7 +181,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2105791413608084587}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.9713255, z: 0, w: 0.23775366}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.9507668, y: 0, z: -2.8927107}
   m_LocalScale: {x: 10.5, y: 10.5, z: 10.5}
   m_ConstrainProportionsScale: 1
@@ -195,7 +196,7 @@ Transform:
   - {fileID: 1853467703136943331}
   - {fileID: 1636212909138366129}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -152.492, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &87823349313922562
 CharacterController:
   m_ObjectHideFlags: 0
@@ -306,6 +307,13 @@ MonoBehaviour:
   currentKickHeight: 0
   kickTrigger: {fileID: 374959338324389693}
   kickCooldown: 0.5
+  useChargeKick: 1
+  chargeTime2: 0.5
+  chargeTime3: 1.5
+  kickMult1: 1
+  kickMult2: 2
+  kickMult3: 4
+  tapTime: 0.1
   jumpVelocity: 10
   gravity: -35
   groundStick: -0.6
@@ -347,6 +355,24 @@ CapsuleCollider:
   m_Height: 0.2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2982971697010060558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105791413608084587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46f7f98f733ec54082a2a1a456311c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  playerPositionIndicatorPrefab: {fileID: 2272880412295671249, guid: 412ae84f259104d448b55a1e358b6694, type: 3}
+  canvasOffset: 0.1
+  lerpSpeed: 10
 --- !u!1 &2502626789456842745
 GameObject:
   m_ObjectHideFlags: 0
