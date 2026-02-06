@@ -139,8 +139,49 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
         currentItem = null;
     }
 
+<<<<<<< HEAD
     public void OnJump() { }
     public void OnKick() { }
     public void OnJoin() { }
     public void OnAbility() { }
+=======
+    void IPlayerControllable.OnJump()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    void IPlayerControllable.OnKick(bool held)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    void IPlayerControllable.OnSprint(bool held)
+    {
+        throw new System.NotImplementedException();
+    }
+    void IPlayerControllable.OnJoin()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    void IPlayerControllable.OnConfirm()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    void IPlayerControllable.OnCancel()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    void IPlayerControllable.OnMove(Vector2 input)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnAbility()
+    {
+        throw new System.NotImplementedException();
+    }
+>>>>>>> main
 }
