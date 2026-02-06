@@ -139,27 +139,7 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
         currentItem = null;
     }
 
-<<<<<<< HEAD
-    public void OnJump() { }
-    public void OnKick() { }
-    public void OnJoin() { }
-    public void OnAbility() { }
-=======
-    void IPlayerControllable.OnJump()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    void IPlayerControllable.OnKick(bool held)
-    {
-        throw new System.NotImplementedException();
-    }
-
     void IPlayerControllable.OnSprint(bool held)
-    {
-        throw new System.NotImplementedException();
-    }
-    void IPlayerControllable.OnJoin()
     {
         throw new System.NotImplementedException();
     }
@@ -179,9 +159,8 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
         throw new System.NotImplementedException();
     }
 
-    public void OnAbility()
-    {
-        throw new System.NotImplementedException();
-    }
->>>>>>> main
+    public void OnJump() { }
+    public void OnKick() { }
+    public void OnJoin() { }
+    public void OnAbility() { }
 }

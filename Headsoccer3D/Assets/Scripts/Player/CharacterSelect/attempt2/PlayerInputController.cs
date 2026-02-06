@@ -79,18 +79,16 @@ public class PlayerInputController : MonoBehaviour
         map.Enable();
     }
 
-<<<<<<< HEAD
+        //moveAction.canceled += OnMoveCancelled;
+        //sprintAction.canceled += OnSprint;
+        //kickAction.canceled += OnKick;
+
     public void MarkDisconnected()
     {
         IsConnected = false;
         AssignedDevice = null;
 
         actionsInstance?.Disable();
-=======
-        moveAction.canceled += OnMoveCancelled;
-        sprintAction.canceled += OnSprint;
-        kickAction.canceled += OnKick;
->>>>>>> main
     }
 
     public void SetControlledObject(IPlayerControllable obj)
@@ -114,50 +112,18 @@ public class PlayerInputController : MonoBehaviour
         controlledObject?.OnMove(Vector2.zero);
     }
 
-<<<<<<< HEAD
-    void OnConfirm(InputAction.CallbackContext ctx) => controlledObject?.OnConfirm();
-    void OnCancel(InputAction.CallbackContext ctx) => controlledObject?.OnCancel();
-    void OnJump(InputAction.CallbackContext ctx) => controlledObject?.OnJump();
-    void OnKick(InputAction.CallbackContext ctx) => controlledObject?.OnKick();
-    void OnJoin(InputAction.CallbackContext ctx) => controlledObject?.OnJoin();
-    void OnAbility(InputAction.CallbackContext ctx) => controlledObject?.OnAbility();
-=======
-    void OnConfirm(InputAction.CallbackContext ctx)
-    {
-        controlledObject?.OnConfirm();
-    }
-
-    void OnCancel(InputAction.CallbackContext ctx)
-    {
-        controlledObject?.OnCancel();
-    }
-
-    void OnJump(InputAction.CallbackContext ctx)
-    {
-        controlledObject?.OnJump();
-    }
-
-    void OnKick(InputAction.CallbackContext ctx)
-    {
-        if (ctx.performed) controlledObject?.OnKick(true);
-        else if (ctx.canceled) controlledObject?.OnKick(false);
-    }
-
-    void OnJoin(InputAction.CallbackContext ctx)
-    {
-        controlledObject?.OnJoin();
-    }
-    void OnAbility(InputAction.CallbackContext ctx)
-    {
-        controlledObject?.OnAbility();
-    }
     void OnSprint(InputAction.CallbackContext ctx)
     {
         if (ctx.performed) controlledObject?.OnSprint(true);
         else if (ctx.canceled) controlledObject?.OnSprint(false);
     }
 
->>>>>>> main
+    void OnConfirm(InputAction.CallbackContext ctx) => controlledObject?.OnConfirm();
+    void OnCancel(InputAction.CallbackContext ctx) => controlledObject?.OnCancel();
+    void OnJump(InputAction.CallbackContext ctx) => controlledObject?.OnJump();
+    void OnKick(InputAction.CallbackContext ctx) => controlledObject?.OnKick();
+    void OnJoin(InputAction.CallbackContext ctx) => controlledObject?.OnJoin();
+    void OnAbility(InputAction.CallbackContext ctx) => controlledObject?.OnAbility();
 
     void OnDestroy()
     {
