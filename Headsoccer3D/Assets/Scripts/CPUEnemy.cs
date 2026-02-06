@@ -126,7 +126,7 @@ public class CPUEnemy : MonoBehaviour
         Vector3 _dir = (_target - ball.position).normalized;
 
         _brb.linearVelocity = Vector3.zero;
-        _dir.y = Random.Range(0.234f, 1.5f) / _forceMult; //more force should not affect y
+        _dir.y = Random.Range(0.234f, 0.9f) / _forceMult; //more force should not affect y
         _brb.AddForce(_dir * 5.8467f * _forceMult, ForceMode.VelocityChange);
 
         if (_switchRoles)
@@ -210,14 +210,14 @@ public class CPUEnemy : MonoBehaviour
         if (Vector3.Dot((_dirToTeammate - ball.position), (ball.position - transform.position)) < 0.1f)
             return false;
 
-        kickBallTowards(_dirToTeammate);
+        kickBallTowards(_dirToTeammate, true, 0.879f);
         return true;
     }
     private void yeetTheBallCloseToOtherCPU()
     {
         //random decision
         Vector3 _dirToTeammate = Random.value > 0.5f ? myTeammate.transform.position : myTeammate.runningDestination;
-        kickBallTowards(_dirToTeammate);
+        kickBallTowards(_dirToTeammate, true);
     }
     public void moveToRecievePass()
     {
