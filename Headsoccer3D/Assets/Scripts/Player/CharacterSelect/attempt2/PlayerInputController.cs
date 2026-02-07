@@ -114,8 +114,7 @@ public class PlayerInputController : MonoBehaviour
 
     void OnSprint(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed) controlledObject?.OnSprint(true);
-        else if (ctx.canceled) controlledObject?.OnSprint(false);
+        controlledObject?.OnSprint(ctx.ReadValueAsButton());
     }
 
     void OnConfirm(InputAction.CallbackContext ctx) => controlledObject?.OnConfirm();
@@ -123,8 +122,7 @@ public class PlayerInputController : MonoBehaviour
     void OnJump(InputAction.CallbackContext ctx) => controlledObject?.OnJump();
     void OnKick(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed) controlledObject?.OnKick(true);
-        else if (ctx.canceled) controlledObject?.OnKick(false);
+        controlledObject?.OnKick(ctx.ReadValueAsButton());
     }
     void OnJoin(InputAction.CallbackContext ctx) => controlledObject?.OnJoin();
     void OnAbility(InputAction.CallbackContext ctx) => controlledObject?.OnAbility();
