@@ -6,13 +6,14 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
 #endif
 
-//CBUFFER perhaps?
+//CBUFFER perhaps to mnake it SRP Batch compatible?
     //Color
     float4 _BaseMap_ST;
     //TEXTURE2D(_BaseMap);
     //SAMPLER(sampler_BaseMap);
     float4 _BaseColor;
     float _BaseStrength;
+
     //AO
     float4 _AOTexture_ST;
     TEXTURE2D(_AOTexture);
@@ -38,13 +39,11 @@ struct Attributes
 
 struct Varyings
 {
+    float4 positionCS : SV_POSITION;
     float2 uv : TEXCOORD0;
-
     float3 positionWS : TEXCOORD1; // xyz: posWS
-
     half3 normalWS : TEXCOORD2;
-
-
+    
     #ifdef _ADDITIONAL_LIGHTS_VERTEX
         half4 fogFactorAndVertexLight  : TEXCOORD5; // x: fogFactor, yzw: vertex light
     #else
@@ -65,7 +64,8 @@ struct Varyings
         float4 probeOcclusion : TEXCOORD9;
     #endif
 
-    float4 positionCS : SV_POSITION;
+    float4 screenPos : TEXCOORD10;
+
     UNITY_VERTEX_INPUT_INSTANCE_ID
     UNITY_VERTEX_OUTPUT_STEREO
 };

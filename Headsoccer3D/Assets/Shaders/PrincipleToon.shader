@@ -7,6 +7,8 @@ Shader "Saphead Studios/Principle Toon"
 		_BaseColor ("Base Tint", Color) = (1, 1, 1, 1)
 		_BaseStrength("Surface Texture Lightness", Range(0,1)) = 0
         [Toggle(_AMBIENTLIGHTING)] _AmbientToggle ("Use Ambient Light", Float) = 0
+
+        [Space(20)]
 		//AO
 		_AOTexture("AO Texture", 2D) = "black" {}
 		_AOFrequency("AO Frequency", Float) = 1
@@ -14,6 +16,16 @@ Shader "Saphead Studios/Principle Toon"
 		//Shadow
 		_ShadowTex("Shadow Texture", 2D) = "black" {}
 		_ShadowFrequency("_Shadow Frequency", Float) = 1
+
+        //halftone 
+        //https://www.ronja-tutorials.com/post/040-halftone-shading/
+
+        [Space(20)]
+        _HalftonePattern("Halftone Pattern", 2D) = "white" {}
+        _RemapInputMin ("Remap input min value", Range(0, 1)) = 0
+        _RemapInputMax ("Remap input max value", Range(0, 1)) = 1
+        _RemapOutputMin ("Remap output min value", Range(0, 1)) = 0
+        _RemapOutputMax ("Remap output max value", Range(0, 1)) = 1
 
 	}
 
@@ -34,6 +46,7 @@ Shader "Saphead Studios/Principle Toon"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
             #include "Assets/Shaders/SapheadLighting.hlsl"
             #include "Assets/Shaders/PrincipleToonInitData.hlsl"
+            #include "Assets/Shaders/SapheadHalftone.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/AmbientOcclusion.hlsl"
 
 			#pragma vertex PrincipleToonVertexLit
@@ -84,7 +97,7 @@ Shader "Saphead Studios/Principle Toon"
 
                 output.uv = TRANSFORM_TEX(input.texcoord, _BaseMap);
                 output.positionWS.xyz = vertexInput.positionWS;
-                output.positionCS = vertexInput.positionCS;
+                output.positionCS = TransformObjectToHClip(input.positionOS.xyz);;
 
                 output.normalWS = NormalizeNormalPerVertex(normalInput.normalWS);
 
@@ -105,6 +118,9 @@ Shader "Saphead Studios/Principle Toon"
                     output.shadowCoord = GetShadowCoord(vertexInput);
                 #endif
 
+                //for halftone screen space
+                output.screenPos = ComputeScreenPos(output.positionCS);
+
                 return output;
 			}
 
@@ -120,9 +136,11 @@ Shader "Saphead Studios/Principle Toon"
                 #if _AMBIENTLIGHTING
 					ambientLight = GetBakedGIData(i, inputData);
 				#endif
-				half4 color = UniversalFragmentBlinnPhong(inputData, surfaceData);
-                
 
+                //excludes color
+				half4 lighting = UniversalFragmentBlinnPhong(inputData, surfaceData);
+
+                
 				//------------------------------AO
 				//sample ssao manually, cue copy pasta source code from ShaderLibrary/AmbientOcclusion.hlsl
 				float ssao = saturate(SampleAmbientOcclusion(GetNormalizedScreenSpaceUV(i.positionCS)) + (1.0 - _AmbientOcclusionParam.x));
@@ -130,19 +148,23 @@ Shader "Saphead Studios/Principle Toon"
 				AmbientOcclusionFactor aoFactor;
 				aoFactor.indirectAmbientOcclusion = ssao;
 				aoFactor.directAmbientOcclusion = lerp(1.0h, ssao, _AmbientOcclusionParam.w);
+                //full light
+                //aoFactor.indirectAmbientOcclusion = 1.0;
+				//aoFactor.directAmbientOcclusion = 1.0;
 
+                /*
 				//move the AO with uv
 				float2 screenUV = GetNormalizedScreenSpaceUV(i.positionCS);
 
 				half aoStylized = SAMPLE_TEXTURE2D(_AOTexture, sampler_AOTexture, (i.uv * _AOFrequency) + (screenUV * 0.5)).r;
 				half aoPattern = lerp(aoStylized, 1.0, aoFactor.directAmbientOcclusion);
-                aoPattern = smoothstep(0.7, 0.9, aoPattern);
-				//return half4( color.rgb * aoPattern, 1.0h);
+                aoPattern = smoothstep(0.7, 0.9, aoPattern);*/
 
                 
 				//------------------------------Shadow
 				Light mainLight = GetMainLight(inputData, CalculateShadowMask(inputData), aoFactor);
-				float shadow = saturate((mainLight.shadowAttenuation * mainLight.distanceAttenuation) + color.r + color.g + color.b);
+				half shadow = saturate((mainLight.shadowAttenuation * mainLight.distanceAttenuation) + (smoothstep(0.1,0.94987,lighting.r)));
+
 				//manipulate the UV too
 				float2 shadowUV = i.uv * _ShadowFrequency;
 
@@ -153,6 +175,7 @@ Shader "Saphead Studios/Principle Toon"
                 //harsher shadow
                 //shadowPattern =  smoothstep(0.1, 0.3, shadowPattern);
 
+                /*
 				half basePattern = lerp(baseTexture, 1.0, 
                                         saturate(color.r + color.g + color.b + _BaseStrength));
 
@@ -160,9 +183,18 @@ Shader "Saphead Studios/Principle Toon"
 
                 half3 baseLitPattern = (color.rgb + ambientLight) * basePattern;
 
-                half4 finalPattern = half4 (shadowPattern * baseLitPattern, 1.0h);
+                half4 finalPattern = half4 (shadowPattern * baseLitPattern, 1.0h);*/
 
-				return finalPattern * aoPattern * _BaseColor;
+
+                 //halftone
+                float2 screenUV = (i.positionCS.xy / _ScaledScreenParams.xy) * (2.0 - i.positionCS.z);
+
+
+                half4 halftonePattern = LightingHalftone(baseTexture * _BaseColor.rgb, shadow, screenUV);
+
+				return halftonePattern;
+
+				//return finalPattern * _BaseColor;
 			}
 
 
