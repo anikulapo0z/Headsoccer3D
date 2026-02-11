@@ -1436,6 +1436,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ee31208cddd4ee4faac8661cd223a97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!23 &1331204553 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 9127251918760695708, guid: 2c5d9f67aa6b51146a0dc500dd3fd62f, type: 3}
+  m_PrefabInstance: {fileID: 2801263702900696236}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1606826442
 GameObject:
   m_ObjectHideFlags: 0
@@ -1648,6 +1653,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &2091099189 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1079896362976019235, guid: 2c5d9f67aa6b51146a0dc500dd3fd62f, type: 3}
+  m_PrefabInstance: {fileID: 2801263702900696236}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2801263702900696236
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1700,6 +1710,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8162672953497282590, guid: 2c5d9f67aa6b51146a0dc500dd3fd62f, type: 3}
+      propertyPath: flagRenderer
+      value: 
+      objectReference: {fileID: 1331204553}
+    - target: {fileID: 9062793033716935319, guid: 2c5d9f67aa6b51146a0dc500dd3fd62f, type: 3}
+      propertyPath: flagRenderer
+      value: 
+      objectReference: {fileID: 2091099189}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
