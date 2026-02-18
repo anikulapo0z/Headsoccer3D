@@ -13,6 +13,8 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _AMBIENTLIGHTING
+  - _HALFTONELIGHT
+  - _SHADOWSLIGHT
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -26,7 +28,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AOTexture:
-        m_Texture: {fileID: 2800000, guid: e37977e336a00454199048b222ff9713, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5a061fc6455b7db4fb0e29eab26806d8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -55,10 +57,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _HalftonePattern:
         m_Texture: {fileID: 2800000, guid: 59380a8c482907548898ef5ffad0bff6, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 4b15cebf074384948a4a5318a40c7f6e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -75,6 +77,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _ShadowTex:
         m_Texture: {fileID: 2800000, guid: 266ce12a5869bcb478757fb4dae44c80, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ShadowTexture:
+        m_Texture: {fileID: 2800000, guid: 81446ed0ece35c041a864b75ecc69767, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -95,12 +101,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AOFrequency: 1.26
+    - _AOFrequency: 1
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _AmbientToggle: 1
-    - _BaseStrength: 0.71
+    - _BaseStrength: 0.718
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
@@ -116,16 +122,19 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _HalftoneToggle: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RemapInputMax: 0.791
-    - _RemapInputMin: 0.374
-    - _RemapOutputMax: 0
-    - _RemapOutputMin: 0.209
-    - _ShadowFrequency: 1.36
+    - _RemapInputMax: 0.941
+    - _RemapInputMin: 0.368
+    - _RemapOutputMax: 0.778
+    - _RemapOutputMin: 0.483
+    - _ShadowFrequency: 1.77
+    - _ShadowLightness: 0.389
+    - _ShadowsToggle: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -135,9 +144,10 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.6981132, g: 0.2206301, b: 0.2206301, a: 1}
+    - _BaseColor: {r: 0.1882353, g: 0.30980393, b: 0.9921568, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HalftoneColor: {r: 0.09803922, g: 0.23529412, b: 0.60784316, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
