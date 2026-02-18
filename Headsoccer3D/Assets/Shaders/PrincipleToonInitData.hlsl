@@ -6,24 +6,47 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
 #endif
 
-//CBUFFER perhaps?
-    //Color
-    float4 _BaseMap_ST;
-    //TEXTURE2D(_BaseMap);
-    //SAMPLER(sampler_BaseMap);
-    float4 _BaseColor;
-    float _BaseStrength;
+    //Base
+    TEXTURE2D(_MainTex);
+    SAMPLER(sampler_MainTex);
+ 
     //AO
-    float4 _AOTexture_ST;
     TEXTURE2D(_AOTexture);
     SAMPLER(sampler_AOTexture);
-    float _AOFrequency;
 
     //Shadow
-    float4 _ShadowTex_ST;
-    TEXTURE2D(_ShadowTex);
-    SAMPLER(sampler_ShadowTex);
-    float _ShadowFrequency;
+    TEXTURE2D(_ShadowTexture);
+    SAMPLER(sampler_ShadowTexture);
+
+    //Halftone
+    TEXTURE2D(_HalftonePattern);
+    SAMPLER(sampler_HalftonePattern);
+
+//CBUFFER perhaps to mnake it SRP Batch compatible
+    CBUFFER_START(UnityPerMaterial)
+        float4 _BaseColor;
+        float _BaseStrength;
+        float4 _Color;
+        float4 _Emission;
+
+        float4 _MainTex_ST;
+        float4 _HalftonePattern_ST;
+        float4 _ShadowTexture_ST;
+        float4 _AOTexture_ST;
+
+        float _AOFrequency;
+        float _AOLightness;
+        float _ShadowFrequency;
+        float _ShadowLightness;
+
+        float4 _HalftoneColor;
+
+        float _RemapInputMin;
+        float _RemapInputMax;
+        float _RemapOutputMin;
+        float _RemapOutputMax;
+    CBUFFER_END
+
 
 struct Attributes
 {

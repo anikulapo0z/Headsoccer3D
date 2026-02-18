@@ -3,17 +3,37 @@ Shader "Saphead Studios/Principle Toon"
     Properties
 	{
 		//Base
-		_BaseMap("Surface Texture", 2D) = "white" {}
+        [Header(Base)]
+		_MainTex("Surface Texture", 2D) = "white" {}
 		_BaseColor ("Base Tint", Color) = (1, 1, 1, 1)
-		_BaseStrength("Surface Texture Lightness", Range(0,1)) = 0
-        [Toggle(_AMBIENTLIGHTING)] _AmbientToggle ("Use Ambient Light", Float) = 0
+		//_BaseStrength("Surface Texture Lightness", Range(0,1)) = 0
+        //[Toggle(_AMBIENTLIGHTING)] _AmbientToggle ("Use Ambient Light", Float) = 0
+
+        //[Space(20)]
 		//AO
-		_AOTexture("AO Texture", 2D) = "black" {}
-		_AOFrequency("AO Frequency", Float) = 1
+		//_AOTexture("AO Texture", 2D) = "black" {}
+		//_AOFrequency("AO Frequency", Float) = 1
+		//_AOLightness("AO Lightness", Range(0,1)) = 0
 
 		//Shadow
-		_ShadowTex("Shadow Texture", 2D) = "black" {}
+        [Space(20)]
+        [Header(Shadows)]
+        [Toggle(_SHADOWSLIGHT)] _ShadowsToggle ("Calculate Shadows", Float) = 1
+		[NoScaleOffset]_ShadowTexture("Shadow Texture", 2D) = "black" {}
 		_ShadowFrequency("_Shadow Frequency", Float) = 1
+		_ShadowLightness("_Shadow Lightness", Range(0,1)) = 0
+
+        //Halftone 
+        //https://www.ronja-tutorials.com/post/040-halftone-shading/
+        [Space(20)]
+        [Header(Halftone)]
+        [Toggle(_HALFTONELIGHT)] _HalftoneToggle ("Use Halftone", Float) = 1
+		_HalftoneColor ("Halftone Color", Color) = (1, 1, 1, 1)
+        _HalftonePattern("Halftone Pattern", 2D) = "white" {}
+        _RemapInputMin ("Remap input min value", Range(0, 1)) = 0
+        _RemapInputMax ("Remap input max value", Range(0, 1)) = 1
+        _RemapOutputMin ("Remap output min value", Range(0, 1)) = 0
+        _RemapOutputMax ("Remap output max value", Range(0, 1)) = 1
 
 	}
 
@@ -41,6 +61,8 @@ Shader "Saphead Studios/Principle Toon"
 
             //Shader speciific
             #pragma shader_feature_local_fragment _AMBIENTLIGHTING
+            #pragma shader_feature_local_fragment _SHADOWSLIGHT
+            #pragma shader_feature_local_fragment _HALFTONELIGHT
 
             //From Simple Lit
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
@@ -82,7 +104,7 @@ Shader "Saphead Studios/Principle Toon"
 
                 half fogFactor = 0;
 
-                output.uv = TRANSFORM_TEX(input.texcoord, _BaseMap);
+                output.uv = TRANSFORM_TEX(input.texcoord, _MainTex);
                 output.positionWS.xyz = vertexInput.positionWS;
                 output.positionCS = vertexInput.positionCS;
 
@@ -110,65 +132,49 @@ Shader "Saphead Studios/Principle Toon"
 
 			half4 PrincipleToonFragmentLit(Varyings i) : SV_Target
 			{
-
-				//Calc BlinnPhong
+                //----------------------------Basis
 				SurfaceData surfaceData;
 				InitializeSurfaceData(i, surfaceData);
 				InputData inputData;
 				InitializeInputData(i, surfaceData.normalTS, inputData);
-                half3 ambientLight = 0.0h;
-                #if _AMBIENTLIGHTING
-					ambientLight = GetBakedGIData(i, inputData);
+                half4 baseTexture = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv) * _BaseColor;
+                Light mainLight = GetMainLight(TransformWorldToShadowCoord(i.positionWS)); //passing the shadow coord
+
+
+				//----------------------------BlinnPhong for lighting data
+                //half3 ambientLight = 0.0h;
+                //#if _AMBIENTLIGHTING
+				//	ambientLight = GetBakedGIData(i, inputData);
+				//#endif
+                //excludes color
+				//half4 lighting = UniversalFragmentBlinnPhong(inputData, surfaceData);
+
+                //---------------------------Halftone
+                #if _HALFTONELIGHT
+                    //world space normal needed for dot of light intensity
+                    float NdotL = dot(normalize(i.normalWS), mainLight.direction);
+                    NdotL = NdotL * 0.5 + 0.5;
+                    float lightIntensity = saturate(NdotL * mainLight.shadowAttenuation);
+                    half halftonePattern = LightingHalftone(lightIntensity, i.screenPos);
+					baseTexture = lerp(_HalftoneColor, baseTexture, halftonePattern);
 				#endif
-				half4 color = UniversalFragmentBlinnPhong(inputData, surfaceData);
-                
 
-				//------------------------------AO
-				//sample ssao manually, cue copy pasta source code from ShaderLibrary/AmbientOcclusion.hlsl
-				float ssao = saturate(SampleAmbientOcclusion(GetNormalizedScreenSpaceUV(i.positionCS)) + (1.0 - _AmbientOcclusionParam.x));
-				//even building AmbientOcclusionFactor manually
-				AmbientOcclusionFactor aoFactor;
-				aoFactor.indirectAmbientOcclusion = ssao;
-				aoFactor.directAmbientOcclusion = lerp(1.0h, ssao, _AmbientOcclusionParam.w);
+                //------------------------------Shadow and its Pattern
+                #if _SHADOWSLIGHT
+				    half shadow = saturate((mainLight.shadowAttenuation * mainLight.distanceAttenuation));
+				    //manipulate the UV too
+				    float2 shadowUV = i.uv * _ShadowFrequency;
+                    float shadowPattern = lerp(1.0, SAMPLE_TEXTURE2D(_ShadowTexture, sampler_ShadowTexture, shadowUV).r, 1 - shadow);
+                    shadowPattern = smoothstep(0.047,0.7438, shadowPattern);
+                    shadowPattern += _ShadowLightness;
+                    shadowPattern = saturate(shadowPattern);
+					baseTexture *= shadowPattern;
+				#endif
 
-				//move the AO with uv
-				float2 screenUV = GetNormalizedScreenSpaceUV(i.positionCS);
-
-				half aoStylized = SAMPLE_TEXTURE2D(_AOTexture, sampler_AOTexture, (i.uv * _AOFrequency) + (screenUV * 0.5)).r;
-				half aoPattern = lerp(aoStylized, 1.0, aoFactor.directAmbientOcclusion);
-                aoPattern = smoothstep(0.7, 0.9, aoPattern);
-				//return half4( color.rgb * aoPattern, 1.0h);
-
-                
-				//------------------------------Shadow
-				Light mainLight = GetMainLight(inputData, CalculateShadowMask(inputData), aoFactor);
-				float shadow = saturate((mainLight.shadowAttenuation * mainLight.distanceAttenuation) + color.r + color.g + color.b);
-				//manipulate the UV too
-				float2 shadowUV = i.uv * _ShadowFrequency;
-
-                //------------------Blend base and shadow
-				half shadowStylized = SAMPLE_TEXTURE2D(_ShadowTex, sampler_ShadowTex, shadowUV).r;
-				half baseTexture = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, i.uv).r;
-				float shadowPattern = lerp(1.0, shadowStylized, 1 - shadow);
-                //harsher shadow
-                //shadowPattern =  smoothstep(0.1, 0.3, shadowPattern);
-
-				half basePattern = lerp(baseTexture, 1.0, 
-                                        saturate(color.r + color.g + color.b + _BaseStrength));
-
-                //return basePattern * shadowPattern;
-
-                half3 baseLitPattern = (color.rgb + ambientLight) * basePattern;
-
-                half4 finalPattern = half4 (shadowPattern * baseLitPattern, 1.0h);
-
-				return finalPattern * aoPattern * _BaseColor;
+                return baseTexture;
 			}
-
-
 			ENDHLSL
 		}
-
 
         Pass
         {
