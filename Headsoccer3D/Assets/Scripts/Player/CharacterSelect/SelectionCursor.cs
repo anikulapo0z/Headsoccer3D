@@ -3,7 +3,7 @@ using UnityEngine;
 public class SelectionCursor : MonoBehaviour, IPlayerControllable
 {
     public RectTransform parent;
-    bool locked = false;
+    [SerializeField] bool locked = false;
     public int playerIndex;
     public PlayerInputController playerInputController;
 
@@ -28,7 +28,7 @@ public class SelectionCursor : MonoBehaviour, IPlayerControllable
 
         RectTransform targetButton = null;
 
-        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+/*        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
         {
             if (dir.x < 0)
             {
@@ -49,7 +49,7 @@ public class SelectionCursor : MonoBehaviour, IPlayerControllable
             {
                 targetButton = currentButton.selectionAbove;
             }
-        }
+        }*/
 
         if (targetButton != null)
         {
@@ -70,7 +70,7 @@ public class SelectionCursor : MonoBehaviour, IPlayerControllable
         CharacterSelectManager.Instance.CheckPlayerConfirm(locked);
         locked = true;
         Debug.Log(playerInputController);
-        playerInputController.selectedCharacterID = parent.GetComponent<CharacterButton>().characterID;
+        //playerInputController.selectedCharacterID = parent.GetComponent<CharacterButton>().characterID;
         CharacterSelectionPreview.Instance.SetPortraitInfo(
             playerIndex,
             parent.GetComponent<CharacterButton>().selectedImage,
