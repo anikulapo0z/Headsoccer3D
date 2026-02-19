@@ -25,8 +25,7 @@ public class ParalaxController : MonoBehaviour
         if (target == null || spawn == null) return;
 
         // Move toward the left target but only on the x axis
-        Vector3 targetPos = new Vector3(target.position.x, transform.position.y, transform.position.z);
-        transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position , target.position, speed * Time.deltaTime);
 
         // If reached the left target, snap to the right spawn and change material
         if (Vector3.Distance(transform.position, target.position) < 0.05f)
