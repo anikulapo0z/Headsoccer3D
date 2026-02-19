@@ -6,6 +6,11 @@ Shader "Saphead Studios/Principle Toon"
         [Header(Base)]
 		_MainTex("Surface Texture", 2D) = "white" {}
 		_BaseColor ("Base Tint", Color) = (1, 1, 1, 1)
+        [Space(10)]
+        [Toggle(_MASKING)] _MaskToggle ("Use Mask (Disables Surface Texture)", Float) = 0
+		[NoScaleOffset] _MaskTex("Mask Map", 2D) = "white" {}
+        _FirstMaskColor ("Mask Color 1 (Black)", Color) = (0, 0, 0, 1)
+        _SecondMaskColor ("Mask Color 2 (White)", Color) = (1, 1, 1, 1)
 		//_BaseStrength("Surface Texture Lightness", Range(0,1)) = 0
         //[Toggle(_AMBIENTLIGHTING)] _AmbientToggle ("Use Ambient Light", Float) = 0
 
@@ -30,10 +35,15 @@ Shader "Saphead Studios/Principle Toon"
         [Toggle(_HALFTONELIGHT)] _HalftoneToggle ("Use Halftone", Float) = 1
 		_HalftoneColor ("Halftone Color", Color) = (1, 1, 1, 1)
         _HalftonePattern("Halftone Pattern", 2D) = "white" {}
-        _RemapInputMin ("Remap input min value", Range(0, 1)) = 0
-        _RemapInputMax ("Remap input max value", Range(0, 1)) = 1
-        _RemapOutputMin ("Remap output min value", Range(0, 1)) = 0
-        _RemapOutputMax ("Remap output max value", Range(0, 1)) = 1
+        [Toggle(_HALFTONEMASK)] _HalftoneMaskToggle ("Use Halftone Mask", Float) = 0
+		[NoScaleOffset] _HalftoneMaskTex("Halftone Mask Map", 2D) = "white" {}
+        [Toggle(_HALFTONEMASKINVERT)] _HalftoneMaskInvertToggle ("Invert Halftone Mask", Float) = 0
+
+        [Space(10)]
+        _RemapInputMin ("Remap input min value", Range(-1, 1)) = 0
+        _RemapInputMax ("Remap input max value", Range(-1, 1)) = 1
+        _RemapOutputMin ("Remap output min value", Range(-1, 1)) = 0
+        _RemapOutputMax ("Remap output max value", Range(-1, 1)) = 1
 	}
 
     SubShader
@@ -63,16 +73,19 @@ Shader "Saphead Studios/Principle Toon"
             #pragma shader_feature_local_fragment _AMBIENTLIGHTING
             #pragma shader_feature_local_fragment _SHADOWSLIGHT
             #pragma shader_feature_local_fragment _HALFTONELIGHT
+            #pragma shader_feature_local_fragment _MASKING
+            #pragma shader_feature_local_fragment _HALFTONEMASK
+            #pragma shader_feature_local_fragment _HALFTONEMASKINVERT
 
             //From Simple Lit
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
-            #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
+            //#pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
             #pragma multi_compile _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX
             #pragma multi_compile _ LIGHTMAP_SHADOW_MIXING
             #pragma multi_compile _ SHADOWS_SHADOWMASK
             #pragma multi_compile _ _LIGHT_LAYERS
             #pragma multi_compile _ _FORWARD_PLUS
-            #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
+            //#pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
             #pragma multi_compile_fragment _ _SHADOWS_SOFT
             #pragma multi_compile_fragment _ _SHADOWS_SOFT_LOW _SHADOWS_SOFT_MEDIUM _SHADOWS_SOFT_HIGH
             //#pragma multi_compile_fragment _ _SCREEN_SPACE_OCCLUSION
@@ -140,9 +153,16 @@ Shader "Saphead Studios/Principle Toon"
 				InitializeSurfaceData(i, surfaceData);
 				InputData inputData;
 				InitializeInputData(i, surfaceData.normalTS, inputData);
-                half4 baseTexture = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv) * _BaseColor;
+                
                 Light mainLight = GetMainLight(TransformWorldToShadowCoord(i.positionWS)); //passing the shadow coord
 
+                half4 baseTexture;
+
+                #if _MASKING
+                    baseTexture = lerp(_FirstMaskColor, _SecondMaskColor, SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, i.uv));
+                #else
+                    baseTexture = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv) * _BaseColor;
+                #endif
 
 				//----------------------------BlinnPhong for lighting data
                 //half3 ambientLight = 0.0h;
@@ -157,9 +177,19 @@ Shader "Saphead Studios/Principle Toon"
                     //world space normal needed for dot of light intensity
                     float NdotL = dot(normalize(i.normalWS), mainLight.direction);
                     NdotL = NdotL * 0.5 + 0.5;
-                    float lightIntensity = saturate(NdotL * mainLight.shadowAttenuation);
+                    float lightIntensity = saturate(NdotL * mainLight.shadowAttenuation * mainLight.distanceAttenuation);
+
+                    //get pattern
                     half halftonePattern = LightingHalftone(lightIntensity, i.screenPos);
-					baseTexture = lerp(_HalftoneColor, baseTexture, halftonePattern);
+                    //get mask if needed
+                    half halftoneMask = 0.0h;
+                    #if _HALFTONEMASK
+                        halftoneMask = SAMPLE_TEXTURE2D(_HalftoneMaskTex, sampler_HalftoneMaskTex, i.uv);
+                        #if _HALFTONEMASKINVERT
+                            halftoneMask = 1 - halftoneMask;
+                        #endif
+                    #endif
+					baseTexture = lerp(_HalftoneColor, baseTexture, saturate(halftonePattern + halftoneMask));
 				#endif
                 //------------------------------Shadow and its Pattern
                 #if _SHADOWSLIGHT

@@ -9,6 +9,11 @@
     //Base
     TEXTURE2D(_MainTex);
     SAMPLER(sampler_MainTex);
+
+    //Mask
+    TEXTURE2D(_MaskTex);
+    SAMPLER(sampler_MaskTex);
+
     //AO
     TEXTURE2D(_AOTexture);
     SAMPLER(sampler_AOTexture);
@@ -20,6 +25,9 @@
     //Halftone
     TEXTURE2D(_HalftonePattern);
     SAMPLER(sampler_HalftonePattern);
+    //Halftone Mask
+    TEXTURE2D(_HalftoneMaskTex);
+    SAMPLER(sampler_HalftoneMaskTex);
 
 //CBUFFER perhaps to mnake it SRP Batch compatible
     CBUFFER_START(UnityPerMaterial)
@@ -27,6 +35,8 @@
         float _BaseStrength;
         float4 _Color;
         float4 _Emission;
+        float4 _FirstMaskColor;
+        float4 _SecondMaskColor;
 
         float4 _MainTex_ST;
         float4 _HalftonePattern_ST;

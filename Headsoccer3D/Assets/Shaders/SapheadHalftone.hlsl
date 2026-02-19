@@ -20,7 +20,7 @@ float halftoneValue(float4 screenPos)
     return SAMPLE_TEXTURE2D(_HalftonePattern, sampler_HalftonePattern, screenUV).r;
 }
 
-    // This function remaps values from a input to a output range
+// This function remaps values from a input to a output range
 float RemapLight(float input, float inMin, float inMax, float outMin, float outMax)
 {
     float relative = (input - inMin) / (inMax - inMin);
@@ -31,7 +31,6 @@ float RemapLight(float input, float inMin, float inMax, float outMin, float outM
 half LightingHalftone(half lightIntensity, float4 screenPos)
 {
     float halftone = halftoneValue(screenPos);
-
         //make lightness binary between fully lit and fully shadow based on halftone pattern (with a bit of antialiasing between)
         //honestly the math here is confusing me, so shamelessly translated from Ronja's tutorial
     halftone = RemapLight(halftone,
