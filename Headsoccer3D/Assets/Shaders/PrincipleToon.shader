@@ -33,6 +33,7 @@ Shader "Saphead Studios/Principle Toon"
         [Space(20)]
         [Header(Halftone)]
         [Toggle(_HALFTONELIGHT)] _HalftoneToggle ("Use Halftone", Float) = 1
+        [Toggle(_USESHADOWS)] _UseShadowsToggle ("Use Shadow for Halftone calc", Float) = 1
 		_HalftoneColor ("Halftone Color", Color) = (1, 1, 1, 1)
         _HalftonePattern("Halftone Pattern", 2D) = "white" {}
         [Toggle(_HALFTONEMASK)] _HalftoneMaskToggle ("Use Halftone Mask", Float) = 0
@@ -72,6 +73,7 @@ Shader "Saphead Studios/Principle Toon"
             //Shader speciific
             #pragma shader_feature_local_fragment _AMBIENTLIGHTING
             #pragma shader_feature_local_fragment _SHADOWSLIGHT
+            #pragma shader_feature_local_fragment _USESHADOWS
             #pragma shader_feature_local_fragment _HALFTONELIGHT
             #pragma shader_feature_local_fragment _MASKING
             #pragma shader_feature_local_fragment _HALFTONEMASK
@@ -177,8 +179,11 @@ Shader "Saphead Studios/Principle Toon"
                     //world space normal needed for dot of light intensity
                     float NdotL = dot(normalize(i.normalWS), mainLight.direction);
                     NdotL = NdotL * 0.5 + 0.5;
-                    float lightIntensity = saturate(NdotL * mainLight.shadowAttenuation * mainLight.distanceAttenuation);
-
+                    float lightIntensity = NdotL;
+                    #if _USESHADOWS
+                        lightIntensity *= mainLight.shadowAttenuation * mainLight.distanceAttenuation;
+                    #endif
+                    lightIntensity = saturate(lightIntensity);
                     //get pattern
                     half halftonePattern = LightingHalftone(lightIntensity, i.screenPos);
                     //get mask if needed

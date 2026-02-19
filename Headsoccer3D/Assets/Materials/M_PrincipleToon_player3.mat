@@ -15,7 +15,9 @@ Material:
   - _AMBIENTLIGHTING
   - _HALFTONELIGHT
   - _SHADOWSLIGHT
-  m_InvalidKeywords: []
+  - _USESHADOWS
+  m_InvalidKeywords:
+  - _IGNORESHADOWS
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -106,6 +108,7 @@ Material:
     - _HalftoneMaskInvertToggle: 0
     - _HalftoneMaskToggle: 0
     - _HalftoneToggle: 1
+    - _IgnoreShadowsToggle: 1
     - _MaskToggle: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
@@ -124,6 +127,7 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
+    - _UseShadowsToggle: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 0.72454906, g: 0.7658823, b: 0.972549, a: 1}
