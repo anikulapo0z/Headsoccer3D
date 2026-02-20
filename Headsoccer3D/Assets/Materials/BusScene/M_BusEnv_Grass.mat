@@ -65,8 +65,8 @@ Material:
         m_Scale: {x: 5, y: -3.67}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: ba90e0d681c598644910bd718f5fc1b3, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 4016a2c19be285943abbe635ffaeeabd, type: 3}
+        m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
         m_Texture: {fileID: 0}
@@ -136,6 +136,7 @@ Material:
     - _HalftoneMaskToggle: 0
     - _HalftoneToggle: 0
     - _IgnoreShadowsToggle: 1
+    - _Lightness: 0.349
     - _MaskToggle: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
@@ -146,8 +147,8 @@ Material:
     - _RemapInputMin: 0
     - _RemapOutputMax: 1
     - _RemapOutputMin: 0
-    - _ShadowFrequency: 2.49
-    - _ShadowLightness: 0.16
+    - _ShadowFrequency: 1.2
+    - _ShadowLightness: 0
     - _ShadowsToggle: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
