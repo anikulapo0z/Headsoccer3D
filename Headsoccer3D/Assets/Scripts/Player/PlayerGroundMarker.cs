@@ -16,14 +16,23 @@ public class PlayerGroundMarker : MonoBehaviour
     [SerializeField] float uiSideOffset;
     [SerializeField] float uiHeightOffset;
 
+    [SerializeField] GameObject playerObj;
 
     private void Start()
     {
         mainCam = Camera.main;
-        playerPositionIndicator = Instantiate(playerPositionIndicatorPrefab);
+
+    }
+
+    public void SetPlayerWorldUIAndColor(GameObject posInd, Material playerMat)
+    {
+        playerPositionIndicator = Instantiate(posInd);
         playerFloatingUI = Instantiate(playerFloatingUIPrefab);
         GetComponent<PlayerController>().SetStaminaBar(playerFloatingUI.GetComponentInChildren<Slider>());
+
+        //playerObj.GetComponent<Material>() = playerMat;
     }
+
 
     private void FixedUpdate()
     {
