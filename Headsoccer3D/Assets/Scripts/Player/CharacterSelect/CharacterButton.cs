@@ -23,9 +23,6 @@ public class CharacterButton : MonoBehaviour, IMenuItem
 
     public void OnHoverEnter(int playerIndex)
     {
-        if (hovered) return;
-        hovered = true;
-
         MenuManager.Instance.SetPortraitInfo(
             playerIndex,
             selectedImage,
