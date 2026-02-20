@@ -32,6 +32,7 @@
 //CBUFFER perhaps to mnake it SRP Batch compatible
     CBUFFER_START(UnityPerMaterial)
         float4 _BaseColor;
+        float _Lightness;
         float _BaseStrength;
         float4 _Color;
         float4 _Emission;

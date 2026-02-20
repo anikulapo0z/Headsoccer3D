@@ -5,6 +5,7 @@ Shader "Saphead Studios/Principle Toon"
 		//Base
         [Header(Base)]
 		_MainTex("Surface Texture", 2D) = "white" {}
+        _Lightness("Lightness", Range(0,1)) = 0
 		_BaseColor ("Base Tint", Color) = (1, 1, 1, 1)
         [Space(10)]
         [Toggle(_MASKING)] _MaskToggle ("Use Mask (Disables Surface Texture)", Float) = 0
@@ -25,8 +26,8 @@ Shader "Saphead Studios/Principle Toon"
         [Header(Shadows)]
         [Toggle(_SHADOWSLIGHT)] _ShadowsToggle ("Calculate Shadows", Float) = 1
 		[NoScaleOffset]_ShadowTexture("Shadow Texture", 2D) = "black" {}
-		_ShadowFrequency("_Shadow Frequency", Float) = 1
-		_ShadowLightness("_Shadow Lightness", Range(0,1)) = 0
+		_ShadowFrequency("Shadow Frequency", Float) = 1
+		_ShadowLightness("Shadow Lightness", Range(0,1)) = 0
 
         //Halftone 
         //https://www.ronja-tutorials.com/post/040-halftone-shading/
@@ -163,7 +164,10 @@ Shader "Saphead Studios/Principle Toon"
                 #if _MASKING
                     baseTexture = lerp(_FirstMaskColor, _SecondMaskColor, SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, i.uv));
                 #else
-                    baseTexture = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv) * _BaseColor;
+                    baseTexture = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
+                    baseTexture += _Lightness;
+                    baseTexture = saturate(baseTexture);
+                    baseTexture *= _BaseColor;
                 #endif
 
 				//----------------------------BlinnPhong for lighting data
