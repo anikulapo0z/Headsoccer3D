@@ -58,6 +58,15 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] CameraController camera;
 
 
+    [Space(10)]
+    [Header("Team Distinctions")]
+    [SerializeField] Material leftTeamColor;
+    [SerializeField] Material rightTeamColor;
+    [SerializeField] GameObject leftTeamPositionIndicator;
+    [SerializeField] GameObject rightTeamPositionIndicator;
+
+
+
     void Start()
     {
         Instance = this;
@@ -420,9 +429,24 @@ public class GameSceneManager : MonoBehaviour
 
             // set player position
             if (teamSizes == MenuManager.TeamSizes.v1)
+            {
                 playerObj.transform.position = TwoP_SpawnPoints[inputControllers.IndexOf(player)].transform.position;
+
+
+            }
             else
                 playerObj.transform.position = FourP_SpawnPoints[inputControllers.IndexOf(player)].transform.position;
+
+
+            // setting team color and ui based on X position, we'll see if this works
+            if (playerObj.transform.position.x < 0)
+            {
+                playerObj.GetComponent<PlayerGroundMarker>().SetPlayerWorldUIAndColor(leftTeamPositionIndicator, leftTeamColor);
+            }
+            else
+            {
+                playerObj.GetComponent<PlayerGroundMarker>().SetPlayerWorldUIAndColor(rightTeamPositionIndicator, rightTeamColor);
+            }
 
 
             if (aiCount == 2)
