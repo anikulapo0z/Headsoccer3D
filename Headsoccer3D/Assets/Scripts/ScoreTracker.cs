@@ -37,6 +37,14 @@ public class ScoreTracker : MonoBehaviour
     [SerializeField] float bigShakeSpeed;
     [SerializeField] float massiveShakeSpeed;
 
+
+    [Space(10)]
+    [Header("Field Specific Properties")]
+    [Space(3)]
+    [Header("Bus Map")]
+    [SerializeField] GoalSign goalSign;
+
+
     public void PointForLeft()
     {
         if (!canScore)
@@ -60,6 +68,8 @@ public class ScoreTracker : MonoBehaviour
         }
         Invoke("TurnOffParticles", timeUntilTurnParticlesOff);
 
+        goalSign.TriggerGoalSign();
+
     }
     public void PointForRight()
     {
@@ -82,6 +92,8 @@ public class ScoreTracker : MonoBehaviour
             p.SetActive(true);
         }
         Invoke("TurnOffParticles", timeUntilTurnParticlesOff);
+
+        goalSign.TriggerGoalSign();
     }
     
     void TurnOffParticles()
