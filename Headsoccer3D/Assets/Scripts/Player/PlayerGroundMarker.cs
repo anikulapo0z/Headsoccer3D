@@ -16,7 +16,7 @@ public class PlayerGroundMarker : MonoBehaviour
     [SerializeField] float uiSideOffset;
     [SerializeField] float uiHeightOffset;
 
-    [SerializeField] GameObject playerObj;
+    [SerializeField] GameObject matObj;
 
     private void Start()
     {
@@ -30,7 +30,12 @@ public class PlayerGroundMarker : MonoBehaviour
         playerFloatingUI = Instantiate(playerFloatingUIPrefab);
         GetComponent<PlayerController>().SetStaminaBar(playerFloatingUI.GetComponentInChildren<Slider>());
 
-        //playerObj.GetComponent<Material>() = playerMat;
+
+        Renderer rend = matObj.GetComponent<Renderer>();
+        Material[] mats = rend.materials;
+        mats[1] = playerMat;
+        rend.materials = mats;
+
     }
 
 
