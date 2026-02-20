@@ -13,6 +13,9 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _AMBIENTLIGHTING
+  - _HALFTONELIGHT
+  - _SHADOWSLIGHT
+  - _USESHADOWS
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -25,7 +28,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AOTexture:
-        m_Texture: {fileID: 2800000, guid: 59380a8c482907548898ef5ffad0bff6, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5a061fc6455b7db4fb0e29eab26806d8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -44,12 +47,28 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _HalftoneMaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HalftonePattern:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 1ef80c5bb3babfb43b7047fd467f8803, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ShadowTex:
         m_Texture: {fileID: 2800000, guid: 49f2eb23f80e59c408862a06325256c3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ShadowTexture:
+        m_Texture: {fileID: 2800000, guid: 4016a2c19be285943abbe635ffaeeabd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -70,13 +89,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AOFrequency: 1.04
+    - _AOFrequency: 1
+    - _AOLightness: 0
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
     - _AlphaClipToggle: 0
     - _AlphaToMask: 0
     - _AmbientToggle: 1
-    - _BaseStrength: 0.423
+    - _BaseStrength: 0.718
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
@@ -85,9 +105,20 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _GlossinessSource: 0
+    - _HalftoneMaskInvertToggle: 0
+    - _HalftoneMaskToggle: 0
+    - _HalftoneToggle: 1
+    - _Lightness: 0
+    - _MaskToggle: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _ShadowFrequency: 3.4
+    - _RemapInputMax: 1
+    - _RemapInputMin: 0
+    - _RemapOutputMax: 1
+    - _RemapOutputMin: 0
+    - _ShadowFrequency: 1
+    - _ShadowLightness: 0
+    - _ShadowsToggle: 1
     - _Shininess: 0
     - _Smoothness: 0.5
     - _SmoothnessSource: 0
@@ -96,11 +127,15 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
+    - _UseShadowsToggle: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 0.6839622, g: 0.9424923, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FirstMaskColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HalftoneColor: {r: 0.990566, g: 0, b: 0, a: 1}
+    - _SecondMaskColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
