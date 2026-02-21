@@ -10,9 +10,9 @@ public class GoalSign : MonoBehaviour
 
     public void TriggerGoalSign()
     {
-        goalText.transform.position = new Vector3(rightPos, 0, 0);
-        goalText.transform.DOMove(new Vector3(leftPos, 0, 0), totalTravelTime).SetEase(Ease.Linear)
-            .OnComplete(() => goalText.transform.position = new Vector3(rightPos, 0, 0));
+        goalText.transform.localPosition = new Vector3(rightPos, 0, 0);
+        goalText.transform.DOLocalMove(new Vector3(leftPos, 0, 0), totalTravelTime).SetEase(Ease.Linear)
+            .OnComplete(() => goalText.transform.localPosition = new Vector3(rightPos, transform.localPosition.y, transform.localPosition.z));
     }
 
 }

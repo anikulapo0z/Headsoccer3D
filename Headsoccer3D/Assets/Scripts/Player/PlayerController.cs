@@ -91,8 +91,14 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         kickDisplayMat = kickCollider.GetComponent<Renderer>().material;
 
         currentStamina = maxStamina;
-        if (staminaBar)
+
+    }
+
+    public void SetStaminaBar(Slider bar)
+    {
+        if (bar)
         {
+            staminaBar = bar;
             staminaBar.minValue = 0f;
             staminaBar.maxValue = 1f;
             staminaBar.value = 1f;
@@ -387,8 +393,11 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         else if(level == 3) mult = kickMult3;
         float finalForce = kickForce * mult;
 
-        targetBall.linearVelocity = Vector3.zero;
-        targetBall.AddForce(kickDirection * finalForce, ForceMode.Impulse);
+        SoccerBall ball = targetBall.GetComponent<SoccerBall>();
+        if (ball != null)
+        {
+            ball.LaunchAtDirection(kickDirection + Vector3.up * currentKickHeight, finalForce);
+        }
         targetBall.AddForce(new Vector3(0, currentKickHeight, 0), ForceMode.Impulse);
         Debug.Log($"KICK! Level: {level} | Force: {finalForce} | hold: {kickHoldTime:F2}S");
     }
@@ -402,5 +411,27 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     {
         GetComponent<CharacterController>().enabled = true;
     }
+    public void GetHit(SoccerBall ball, float momentum, Vector3 hitDirection)
+    {
+        if (momentum < 5f)
+        {
+            // gained control
+            return;
+        }
+        else if (momentum < 15f)
+        {
+            ApplyKnockback(hitDirection * 3f);
+        }
+        else
+        {
+            ApplyKnockback(hitDirection * 8f);
+        }
+    }
+    private void ApplyKnockback(Vector3 force)
+    {
+        // Add to verticalVelocity? No.
+        // Instead temporarily modify movement direction.
 
+        controller.Move(force * Time.fixedDeltaTime);
+    }
 }
