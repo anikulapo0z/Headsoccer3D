@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
 
 public class ScoreTracker : MonoBehaviour
 {
