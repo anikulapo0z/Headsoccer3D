@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     [Header("Animator")]
     [SerializeField] private Animator anim;
+    [SerializeField] private Animator kickchargeAnim;
+
 
 
     private CharacterController controller;
@@ -241,6 +243,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     }
     public void OnKick(bool held)
     {
+        kickchargeAnim.SetBool("charge", held);
         if (!useChargeKick)
         {
             if (held) ChargeKick(1);
