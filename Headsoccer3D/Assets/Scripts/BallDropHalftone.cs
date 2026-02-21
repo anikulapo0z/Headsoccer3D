@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BallDropHalftone : MonoBehaviour
 {
-    [SerializeField] private Transform ballTransform;
+    private Transform ballTransform;
 
     private Renderer targetRenderer;
     private Material targetMaterial;
@@ -17,10 +17,15 @@ public class BallDropHalftone : MonoBehaviour
 
     private void Update()
     {
-        //incase we destory the ball
+        //incase we destory the ball or not assigned yet
         if (targetMaterial != null && ballTransform != null)
         {
             targetMaterial.SetVector(BallPositionID, ballTransform.position);
         }
+    }
+
+    public void setBallTransform(Transform _ballTransform)
+    {
+        ballTransform = _ballTransform;
     }
 }

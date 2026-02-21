@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: boi_mat
-  m_Shader: {fileID: -6465566751694194690, guid: 5922d29bc9090914e94fe0ecd523ee95, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 16c6c78a8f33d2644b4c521b9be0c621, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -30,14 +30,45 @@ Material:
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap:
-    RenderType: Opaque
+  stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _AmbientOcclusion:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Base_Tetxure:
+        m_Texture: {fileID: 2800000, guid: ba90e0d681c598644910bd718f5fc1b3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Basecolor:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Emission:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Halftone_Map:
+        m_Texture: {fileID: 2800000, guid: f792c5aded2ba1c4690d4c4923ea561a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Metallic:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Roughness:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Texture2D:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -47,7 +78,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _openVAT_nrml:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: ccca6d02ab995f340b2e6d8244d92b18, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -66,22 +97,35 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _AlphaToMask: 0
+    - _Animation_Index: 3.98
+    - _Animation_Index_1: 1.1
+    - _Animation_Index_Offset: 3
+    - _Animation_Layers: 3
+    - _Animation_Randomizer: 23.13
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _CastShadows: 1
     - _Cull: 2
     - _DstBlend: 0
     - _DstBlendAlpha: 0
+    - _Halftone_Tile: 100.6
+    - _Hue_Shift_Intensity: 71.9
     - _Metallic: 0
+    - _Modulo: 59.32
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _Remap_In_Max: 0
+    - _Remap_In_Min: 0.44
+    - _Remap_Out_Max: 1
+    - _Remap_Out_Min: 0.158
     - _Smoothness: 0
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _UsePackedNormals: 1
     - _UseTIme: 1
+    - _UseTime: 1
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 1
@@ -89,10 +133,12 @@ Material:
     - _exaggeration: 0
     - _frame: 0
     - _frames: 180
-    - _resolutionY: 256
-    - _speed: 1
+    - _resolutionY: 360
+    - _speed: 2
     m_Colors:
-    - _Basecolor: {r: 0, g: 0, b: 0, a: 0}
+    - _Base_Color: {r: 0.28627452, g: 0.7843138, b: 1, a: 0}
+    - _Basecolor: {r: 0.6415094, g: 0.40850836, b: 0.40850836, a: 0}
+    - _Halftone_Color: {r: 0, g: 0.39999986, b: 1, a: 1}
     - _maxValues: {r: -4.8, g: 12.6, b: 7.9, a: 0}
     - _minValues: {r: 4.8, g: -3.7, b: -6.7, a: 0}
   m_BuildTextureStacks: []
