@@ -8,12 +8,16 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_PrincipleToon_player3
-  m_Shader: {fileID: 4800000, guid: 0a67ac8c98c40c74b85399195203fd65, type: 3}
+  m_Shader: {fileID: 4800000, guid: d67c0f1751ae0724ea7be98cfd6110cb, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords:
+  m_ValidKeywords:
   - _AMBIENTLIGHTING
+  - _HALFTONELIGHT
+  - _SHADOWSLIGHT
+  - _USESHADOWS
+  m_InvalidKeywords:
+  - _IGNORESHADOWS
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -44,17 +48,29 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _HalftonePattern:
-        m_Texture: {fileID: 2800000, guid: 87d44e45926b0ad49825083694c22584, type: 3}
+    - _HalftoneMaskTex:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _HalftonePattern:
+        m_Texture: {fileID: 2800000, guid: f792c5aded2ba1c4690d4c4923ea561a, type: 3}
+        m_Scale: {x: 15, y: 15}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
+        m_Texture: {fileID: 2800000, guid: ba90e0d681c598644910bd718f5fc1b3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ShadowTex:
         m_Texture: {fileID: 2800000, guid: 266ce12a5869bcb478757fb4dae44c80, type: 3}
         m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ShadowTexture:
+        m_Texture: {fileID: 2800000, guid: fac3502d5512bae4186ef5cd6ad2e467, type: 3}
+        m_Scale: {x: 0.5, y: 0.5}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
@@ -80,7 +96,7 @@ Material:
     - _AlphaClipToggle: 0
     - _AlphaToMask: 0
     - _AmbientToggle: 1
-    - _BaseStrength: 0.69
+    - _BaseStrength: 0.433
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
@@ -89,13 +105,20 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _GlossinessSource: 0
+    - _HalftoneMaskInvertToggle: 0
+    - _HalftoneMaskToggle: 0
+    - _HalftoneToggle: 1
+    - _IgnoreShadowsToggle: 1
+    - _MaskToggle: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _RemapInputMax: 1
     - _RemapInputMin: 0
     - _RemapOutputMax: 1
     - _RemapOutputMin: 0
-    - _ShadowFrequency: 1.67
+    - _ShadowFrequency: 1
+    - _ShadowLightness: 0.357
+    - _ShadowsToggle: 1
     - _Shininess: 0
     - _Smoothness: 0.5
     - _SmoothnessSource: 0
@@ -104,12 +127,16 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
+    - _UseShadowsToggle: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 0.5032191, b: 0.4575472, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.72454906, g: 0.7658823, b: 0.972549, a: 1}
+    - _Color: {r: 0.8584906, g: 0.6924617, b: 0.6924617, a: 1}
     - _Emission: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FirstMaskColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HalftoneColor: {r: 0.14901961, g: 0.28627452, b: 0.9725491, a: 1}
+    - _SecondMaskColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

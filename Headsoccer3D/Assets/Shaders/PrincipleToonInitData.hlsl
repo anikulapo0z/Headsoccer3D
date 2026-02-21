@@ -6,25 +6,57 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
 #endif
 
-//CBUFFER perhaps to mnake it SRP Batch compatible?
-    //Color
-    float4 _BaseMap_ST;
-    //TEXTURE2D(_BaseMap);
-    //SAMPLER(sampler_BaseMap);
-    float4 _BaseColor;
-    float _BaseStrength;
+    //Base
+    TEXTURE2D(_MainTex);
+    SAMPLER(sampler_MainTex);
+
+    //Mask
+    TEXTURE2D(_MaskTex);
+    SAMPLER(sampler_MaskTex);
 
     //AO
-    float4 _AOTexture_ST;
     TEXTURE2D(_AOTexture);
     SAMPLER(sampler_AOTexture);
-    float _AOFrequency;
 
     //Shadow
-    float4 _ShadowTex_ST;
-    TEXTURE2D(_ShadowTex);
-    SAMPLER(sampler_ShadowTex);
-    float _ShadowFrequency;
+    TEXTURE2D(_ShadowTexture);
+    SAMPLER(sampler_ShadowTexture);
+
+    //Halftone
+    TEXTURE2D(_HalftonePattern);
+    SAMPLER(sampler_HalftonePattern);
+    //Halftone Mask
+    TEXTURE2D(_HalftoneMaskTex);
+    SAMPLER(sampler_HalftoneMaskTex);
+
+//CBUFFER perhaps to mnake it SRP Batch compatible
+    CBUFFER_START(UnityPerMaterial)
+        float4 _BaseColor;
+        float _Lightness;
+        float _BaseStrength;
+        float4 _Color;
+        float4 _Emission;
+        float4 _FirstMaskColor;
+        float4 _SecondMaskColor;
+
+        float4 _MainTex_ST;
+        float4 _HalftonePattern_ST;
+        float4 _ShadowTexture_ST;
+        float4 _AOTexture_ST;
+
+        float _AOFrequency;
+        float _AOLightness;
+        float _ShadowFrequency;
+        float _ShadowLightness;
+
+        float4 _HalftoneColor;
+
+        float _RemapInputMin;
+        float _RemapInputMax;
+        float _RemapOutputMin;
+        float _RemapOutputMax;
+    CBUFFER_END
+
 
 struct Attributes
 {
@@ -44,10 +76,10 @@ struct Varyings
     float3 positionWS : TEXCOORD1; // xyz: posWS
     half3 normalWS : TEXCOORD2;
     
-    #ifdef _ADDITIONAL_LIGHTS_VERTEX
+#ifdef _ADDITIONAL_LIGHTS_VERTEX
         half4 fogFactorAndVertexLight  : TEXCOORD5; // x: fogFactor, yzw: vertex light
-    #else
-        half fogFactor : TEXCOORD5;
+#else
+    half fogFactor : TEXCOORD5;
     #endif
 
     #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
@@ -56,17 +88,17 @@ struct Varyings
 
     DECLARE_LIGHTMAP_OR_SH(staticLightmapUV, vertexSH, 7);
 
-    #ifdef DYNAMICLIGHTMAP_ON
+#ifdef DYNAMICLIGHTMAP_ON
         float2  dynamicLightmapUV : TEXCOORD8; // Dynamic lightmap UVs
-    #endif
+#endif
 
-    #ifdef USE_APV_PROBE_OCCLUSION
+#ifdef USE_APV_PROBE_OCCLUSION
         float4 probeOcclusion : TEXCOORD9;
-    #endif
+#endif
 
-    float4 screenPos : TEXCOORD10;
+float4 screenPos : TEXCOORD10;
 
-    UNITY_VERTEX_INPUT_INSTANCE_ID
+UNITY_VERTEX_INPUT_INSTANCE_ID
     UNITY_VERTEX_OUTPUT_STEREO
 };
 
@@ -75,9 +107,9 @@ void InitializeInputData(Varyings input, half3 normalTS, out InputData inputData
     inputData = (InputData) 0;
 
     inputData.positionWS = input.positionWS;
-    #if defined(DEBUG_DISPLAY)
+#if defined(DEBUG_DISPLAY)
         inputData.positionCS = input.positionCS;
-    #endif
+#endif
 
 
     half3 viewDirWS = GetWorldSpaceNormalizeViewDir(inputData.positionWS);
@@ -89,39 +121,39 @@ void InitializeInputData(Varyings input, half3 normalTS, out InputData inputData
 
     inputData.viewDirectionWS = viewDirWS;
 
-    #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
+#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
             inputData.shadowCoord = input.shadowCoord;
-    #elif defined(MAIN_LIGHT_CALCULATE_SHADOWS)
+#elif defined(MAIN_LIGHT_CALCULATE_SHADOWS)
             inputData.shadowCoord = TransformWorldToShadowCoord(inputData.positionWS);
-    #else
-        inputData.shadowCoord = float4(0, 0, 0, 0);
-    #endif
+#else
+    inputData.shadowCoord = float4(0, 0, 0, 0);
+#endif
 
-    #ifdef _ADDITIONAL_LIGHTS_VERTEX
+#ifdef _ADDITIONAL_LIGHTS_VERTEX
             inputData.fogCoord = InitializeInputDataFog(float4(inputData.positionWS, 1.0), input.fogFactorAndVertexLight.x);
             inputData.vertexLighting = input.fogFactorAndVertexLight.yzw;
-    #else
-        inputData.fogCoord = InitializeInputDataFog(float4(inputData.positionWS, 1.0), input.fogFactor);
-        inputData.vertexLighting = half3(0, 0, 0);
-    #endif
+#else
+    inputData.fogCoord = InitializeInputDataFog(float4(inputData.positionWS, 1.0), input.fogFactor);
+    inputData.vertexLighting = half3(0, 0, 0);
+#endif
 
-        inputData.normalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(input.positionCS);
+    inputData.normalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(input.positionCS);
 
-    #if defined(DEBUG_DISPLAY)
-        #if defined(DYNAMICLIGHTMAP_ON)
+#if defined(DEBUG_DISPLAY)
+#if defined(DYNAMICLIGHTMAP_ON)
             inputData.dynamicLightmapUV = input.dynamicLightmapUV.xy;
-        #endif
+#endif
     
-        #if defined(LIGHTMAP_ON)
+#if defined(LIGHTMAP_ON)
             inputData.staticLightmapUV = input.staticLightmapUV;
-        #else
+#else
             inputData.vertexSH = input.vertexSH;
-        #endif
+#endif
     
-        #if defined(USE_APV_PROBE_OCCLUSION)
+#if defined(USE_APV_PROBE_OCCLUSION)
             inputData.probeOcclusion = input.probeOcclusion;
-        #endif
-    #endif
+#endif
+#endif
 }
 
 void InitializeBakedGIData(Varyings input, inout InputData inputData)
