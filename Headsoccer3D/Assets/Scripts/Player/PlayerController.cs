@@ -91,8 +91,14 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         kickDisplayMat = kickCollider.GetComponent<Renderer>().material;
 
         currentStamina = maxStamina;
-        if (staminaBar)
+
+    }
+
+    public void SetStaminaBar(Slider bar)
+    {
+        if (bar)
         {
+            staminaBar = bar;
             staminaBar.minValue = 0f;
             staminaBar.maxValue = 1f;
             staminaBar.value = 1f;

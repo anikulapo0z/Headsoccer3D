@@ -19,6 +19,9 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
 
     [SerializeField] IMenuItem currentItem;
 
+    [SerializeField] Sprite defaultSpriteCursor;
+    [SerializeField] Sprite selectedSpriteCursor;
+
 
 
 
@@ -131,6 +134,7 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
 
             MenuManager.Instance.CheckPlayerConfirm(isLocked);
             isLocked = true;
+            GetComponent<Image>().sprite = selectedSpriteCursor;
             currentItem.OnConfirm(playerIndex);
         }
     }
@@ -140,6 +144,8 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
     {
         MenuManager.Instance.PlayerCancel(isLocked);
         isLocked = false;
+        GetComponent<Image>().sprite = defaultSpriteCursor;
+
         currentItem?.OnHoverExit(playerIndex);
         currentItem = null;
     }

@@ -17,12 +17,16 @@ public class BallController : MonoBehaviour
 
     LineRenderer lr;
 
+    Vector3 previousBallPos;
+    Vector3 previousHitPos;
 
     void Awake()
     {
         ballPositionIndicator = Instantiate(ballPositionIndicatorPrefab, Vector3.zero, Quaternion.identity);
         lr = GetComponent<LineRenderer>();
         rb = GetComponent<Rigidbody>();
+        previousBallPos = transform.position;
+        previousHitPos = transform.position;
     }
     
     Vector3 GetPredictionPosition()
@@ -58,18 +62,17 @@ public class BallController : MonoBehaviour
             ballPositionIndicator.transform.eulerAngles.y + positionIndicatorSpeed,
             0f
             );
+
         if(Physics.Raycast(transform.position, Vector3.down, out hit, 100, layerToShowBallPositionOn))
         {
-            ballPositionIndicator.transform.position = Vector3.Lerp(
-                ballPositionIndicator.transform.position,
-                hit.point + canvasOffset,
-                Time.deltaTime * lerpSpeed);
+            ballPositionIndicator.transform.position = hit.point + canvasOffset;
             lr.SetPosition(0, transform.position);
             lr.SetPosition(1, hit.point);
+
+            previousBallPos = transform.position;
+            previousHitPos = hit.point;
+
         }
-        
-
-
 
         Vector3 velocity = rb.linearVelocity;
 
@@ -78,5 +81,6 @@ public class BallController : MonoBehaviour
             Vector3 dragForce = -velocity.normalized * airDrag * velocity.sqrMagnitude;
             rb.AddForce(dragForce, ForceMode.Force);
         }
+
     }
 }
