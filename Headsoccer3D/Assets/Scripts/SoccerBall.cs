@@ -84,7 +84,7 @@ public class SoccerBall : MonoBehaviour
         //        rb.AddForce(Vector3.up);
         //    }
         //}
-        if (!collision.gameObject.CompareTag("Team") && !collision.gameObject.CompareTag("Player"))
+        if (!collision.gameObject.tag.Contains("Team") && !collision.gameObject.CompareTag("Player"))
             return;
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
         if (player != null)

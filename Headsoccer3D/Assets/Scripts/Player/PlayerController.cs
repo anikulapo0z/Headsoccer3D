@@ -210,7 +210,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         }
         else
         {
-            Debug.Log("[JUMP] Blocked – not grounded");
+            Debug.Log("[JUMP] Blocked ï¿½ not grounded");
         }
 
         HeaderBall();
@@ -396,9 +396,9 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         SoccerBall ball = targetBall.GetComponent<SoccerBall>();
         if (ball != null)
         {
-            ball.LaunchAtDirection(kickDirection + Vector3.up * currentKickHeight, finalForce);
+            ball.LaunchAtDirection(kickDirection + (Vector3.up * currentKickHeight / 0.3334f * level), finalForce);
         }
-        targetBall.AddForce(new Vector3(0, currentKickHeight, 0), ForceMode.Impulse);
+        //targetBall.AddForce(new Vector3(0, currentKickHeight, 0), ForceMode.Impulse);
         Debug.Log($"KICK! Level: {level} | Force: {finalForce} | hold: {kickHoldTime:F2}S");
     }
     #endregion

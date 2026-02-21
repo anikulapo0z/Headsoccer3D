@@ -127,10 +127,17 @@ MonoBehaviour:
   rotationSpeed: 25
   rotateToMovement: 1
   kickForce: 10
-  startingKickHeight: 4
+  startingKickHeight: 1
   currentKickHeight: 0
   kickTrigger: {fileID: 374959338324389693}
   kickCooldown: 0.5
+  useChargeKick: 1
+  chargeTime2: 0.5
+  chargeTime3: 1.5
+  kickMult1: 1
+  kickMult2: 2
+  kickMult3: 4
+  tapTime: 0.1
   jumpVelocity: 10
   gravity: -35
   groundStick: -0.6
@@ -143,6 +150,12 @@ MonoBehaviour:
   playerVelocityPercent: 0.9
   isHeaderAcive: 0
   kickCollider: {fileID: 2812258890230775551}
+  sprintMultiplier: 2
+  maxStamina: 10
+  staminaDrainRate: 1
+  staminaRegenRate: 0.8
+  staminaRegenDelay: 2
+  staminaBar: {fileID: 0}
 --- !u!136 &254365768025910371
 CapsuleCollider:
   m_ObjectHideFlags: 0

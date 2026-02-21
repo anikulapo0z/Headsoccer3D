@@ -44,6 +44,7 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] float delayBeforeUnlockPlayer;
     [SerializeField] GameObject ballPrefab;
     [SerializeField] GameObject ballObject;
+    [SerializeField] BallDropHalftone ballDropHalftone;
     [SerializeField] Transform ballStartingPos;
     [SerializeField] ScoreTracker scoreTracker;
 
@@ -78,6 +79,7 @@ public class GameSceneManager : MonoBehaviour
     {
         inputControllers = PlayerInputHolder.Instance.playerList;
         ballObject = Instantiate(ballPrefab, ballStartingPos.position, Quaternion.identity);
+        ballDropHalftone.setBallTransform(ballObject.transform);
         camera.target = ballObject.transform;
 
 
