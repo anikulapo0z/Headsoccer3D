@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] private float kickForce = 10f;
     [SerializeField] private float startingKickHeight = 1f;
     [SerializeField] private float currentKickHeight;
-    [SerializeField] private Collider kickTrigger;
+    //[SerializeField] private Collider kickTrigger;
     [SerializeField] private float kickCooldown = 0.5f;
     private bool kickUsesFacingDirection = true;
     [Header("Charge Kick")]
@@ -28,10 +28,17 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] private float kickMult1 = 1f;
     [SerializeField] private float kickMult2 = 2f;
     [SerializeField] private float kickMult3 = 4f;
+    [SerializeField] private float kickHeightMult1;
+    [SerializeField] private float kickHeightMult2;
+    [SerializeField] private float kickHeightMult3;
+
+
+
+
     [SerializeField] private float tapTime = 0.1f;
     private bool kickHeld;
     private float kickHoldTime;
-    private int kickChargeLevel = 1;
+    public int kickChargeLevel = 1;
 
     [Header("Jumping Settings")]
     [SerializeField] private float jumpVelocity = 8f;
@@ -39,7 +46,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] private float groundStick = -2f;
 
     [Header("Heading Settings")]
-    [SerializeField] private Collider headTrigger;
+    //[SerializeField] private Collider headTrigger;
     [SerializeField] private float headingForce = 5f;
     [SerializeField] private float headCooldown = 0.5f;
 
@@ -55,8 +62,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     private float verticalVelocity;
     private float nextKickTime = 0f;
     private float nextHeadTime = 0f;
-    private readonly HashSet<Rigidbody> ballsInHeadRange = new HashSet<Rigidbody>();
-    private readonly HashSet<Rigidbody> ballsInKickRange = new HashSet<Rigidbody>();
+    //private readonly HashSet<Rigidbody> ballsInHeadRange = new HashSet<Rigidbody>();
+    //private readonly HashSet<Rigidbody> ballsInKickRange = new HashSet<Rigidbody>();
 
 
     // owen vars
@@ -65,9 +72,22 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField, Range(0f, 1f)] float ballVelocityPercent;
     [SerializeField, Range(0f, 1f)] float playerVelocityPercent;
 
-    [SerializeField] bool isHeaderAcive = false;
+    //[SerializeField] bool isHeaderAcive = false;
     [SerializeField] GameObject kickCollider;
     Material kickDisplayMat;
+
+
+
+    // new kick vars
+    [SerializeField] PlayerTriggers kickTrigger;
+    [SerializeField] PlayerTriggers headTrigger;
+    [SerializeField] float kickActiveTime;
+    [SerializeField] float headActiveTime;
+
+
+
+
+
 
     [Header("Sprint Settings")]
     [SerializeField] private float sprintMultiplier = 2f;
@@ -107,13 +127,14 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         }
     }
 
+
+
     void FixedUpdate()
     {
         //Grounding and gravity logic
         if (controller.isGrounded && verticalVelocity < 0f)
         {
             verticalVelocity = groundStick;
-            isHeaderAcive = false;
         }
         verticalVelocity += gravity * Time.fixedDeltaTime;
 
@@ -161,11 +182,16 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             Quaternion target = Quaternion.LookRotation(moveDir, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, rotationSpeed * Time.fixedDeltaTime);
         }
+        //Debug.LogError(kickHeld);
         if (useChargeKick && kickHeld)
         {
-            kickHoldTime += Time.fixedDeltaTime;
+            kickHoldTime += Time.deltaTime;
 
-            if (kickHoldTime >= chargeTime3) kickChargeLevel = 3;
+            if (kickHoldTime >= chargeTime3)
+            {
+                Debug.LogError("-----------------------");
+                kickChargeLevel = 3;
+            }
             else if (kickHoldTime >= chargeTime2) kickChargeLevel = 2;
             else kickChargeLevel = 1;
         }
@@ -205,7 +231,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         if (controller.isGrounded)
         {
             // setting header active
-            isHeaderAcive = true;
+            //isHeaderAcive = true;
 
             verticalVelocity = jumpVelocity;
             Debug.Log($"[JUMP] APPLY jumpVelocity = {jumpVelocity}");
@@ -215,7 +241,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             Debug.Log("[JUMP] Blocked � not grounded");
         }
 
-        HeaderBall();
+        headTrigger.TurnOnCollider();
+        StartCoroutine(DisableHeadAfterTime());
     }
     public void OnMove(Vector2 input)
     {
@@ -265,11 +292,11 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             int levelToUse = (kickHoldTime <= tapTime) ? 1 : kickChargeLevel;
             ChargeKick(levelToUse);
 
-            kickHoldTime = 0f;
-            kickChargeLevel = 1;
+
         }
     }
-    void HeaderBall()
+
+/*    void HeaderBall()
     {
         foreach (var t in ballsInHeadRange)
         {
@@ -307,11 +334,17 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         ball.AddForce((Vector3.up * headingForce) + newVel, ForceMode.Impulse);
 
 
+    }*/
+
+    public void HitBall(SoccerBall ball)
+    {
+
     }
 
 
+
     #region Kicking Logic
-    private Rigidbody GetClosest(HashSet<Rigidbody> set)
+/*    private Rigidbody GetClosest(HashSet<Rigidbody> set)
     {
         Rigidbody best = null;
         float bestSqr = float.PositiveInfinity;
@@ -327,8 +360,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             }
         }
         return best;
-    }
-    private void OnTriggerEnter(Collider other)
+    }*/
+/*    private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Ball")) return;
 
@@ -362,9 +395,23 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         ballsInKickRange.Remove(rb);
         ballsInHeadRange.Remove(rb);
-    }
+    }*/
     void ChargeKick(int level)
     {
+        if(Time.time < nextKickTime) return;
+
+        nextKickTime = Time.time + kickCooldown;
+        kickTrigger.TurnOnCollider();
+        StartCoroutine(DisableKickAfterTime());
+
+        kickDisplayMat.SetFloat("_ScrollValue", 0f);
+        StartCoroutine(KickVisualAndReset(0.3f));
+        Debug.Log($"KICK! Level: {level} | hold: {kickHoldTime:F2}S");
+
+
+
+
+/*
         if (Time.time < nextKickTime) return;
         nextKickTime = Time.time + kickCooldown;
         kickCollider.SetActive(true);
@@ -399,11 +446,86 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         SoccerBall ball = targetBall.GetComponent<SoccerBall>();
         if (ball != null)
         {
-            ball.LaunchAtDirection(kickDirection + (Vector3.up * currentKickHeight / 0.3334f * level), finalForce);
+            ball.LaunchAtDirection(kickDirection + (Vector3.up * currentKickHeight / 0.3334f * level)*//*, finalForce*//*);
         }
         //targetBall.AddForce(new Vector3(0, currentKickHeight, 0), ForceMode.Impulse);
-        Debug.Log($"KICK! Level: {level} | Force: {finalForce} | hold: {kickHoldTime:F2}S");
+        Debug.Log($"KICK! Level: {level} | Force: {finalForce} | hold: {kickHoldTime:F2}S");*/
     }
+
+    private IEnumerator DisableKickAfterTime()
+    {
+        yield return new WaitForSeconds(kickActiveTime);
+        kickHoldTime = 0f;
+        kickChargeLevel = 1;
+        kickTrigger.TurnOffCollider();
+    }
+    private IEnumerator DisableHeadAfterTime()
+    {
+        yield return new WaitForSeconds(headActiveTime);
+        headTrigger.TurnOffCollider();
+    }
+
+    public void OnKickTrigger(SoccerBall ball)
+    {
+        Vector3 kickDirection;
+
+        if(kickUsesFacingDirection)
+            kickDirection = transform.forward;
+        else
+            kickDirection = (ball.transform.position - transform.position);
+
+        kickDirection.y = 0f;
+        kickDirection.Normalize();
+
+        float mult = kickMult1;
+        float currentKickHeight = kickHeightMult1;
+        if (kickChargeLevel == 2)
+        {
+            mult = kickMult2;
+            currentKickHeight = kickHeightMult2;
+        }
+        else if (kickChargeLevel == 3)
+        {
+            mult = kickMult3;
+            currentKickHeight = kickHeightMult3;
+        }
+
+        float finalForce = kickForce * mult;
+
+        Debug.LogError(kickChargeLevel);
+        ball.LaunchAtDirection(kickDirection + (Vector3.up * currentKickHeight), finalForce);
+
+
+
+    }
+
+    public void OnHeadTrigger(SoccerBall ball)
+    {
+        if (Time.time < nextHeadTime) return;
+
+        nextHeadTime = Time.time + headCooldown;
+
+        // Base direction: forward + upward bias
+        Vector3 headerDirection = transform.forward;
+
+        // Slight upward angle for realism
+        headerDirection += Vector3.up * 0.6f;
+
+        headerDirection.Normalize();
+
+        // Optional: influence header by player movement
+        Vector3 movementInfluence = controller.velocity * playerVelocityPercent;
+        movementInfluence.y = 0f;
+
+        headerDirection += movementInfluence;
+        headerDirection.Normalize();
+
+        float finalForce = headingForce;
+
+        ball.LaunchAtDirection(headerDirection, finalForce);
+    }
+
+
     #endregion
 
     public void LockPlayerMove()

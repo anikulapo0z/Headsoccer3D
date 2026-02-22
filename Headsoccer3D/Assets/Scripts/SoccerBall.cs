@@ -23,9 +23,11 @@ public class SoccerBall : MonoBehaviour
     public void LaunchAtDirection(Vector3 dir, float force)
     {
         currentActivePlayer = null;
+        //Debug.LogError(force);
 
         dir.Normalize();
         rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
         rb.AddForce(dir * force, ForceMode.Impulse);    
     }
 
