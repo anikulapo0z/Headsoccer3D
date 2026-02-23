@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [Header("Heading Settings")]
     //[SerializeField] private Collider headTrigger;
     [SerializeField] private float headingForce = 5f;
+    [SerializeField] private float headerUpForce;
     [SerializeField] private float headCooldown = 0.5f;
 
     [Header("Animator")]
@@ -70,7 +71,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     bool isPlayerLocked = false;
     public Vector3 startingPos;
     [SerializeField, Range(0f, 1f)] float ballVelocityPercent;
-    [SerializeField, Range(0f, 1f)] float playerVelocityPercent;
+    [SerializeField] float playerVelocityPercent;
 
     //[SerializeField] bool isHeaderAcive = false;
     [SerializeField] GameObject kickCollider;
@@ -296,45 +297,6 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         }
     }
 
-/*    void HeaderBall()
-    {
-        foreach (var t in ballsInHeadRange)
-        {
-            Debug.Log("after func call: " + t.name);
-        }
-
-
-        if (!isHeaderAcive) return;
-        if (ballsInHeadRange.Count == 0) return;
-
-        if (Time.time < nextHeadTime) return;
-        nextHeadTime = Time.time + headCooldown;
-
-
-        foreach (var t in ballsInHeadRange)
-        {
-            Debug.Log(t.name);
-        }
-        Debug.Log("hgjkhgkj");
-
-        //Rigidbody ball = GetClosest(ballsInHeadRange);
-        Rigidbody ball = ballsInHeadRange.FirstOrDefault();
-
-
-        if (ball == null) return;
-        Debug.Log("aaaaaaaaaaaaaaaaaaaaaa");
-
-
-        Vector3 startingVel = ball.linearVelocity;
-        Vector3 newVel = (startingVel * ballVelocityPercent) + (controller.velocity * playerVelocityPercent);
-        newVel.y = 0f;
-
-
-        ball.linearVelocity = Vector3.zero;
-        ball.AddForce((Vector3.up * headingForce) + newVel, ForceMode.Impulse);
-
-
-    }*/
 
     public void HitBall(SoccerBall ball)
     {
@@ -344,58 +306,6 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
 
     #region Kicking Logic
-/*    private Rigidbody GetClosest(HashSet<Rigidbody> set)
-    {
-        Rigidbody best = null;
-        float bestSqr = float.PositiveInfinity;
-
-        foreach (var rb in set)
-        {
-            if (rb == null) continue;
-            float sqr = (rb.worldCenterOfMass - transform.position).sqrMagnitude;
-            if (sqr < bestSqr)
-            {
-                bestSqr = sqr;
-                best = rb;
-            }
-        }
-        return best;
-    }*/
-/*    private void OnTriggerEnter(Collider other)
-    {
-        if (!other.CompareTag("Ball")) return;
-
-        Rigidbody rb = other.attachedRigidbody;
-        if (rb == null) return;
-
-        // Which trigger fired?
-        if (kickTrigger.bounds.Intersects(other.bounds))
-            ballsInKickRange.Add(rb);
-
-        if (headTrigger.bounds.Intersects(other.bounds))
-        {
-            Debug.Log("adding ball to head range");
-            ballsInHeadRange.Add(rb);
-            foreach (var t in ballsInHeadRange)
-            {
-                Debug.Log("after adding to list: " + t.name);
-            }
-            HeaderBall();
-
-        }
-
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (!other.CompareTag("Ball")) return;
-
-        Rigidbody rb = other.attachedRigidbody;
-        if (rb == null) return;
-
-        ballsInKickRange.Remove(rb);
-        ballsInHeadRange.Remove(rb);
-    }*/
     void ChargeKick(int level)
     {
         if(Time.time < nextKickTime) return;
@@ -409,47 +319,6 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         Debug.Log($"KICK! Level: {level} | hold: {kickHoldTime:F2}S");
 
 
-
-
-/*
-        if (Time.time < nextKickTime) return;
-        nextKickTime = Time.time + kickCooldown;
-        kickCollider.SetActive(true);
-        kickDisplayMat.SetFloat("_ScrollValue", 0f);
-        StartCoroutine(KickVisualAndReset(0.3f));
-
-        Rigidbody targetBall = GetClosest(ballsInKickRange);
-        if (targetBall == null) return;
-
-        Vector3 kickDirection;
-
-        if (kickUsesFacingDirection)
-        {
-            kickDirection = transform.forward;
-        }
-        else
-        {
-            kickDirection = (targetBall.worldCenterOfMass - transform.position);
-        }
-
-        kickDirection.y = 0f;
-        if (kickDirection.sqrMagnitude < 0.01f)
-            kickDirection = transform.forward;
-
-        kickDirection.Normalize();
-
-        float mult = kickMult1;
-        if (level == 2) mult = kickMult2;
-        else if(level == 3) mult = kickMult3;
-        float finalForce = kickForce * mult;
-
-        SoccerBall ball = targetBall.GetComponent<SoccerBall>();
-        if (ball != null)
-        {
-            ball.LaunchAtDirection(kickDirection + (Vector3.up * currentKickHeight / 0.3334f * level)*//*, finalForce*//*);
-        }
-        //targetBall.AddForce(new Vector3(0, currentKickHeight, 0), ForceMode.Impulse);
-        Debug.Log($"KICK! Level: {level} | Force: {finalForce} | hold: {kickHoldTime:F2}S");*/
     }
 
     private IEnumerator DisableKickAfterTime()
@@ -505,15 +374,12 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         nextHeadTime = Time.time + headCooldown;
 
-        // Base direction: forward + upward bias
         Vector3 headerDirection = transform.forward;
 
-        // Slight upward angle for realism
-        headerDirection += Vector3.up * 0.6f;
+        headerDirection += Vector3.up * headerUpForce;
 
-        headerDirection.Normalize();
+        //headerDirection.Normalize();
 
-        // Optional: influence header by player movement
         Vector3 movementInfluence = controller.velocity * playerVelocityPercent;
         movementInfluence.y = 0f;
 
