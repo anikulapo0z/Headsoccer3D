@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 87823349313922562}
   - component: {fileID: 5715509517818701763}
   - component: {fileID: 2982971697010060558}
+  - component: {fileID: 8232834016103739514}
   m_Layer: 7
   m_Name: character1
   m_TagString: Player
@@ -89,34 +90,39 @@ MonoBehaviour:
   useChargeKick: 1
   chargeTime2: 0.5
   chargeTime3: 1.5
-  kickMult1: 1
-  kickMult2: 2
-  kickMult3: 4
-  kickHeightMult1: 1
-  kickHeightMult2: 2
-  kickHeightMult3: 3
+  kickMult1: 0.7
+  kickMult2: 1
+  kickMult3: 2
+  kickHeightMult1: 0.5
+  kickHeightMult2: 1
+  kickHeightMult3: 1.2
   tapTime: 0.1
+  kickChargeLevel: 1
   jumpVelocity: 10
   gravity: -35
   groundStick: -0.6
   headingForce: 5
+  headerUpForce: 40
   headCooldown: 0.5
   anim: {fileID: 0}
   kickchargeAnim: {fileID: 3598370525349734555}
   startingPos: {x: 0, y: 0, z: 0}
   ballVelocityPercent: 0.5
-  playerVelocityPercent: 0.9
+  playerVelocityPercent: 10
   kickCollider: {fileID: 7273337607246191686}
   kickTrigger: {fileID: 2943843792541657765}
   headTrigger: {fileID: 558312512381974239}
-  kickActiveTime: 1
-  headActiveTime: 1
+  kickActiveTime: 0.15
+  headActiveTime: 0.7
+  kickPlayerCooldown: 0.12
   sprintMultiplier: 2
   maxStamina: 10
   staminaDrainRate: 1
   staminaRegenRate: 1.5
   staminaRegenDelay: 0.5
   staminaBar: {fileID: 0}
+  knockbackDuration: 0.5
+  knockbackDrag: 18
 --- !u!114 &2982971697010060558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +145,33 @@ MonoBehaviour:
   uiSideOffset: 0.8
   uiHeightOffset: 0.8
   matObj: {fileID: 2346882006535162926}
+--- !u!54 &8232834016103739514
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105791413608084587}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
 --- !u!1 &2578436691414235925
 GameObject:
   m_ObjectHideFlags: 0
@@ -1190,6 +1223,59 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &8544093924952792565
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7923900270575340767}
+  - component: {fileID: 7850017286332309025}
+  m_Layer: 0
+  m_Name: KickPlayerCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7923900270575340767
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8544093924952792565}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6507452193112454576}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7850017286332309025
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8544093924952792565}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.25, y: 0.25, z: 0.25}
+  m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!1001 &228479119720917522
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1289,6 +1375,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6441455637586173858, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9138427896746568098}
+    - targetCorrespondingSourceObject: {fileID: 6441455637586173858, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7923900270575340767}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
 --- !u!1 &2346882006535162926 stripped
