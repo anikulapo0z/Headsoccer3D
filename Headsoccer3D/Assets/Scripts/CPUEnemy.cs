@@ -143,6 +143,21 @@ public class CPUEnemy : MonoBehaviour
         }
     }
 
+    //Getting hit
+    public void GetHit(SoccerBall ball, float momentum, Vector3 hitDirection)
+    {
+        // We have to check for the agent because it's navmesh stuff
+        if (agent == null) return;
+
+        hitDirection.y = 0f;
+        hitDirection = hitDirection.sqrMagnitude > 0.001f ? hitDirection.normalized : -transform.forward;
+
+        float dist = (momentum < 15f) ? 0.8f : 1.8f;
+
+        // quick knockback
+        agent.Move(hitDirection * dist);
+    }
+
     //kicking and team play----------------------------------------------------------------------
     private void kickBallTowards(Vector3 _target, bool _switchRoles = false, float _forceMult = 1.0f)
     {

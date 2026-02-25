@@ -63,9 +63,6 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     private float verticalVelocity;
     private float nextKickTime = 0f;
     private float nextHeadTime = 0f;
-    //private readonly HashSet<Rigidbody> ballsInHeadRange = new HashSet<Rigidbody>();
-    //private readonly HashSet<Rigidbody> ballsInKickRange = new HashSet<Rigidbody>();
-
 
     // owen vars
     bool isPlayerLocked = false;
@@ -84,7 +81,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] PlayerTriggers headTrigger;
     [SerializeField] float kickActiveTime;
     [SerializeField] float headActiveTime;
-
+    [SerializeField] float kickPlayerCooldown = 0.12f;
+    private float nextKickPlayerTime = 0f;
 
 
 
@@ -97,6 +95,12 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] private float staminaRegenRate = 0.8f;
     [SerializeField] private float staminaRegenDelay = 2f;
     [SerializeField] private Slider staminaBar;
+
+    [Header("Knockback Settings")]
+    [SerializeField] private float knockbackDuration = 0.2f;
+    [SerializeField] private float knockbackDrag = 18f;
+    private Vector3 knockbackVelocity;
+    private float knockbackTimer;
 
     private float currentStamina;
     private float regenTimer;
@@ -167,7 +171,24 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         }
         // Apply movement
         float moveSpeed = isSprinting ? this.moveSpeed * sprintMultiplier : this.moveSpeed;
-        Vector3 velocity = (moveDir * moveSpeed) + (Vector3.up * verticalVelocity);
+
+        //Apply knockback if active
+        if (knockbackTimer > 0f)
+        {
+            knockbackTimer -= Time.fixedDeltaTime;
+            knockbackVelocity = Vector3.Slerp(knockbackVelocity, Vector3.zero, knockbackDrag * Time.fixedDeltaTime);
+
+            // remove player control while being knocked
+            moveDir = Vector3.zero;
+        }
+        else
+        {
+            knockbackVelocity = Vector3.zero;
+        }
+
+        // Apply movement + knockback
+        Vector3 velocity = (moveDir * moveSpeed) + knockbackVelocity + (Vector3.up * verticalVelocity);
+
         anim.SetFloat("Velocity", Mathf.Abs(velocity.x) + Mathf.Abs(velocity.z));
         anim.SetBool("onGround", controller.isGrounded);
 
@@ -390,7 +411,27 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         ball.LaunchAtDirection(headerDirection, finalForce);
     }
+     public float GetKickPlayerMomentum()
+     {
+        float mult = kickMult1;
+        if (kickChargeLevel == 2)
+        {
+            mult = kickMult2;
+        }
+        else if (kickChargeLevel == 3)
+        {
+            mult = kickMult3;
+        }
 
+        float moveBonus = controller.velocity.magnitude * playerVelocityPercent;
+        return (kickForce * mult) + moveBonus;
+     }
+    public bool CanApplyKickPlayerHit()
+    {
+        if (Time.time < nextKickPlayerTime) return false;
+        nextKickPlayerTime = Time.time + kickPlayerCooldown;
+        return true;
+    }
 
     #endregion
 
@@ -411,11 +452,11 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         }
         else if (momentum < 15f)
         {
-            ApplyKnockback(hitDirection * 3f);
+            ApplyKnockback(hitDirection * 5f);
         }
         else
         {
-            ApplyKnockback(hitDirection * 8f);
+            ApplyKnockback(hitDirection * 9f);
         }
     }
     private void ApplyKnockback(Vector3 force)
@@ -423,6 +464,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         // Add to verticalVelocity? No.
         // Instead temporarily modify movement direction.
 
-        controller.Move(force * Time.fixedDeltaTime);
+        //controller.Move(force * Time.fixedDeltaTime);
+        knockbackVelocity = force;
+        knockbackTimer = knockbackDuration;
     }
 }
