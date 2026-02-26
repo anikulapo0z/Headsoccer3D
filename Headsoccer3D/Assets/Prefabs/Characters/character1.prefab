@@ -93,9 +93,9 @@ MonoBehaviour:
   kickMult1: 0.7
   kickMult2: 1
   kickMult3: 2
-  kickHeightMult1: 0.5
-  kickHeightMult2: 1
-  kickHeightMult3: 1.2
+  kickHeightMult1: 0.2
+  kickHeightMult2: 0.4
+  kickHeightMult3: 1
   tapTime: 0.1
   kickChargeLevel: 1
   jumpVelocity: 10
@@ -123,6 +123,8 @@ MonoBehaviour:
   staminaBar: {fileID: 0}
   knockbackDuration: 0.5
   knockbackDrag: 18
+  knockbackForceMultiplier1: 25
+  knockbackForceMultiplier2: 50
 --- !u!114 &2982971697010060558
 MonoBehaviour:
   m_ObjectHideFlags: 0

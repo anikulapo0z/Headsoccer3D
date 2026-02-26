@@ -84,10 +84,6 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] float kickPlayerCooldown = 0.12f;
     private float nextKickPlayerTime = 0f;
 
-
-
-
-
     [Header("Sprint Settings")]
     [SerializeField] private float sprintMultiplier = 2f;
     [SerializeField] private float maxStamina = 10f;
@@ -99,6 +95,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [Header("Knockback Settings")]
     [SerializeField] private float knockbackDuration = 0.2f;
     [SerializeField] private float knockbackDrag = 18f;
+    [SerializeField] private float knockbackForceMultiplier1 = 15f;
+    [SerializeField] private float knockbackForceMultiplier2 = 30f;
     private Vector3 knockbackVelocity;
     private float knockbackTimer;
 
@@ -452,11 +450,11 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         }
         else if (momentum < 15f)
         {
-            ApplyKnockback(hitDirection * 5f);
+            ApplyKnockback(hitDirection * knockbackForceMultiplier1);
         }
         else
         {
-            ApplyKnockback(hitDirection * 9f);
+            ApplyKnockback(hitDirection * knockbackForceMultiplier2);
         }
     }
     private void ApplyKnockback(Vector3 force)
