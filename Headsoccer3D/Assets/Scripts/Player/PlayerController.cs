@@ -38,9 +38,6 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     public float multi;
     public float c;
 
-
-
-
     [SerializeField] private float tapTime = 0.1f;
     private bool kickHeld;
     private float kickHoldTime;
@@ -113,6 +110,12 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     private bool isSprinting = false;
     private bool sprintHeld;
 
+    [Header("Kick-Player Impact Thresholds")]
+    [SerializeField] private float kickPlayerThreshold1 = 5f;
+    [SerializeField] private float kickPlayerThreshold2 = 15f;
+
+    public float KickPlayerThreshold1 => kickPlayerThreshold1;
+    public float KickPlayerThreshold2 => kickPlayerThreshold2;
 
     void Awake()
     {
@@ -456,14 +459,14 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     {
         GetComponent<CharacterController>().enabled = true;
     }
-    public void GetHit(SoccerBall ball, float momentum, Vector3 hitDirection)
+    public void GetHit(SoccerBall ball, float momentum, Vector3 hitDirection, float threshold1, float threshold2)
     {
-        if (momentum < 5f)
+        if (momentum < threshold1)
         {
             // gained control
             return;
         }
-        else if (momentum < 15f)
+        else if (momentum < threshold2)
         {
             ApplyKnockback(hitDirection * knockbackForceMultiplier1);
         }

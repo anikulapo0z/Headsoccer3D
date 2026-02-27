@@ -9,6 +9,7 @@ public class SoccerBall : MonoBehaviour
     [SerializeField] private float threshold1 = 5f;
     [SerializeField] private float threshold2 = 15f;
     [SerializeField] private float threshold3 = 30f;
+    [SerializeField] private float thresholdBlend = 1.5f;
 
     private PlayerController currentActivePlayer;
 
@@ -90,10 +91,24 @@ public class SoccerBall : MonoBehaviour
             return;
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
         if (player != null)
-            return;
+        {
+            //float momentum = rb.linearVelocity.magnitude * rb.mass * 50;
+            //Vector3 hitDirection = rb.linearVelocity.normalized;
+            //ResolveImpact(player, collision, momentum, hitDirection);
 
-        float momentum = rb.linearVelocity.magnitude * rb.mass;
-        Vector3 hitDirection = rb.linearVelocity.normalized;
+            float relSpeed = collision.relativeVelocity.magnitude;
+            Vector3 hitDirection = (player.transform.position - transform.position);
+
+            float momentum = rb.mass * relSpeed;
+
+            hitDirection.y = 0f;
+            if (hitDirection.sqrMagnitude < 0.0001f)
+                hitDirection = collision.GetContact(0).normal; // fallback
+            hitDirection.Normalize();
+
+            ResolveImpact(player, collision, momentum, hitDirection);
+            Debug.Log($"Resolve Impact {player.name} |Collision: {collision}| Momentum: {momentum} | Hit Direction: {hitDirection}");
+        }
     }
 
     private void OnCollisionExit(Collision collision)
@@ -106,30 +121,62 @@ public class SoccerBall : MonoBehaviour
 
     private void ResolveImpact(PlayerController player, Collision collision, float momentum, Vector3 hitDirection)
     {
+        float threshold1Low = threshold1 - thresholdBlend;
+        float threshold1High = threshold1 + thresholdBlend;
+
+        float threshold2Low = threshold2 - thresholdBlend;
+        float threshold2High = threshold2 + thresholdBlend;
+
+        float threshold3Low = threshold3 - thresholdBlend;
+
         // ball bounces off the player
-        if(momentum < threshold1)
+        if (momentum <= threshold1Low)
         {
             // gain control
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
             currentActivePlayer = player;
 
-            player.GetHit(this, momentum, hitDirection);
+            player.GetHit(this, momentum, hitDirection, threshold1Low, threshold1High);
+            return;
         }
 
         //medium momentum, ball is deflected
-        else if (momentum < threshold2)
+        if (momentum < threshold1High)
         {
-            player.GetHit(this, momentum, hitDirection);
+            float blend01 = Mathf.InverseLerp(threshold1Low, threshold1High, momentum);
+
+            rb.linearVelocity *= Mathf.Lerp(0.05f, 1f, blend01);
+            rb.angularVelocity *= Mathf.Lerp(0.05f, 1f, blend01);
+
+            // Only assign control if it’s still pretty low
+            if (blend01 < 0.35f)
+                currentActivePlayer = player;
+
+            player.GetHit(this, momentum, hitDirection, threshold1, threshold2);
+            return;
         }
 
-        //high momentum, ball is deflected more
-        else
+        if(momentum < threshold2High)
         {
-            player.GetHit(this, momentum, hitDirection);
-            Physics.IgnoreCollision(GetComponent<Collider>(),collision.collider,true);
+            // Player knockback uses real tiers
+            player.GetHit(this, momentum, hitDirection, threshold1, threshold2);
 
-            StartCoroutine(ReenableCollision(collision.collider, 0.2f));
+            float deflect01 = Mathf.InverseLerp(threshold1High, threshold2High, momentum);
+            rb.AddForce(-hitDirection * deflect01 * 2f, ForceMode.Impulse);
+            return;
+        }
+
+        player.GetHit(this, momentum, hitDirection, threshold1, threshold2);
+
+        // Only pass through when it's truly high (near threshold3)
+        if (momentum >= threshold3Low)
+        {
+            Collider ballCol = GetComponent<Collider>();
+            Collider otherCol = collision.collider;
+
+            Physics.IgnoreCollision(ballCol, otherCol, true);
+            StartCoroutine(ReenableCollision(otherCol, 0.2f));
         }
     }
     private IEnumerator ReenableCollision(Collider col, float delay)

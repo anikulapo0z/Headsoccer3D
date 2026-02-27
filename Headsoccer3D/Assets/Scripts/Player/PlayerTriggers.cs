@@ -56,9 +56,12 @@ public class PlayerTriggers : MonoBehaviour
 
         float momentum = playerController.GetKickPlayerMomentum();
 
-        if(otherPlayer != null)
+        float threshold1 = playerController.KickPlayerThreshold1;
+        float threshold2 = playerController.KickPlayerThreshold2;
+
+        if (otherPlayer != null)
         {
-            otherPlayer.GetHit(null, momentum, hitDir);
+            otherPlayer.GetHit(null, momentum, hitDir, threshold1, threshold2);
             Debug.Log("Hit player with momentum: " + momentum + " and direction: " + hitDir);
             return;
         }
