@@ -238,7 +238,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4813d7564bb19848a48e6166c3a465b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  airDrag: 0.15
+  xz_Drag: 0.1
+  y_Drag: 0.15
+  ground_Drag: 0.2
   layerToShowBallPositionOn:
     serializedVersion: 2
     m_Bits: 64

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, IPlayerControllable
@@ -31,6 +32,11 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] private float kickHeightMult1;
     [SerializeField] private float kickHeightMult2;
     [SerializeField] private float kickHeightMult3;
+
+    public AnimationCurve t;
+    float timeTest = 0;
+    public float multi;
+    public float c;
 
 
 
@@ -174,13 +180,15 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         if (knockbackTimer > 0f)
         {
             knockbackTimer -= Time.fixedDeltaTime;
-            knockbackVelocity = Vector3.Slerp(knockbackVelocity, Vector3.zero, knockbackDrag * Time.fixedDeltaTime);
+            timeTest += Time.deltaTime / c;
+            knockbackVelocity = Vector3.Slerp(knockbackVelocity, Vector3.zero, t.Evaluate(timeTest) /*knockbackDrag * Time.fixedDeltaTime*/) / multi;
 
             // remove player control while being knocked
             moveDir = Vector3.zero;
         }
         else
         {
+            timeTest = 0;
             knockbackVelocity = Vector3.zero;
         }
 
@@ -209,7 +217,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
             if (kickHoldTime >= chargeTime3)
             {
-                Debug.LogError("-----------------------");
+                //Debug.LogError("-----------------------");
                 kickChargeLevel = 3;
             }
             else if (kickHoldTime >= chargeTime2) kickChargeLevel = 2;

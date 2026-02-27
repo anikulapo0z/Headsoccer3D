@@ -2,7 +2,11 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
-    [SerializeField] float airDrag = 0.15f;
+    public bool grounded = false;
+
+    [SerializeField] float xz_Drag;
+    [SerializeField] float y_Drag;
+    [SerializeField] float ground_Drag;
     Rigidbody rb;
 
     Vector3 t = new Vector3(0, 0, 60);
@@ -20,6 +24,7 @@ public class BallController : MonoBehaviour
     Vector3 previousBallPos;
     Vector3 previousHitPos;
 
+
     void Awake()
     {
         ballPositionIndicator = Instantiate(ballPositionIndicatorPrefab, Vector3.zero, Quaternion.identity);
@@ -34,7 +39,7 @@ public class BallController : MonoBehaviour
         Vector3 pred = rb.linearVelocity;
         //pred.y = 0f;
 
-        return transform.position + pred * predictionTime * airDrag;
+        return transform.position + pred * predictionTime * new Vector3(xz_Drag, y_Drag, xz_Drag).magnitude;
 
     }
 
@@ -76,11 +81,35 @@ public class BallController : MonoBehaviour
 
         Vector3 velocity = rb.linearVelocity;
 
+
+        if (grounded && velocity.sqrMagnitude > 0.001f)
+        {
+            Vector3 dragForce = -velocity.normalized * ground_Drag * velocity.sqrMagnitude;
+
+            rb.AddForce(dragForce, ForceMode.Force);
+        }
+
         if (velocity.sqrMagnitude > 0.001f)
         {
-            Vector3 dragForce = -velocity.normalized * airDrag * velocity.sqrMagnitude;
+            Vector3 dragForce = new Vector3(
+                -velocity.normalized.x * xz_Drag * velocity.sqrMagnitude,
+                -velocity.normalized.y * y_Drag * velocity.sqrMagnitude,
+                -velocity.normalized.z * xz_Drag * velocity.sqrMagnitude);
             rb.AddForce(dragForce, ForceMode.Force);
         }
 
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+            grounded = true;
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+            grounded = false;
+
+    }
+
 }

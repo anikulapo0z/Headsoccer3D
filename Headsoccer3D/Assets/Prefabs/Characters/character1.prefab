@@ -96,6 +96,41 @@ MonoBehaviour:
   kickHeightMult1: 0.2
   kickHeightMult2: 0.4
   kickHeightMult3: 1
+  t:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.077988386
+      outSlope: 0.077988386
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.27476636
+    - serializedVersion: 3
+      time: 0.5774324
+      value: 0.15
+      inSlope: 0.63579595
+      outSlope: 0.63579595
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.24577485
+      outWeight: 0.20789844
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 4.7048965
+      outSlope: 4.7048965
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.23001385
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  multi: 1.4
+  c: 3
   tapTime: 0.1
   kickChargeLevel: 1
   jumpVelocity: 10
