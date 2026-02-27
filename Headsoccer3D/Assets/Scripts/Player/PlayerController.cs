@@ -106,6 +106,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     private Vector3 knockbackVelocity;
     private float knockbackTimer;
 
+    private Vector3 initialKnockbackVelocity;
+
     private float currentStamina;
     private float regenTimer;
     private bool isSprinting = false;
@@ -119,7 +121,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         if(!anim)
             anim = GetComponentInChildren<Animator>();
 
-        kickDisplayMat = kickCollider.GetComponent<Renderer>().material;
+        //kickDisplayMat = kickCollider.GetComponent<Renderer>().material;
 
         currentStamina = maxStamina;
 
@@ -176,21 +178,27 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         // Apply movement
         float moveSpeed = isSprinting ? this.moveSpeed * sprintMultiplier : this.moveSpeed;
 
+
+
         //Apply knockback if active
         if (knockbackTimer > 0f)
         {
             knockbackTimer -= Time.fixedDeltaTime;
-            timeTest += Time.deltaTime / c;
-            knockbackVelocity = Vector3.Slerp(knockbackVelocity, Vector3.zero, t.Evaluate(timeTest) /*knockbackDrag * Time.fixedDeltaTime*/) / multi;
+
+            float normalizedTime = 1f - (knockbackTimer / knockbackDuration);
+            float curveValue = t.Evaluate(normalizedTime);
+
+            knockbackVelocity = initialKnockbackVelocity * curveValue;
 
             // remove player control while being knocked
             moveDir = Vector3.zero;
         }
         else
         {
-            timeTest = 0;
             knockbackVelocity = Vector3.zero;
         }
+
+
 
         // Apply movement + knockback
         Vector3 velocity = (moveDir * moveSpeed) + knockbackVelocity + (Vector3.up * verticalVelocity);
@@ -210,14 +218,13 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             Quaternion target = Quaternion.LookRotation(moveDir, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, rotationSpeed * Time.fixedDeltaTime);
         }
-        //Debug.LogError(kickHeld);
+
         if (useChargeKick && kickHeld)
         {
             kickHoldTime += Time.deltaTime;
 
             if (kickHoldTime >= chargeTime3)
             {
-                //Debug.LogError("-----------------------");
                 kickChargeLevel = 3;
             }
             else if (kickHoldTime >= chargeTime2) kickChargeLevel = 2;
@@ -341,7 +348,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         kickTrigger.TurnOnCollider();
         StartCoroutine(DisableKickAfterTime());
 
-        kickDisplayMat.SetFloat("_ScrollValue", 0f);
+        //kickDisplayMat.SetFloat("_ScrollValue", 0f);
         StartCoroutine(KickVisualAndReset(0.3f));
         Debug.Log($"KICK! Level: {level} | hold: {kickHoldTime:F2}S");
 
@@ -388,7 +395,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         float finalForce = kickForce * mult;
 
-        Debug.LogError(kickChargeLevel);
+        //Debug.LogError(kickChargeLevel);
         ball.LaunchAtDirection(kickDirection + (Vector3.up * currentKickHeight), finalForce);
 
 
@@ -465,12 +472,15 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             ApplyKnockback(hitDirection * knockbackForceMultiplier2);
         }
     }
+
     private void ApplyKnockback(Vector3 force)
     {
         // Add to verticalVelocity? No.
         // Instead temporarily modify movement direction.
 
         //controller.Move(force * Time.fixedDeltaTime);
+        initialKnockbackVelocity = force;
+
         knockbackVelocity = force;
         knockbackTimer = knockbackDuration;
     }

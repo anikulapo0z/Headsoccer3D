@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5715509517818701763}
   - component: {fileID: 2982971697010060558}
   - component: {fileID: 8232834016103739514}
+  - component: {fileID: 8709485042399580388}
   m_Layer: 7
   m_Name: character1
   m_TagString: Player
@@ -62,7 +63,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 0.1
-  m_Radius: 0.03
+  m_Radius: 0.01
   m_SlopeLimit: 45
   m_StepOffset: 0.1
   m_SkinWidth: 0.05
@@ -85,7 +86,7 @@ MonoBehaviour:
   rotateToMovement: 1
   kickForce: 10
   startingKickHeight: 1
-  currentKickHeight: 0
+  currentKickHeight: 1
   kickCooldown: 0.5
   useChargeKick: 1
   chargeTime2: 0.5
@@ -101,30 +102,21 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 0.077988386
-      outSlope: 0.077988386
+      value: 1
+      inSlope: 0.13696893
+      outSlope: 0.13696893
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.27476636
-    - serializedVersion: 3
-      time: 0.5774324
-      value: 0.15
-      inSlope: 0.63579595
-      outSlope: 0.63579595
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.24577485
-      outWeight: 0.20789844
+      outWeight: 0.17383178
     - serializedVersion: 3
       time: 1
-      value: 1
-      inSlope: 4.7048965
-      outSlope: 4.7048965
+      value: 0
+      inSlope: -1.807379
+      outSlope: -1.807379
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.23001385
+      inWeight: 0.06728971
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -139,12 +131,12 @@ MonoBehaviour:
   headingForce: 5
   headerUpForce: 40
   headCooldown: 0.5
-  anim: {fileID: 0}
+  anim: {fileID: 7560264261446286521}
   kickchargeAnim: {fileID: 3598370525349734555}
   startingPos: {x: 0, y: 0, z: 0}
   ballVelocityPercent: 0.5
   playerVelocityPercent: 10
-  kickCollider: {fileID: 7273337607246191686}
+  kickCollider: {fileID: 8544093924952792565}
   kickTrigger: {fileID: 2943843792541657765}
   headTrigger: {fileID: 558312512381974239}
   kickActiveTime: 0.15
@@ -156,10 +148,10 @@ MonoBehaviour:
   staminaRegenRate: 1.5
   staminaRegenDelay: 0.5
   staminaBar: {fileID: 0}
-  knockbackDuration: 0.5
+  knockbackDuration: 1
   knockbackDrag: 18
-  knockbackForceMultiplier1: 25
-  knockbackForceMultiplier2: 50
+  knockbackForceMultiplier1: 4
+  knockbackForceMultiplier2: 10
 --- !u!114 &2982971697010060558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,6 +201,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 3
+--- !u!136 &8709485042399580388
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105791413608084587}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.034
+  m_Height: 0.1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.04, z: 0}
 --- !u!1 &2578436691414235925
 GameObject:
   m_ObjectHideFlags: 0
@@ -1394,6 +1409,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8993589071750506691, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e324178acf006cd4cae0fc091de3910b, type: 2}
+    - target: {fileID: 8993589071750506691, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 2100000, guid: 67e895dba2f36aa4c8eedf1c1b8d1b78, type: 2}
@@ -1425,6 +1444,11 @@ GameObject:
 --- !u!4 &6507452193112454576 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6441455637586173858, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
+  m_PrefabInstance: {fileID: 228479119720917522}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7560264261446286521 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7764430911283205803, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
   m_PrefabInstance: {fileID: 228479119720917522}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &399853635909168860
