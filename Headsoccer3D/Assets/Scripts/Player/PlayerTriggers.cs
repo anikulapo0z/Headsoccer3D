@@ -7,6 +7,7 @@ public class PlayerTriggers : MonoBehaviour
     [SerializeField] PlayerController playerController;
     [SerializeField] bool isKickTrigger;
     [SerializeField] bool isHeadTrigger;
+    bool ballHit = false;
 
 
     private void Awake()
@@ -18,6 +19,7 @@ public class PlayerTriggers : MonoBehaviour
     public void TurnOnCollider()
     {
         col.enabled = true;
+        ballHit = false;
     }
     public void TurnOffCollider()
     {
@@ -28,6 +30,9 @@ public class PlayerTriggers : MonoBehaviour
     {
         if (other.CompareTag("Ball"))
         {
+            if (ballHit) return;
+            ballHit = true;
+
             if (isKickTrigger)
             {
                 playerController.OnKickTrigger(other.GetComponent<SoccerBall>());

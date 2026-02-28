@@ -97,34 +97,46 @@ MonoBehaviour:
   kickHeightMult1: 0.2
   kickHeightMult2: 0.4
   kickHeightMult3: 1
-  t:
+  getHitSpeedCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 0.13696893
-      outSlope: 0.13696893
+      inSlope: -0.00028051625
+      outSlope: -0.00028051625
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.17383178
+      outWeight: 0.3300598
+    - serializedVersion: 3
+      time: 0.6287449
+      value: 0.7103351
+      inSlope: -0.9752558
+      outSlope: -0.9752558
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.13193035
+      outWeight: 0.19174969
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: -1.807379
-      outSlope: -1.807379
+      inSlope: -2.9750679
+      outSlope: -2.9750679
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.06728971
+      inWeight: 0.10572876
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   multi: 1.4
-  c: 3
+  reduceKnockBackTime: 0.7
+  reduceKnockBackTimer: 0
+  reduceKnockBackAmount: 0.6
   tapTime: 0.1
   kickChargeLevel: 1
+  kickHeldSpeedMultiplierVal: 0.4
   jumpVelocity: 10
   gravity: -35
   groundStick: -0.6
@@ -142,16 +154,18 @@ MonoBehaviour:
   kickActiveTime: 0.15
   headActiveTime: 0.7
   kickPlayerCooldown: 0.12
-  sprintMultiplier: 2
+  sprintMultiplier: 1.5
   maxStamina: 10
   staminaDrainRate: 1
   staminaRegenRate: 1.5
   staminaRegenDelay: 0.5
   staminaBar: {fileID: 0}
-  knockbackDuration: 1
+  knockbackDuration: 0.7
   knockbackDrag: 18
-  knockbackForceMultiplier1: 4
-  knockbackForceMultiplier2: 10
+  knockbackForceMultiplier1: 3
+  knockbackForceMultiplier2: 7
+  kickPlayerThreshold1: 5
+  kickPlayerThreshold2: 15
 --- !u!114 &2982971697010060558
 MonoBehaviour:
   m_ObjectHideFlags: 0

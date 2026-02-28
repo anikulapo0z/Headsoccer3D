@@ -33,15 +33,20 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] private float kickHeightMult2;
     [SerializeField] private float kickHeightMult3;
 
-    public AnimationCurve t;
-    float timeTest = 0;
-    public float multi;
-    public float c;
+    [SerializeField] AnimationCurve getHitSpeedCurve;
+    [SerializeField] float multi;
+    [SerializeField] float reduceKnockBackTime;
+    [SerializeField] float reduceKnockBackTimer;
+    [SerializeField] float reduceKnockBackAmount;
+
 
     [SerializeField] private float tapTime = 0.1f;
     private bool kickHeld;
     private float kickHoldTime;
     public int kickChargeLevel = 1;
+    float kickHeldSpeedMultiplier;
+    [SerializeField] float kickHeldSpeedMultiplierVal;
+
 
     [Header("Jumping Settings")]
     [SerializeField] private float jumpVelocity = 8f;
@@ -145,6 +150,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     void FixedUpdate()
     {
+        
         //Grounding and gravity logic
         if (controller.isGrounded && verticalVelocity < 0f)
         {
@@ -178,9 +184,18 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
                 if (currentStamina > maxStamina) currentStamina = maxStamina;
             }
         }
-        // Apply movement
-        float moveSpeed = isSprinting ? this.moveSpeed * sprintMultiplier : this.moveSpeed;
 
+
+        float moveSpeed;
+        // Apply movement
+
+        if (kickHeld)
+            moveSpeed = this.moveSpeed;
+        else
+            moveSpeed = isSprinting ? this.moveSpeed * sprintMultiplier : this.moveSpeed;
+
+
+        moveSpeed *= kickHeldSpeedMultiplier;
 
 
         //Apply knockback if active
@@ -189,7 +204,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             knockbackTimer -= Time.fixedDeltaTime;
 
             float normalizedTime = 1f - (knockbackTimer / knockbackDuration);
-            float curveValue = t.Evaluate(normalizedTime);
+            float curveValue = getHitSpeedCurve.Evaluate(normalizedTime);
 
             knockbackVelocity = initialKnockbackVelocity * curveValue;
 
@@ -199,6 +214,11 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         else
         {
             knockbackVelocity = Vector3.zero;
+        }
+
+        if (reduceKnockBackTimer > 0f)
+        {
+            reduceKnockBackTimer -= Time.fixedDeltaTime;
         }
 
 
@@ -226,6 +246,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         {
             kickHoldTime += Time.deltaTime;
 
+            kickHeldSpeedMultiplier = kickHeldSpeedMultiplierVal;
+
             if (kickHoldTime >= chargeTime3)
             {
                 kickChargeLevel = 3;
@@ -233,6 +255,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             else if (kickHoldTime >= chargeTime2) kickChargeLevel = 2;
             else kickChargeLevel = 1;
         }
+        else
+            kickHeldSpeedMultiplier = 1f;
     }
 
     public void OnAbility()
@@ -293,7 +317,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         float timer = 0;
         do
         {
-            kickDisplayMat.SetFloat("_ScrollValue", timer);
+            //kickDisplayMat.SetFloat("_ScrollValue", timer);
             //Debug.Log(Mathf.Lerp(0f, 0.92f, timer));
 
             yield return null;
@@ -304,7 +328,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         //Reset
         kickCollider.SetActive(false);
-        kickDisplayMat.SetFloat("_ScrollValue", 0f);
+        //kickDisplayMat.SetFloat("_ScrollValue", 0f);
     }
     public void OnKick(bool held)
     {
@@ -478,13 +502,17 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     private void ApplyKnockback(Vector3 force)
     {
-        // Add to verticalVelocity? No.
-        // Instead temporarily modify movement direction.
+        if (reduceKnockBackTimer > 0f)
+        {
+            force *= reduceKnockBackAmount;
+        }
 
-        //controller.Move(force * Time.fixedDeltaTime);
         initialKnockbackVelocity = force;
-
         knockbackVelocity = force;
+
         knockbackTimer = knockbackDuration;
+
+        // start reduction window
+        reduceKnockBackTimer = reduceKnockBackTime;
     }
 }
