@@ -295,12 +295,17 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         kickchargeAnim.SetBool("charge", held);
         if (!useChargeKick)
         {
-            if (held) ChargeKick(1);
+            if (held)
+            {
+                ChargeKick(1);
+                
+            }
             return;
         }
 
         if (held)
         {
+            anim.SetTrigger("Charge");
             // start charging
             kickHeld = true;
             kickHoldTime = 0f;
@@ -310,6 +315,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         {
             // release -> perform kick
             kickHeld = false;
+            anim.ResetTrigger("Charge");
 
             int levelToUse = (kickHoldTime <= tapTime) ? 1 : kickChargeLevel;
             ChargeKick(levelToUse);
@@ -334,6 +340,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         nextKickTime = Time.time + kickCooldown;
         kickTrigger.TurnOnCollider();
         StartCoroutine(DisableKickAfterTime());
+
+        anim.SetTrigger("Kick");
 
         kickDisplayMat.SetFloat("_ScrollValue", 0f);
         StartCoroutine(KickVisualAndReset(0.3f));
