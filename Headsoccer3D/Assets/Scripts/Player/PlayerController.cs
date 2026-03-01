@@ -119,6 +119,11 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] private float kickPlayerThreshold1 = 5f;
     [SerializeField] private float kickPlayerThreshold2 = 15f;
 
+    [Space(5)]
+    [Header("Particles")]
+    [SerializeField] GameObject[] jumpParticles;
+    [SerializeField] GameObject sprintParticles;
+
     public float KickPlayerThreshold1 => kickPlayerThreshold1;
     public float KickPlayerThreshold2 => kickPlayerThreshold2;
 
@@ -281,6 +286,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     public void OnSprint(bool held)
     {
         sprintHeld = held;
+        sprintParticles.SetActive(held);
     }
     public void OnJump()
     {
@@ -296,6 +302,14 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             //isHeaderAcive = true;
 
             verticalVelocity = jumpVelocity;
+
+            foreach (var p in jumpParticles)
+            {
+                p.SetActive(true);
+            }
+            //jumpParticles.SetActive(true);
+            Invoke("TurnOffJumpParticles", 0.5f);
+
             Debug.Log($"[JUMP] APPLY jumpVelocity = {jumpVelocity}");
         }
         else
@@ -306,6 +320,15 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         headTrigger.TurnOnCollider();
         StartCoroutine(DisableHeadAfterTime());
     }
+    void TurnOffJumpParticles()
+    {
+        foreach(var p in jumpParticles)
+        {
+            p.SetActive(false);
+        }
+        //jumpParticles.SetActive(false);
+    }
+
     public void OnMove(Vector2 input)
     {
         //Debug.Log("Moving: " + input);
