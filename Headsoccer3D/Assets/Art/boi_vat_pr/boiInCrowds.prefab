@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 4176021496890234021}
   - component: {fileID: 84785776823060565}
   - component: {fileID: 7299303465638218084}
+  - component: {fileID: 8003551357798575119}
   m_Layer: 0
-  m_Name: boi
+  m_Name: boiInCrowds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,3 +87,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8003551357798575119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4695302240096307820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4684d2eb3bc0b4c45ace7620d808726d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  multiplier: 10
