@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1826423484336799888}
   - component: {fileID: 5250684463636118699}
   - component: {fileID: 2184882252670658048}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SoccerBall_Type1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 2953011459512469414}
   - component: {fileID: 6248723573310751419}
   - component: {fileID: 3852579704238106998}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Fake_Ball_Type1
   m_TagString: Ball
   m_Icon: {fileID: 0}
@@ -238,6 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4813d7564bb19848a48e6166c3a465b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grounded: 0
   xz_Drag: 0.1
   y_Drag: 0.15
   ground_Drag: 0.2
@@ -372,3 +373,4 @@ MonoBehaviour:
   threshold1: 5
   threshold2: 15
   threshold3: 30
+  thresholdBlend: 1.5
