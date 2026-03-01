@@ -124,6 +124,11 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] GameObject[] jumpParticles;
     [SerializeField] GameObject sprintParticles;
 
+
+
+    public bool hasEmpoweredKick = false;
+    [HideInInspector] public float empoweredKickStrength;
+
     public float KickPlayerThreshold1 => kickPlayerThreshold1;
     public float KickPlayerThreshold2 => kickPlayerThreshold2;
 
@@ -266,7 +271,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     public void OnAbility()
     {
-        //throw new System.NotImplementedException();
+        GetComponent<PlayerAbility>().TryTriggerAbility();
     }
 
     public void OnCancel()
@@ -455,7 +460,16 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         float finalForce = kickForce * mult;
 
         //Debug.LogError(kickChargeLevel);
-        ball.LaunchAtDirection(kickDirection + (Vector3.up * currentKickHeight), finalForce);
+
+        if (!hasEmpoweredKick)
+        {
+            ball.LaunchAtDirection(kickDirection + (Vector3.up * currentKickHeight), finalForce);
+        }
+        else
+        {
+            ball.LaunchAtDirection(kickDirection + (Vector3.up * currentKickHeight), finalForce * empoweredKickStrength);
+            GetComponent<PlayerAbility>().ResetAbilityUse();
+        }
 
 
 
@@ -496,7 +510,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         }
 
         float moveBonus = controller.velocity.magnitude * playerVelocityPercent;
-        return (kickForce * mult) + moveBonus;
+        return (kickForce * mult * empoweredKickStrength) + moveBonus;
      }
     public bool CanApplyKickPlayerHit()
     {

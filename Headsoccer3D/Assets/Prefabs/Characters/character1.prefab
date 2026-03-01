@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2982971697010060558}
   - component: {fileID: 8232834016103739514}
   - component: {fileID: 8709485042399580388}
+  - component: {fileID: -7854826647095062619}
   m_Layer: 7
   m_Name: character1
   m_TagString: Player
@@ -172,6 +173,8 @@ MonoBehaviour:
   - {fileID: 4898037634796534260}
   - {fileID: 3892511614448148437}
   sprintParticles: {fileID: 8707115633748069013}
+  hasEmpoweredKick: 0
+  empoweredKickStrength: 0
 --- !u!114 &2982971697010060558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,6 +247,26 @@ CapsuleCollider:
   m_Height: 0.1
   m_Direction: 1
   m_Center: {x: 0, y: 0.04, z: 0}
+--- !u!114 &-7854826647095062619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105791413608084587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2fb7c290dd699d41b41775129a54d99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentAbility: 0
+  empoweredKickStrength: 5
+  scaleTime: 0.5
+  growSize: {x: 15, y: 15, z: 15}
+  upAmount: 3
+  outAmount: 5
+  ballAmount: 5
+  ball: {fileID: 675428509796539959, guid: 8029ba434dba37244858514be2ee96db, type: 3}
 --- !u!1 &2578436691414235925
 GameObject:
   m_ObjectHideFlags: 0

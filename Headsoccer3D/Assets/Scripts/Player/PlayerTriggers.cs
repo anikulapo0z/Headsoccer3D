@@ -28,7 +28,7 @@ public class PlayerTriggers : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ball"))
+        if (other.CompareTag("Ball") || other.CompareTag("FakeBall"))
         {
             if (ballHit) return;
             ballHit = true;
