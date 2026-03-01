@@ -55,6 +55,8 @@
         float _RemapInputMax;
         float _RemapOutputMin;
         float _RemapOutputMax;
+
+        float _DesaturationValue;
     CBUFFER_END
 
 

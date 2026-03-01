@@ -46,6 +46,10 @@ Shader "Saphead Studios/Principle Toon"
         _RemapInputMax ("Remap input max value", Range(-1, 1)) = 1
         _RemapOutputMin ("Remap output min value", Range(-1, 1)) = 0
         _RemapOutputMax ("Remap output max value", Range(-1, 1)) = 1
+
+        [Space(20)]
+        [Header(Saturation)]
+        _DesaturationValue("Desaturation Intensity", Range(0,1)) = 0 
 	}
 
     SubShader
@@ -212,7 +216,10 @@ Shader "Saphead Studios/Principle Toon"
 					baseTexture *= shadowPattern;
 				#endif
 
-                return baseTexture;
+                //desaturation
+                half grayscale = baseTexture.r * 0.299h + baseTexture.g * 0.587h + baseTexture.b * 0.114h;
+
+                return lerp(baseTexture, grayscale, _DesaturationValue);
 			}
 			ENDHLSL
 		}
