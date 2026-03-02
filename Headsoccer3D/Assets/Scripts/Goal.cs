@@ -15,6 +15,7 @@ public class Goal : MonoBehaviour
     {
         if (other.CompareTag("Ball"))
         {
+            //Debug.LogError(other.tag);
             scoreTracker.ShakeCamera(other.GetComponent<Rigidbody>().linearVelocity.magnitude);
             if(side == GoalSide.Right)
             {

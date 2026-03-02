@@ -66,7 +66,7 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] GameObject leftTeamPositionIndicator;
     [SerializeField] GameObject rightTeamPositionIndicator;
 
-
+    public List<GameObject> fakeballList = new List<GameObject>();
 
     void Start()
     {
@@ -257,11 +257,21 @@ public class GameSceneManager : MonoBehaviour
         
         ResetPlayers();
         LockBall();
+        DestroyFakeBalls();
 
         yield return new WaitForSeconds(delayBeforeUnlockPlayer);
         UnlockPlayers();
         UnlockBall();
         TossBall();
+    }
+
+    void DestroyFakeBalls()
+    {
+        foreach(GameObject g in fakeballList)
+        {
+            Destroy(g);
+        }
+        fakeballList.Clear();
     }
 
     public void GoalScored(char c)

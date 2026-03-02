@@ -9,6 +9,9 @@ public class PlayerGroundMarker : MonoBehaviour
     [SerializeField] GameObject playerFloatingUIPrefab;
     GameObject playerPositionIndicator;
     GameObject playerFloatingUI;
+
+    public GameObject AbilityText;
+
     [SerializeField] float canvasOffset;
     [SerializeField] float lerpSpeed;
 

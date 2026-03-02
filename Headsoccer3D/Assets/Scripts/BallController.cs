@@ -12,14 +12,14 @@ public class BallController : MonoBehaviour
     Vector3 t = new Vector3(0, 0, 60);
     [SerializeField] LayerMask layerToShowBallPositionOn;
     [SerializeField] GameObject ballPositionIndicatorPrefab;
-    [SerializeField] GameObject ballPositionIndicator;
+    public GameObject ballPositionIndicator;
     [SerializeField] float positionIndicatorSpeed;
 
     [SerializeField] float predictionTime;
     [SerializeField] Vector3 canvasOffset;
     [SerializeField] float lerpSpeed = 12f;
 
-    LineRenderer lr;
+    //LineRenderer lr;
 
     Vector3 previousBallPos;
     Vector3 previousHitPos;
@@ -28,7 +28,7 @@ public class BallController : MonoBehaviour
     void Awake()
     {
         ballPositionIndicator = Instantiate(ballPositionIndicatorPrefab, Vector3.zero, Quaternion.identity);
-        lr = GetComponent<LineRenderer>();
+        //lr = GetComponent<LineRenderer>();
         rb = GetComponent<Rigidbody>();
         previousBallPos = transform.position;
         previousHitPos = transform.position;
@@ -71,8 +71,8 @@ public class BallController : MonoBehaviour
         if(Physics.Raycast(transform.position, Vector3.down, out hit, 100, layerToShowBallPositionOn))
         {
             ballPositionIndicator.transform.position = hit.point + canvasOffset;
-            lr.SetPosition(0, transform.position);
-            lr.SetPosition(1, hit.point);
+            //lr.SetPosition(0, transform.position);
+            //lr.SetPosition(1, hit.point);
 
             previousBallPos = transform.position;
             previousHitPos = hit.point;
@@ -100,6 +100,10 @@ public class BallController : MonoBehaviour
 
     }
 
+    private void OnDestroy()
+    {
+        Destroy(ballPositionIndicator);
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))

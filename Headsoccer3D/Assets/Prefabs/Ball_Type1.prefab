@@ -238,6 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4813d7564bb19848a48e6166c3a465b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grounded: 0
   xz_Drag: 0.1
   y_Drag: 0.15
   ground_Drag: 0.2
@@ -248,7 +249,7 @@ MonoBehaviour:
   ballPositionIndicator: {fileID: 0}
   positionIndicatorSpeed: 4
   predictionTime: 1
-  canvasOffset: {x: 0, y: 0.01, z: 0}
+  canvasOffset: {x: 0, y: 0.1, z: 0}
   lerpSpeed: 12
 --- !u!120 &6248723573310751419
 LineRenderer:
@@ -258,7 +259,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 675428509796539959}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -372,3 +373,4 @@ MonoBehaviour:
   threshold1: 5
   threshold2: 15
   threshold3: 30
+  thresholdBlend: 1.5

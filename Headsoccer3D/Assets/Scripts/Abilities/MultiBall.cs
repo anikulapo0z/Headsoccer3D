@@ -26,10 +26,11 @@ public class MultiBall : MonoBehaviour
                 Vector3 force = (outwardDir * outAmount) + (Vector3.up * upAmount);
                 rb.AddForce(force, ForceMode.Impulse);
             }
+            GameSceneManager.Instance.fakeballList.Add(spawnedBall);
+            //GameSceneManager.Instance.fakeballList.Add(spawnedBall.GetComponent<BallController>().ballPositionIndicator);
         }
         GetComponent<PlayerAbility>().ResetAbilityUse();
     }
-
     public void SetVars(float upA, float outA, int amount, GameObject ballToSpawn)
     {
         upAmount = upA;
