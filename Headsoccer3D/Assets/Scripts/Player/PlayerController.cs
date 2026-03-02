@@ -124,10 +124,14 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] GameObject[] jumpParticles;
     [SerializeField] GameObject sprintParticles;
 
+    [SerializeField] float playerKnockbackForceMultiplier;
+    [SerializeField] float playerKnockbackDurationMultiplier;
+    [SerializeField] float maxPlayerKnockbackDuration;
 
 
     public bool hasEmpoweredKick = false;
     [HideInInspector] public float empoweredKickStrength;
+    [HideInInspector] public float empoweredKickPlayerMultiplier = 1f;
 
     public float KickPlayerThreshold1 => kickPlayerThreshold1;
     public float KickPlayerThreshold2 => kickPlayerThreshold2;
@@ -497,21 +501,22 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         ball.LaunchAtDirection(headerDirection, finalForce);
     }
-     public float GetKickPlayerMomentum()
-     {
+
+    public float GetKickPlayerMomentum()
+    {
         float mult = kickMult1;
         if (kickChargeLevel == 2)
-        {
             mult = kickMult2;
-        }
         else if (kickChargeLevel == 3)
-        {
             mult = kickMult3;
-        }
 
         float moveBonus = controller.velocity.magnitude * playerVelocityPercent;
-        return (kickForce * mult * empoweredKickStrength) + moveBonus;
-     }
+
+        float empoweredMult = hasEmpoweredKick ? empoweredKickPlayerMultiplier : 1f;
+
+        return (kickForce * mult * empoweredMult) + moveBonus;
+    }
+
     public bool CanApplyKickPlayerHit()
     {
         if (Time.time < nextKickPlayerTime) return false;
@@ -544,6 +549,33 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         {
             ApplyKnockback(hitDirection * knockbackForceMultiplier2);
         }
+    }
+
+
+    public void GetHitFromPlayer(float momentum, Vector3 hitDirection)
+    {
+        float kickForce = momentum * playerKnockbackForceMultiplier;
+
+        float kickDuration = momentum * playerKnockbackDurationMultiplier;
+        kickDuration = Mathf.Clamp(kickDuration, knockbackDuration, maxPlayerKnockbackDuration);
+
+        ApplyPlayerKickKnockback(hitDirection * kickForce, kickDuration);
+    }
+
+    private void ApplyPlayerKickKnockback(Vector3 force, float duration)
+    {
+        if (reduceKnockBackTimer > 0f)
+        {
+            force *= reduceKnockBackAmount;
+        }
+
+        initialKnockbackVelocity = force;
+        knockbackVelocity = force;
+
+        knockbackDuration = duration;
+        knockbackTimer = duration;
+
+        reduceKnockBackTimer = reduceKnockBackTime;
     }
 
     private void ApplyKnockback(Vector3 force)

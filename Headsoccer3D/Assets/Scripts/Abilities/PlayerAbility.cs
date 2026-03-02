@@ -58,6 +58,7 @@ public class PlayerAbility : MonoBehaviour
                 GetComponent<EmpoweredKick>().empoweredKickStrength = empoweredKickStrength;
                 GetComponent<PlayerController>().hasEmpoweredKick = true;
                 GetComponent<PlayerController>().empoweredKickStrength = empoweredKickStrength;
+                GetComponent<PlayerController>().empoweredKickPlayerMultiplier = empoweredKickStrength * 0.6f;
 
                 originalScale = transform.localScale;
                 transform.DOScale(growSize, scaleTime);

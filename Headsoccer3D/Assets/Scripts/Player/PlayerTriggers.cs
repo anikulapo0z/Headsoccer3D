@@ -66,11 +66,11 @@ public class PlayerTriggers : MonoBehaviour
 
         if (otherPlayer != null)
         {
-            otherPlayer.GetHit(null, momentum, hitDir, threshold1, threshold2);
+            otherPlayer.GetHitFromPlayer(momentum, hitDir);
             Debug.Log("Hit player with momentum: " + momentum + " and direction: " + hitDir);
             return;
         }
-        if(cpu != null)
+        if (cpu != null)
         {
             cpu.GetComponent<CPUEnemy>().GetHit(null, momentum, hitDir);
             Debug.Log("Hit CPU with momentum: " + momentum + " and direction: " + hitDir);

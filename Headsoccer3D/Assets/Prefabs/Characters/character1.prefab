@@ -173,8 +173,12 @@ MonoBehaviour:
   - {fileID: 4898037634796534260}
   - {fileID: 3892511614448148437}
   sprintParticles: {fileID: 8707115633748069013}
+  playerKnockbackForceMultiplier: 0.4
+  playerKnockbackDurationMultiplier: 0.01
+  maxPlayerKnockbackDuration: 1.5
   hasEmpoweredKick: 0
   empoweredKickStrength: 0
+  empoweredKickPlayerMultiplier: 1
 --- !u!114 &2982971697010060558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,6 +196,7 @@ MonoBehaviour:
     m_Bits: 64
   playerPositionIndicatorPrefab: {fileID: 2272880412295671249, guid: 412ae84f259104d448b55a1e358b6694, type: 3}
   playerFloatingUIPrefab: {fileID: 2272880412295671249, guid: 6bc0f7e23f17e37458f5f290d5ab733d, type: 3}
+  AbilityText: {fileID: 0}
   canvasOffset: 0.1
   lerpSpeed: 10
   uiSideOffset: 0.8
