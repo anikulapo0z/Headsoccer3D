@@ -12,7 +12,7 @@ public class GameSceneManager : MonoBehaviour
     public List<PlayerInputController> inputControllers = new List<PlayerInputController>();
     public List<GameObject> playerCharacters = new List<GameObject>();
 
-    public List<GameObject> characterList = new List<GameObject>();
+    public GameObject characterPrefab;
     public List<GameObject> FourP_SpawnPoints = new List<GameObject>();
     public List<GameObject> TwoP_SpawnPoints = new List<GameObject>();
 
@@ -38,8 +38,6 @@ public class GameSceneManager : MonoBehaviour
     bool canScore = false;
 
 
-
-
     [SerializeField] float delayBeforeResetBall;
     [SerializeField] float delayBeforeUnlockPlayer;
     [SerializeField] GameObject ballPrefab;
@@ -61,8 +59,7 @@ public class GameSceneManager : MonoBehaviour
 
     [Space(10)]
     [Header("Team Distinctions")]
-    [SerializeField] Material leftTeamColor;
-    [SerializeField] Material rightTeamColor;
+    [SerializeField] Material[] characterMaterials;
     [SerializeField] GameObject leftTeamPositionIndicator;
     [SerializeField] GameObject rightTeamPositionIndicator;
 
@@ -94,7 +91,7 @@ public class GameSceneManager : MonoBehaviour
     {
         foreach (var player in inputControllers)
         {
-            GameObject playerObj = Instantiate(characterList[player.selectedCharacterID]);
+            GameObject playerObj = Instantiate(characterPrefab);
             playerCharacters.Add(playerObj);
 
             PlayerController playerController = playerObj.GetComponent<PlayerController>();
@@ -431,7 +428,7 @@ public class GameSceneManager : MonoBehaviour
         foreach (var player in inputControllers)
         {
             //Debug.LogError(player.selectedCharacterID);
-            GameObject playerObj = Instantiate(characterList[player.selectedCharacterID]);
+            GameObject playerObj = Instantiate(characterPrefab);
             playerCharacters.Add(playerObj);
 
             PlayerController playerController = playerObj.GetComponent<PlayerController>();
@@ -450,15 +447,12 @@ public class GameSceneManager : MonoBehaviour
                 playerObj.transform.position = FourP_SpawnPoints[inputControllers.IndexOf(player)].transform.position;
 
 
-            // setting team color and ui based on X position, we'll see if this works
-            if (playerObj.transform.position.x < 0)
-            {
-                playerObj.GetComponent<PlayerGroundMarker>().SetPlayerWorldUIAndColor(leftTeamPositionIndicator, leftTeamColor);
-            }
-            else
-            {
-                playerObj.GetComponent<PlayerGroundMarker>().SetPlayerWorldUIAndColor(rightTeamPositionIndicator, rightTeamColor);
-            }
+            // setting team ui based on X position, we'll see if this works
+            //material set based on selected character
+            playerObj.GetComponent<PlayerGroundMarker>().SetPlayerWorldUIAndColor(playerObj.transform.position.x < 0 ? 
+                                                                                    leftTeamPositionIndicator : rightTeamPositionIndicator, 
+                                                                                    characterMaterials[player.selectedCharacterID]);
+
 
 
             if (aiCount == 2)

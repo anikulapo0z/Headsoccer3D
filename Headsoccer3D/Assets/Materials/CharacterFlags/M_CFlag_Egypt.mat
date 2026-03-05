@@ -12,9 +12,9 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _HALFTONELIGHT
   - _SHADOWSLIGHT
   - _USESHADOWS
+  - _USEUV1
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -43,7 +43,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ShadowTexture:
-        m_Texture: {fileID: 2800000, guid: ba90e0d681c598644910bd718f5fc1b3, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -51,17 +51,17 @@ Material:
     - _DesaturationValue: 0
     - _HalftoneMaskInvertToggle: 0
     - _HalftoneMaskToggle: 0
-    - _HalftoneToggle: 1
+    - _HalftoneToggle: 0
     - _Lightness: 0
     - _MaskToggle: 0
     - _RemapInputMax: 1
     - _RemapInputMin: 0
     - _RemapOutputMax: 1
     - _RemapOutputMin: 0
-    - _ShadowFrequency: 1
+    - _ShadowFrequency: 0.3
     - _ShadowLightness: 0
     - _ShadowsToggle: 1
-    - _UV1Toggle: 0
+    - _UV1Toggle: 1
     - _UV2Toggle: 0
     - _UV3Toggle: 0
     - _UV4Toggle: 0
