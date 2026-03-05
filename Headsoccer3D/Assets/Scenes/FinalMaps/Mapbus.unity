@@ -7547,6 +7547,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3404582675674179269, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: ballTransform
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4018947393931663058, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.001
@@ -7706,6 +7710,10 @@ PrefabInstance:
     - target: {fileID: 7354893560997248522, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_LocalPosition.z
       value: 5.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 7649094326105891699, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: ballTransform
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7678902264508409078, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_Size.y
@@ -14461,6 +14469,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4176021496890234021, guid: 07dcd9d59236e9843a75baece04da12d, type: 3}
   m_PrefabInstance: {fileID: 1344448591}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1347073551 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3404582675674179269, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+  m_PrefabInstance: {fileID: 605910383}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e834e68c26ac345ac1c5d5149b0ead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1348140108 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4176021496890234021, guid: 07dcd9d59236e9843a75baece04da12d, type: 3}
@@ -18933,6 +18952,7 @@ MonoBehaviour:
   ballPrefab: {fileID: 675428509796539959, guid: ca4c47f2e6aaf174b89e550198a0efd7, type: 3}
   ballObject: {fileID: 0}
   ballDropHalftone: {fileID: 7691678867812145161}
+  ballDropHalftoneWalls: {fileID: 1347073551}
   ballStartingPos: {fileID: 605910384}
   scoreTracker: {fileID: 1226518549}
   raumdeuter: {fileID: 341759070}
@@ -21838,6 +21858,10 @@ PrefabInstance:
     - target: {fileID: 8474148246007039119, guid: a41b5ddd62f4d1e40896148d2c286a8c, type: 3}
       propertyPath: m_Name
       value: Main Bus
+      objectReference: {fileID: 0}
+    - target: {fileID: 8896193546921134937, guid: a41b5ddd62f4d1e40896148d2c286a8c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

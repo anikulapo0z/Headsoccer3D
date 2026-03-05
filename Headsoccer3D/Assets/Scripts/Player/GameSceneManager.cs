@@ -43,6 +43,7 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] GameObject ballPrefab;
     [SerializeField] GameObject ballObject;
     [SerializeField] BallDropHalftone ballDropHalftone;
+    [SerializeField] BallDropHalftone ballDropHalftoneWalls;
     [SerializeField] Transform ballStartingPos;
     [SerializeField] ScoreTracker scoreTracker;
 
@@ -77,6 +78,7 @@ public class GameSceneManager : MonoBehaviour
         inputControllers = PlayerInputHolder.Instance.playerList;
         ballObject = Instantiate(ballPrefab, ballStartingPos.position, Quaternion.identity);
         ballDropHalftone.setBallTransform(ballObject.transform);
+        ballDropHalftoneWalls.setBallTransform(ballObject.transform);
         camera.target = ballObject.transform;
 
 
