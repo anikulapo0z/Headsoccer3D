@@ -63,8 +63,6 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] private Animator anim;
     [SerializeField] private Animator kickchargeAnim;
 
-
-
     private CharacterController controller;
     private Vector2 moveInput;
 
@@ -136,6 +134,16 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     public float KickPlayerThreshold1 => kickPlayerThreshold1;
     public float KickPlayerThreshold2 => kickPlayerThreshold2;
 
+    [Header("Dribble Settings")]
+    [SerializeField] private bool dribbleEnabled = true;
+    [SerializeField] private Key dribbleToggleKey = Key.T; // simple keyboard toggle
+    [SerializeField] private float dribbleForce = 35f;
+    [SerializeField] private Vector3 dribbleOffset = new Vector3(0f, 0f, 0.9f);
+    [SerializeField] private float maxDribbleDistance = 5f;
+    private SoccerBall possessedBall;
+
+    public Vector3 DribbleOffset => dribbleOffset;
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -160,11 +168,19 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         }
     }
 
-
+    void Update()
+    {
+        if (Keyboard.current != null && Keyboard.current[dribbleToggleKey].wasPressedThisFrame)
+        {
+            dribbleEnabled = !dribbleEnabled;
+            Debug.Log($"[DRIBBLE] {name} dribbleEnabled={dribbleEnabled}");
+        }
+    }
 
     void FixedUpdate()
     {
         
+
         //Grounding and gravity logic
         if (controller.isGrounded && verticalVelocity < 0f)
         {
@@ -271,6 +287,12 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         }
         else
             kickHeldSpeedMultiplier = 1f;
+
+        if (dribbleEnabled && possessedBall != null)
+        {
+            Vector3 anchor = transform.TransformPoint(dribbleOffset);
+            possessedBall.TweenToAnchor(anchor, this);
+        }
     }
 
     public void OnAbility()
@@ -593,4 +615,25 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         // start reduction window
         reduceKnockBackTimer = reduceKnockBackTime;
     }
+    public void OnGainedPossession(SoccerBall ball)
+    {
+        possessedBall = ball;
+        Debug.Log($"[PLAYER] {name} OnGainedPossession ball={ball.name}");
+    }
+
+    public void OnLostPossession(SoccerBall ball)
+    {
+        if (possessedBall == ball) possessedBall = null;
+        Debug.Log($"[PLAYER] {name} OnLostPossession ball={ball.name}");
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = dribbleEnabled ? Color.green : Color.red;
+        Vector3 anchor = transform.TransformPoint(dribbleOffset);
+        Gizmos.DrawSphere(anchor, 0.12f);
+
+        if (possessedBall != null)
+            Gizmos.DrawLine(possessedBall.transform.position, anchor);
+    }
+
 }
