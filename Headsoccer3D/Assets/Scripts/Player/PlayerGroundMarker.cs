@@ -28,7 +28,9 @@ public class PlayerGroundMarker : MonoBehaviour
     [SerializeField] GameObject empoweredKickText;
     GameObject empoweredKickObject;
     [SerializeField] Vector3 mbOffset;
+    [SerializeField] Vector3 mbRotation;
     [SerializeField] Vector3 ekOffset;
+    [SerializeField] Vector3 ekRotation;
     [SerializeField] bool mbActive = false;
     [SerializeField] bool ekActive = false;
 
@@ -83,8 +85,11 @@ public class PlayerGroundMarker : MonoBehaviour
             + (Vector3.up * mbOffset.y);
 
         multiBallObject.transform.position = targetPos;
+        //multiBallObject.transform.rotation = Quaternion.Euler(mbRotation);
 
         multiBallObject.transform.forward = mainCam.transform.forward;
+        multiBallObject.transform.rotation = Quaternion.Euler(multiBallObject.transform.rotation.x + mbRotation.x, multiBallObject.transform.rotation.y + mbRotation.y, multiBallObject.transform.rotation.z + mbRotation.z);
+
 
     }
     void UpdateEKText()
@@ -99,8 +104,12 @@ public class PlayerGroundMarker : MonoBehaviour
             + (Vector3.up * ekOffset.y);
 
         empoweredKickObject.transform.position = targetPos;
+        //empoweredKickObject.transform.rotation = Quaternion.Euler(ekRotation);
+
 
         empoweredKickObject.transform.forward = mainCam.transform.forward;
+        empoweredKickObject.transform.rotation = Quaternion.Euler(empoweredKickObject.transform.rotation.x + ekRotation.x, empoweredKickObject.transform.rotation.y + ekRotation.y, empoweredKickObject.transform.rotation.z + ekRotation.z);
+
 
     }
 

@@ -199,9 +199,17 @@ MonoBehaviour:
   AbilityText: {fileID: 0}
   canvasOffset: 0.1
   lerpSpeed: 10
-  uiSideOffset: 0.8
+  uiSideOffset: -1.4
   uiHeightOffset: 0.8
   matObj: {fileID: 2346882006535162926}
+  multiBallText: {fileID: 3798930661154949969, guid: ad6825c6a490e344abb915b4ce2a1143, type: 3}
+  empoweredKickText: {fileID: 5041241853163221094, guid: f2d58010527d10c47b2a34888d282aca, type: 3}
+  mbOffset: {x: 0, y: 1.3, z: 0.6}
+  mbRotation: {x: 0, y: 0, z: 17}
+  ekOffset: {x: 0, y: 1.8, z: 0.8}
+  ekRotation: {x: 0, y: 0, z: 16}
+  mbActive: 0
+  ekActive: 0
 --- !u!54 &8232834016103739514
 Rigidbody:
   m_ObjectHideFlags: 0
