@@ -43,6 +43,9 @@ public class SoccerBall : MonoBehaviour
     [SerializeField] private bool forceToGroundOnClaim = true;
 
     [SerializeField] private float maxClaimHeightAboveGround = 0.35f;
+
+    Vector3 lastTweenPosition;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -153,6 +156,24 @@ public class SoccerBall : MonoBehaviour
             resetBallParent();
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!isPossessed) return;
+        if (currentActivePlayer == null) return;
+
+        if (other.transform.root == currentActivePlayer.transform.root)
+            return;
+
+        if (((1 << other.gameObject.layer) & groundMask) != 0)
+            return;
+
+        ReleasePossession(currentActivePlayer);
+
+        Vector3 dir = (transform.position - other.ClosestPoint(transform.position)).normalized;
+        rb.AddForce(dir * 1.5f, ForceMode.Impulse);
+    }
+
+
 
     private void ResolveImpact(PlayerController player, Collision collision, float momentum, Vector3 hitDirection)
     {
@@ -277,20 +298,12 @@ public class SoccerBall : MonoBehaviour
         // SNAP ON CLAIM so there is no huge first tween
         if (player != null)
         {
-            Vector3 anchor = player.transform.TransformPoint(player.DribbleOffset);
-
-            if (forceToGroundOnClaim)
-                anchor = ClampAnchorToGround(anchor);
-            else
-                anchor.y = transform.position.y + holdHeight;
-
-            transform.position = anchor;
-
-            // kill any leftover motion
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }
     }
+
+
 
     private void ExitPossessedMode()
     {
@@ -310,20 +323,48 @@ public class SoccerBall : MonoBehaviour
         if (!isPossessed) return;
         if (currentActivePlayer != requester) return;
 
-        anchorPos.y = transform.position.y + holdHeight;
+        //anchorPos.y = transform.position.y + holdHeight;
+        anchorPos = ClampAnchorToGround(anchorPos);
+        anchorPos.y += holdHeight;
 
         // Clamp end position if too far (prevents huge pops)
         Vector3 delta = anchorPos - transform.position;
         float dist = delta.magnitude;
+
         if (dist > maxTweenDistance)
             anchorPos = transform.position + delta.normalized * maxTweenDistance;
 
         if (followTween == null || !followTween.IsActive())
         {
+            lastTweenPosition = transform.position;
+
             followTween = transform.DOMove(anchorPos, followDuration)
                 .SetEase(followEase)
-                .SetUpdate(UpdateType.Fixed)
-                .SetAutoKill(false);
+                .SetUpdate(UpdateType.Normal)
+                .SetAutoKill(false)
+                .OnUpdate(() =>
+                {
+                    Vector3 currentPos = transform.position;
+                    Vector3 move = currentPos - lastTweenPosition;
+                    float dist = move.magnitude;
+
+                    if (dist > 0.0001f)
+                    {
+                        Vector3 dir = move.normalized;
+
+                        if (Physics.SphereCast(lastTweenPosition, 0.11f, dir, out RaycastHit hit, dist))
+                        {
+                            if (!hit.collider.CompareTag("Player"))
+                            {
+                                followTween.Kill();
+                                ReleasePossession(currentActivePlayer);
+                                return;
+                            }
+                        }
+                    }
+
+                    lastTweenPosition = currentPos;
+                });
         }
         else
         {
