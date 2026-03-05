@@ -1468,6 +1468,7 @@ GameObject:
   - component: {fileID: 3808909879993463481}
   - component: {fileID: 7935642156343511545}
   - component: {fileID: 5279488226944760382}
+  - component: {fileID: 3893330772990947144}
   m_Layer: 0
   m_Name: Goal R
   m_TagString: Untagged
@@ -1644,6 +1645,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreTracker: {fileID: 121180679605582305}
   side: 1
+--- !u!54 &3893330772990947144
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3352626273011029627}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 0
+  m_ImplicitTensor: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &3378338438740323361
 GameObject:
   m_ObjectHideFlags: 0
@@ -4201,6 +4229,7 @@ GameObject:
   - component: {fileID: 1009415860053496643}
   - component: {fileID: 1906211323870281210}
   - component: {fileID: 9157016170308761410}
+  - component: {fileID: 2123082076380687838}
   m_Layer: 0
   m_Name: Goal L
   m_TagString: Untagged
@@ -4377,6 +4406,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreTracker: {fileID: 121180679605582305}
   side: 0
+--- !u!54 &2123082076380687838
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8823129649732276710}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 0
+  m_ImplicitTensor: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &9082644537197897751
 GameObject:
   m_ObjectHideFlags: 0

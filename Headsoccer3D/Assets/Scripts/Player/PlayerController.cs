@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Android;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
 using UnityEngine.UI;
@@ -317,7 +318,17 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     public void OnSprint(bool held)
     {
         sprintHeld = held;
-        sprintParticles.SetActive(held);
+
+        if (held)
+        {
+            var emission = sprintParticles.GetComponent<ParticleSystem>().emission;
+            emission.rateOverDistance = new ParticleSystem.MinMaxCurve(2f, 4f);
+        }
+        else
+        {
+            var emission = sprintParticles.GetComponent<ParticleSystem>().emission;
+            emission.rateOverDistance = new ParticleSystem.MinMaxCurve(0f, 0f);
+        }
     }
     public void OnJump()
     {

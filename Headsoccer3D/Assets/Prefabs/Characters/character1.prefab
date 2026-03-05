@@ -208,6 +208,14 @@ MonoBehaviour:
   uiSideOffset: 0.8
   uiHeightOffset: 0.8
   matObj: {fileID: 6544384373899927326}
+  multiBallText: {fileID: 3798930661154949969, guid: ad6825c6a490e344abb915b4ce2a1143, type: 3}
+  empoweredKickText: {fileID: 5041241853163221094, guid: f2d58010527d10c47b2a34888d282aca, type: 3}
+  mbOffset: {x: 0, y: 1.5, z: 0.7}
+  mbRotation: {x: 0, y: 0, z: 17}
+  ekOffset: {x: 0, y: 1.6, z: 0.6}
+  ekRotation: {x: 0, y: 0, z: 16}
+  mbActive: 0
+  ekActive: 0
 --- !u!54 &8232834016103739514
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1390,6 +1398,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 909526382676242523}
     m_Modifications:
+    - target: {fileID: 2826871211292261292, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4615716246373951051, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 52c4a4c0a7a50ea4589b9c7cd93adc2c, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.61993
@@ -1458,14 +1474,6 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[2]'
       value: 
       objectReference: {fileID: 2100000, guid: e8551549172e03e4ca0b3e529f1b7195, type: 2}
-    - target: {fileID: 2826871211292261292, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4615716246373951051, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1740,6 +1748,18 @@ PrefabInstance:
       value: SprintDustVFX
       objectReference: {fileID: 0}
     - target: {fileID: 6323174594618006324, guid: 6cea7713be80c7247ac71c548d4d5789, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6323174594618006324, guid: 6cea7713be80c7247ac71c548d4d5789, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6323174594618006324, guid: 6cea7713be80c7247ac71c548d4d5789, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6323174594618006324, guid: 6cea7713be80c7247ac71c548d4d5789, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1778,6 +1798,10 @@ PrefabInstance:
     - target: {fileID: 6323174594618006324, guid: 6cea7713be80c7247ac71c548d4d5789, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6323174594618006324, guid: 6cea7713be80c7247ac71c548d4d5789, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

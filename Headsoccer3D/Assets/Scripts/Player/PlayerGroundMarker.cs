@@ -56,7 +56,7 @@ public class PlayerGroundMarker : MonoBehaviour
 
         Renderer rend = matObj.GetComponent<Renderer>();
         Material[] mats = rend.materials;
-        mats[1] = playerMat;
+        mats[0] = playerMat;
         rend.materials = mats;
 
     }

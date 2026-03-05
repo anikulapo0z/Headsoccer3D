@@ -329,6 +329,14 @@ public class GameSceneManager : MonoBehaviour
     }
     void UnlockBall()
     {
+
+        Destroy(ballObject);
+        ballObject = Instantiate(ballPrefab, ballStartingPos.position, Quaternion.identity);
+
+        ballDropHalftone.setBallTransform(ballObject.transform);
+        ballDropHalftoneWalls.setBallTransform(ballObject.transform);
+
+
         ballObject.GetComponent<SphereCollider>().enabled = true;
         ballObject.GetComponent<Rigidbody>().isKinematic = false;
         ballObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
