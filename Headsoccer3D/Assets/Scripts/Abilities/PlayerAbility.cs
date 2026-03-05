@@ -59,6 +59,7 @@ public class PlayerAbility : MonoBehaviour
                 GetComponent<PlayerController>().hasEmpoweredKick = true;
                 GetComponent<PlayerController>().empoweredKickStrength = empoweredKickStrength;
                 GetComponent<PlayerController>().empoweredKickPlayerMultiplier = empoweredKickStrength * 0.6f;
+                GetComponent<PlayerGroundMarker>().ToggleEKActive();
 
                 originalScale = transform.localScale;
                 transform.DOScale(growSize, scaleTime);
@@ -68,6 +69,7 @@ public class PlayerAbility : MonoBehaviour
                 if(GetComponent<MultiBall>() == null)
                     gameObject.AddComponent<MultiBall>();
                 GetComponent<MultiBall>().SetVars(upAmount, outAmount, ballAmount, ball);
+                GetComponent<PlayerGroundMarker>().ToggleMBActive();
                 break;
 
         }
@@ -84,11 +86,13 @@ public class PlayerAbility : MonoBehaviour
                 GetComponent<EmpoweredKick>().ResetAbilityUse(originalScale, scaleTime);
                 GetComponent<PlayerController>().hasEmpoweredKick = false;
                 GetComponent<PlayerController>().empoweredKickStrength = 1f;
+                GetComponent<PlayerGroundMarker>().ToggleEKActive();
                 Destroy(GetComponent<EmpoweredKick>());
                 break;
 
             case AbilityTrigger.AbilityTypes.MultiBall:
                 Destroy(GetComponent<MultiBall>());
+                GetComponent<PlayerGroundMarker>().ToggleMBActive();
                 break;
 
         }

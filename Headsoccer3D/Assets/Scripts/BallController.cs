@@ -24,9 +24,13 @@ public class BallController : MonoBehaviour
     Vector3 previousBallPos;
     Vector3 previousHitPos;
 
+    [SerializeField] float fakeBallAliveTime;
+
 
     void Awake()
     {
+        if(gameObject.name.Contains("Fake"))
+            Invoke("DestroyBall", fakeBallAliveTime);
         ballPositionIndicator = Instantiate(ballPositionIndicatorPrefab, Vector3.zero, Quaternion.identity);
         //lr = GetComponent<LineRenderer>();
         rb = GetComponent<Rigidbody>();
@@ -98,6 +102,11 @@ public class BallController : MonoBehaviour
             rb.AddForce(dragForce, ForceMode.Force);
         }
 
+    }
+
+    void DestroyBall()
+    {
+        Destroy(gameObject);
     }
 
     private void OnDestroy()

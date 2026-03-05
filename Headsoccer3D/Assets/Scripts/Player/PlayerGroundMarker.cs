@@ -21,6 +21,24 @@ public class PlayerGroundMarker : MonoBehaviour
 
     [SerializeField] GameObject matObj;
 
+
+
+    [SerializeField] GameObject multiBallText;
+    GameObject multiBallObject;
+    [SerializeField] GameObject empoweredKickText;
+    GameObject empoweredKickObject;
+    [SerializeField] Vector3 mbOffset;
+    [SerializeField] Vector3 ekOffset;
+    [SerializeField] bool mbActive = false;
+    [SerializeField] bool ekActive = false;
+
+
+
+
+
+
+
+
     private void Start()
     {
         mainCam = Camera.main;
@@ -46,7 +64,46 @@ public class PlayerGroundMarker : MonoBehaviour
     {
         UpdateFloatingUIPosition();
         UpdateGroundIndicatorPosition();
+        if (mbActive)
+            UpdateMBText();
+        else if (ekActive)
+            UpdateEKText();
+
     }
+
+    void UpdateMBText()
+    {
+        if (multiBallObject == null)
+            multiBallObject = Instantiate(multiBallText);
+
+
+        Vector3 targetPos =
+            transform.position
+            + (mainCam.transform.right * mbOffset.z)
+            + (Vector3.up * mbOffset.y);
+
+        multiBallObject.transform.position = targetPos;
+
+        multiBallObject.transform.forward = mainCam.transform.forward;
+
+    }
+    void UpdateEKText()
+    {
+        if (empoweredKickObject == null)
+            empoweredKickObject = Instantiate(empoweredKickText);
+
+
+        Vector3 targetPos =
+            transform.position
+            + (mainCam.transform.right * ekOffset.z)
+            + (Vector3.up * ekOffset.y);
+
+        empoweredKickObject.transform.position = targetPos;
+
+        empoweredKickObject.transform.forward = mainCam.transform.forward;
+
+    }
+
 
     void UpdateFloatingUIPosition()
     {
@@ -75,5 +132,41 @@ public class PlayerGroundMarker : MonoBehaviour
             playerPositionIndicator.transform.position = hit.point + new Vector3(0, canvasOffset, 0);
         }
     }
+
+
+    public void ToggleMBActive()
+    {
+        if (mbActive)
+        {
+            mbActive = false;
+            if (multiBallObject != null)
+                Destroy(multiBallObject);
+        }
+        else
+        {
+            mbActive = true;
+            if (multiBallObject == null)
+                multiBallObject = Instantiate(multiBallText);
+
+        }
+    }
+    public void ToggleEKActive()
+    {
+        if (mbActive)
+        {
+            ekActive = false;
+            if (empoweredKickObject != null)
+                Destroy(empoweredKickObject);
+        }
+        else
+        {
+            ekActive = true;
+            if (empoweredKickObject == null)
+               empoweredKickObject = Instantiate(empoweredKickText);
+
+        }
+    }
+
+
 
 }
