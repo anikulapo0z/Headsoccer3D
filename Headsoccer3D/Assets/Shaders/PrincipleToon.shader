@@ -5,6 +5,10 @@ Shader "Saphead Studios/Principle Toon"
 		//Base
         [Header(Base)]
 		_MainTex("Surface Texture", 2D) = "white" {}
+        [Toggle(_USEUV1)] _UV1Toggle ("Use UV1", Float) = 0
+        [Toggle(_USEUV2)] _UV2Toggle ("Use UV2", Float) = 0
+        [Toggle(_USEUV3)] _UV3Toggle ("Use UV3", Float) = 0
+        [Toggle(_USEUV4)] _UV4Toggle ("Use UV4", Float) = 0
         _Lightness("Lightness", Range(0,1)) = 0
 		_BaseColor ("Base Tint", Color) = (1, 1, 1, 1)
         [Space(10)]
@@ -76,6 +80,11 @@ Shader "Saphead Studios/Principle Toon"
 			#pragma fragment PrincipleToonFragmentLit
 
             //Shader speciific
+            #pragma shader_feature_local_vertex _USEUV1
+            #pragma shader_feature_local_vertex _USEUV2
+            #pragma shader_feature_local_vertex _USEUV3
+            #pragma shader_feature_local_vertex _USEUV4
+
             #pragma shader_feature_local_fragment _AMBIENTLIGHTING
             #pragma shader_feature_local_fragment _SHADOWSLIGHT
             #pragma shader_feature_local_fragment _USESHADOWS
@@ -124,7 +133,21 @@ Shader "Saphead Studios/Principle Toon"
 
                 half fogFactor = 0;
 
+                //UV sets
                 output.uv = TRANSFORM_TEX(input.texcoord, _MainTex);
+                #if _USEUV1
+                    output.uv = TRANSFORM_TEX(input.texcoord1, _MainTex);
+                #endif
+                #if _USEUV2
+                    output.uv = TRANSFORM_TEX(input.texcoord2, _MainTex);
+                #endif
+                #if _USEUV3
+                    output.uv = TRANSFORM_TEX(input.texcoord3, _MainTex);
+                #endif
+                #if _USEUV4
+                    output.uv = TRANSFORM_TEX(input.texcoord4, _MainTex);
+                #endif
+
                 output.positionWS.xyz = vertexInput.positionWS;
                 output.positionCS = TransformObjectToHClip(input.positionOS.xyz);;
 

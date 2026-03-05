@@ -7547,6 +7547,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3404582675674179269, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: ballTransform
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4018947393931663058, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.001
@@ -7706,6 +7710,10 @@ PrefabInstance:
     - target: {fileID: 7354893560997248522, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_LocalPosition.z
       value: 5.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 7649094326105891699, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: ballTransform
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7678902264508409078, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_Size.y
@@ -14461,6 +14469,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4176021496890234021, guid: 07dcd9d59236e9843a75baece04da12d, type: 3}
   m_PrefabInstance: {fileID: 1344448591}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1347073551 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3404582675674179269, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+  m_PrefabInstance: {fileID: 605910383}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e834e68c26ac345ac1c5d5149b0ead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1348140108 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4176021496890234021, guid: 07dcd9d59236e9843a75baece04da12d, type: 3}
@@ -18911,13 +18930,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputControllers: []
   playerCharacters: []
-  characterList:
-  - {fileID: 2105791413608084587, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
-  - {fileID: 2105791413608084587, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
-  - {fileID: 2105791413608084587, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
-  - {fileID: 2105791413608084587, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
-  - {fileID: 2105791413608084587, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
-  - {fileID: 2105791413608084587, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
+  characterPrefab: {fileID: 2105791413608084587, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
   FourP_SpawnPoints:
   - {fileID: 605910390}
   - {fileID: 605910389}
@@ -18939,6 +18952,7 @@ MonoBehaviour:
   ballPrefab: {fileID: 675428509796539959, guid: ca4c47f2e6aaf174b89e550198a0efd7, type: 3}
   ballObject: {fileID: 0}
   ballDropHalftone: {fileID: 7691678867812145161}
+  ballDropHalftoneWalls: {fileID: 1347073551}
   ballStartingPos: {fileID: 605910384}
   scoreTracker: {fileID: 1226518549}
   raumdeuter: {fileID: 341759070}
@@ -18946,8 +18960,49 @@ MonoBehaviour:
   cpu2: {fileID: 341759069}
   numOfAIs: 0
   camera: {fileID: 58505474}
-  leftTeamColor: {fileID: 2100000, guid: ae975ee22a38bfd4bab6a94cf25fd97f, type: 2}
-  rightTeamColor: {fileID: 2100000, guid: 045e412f8c8755a4aae6d9cc3c564164, type: 2}
+  characterMaterials:
+  - {fileID: 2100000, guid: e614107cad86c444b9aef22603da486f, type: 2}
+  - {fileID: 2100000, guid: e15ee551be911a54d959df6d7792845e, type: 2}
+  - {fileID: 2100000, guid: 2030f04ae90757e45ad6cdc8f7f0588f, type: 2}
+  - {fileID: 2100000, guid: af5685c05bfc0aa458ac32ef3788e526, type: 2}
+  - {fileID: 2100000, guid: 29beafc1f039a7e43a0d22537471b44f, type: 2}
+  - {fileID: 2100000, guid: eafe82b109b495c4da728d1e6e5656a4, type: 2}
+  - {fileID: 2100000, guid: d066865f8ca66714285fe59860a7001a, type: 2}
+  - {fileID: 2100000, guid: adfe3a1dda2f6a8449d6e80aabd6367a, type: 2}
+  - {fileID: 2100000, guid: e7a452f4acd530f45beae6442404fed6, type: 2}
+  - {fileID: 2100000, guid: 5f06bc07dcc92f843ba5f55a941beea4, type: 2}
+  - {fileID: 2100000, guid: 6d1cbb7f24cc1c343b0666767f88c22a, type: 2}
+  - {fileID: 2100000, guid: 750309e8719916b488b4c3070f014c0c, type: 2}
+  - {fileID: 2100000, guid: 6fd8882a3ca740e4bbcc8446f800462d, type: 2}
+  - {fileID: 2100000, guid: 6e7e2dcf4010c7143a08a5e114cdbc08, type: 2}
+  - {fileID: 2100000, guid: f861ae08dda47d5429a3c4a3e9262135, type: 2}
+  - {fileID: 2100000, guid: ee941626e2ecb304d8cfac7a0a1c6970, type: 2}
+  - {fileID: 2100000, guid: 835c80cc3867daf4b814b2be19efcdbc, type: 2}
+  - {fileID: 2100000, guid: dcf1dc7c133b9544e85e72ac76eadd6d, type: 2}
+  - {fileID: 2100000, guid: 57103563cc0419042a41e42bd5516bad, type: 2}
+  - {fileID: 2100000, guid: 26b78ce8beb5b6e4893824b440344a93, type: 2}
+  - {fileID: 2100000, guid: c3d595a54d9de0442bcc925d3b5b4d6b, type: 2}
+  - {fileID: 2100000, guid: 9ef098604afa3ee4fafcf971efe5167f, type: 2}
+  - {fileID: 2100000, guid: 681114e4fc74f5e46a6626a597f6ef30, type: 2}
+  - {fileID: 2100000, guid: ef78e8836502baf4782389225da0b093, type: 2}
+  - {fileID: 2100000, guid: d0977d346da45b944be39229bc19b761, type: 2}
+  - {fileID: 2100000, guid: 4dda6e0f4a90278449f5f1a20560f175, type: 2}
+  - {fileID: 2100000, guid: 62a45d89c8efcb64bb4d0a3e1f3733f9, type: 2}
+  - {fileID: 2100000, guid: 5a9d61844f336e44aa5968c5e5a8dc69, type: 2}
+  - {fileID: 2100000, guid: 489b74b147a3f094e99b37359c2d2afc, type: 2}
+  - {fileID: 2100000, guid: 4172387c31f769d41a187eb0bdb9dfa5, type: 2}
+  - {fileID: 2100000, guid: a5a15e02f2630d5469cb474e927d17cb, type: 2}
+  - {fileID: 2100000, guid: 6de62d7dea06b6942b1e40047feea8c0, type: 2}
+  - {fileID: 2100000, guid: 37b0252c39f107d42ac6c642feffeb8a, type: 2}
+  - {fileID: 2100000, guid: 02690503b4f026c4eafc1af8901611cd, type: 2}
+  - {fileID: 2100000, guid: cc866ce5878e4534998dcf8c56a66b48, type: 2}
+  - {fileID: 2100000, guid: 1967a0ced91f2c24b85db5df888e2abc, type: 2}
+  - {fileID: 2100000, guid: b052c063064bdb642aa9e2bc6aa208b4, type: 2}
+  - {fileID: 2100000, guid: a62c78a5062416e469f2d9d31911b4ea, type: 2}
+  - {fileID: 2100000, guid: c37240556b1b7bd48b74d23eea50c022, type: 2}
+  - {fileID: 2100000, guid: 69ffa2da5f8d4bd469484dd528a61d91, type: 2}
+  - {fileID: 2100000, guid: aeb7546da19e07c48bc3be97ccd5a98f, type: 2}
+  - {fileID: 2100000, guid: e9a12a0fb67e4ce48b3ccb9cbc75dd71, type: 2}
   leftTeamPositionIndicator: {fileID: 2272880412295671249, guid: 412ae84f259104d448b55a1e358b6694, type: 3}
   rightTeamPositionIndicator: {fileID: 2272880412295671249, guid: 1cbc517d48694874a830577297739654, type: 3}
   fakeballList: []
@@ -21807,6 +21862,10 @@ PrefabInstance:
     - target: {fileID: 8474148246007039119, guid: a41b5ddd62f4d1e40896148d2c286a8c, type: 3}
       propertyPath: m_Name
       value: Main Bus
+      objectReference: {fileID: 0}
+    - target: {fileID: 8896193546921134937, guid: a41b5ddd62f4d1e40896148d2c286a8c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

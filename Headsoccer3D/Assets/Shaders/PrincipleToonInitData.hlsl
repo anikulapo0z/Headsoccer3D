@@ -66,8 +66,12 @@ struct Attributes
     float3 normalOS : NORMAL;
     float4 tangentOS : TANGENT;
     float2 texcoord : TEXCOORD0;
-    float2 staticLightmapUV : TEXCOORD1;
-    float2 dynamicLightmapUV : TEXCOORD2;
+    float2 texcoord1 : TEXCOORD1;
+    float2 texcoord2 : TEXCOORD2;
+    float2 texcoord3 : TEXCOORD3;
+    float2 texcoord4 : TEXCOORD4;
+    float2 staticLightmapUV : TEXCOORD5;
+    float2 dynamicLightmapUV : TEXCOORD6;
     UNITY_VERTEX_INPUT_INSTANCE_ID
 };
 
