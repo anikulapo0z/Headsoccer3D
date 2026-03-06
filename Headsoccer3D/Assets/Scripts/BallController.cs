@@ -31,7 +31,7 @@ public class BallController : MonoBehaviour
     {
         if(gameObject.name.Contains("Fake"))
             Invoke("DestroyBall", fakeBallAliveTime);
-        ballPositionIndicator = Instantiate(ballPositionIndicatorPrefab, Vector3.zero, Quaternion.identity);
+        //ballPositionIndicator = Instantiate(ballPositionIndicatorPrefab, Vector3.zero, Quaternion.identity);
         //lr = GetComponent<LineRenderer>();
         rb = GetComponent<Rigidbody>();
         previousBallPos = transform.position;
@@ -66,15 +66,15 @@ public class BallController : MonoBehaviour
 
         RaycastHit hit;
 
-        ballPositionIndicator.transform.rotation = Quaternion.Euler(
-            90f,
-            ballPositionIndicator.transform.eulerAngles.y + positionIndicatorSpeed,
-            0f
-            );
+        //ballPositionIndicator.transform.rotation = Quaternion.Euler(
+            //90f,
+            //ballPositionIndicator.transform.eulerAngles.y + positionIndicatorSpeed,
+            //0f
+            //);
 
         if(Physics.Raycast(transform.position, Vector3.down, out hit, 100, layerToShowBallPositionOn))
         {
-            ballPositionIndicator.transform.position = hit.point + canvasOffset;
+            //ballPositionIndicator.transform.position = hit.point + canvasOffset;
             //lr.SetPosition(0, transform.position);
             //lr.SetPosition(1, hit.point);
 
@@ -111,7 +111,7 @@ public class BallController : MonoBehaviour
 
     private void OnDestroy()
     {
-        Destroy(ballPositionIndicator);
+        //Destroy(ballPositionIndicator);
     }
     private void OnCollisionEnter(Collision collision)
     {
