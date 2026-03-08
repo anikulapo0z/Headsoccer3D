@@ -33,7 +33,7 @@ public class MapSelectionManager : MonoBehaviour
         foreach (PlayerInputController i in inputControllers)
         {
             IPlayerControllable cursor = CreateCursor(i.PlayerIndex);
-            i.SetControlledObject(cursor);
+            i.SetControlledObject(cursor, true);
         }
         StartCountDown();
     }

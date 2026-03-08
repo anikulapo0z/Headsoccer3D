@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class PlayerInputController : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class PlayerInputController : MonoBehaviour
 
     public int selectedCharacterID = -1;
 
-    IPlayerControllable controlledObject;
+    List<IPlayerControllable> controlledObject = new List<IPlayerControllable>();
 
     InputActionAsset actionsInstance;
     InputAction moveAction;
@@ -91,9 +92,12 @@ public class PlayerInputController : MonoBehaviour
         actionsInstance?.Disable();
     }
 
-    public void SetControlledObject(IPlayerControllable obj)
+    public void SetControlledObject(IPlayerControllable obj, bool resetList)
     {
-        controlledObject = obj;
+        if (resetList)
+            controlledObject.Clear();
+
+        controlledObject.Add(obj);
     }
 
     static string BuildControllerId(InputDevice device)
@@ -104,28 +108,52 @@ public class PlayerInputController : MonoBehaviour
 
     void OnMove(InputAction.CallbackContext ctx)
     {
-        controlledObject?.OnMove(ctx.ReadValue<Vector2>());
+        foreach(IPlayerControllable p in controlledObject)
+            p?.OnMove(ctx.ReadValue<Vector2>());
     }
 
     void OnMoveCancelled(InputAction.CallbackContext ctx)
     {
-        controlledObject?.OnMove(Vector2.zero);
+        foreach (IPlayerControllable p in controlledObject)
+            p?.OnMove(Vector2.zero);
     }
 
     void OnSprint(InputAction.CallbackContext ctx)
     {
-        controlledObject?.OnSprint(ctx.ReadValueAsButton());
+        foreach (IPlayerControllable p in controlledObject)
+            p?.OnSprint(ctx.ReadValueAsButton());
     }
 
-    void OnConfirm(InputAction.CallbackContext ctx) => controlledObject?.OnConfirm();
-    void OnCancel(InputAction.CallbackContext ctx) => controlledObject?.OnCancel();
-    void OnJump(InputAction.CallbackContext ctx) => controlledObject?.OnJump();
+    void OnConfirm(InputAction.CallbackContext ctx)
+    {
+        foreach (IPlayerControllable p in controlledObject)
+            p?.OnConfirm();
+    }
+    void OnCancel(InputAction.CallbackContext ctx)
+    {
+        foreach (IPlayerControllable p in controlledObject)
+            p?.OnCancel();
+    }
+    void OnJump(InputAction.CallbackContext ctx)
+    {
+        foreach (IPlayerControllable p in controlledObject)
+            p?.OnJump();
+    }
     void OnKick(InputAction.CallbackContext ctx)
     {
-        controlledObject?.OnKick(ctx.ReadValueAsButton());
+        foreach (IPlayerControllable p in controlledObject)
+            p?.OnKick(ctx.ReadValueAsButton());
     }
-    void OnJoin(InputAction.CallbackContext ctx) => controlledObject?.OnJoin();
-    void OnAbility(InputAction.CallbackContext ctx) => controlledObject?.OnAbility();
+    void OnJoin(InputAction.CallbackContext ctx)
+    {
+        foreach (IPlayerControllable p in controlledObject)
+            p?.OnJoin();
+    }
+    void OnAbility(InputAction.CallbackContext ctx)
+    {
+        foreach (IPlayerControllable p in controlledObject)
+            p?.OnAbility();
+    }
 
     void OnDestroy()
     {

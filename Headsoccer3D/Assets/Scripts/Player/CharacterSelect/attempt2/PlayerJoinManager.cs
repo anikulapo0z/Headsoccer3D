@@ -120,7 +120,7 @@ public class PlayerJoinManager : MonoBehaviour
         int index = inputControllers.Count;
         PlayerInputController newController = CreatePlayerController(index, device);
         IPlayerControllable cursor = CreateCursor(index);
-        newController.SetControlledObject(cursor);
+        newController.SetControlledObject(cursor, true);
 
         inputControllers.Add(newController);
         PlayerInputHolder.Instance.playerList.Add(newController);

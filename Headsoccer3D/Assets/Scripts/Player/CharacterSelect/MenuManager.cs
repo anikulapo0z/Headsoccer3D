@@ -118,7 +118,7 @@ public class MenuManager : MonoBehaviour
 
         foreach(PlayerInputController t in PlayerInputHolder.Instance.playerList)
         {
-            t.SetControlledObject(controller);
+            t.SetControlledObject(controller, true);
         }
     }
 

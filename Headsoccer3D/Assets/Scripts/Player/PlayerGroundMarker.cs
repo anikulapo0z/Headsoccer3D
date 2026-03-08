@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class PlayerGroundMarker : MonoBehaviour
 {
@@ -34,9 +35,9 @@ public class PlayerGroundMarker : MonoBehaviour
     [SerializeField] bool mbActive = false;
     [SerializeField] bool ekActive = false;
 
-
-
-
+    public bool controllingFlipper = false;
+    public List<GameObject> controlledFlippers = new List<GameObject>();
+    [SerializeField] float lrYHeight;
 
 
 
@@ -70,7 +71,17 @@ public class PlayerGroundMarker : MonoBehaviour
             UpdateMBText();
         else if (ekActive)
             UpdateEKText();
+        if (controllingFlipper)
+            UpdateFlipperLine();
+    }
 
+    void UpdateFlipperLine()
+    {
+        foreach(GameObject t in controlledFlippers)
+        {
+            t.GetComponent<LineRenderer>().SetPosition(0, new Vector3(t.transform.position.x, lrYHeight, t.transform.position.z));
+            t.GetComponent<LineRenderer>().SetPosition(1, new Vector3(transform.position.x, lrYHeight, transform.position.z));
+        }
     }
 
     void UpdateMBText()

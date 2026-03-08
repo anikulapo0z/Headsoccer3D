@@ -10,9 +10,8 @@ public class GameSceneManager : MonoBehaviour
     public enum MapType
     {
         Default,
-        Stadium,
-        Street,
-        Training
+        BusMap,
+        LibertyBell
     }
 
     [Header("Map Setup")]
@@ -331,14 +330,17 @@ public class GameSceneManager : MonoBehaviour
             case MapType.Default:
                 break;
 
-            case MapType.Stadium:
+            case MapType.BusMap:
+                if (GetComponent<SetupBusMap>() != null)
+                    GetComponent<SetupBusMap>().SetupBusGame(playerCharacters, inputControllers);
+                else
+                    Debug.LogError("'SetupBusMap' Component not found");
+
+                    break;
+
+            case MapType.LibertyBell:
                 break;
 
-            case MapType.Street:
-                break;
-
-            case MapType.Training:
-                break;
         }
     }
 
@@ -366,7 +368,7 @@ public class GameSceneManager : MonoBehaviour
                 characterMaterials[player.selectedCharacterID]
             );
 
-            player.SetControlledObject(playerController);
+            player.SetControlledObject(playerController, true);
 
             playerObj.GetComponent<CharacterController>().enabled = true;
         }

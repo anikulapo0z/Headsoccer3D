@@ -23,13 +23,14 @@ public class PinballFlipper : MonoBehaviour, IPlayerControllable
 
     public List<GameObject> hitPlayers = new List<GameObject>();
     public List<Vector3> hitPoints = new List<Vector3>();
+    [SerializeField] Transform fallbackKnockback;
 
 
     private void Start()
     {
         previousHitTime = Time.time;
         hitCollider = GetComponent<Collider>();
-        startRotation = transform.rotation.eulerAngles;
+        startRotation = objectToRotate.transform.rotation.eulerAngles;
     }
 
     private void Update()
@@ -59,7 +60,7 @@ public class PinballFlipper : MonoBehaviour, IPlayerControllable
     {
         hitPlayers.Clear();
         onTween.Kill();
-        offTween = objectToRotate.transform.DOLocalRotateQuaternion(Quaternion.Euler(startRotation), rotationSpeed);
+        offTween = objectToRotate.transform.DORotateQuaternion(Quaternion.Euler(startRotation), rotationSpeed);
     }
 
     IEnumerator TurnOnThePain()
@@ -78,8 +79,12 @@ public class PinballFlipper : MonoBehaviour, IPlayerControllable
 
             var collisionPoint = hitCollider.ClosestPoint(other.transform.position);
             hitPoints.Add(collisionPoint);
-            other.gameObject.GetComponent<PlayerController>().GetHitFromPlayer(force, other.transform.position - collisionPoint);
-            Debug.Log(other.transform.position - collisionPoint);
+            
+
+            if(other.transform.position - collisionPoint != Vector3.zero)
+                other.gameObject.GetComponent<PlayerController>().GetHitFromPlayer(force, (other.transform.position - collisionPoint).normalized);
+            else
+                other.gameObject.GetComponent<PlayerController>().GetHitFromPlayer(force, (other.transform.position - fallbackKnockback.position).normalized);
         }
     }
 
