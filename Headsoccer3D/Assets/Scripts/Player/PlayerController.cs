@@ -292,7 +292,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         if (dribbleEnabled && possessedBall != null)
         {
             Vector3 anchor = transform.TransformPoint(dribbleOffset);
-            possessedBall.TweenToAnchor(anchor, this);
+            //possessedBall.TweenToAnchor(anchor, this);
+            possessedBall.MoveTowardAnchor(anchor, this);
         }
     }
 

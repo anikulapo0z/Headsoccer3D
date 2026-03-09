@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aab1aac9d0bb6ed4b80164fd0c827344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 2.5
   rotationSpeed: 25
   rotateToMovement: 1
   kickForce: 10
@@ -156,7 +156,7 @@ MonoBehaviour:
   kickActiveTime: 0.15
   headActiveTime: 0.7
   kickPlayerCooldown: 0.12
-  sprintMultiplier: 1.5
+  sprintMultiplier: 2.3
   maxStamina: 10
   staminaDrainRate: 1
   staminaRegenRate: 1.5
@@ -216,6 +216,9 @@ MonoBehaviour:
   ekRotation: {x: 0, y: 0, z: 16}
   mbActive: 0
   ekActive: 0
+  controllingFlipper: 0
+  controlledFlippers: []
+  lrYHeight: 0
 --- !u!54 &8232834016103739514
 Rigidbody:
   m_ObjectHideFlags: 0

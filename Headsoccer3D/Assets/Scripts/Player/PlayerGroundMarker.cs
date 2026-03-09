@@ -172,7 +172,7 @@ public class PlayerGroundMarker : MonoBehaviour
     }
     public void ToggleEKActive()
     {
-        if (mbActive)
+        if (ekActive)
         {
             ekActive = false;
             if (empoweredKickObject != null)
