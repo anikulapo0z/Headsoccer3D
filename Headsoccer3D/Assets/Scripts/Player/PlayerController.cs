@@ -145,6 +145,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     public Vector3 DribbleOffset => dribbleOffset;
 
+    [SerializeField] GameObject crown;
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -648,4 +650,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             Gizmos.DrawLine(possessedBall.transform.position, anchor);
     }
 
+    public void SetWin()
+    {
+        crown.SetActive(true);
+    }
 }

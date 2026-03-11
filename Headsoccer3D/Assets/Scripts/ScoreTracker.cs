@@ -94,6 +94,15 @@ public class ScoreTracker : MonoBehaviour
 
         goalSign.TriggerGoalSign();
     }
+
+    public bool LeftTeamWon()
+    {
+        if(leftScore > rightScore)
+            return true;
+        else
+            return false;
+    }
+
     
     void TurnOffParticles()
     {

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static MenuManager;
 
 public class GameSceneManager : MonoBehaviour
 {
@@ -63,6 +64,10 @@ public class GameSceneManager : MonoBehaviour
 
     public List<GameObject> fakeballList = new List<GameObject>();
 
+    [SerializeField] Transform[] winAreaSpawnPoints;
+    List<GameObject> leftTeam = new List<GameObject>();
+    List<GameObject> rightTeam = new List<GameObject>();
+    [SerializeField] GameObject winAreaCamera;
 
     void Start()
     {
@@ -173,14 +178,55 @@ public class GameSceneManager : MonoBehaviour
     }
 
 
-    IEnumerator EndGame()
+    void EndGame()
     {
         scoreTracker.canScore = false;
 
         if (gameTimeCoroutine != null)
             StopCoroutine(gameTimeCoroutine);
 
-        yield return new WaitForSeconds(delayBeforeScoreScreen);
+        winAreaCamera.SetActive(true);
+        LockPlayers();
+
+        foreach(var p in playerCharacters)
+        {
+            p.transform.localScale = p.transform.localScale * 0.7f;
+        }
+        foreach (var player in inputControllers)
+        {
+            if (playerCharacters.Count == 2)
+            {
+                playerCharacters[0].transform.position = winAreaSpawnPoints[0].transform.position;
+                playerCharacters[1].transform.position = winAreaSpawnPoints[2].transform.position;
+
+            }
+            else if (playerCharacters.Count == 4)
+            {
+                playerCharacters[0].transform.position = winAreaSpawnPoints[0].transform.position;
+                playerCharacters[1].transform.position = winAreaSpawnPoints[1].transform.position;
+                playerCharacters[2].transform.position = winAreaSpawnPoints[2].transform.position;
+                playerCharacters[3].transform.position = winAreaSpawnPoints[3].transform.position;
+            }
+        }
+
+        if (scoreTracker.LeftTeamWon())
+        {
+            foreach(var p in leftTeam)
+            {
+                p.GetComponent<PlayerController>().SetWin();
+                p.transform.localScale = p.transform.localScale * 2f;
+            }
+        }
+        else
+        {
+            foreach (var p in rightTeam)
+            {
+                p.GetComponent<PlayerController>().SetWin();
+            }
+        }
+        UnlockPlayers();
+
+
 
         // load score screen
     }
@@ -363,10 +409,24 @@ public class GameSceneManager : MonoBehaviour
                 playerObj.transform.position = FourP_SpawnPoints[inputControllers.IndexOf(player)].transform.position;
 
 
-            playerObj.GetComponent<PlayerGroundMarker>().SetPlayerWorldUIAndColor(
+
+            if(playerObj.transform.position.x < 0)
+            {
+                playerObj.GetComponent<PlayerGroundMarker>().SetPlayerWorldUIAndColor(leftTeamPositionIndicator, characterMaterials[player.selectedCharacterID]);
+                leftTeam.Add(playerObj);
+            }
+            else
+            {
+                playerObj.GetComponent<PlayerGroundMarker>().SetPlayerWorldUIAndColor(rightTeamPositionIndicator, characterMaterials[player.selectedCharacterID]);
+                rightTeam.Add(playerObj);
+            }
+
+
+
+            /*playerObj.GetComponent<PlayerGroundMarker>().SetPlayerWorldUIAndColor(
                 playerObj.transform.position.x < 0 ? leftTeamPositionIndicator : rightTeamPositionIndicator,
                 characterMaterials[player.selectedCharacterID]
-            );
+            );*/
 
             player.SetControlledObject(playerController, true);
 
