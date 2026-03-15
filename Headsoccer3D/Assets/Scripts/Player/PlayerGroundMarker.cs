@@ -62,6 +62,10 @@ public class PlayerGroundMarker : MonoBehaviour
 
     }
 
+    public void DestroyGroundMarker()
+    {
+        Destroy(playerPositionIndicator);
+    }
 
     private void FixedUpdate()
     {

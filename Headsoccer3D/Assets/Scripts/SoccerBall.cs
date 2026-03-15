@@ -245,7 +245,7 @@ public class SoccerBall : MonoBehaviour
     }
     public bool TryClaimPossession(PlayerController player)
     {
-        Debug.LogWarning($"[POSSESSION] TryClaim called | player={(player ? player.name : "NULL")} | current={(currentActivePlayer ? currentActivePlayer.name : "NULL")} | t={Time.time:F2} next={nextPossessionTime:F2}");
+        //Debug.LogWarning($"[POSSESSION] TryClaim called | player={(player ? player.name : "NULL")} | current={(currentActivePlayer ? currentActivePlayer.name : "NULL")} | t={Time.time:F2} next={nextPossessionTime:F2}");
         if (!CanClaimHere()) return false;
         if (player == null) return false;
         if (Time.time < nextPossessionTime) return false;

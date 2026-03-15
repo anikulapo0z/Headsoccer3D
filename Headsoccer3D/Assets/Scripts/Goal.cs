@@ -19,11 +19,11 @@ public class Goal : MonoBehaviour
             scoreTracker.ShakeCamera(other.GetComponent<Rigidbody>().linearVelocity.magnitude);
             if(side == GoalSide.Right)
             {
-                scoreTracker.PointForRight();
+                scoreTracker.PointForLeft();
             }
             else
             {
-                scoreTracker.PointForLeft();
+                scoreTracker.PointForRight();
             }
 
             other.GetComponent<SoccerBall>().resetBallParent();

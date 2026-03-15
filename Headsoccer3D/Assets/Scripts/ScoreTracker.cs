@@ -52,7 +52,7 @@ public class ScoreTracker : MonoBehaviour
         leftScoreText.text = leftScore.ToString();
         gameSceneManager.GoalScored('l');
 
-        Debug.LogWarning(leftGoalParticles.Count);
+        //Debug.LogWarning(leftGoalParticles.Count);
 
         //leftGoalParticles[0].Play();
         //testConfett.Play();
@@ -102,7 +102,10 @@ public class ScoreTracker : MonoBehaviour
         else
             return false;
     }
-
+    public string GetScore()
+    {
+        return leftScore + " - " + rightScore;
+    }
     
     void TurnOffParticles()
     {

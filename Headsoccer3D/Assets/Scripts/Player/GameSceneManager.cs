@@ -68,6 +68,7 @@ public class GameSceneManager : MonoBehaviour
     List<GameObject> leftTeam = new List<GameObject>();
     List<GameObject> rightTeam = new List<GameObject>();
     [SerializeField] GameObject winAreaCamera;
+    bool gameOver = false;
 
     void Start()
     {
@@ -166,7 +167,6 @@ public class GameSceneManager : MonoBehaviour
             currentGameTime--;
             startCountdownText.text = currentGameTime.ToString();
         }
-
         gameTimeCoroutine = null;
         TryEndGame();
     }
@@ -174,7 +174,12 @@ public class GameSceneManager : MonoBehaviour
 
     void TryEndGame()
     {
-        EndGame();
+        if (!gameOver)
+        {
+            scoreTracker.canScore = false;
+            gameOver = true;
+            EndGame();
+        }
     }
 
 
@@ -188,9 +193,10 @@ public class GameSceneManager : MonoBehaviour
         winAreaCamera.SetActive(true);
         LockPlayers();
 
-        foreach(var p in playerCharacters)
+        foreach (var p in playerCharacters)
         {
             p.transform.localScale = p.transform.localScale * 0.7f;
+            p.GetComponent<PlayerController>().SetReadyForEndArea();
         }
         foreach (var player in inputControllers)
         {
@@ -216,13 +222,22 @@ public class GameSceneManager : MonoBehaviour
                 p.GetComponent<PlayerController>().SetWin();
                 p.transform.localScale = p.transform.localScale * 2f;
             }
+
+            GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("red team", -1);
+            GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("wins", 7);
+            GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord(scoreTracker.GetScore(), 4);
         }
         else
         {
             foreach (var p in rightTeam)
             {
                 p.GetComponent<PlayerController>().SetWin();
+                p.transform.localScale = p.transform.localScale * 2f;
             }
+            GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("blue team", -1);
+            GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("wins", 7);
+            GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord(scoreTracker.GetScore(), 4);
+
         }
         UnlockPlayers();
 

@@ -438,7 +438,10 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     }
 
-
+    public void SetReadyForEndArea()
+    {
+        GetComponent<PlayerGroundMarker>().DestroyGroundMarker();
+    }
 
     #region Kicking Logic
     void ChargeKick(int level)
