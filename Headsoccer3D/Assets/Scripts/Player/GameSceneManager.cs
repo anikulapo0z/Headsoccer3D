@@ -42,7 +42,7 @@ public class GameSceneManager : MonoBehaviour
     // time before score screen
     [SerializeField] float delayBeforeScoreScreen;
 
-    bool canScore = false;
+    public bool canScore = false;
 
     [SerializeField] float delayBeforeResetBall;
     [SerializeField] float delayBeforeUnlockPlayer;
@@ -95,7 +95,7 @@ public class GameSceneManager : MonoBehaviour
     {
         currentGameTime = maxGameTime;
         startCountdownText.text = currentGameTime.ToString();
-
+        canScore = true;
         UnlockPlayers();
         UnlockBall();
         scoreTracker.canScore = true;
@@ -257,6 +257,7 @@ public class GameSceneManager : MonoBehaviour
 
         yield return new WaitForSeconds(delayBeforeUnlockPlayer);
 
+        canScore = true;
         UnlockPlayers();
         UnlockBall();
         TossBall();
@@ -276,6 +277,7 @@ public class GameSceneManager : MonoBehaviour
 
     public void GoalScored(char c)
     {
+        canScore = false;
         PauseTimer();
 
         sideThatScored = c;

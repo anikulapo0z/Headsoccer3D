@@ -59,7 +59,7 @@ public class ScoreTracker : MonoBehaviour
 
 
 
-        var particles = leftGoalParticles;
+        var particles = rightGoalParticles;
 
         foreach (var p in particles)
         {
@@ -84,7 +84,7 @@ public class ScoreTracker : MonoBehaviour
 
 
 
-        var particles = rightGoalParticles;
+        var particles = leftGoalParticles;
 
         foreach (var p in particles)
         {
