@@ -14,6 +14,7 @@ public class PlayerAbility : MonoBehaviour
     [SerializeField] float empoweredKickStrength;
     [SerializeField] float scaleTime;
     [SerializeField] Vector3 growSize;
+    [SerializeField] AudioSource empoweredKickSfx;
     Vector3 originalScale;
 
     [Space(3)]
@@ -22,6 +23,7 @@ public class PlayerAbility : MonoBehaviour
     [SerializeField] float outAmount;
     [SerializeField] int ballAmount;
     [SerializeField] GameObject ball;
+    [SerializeField] AudioSource multiBallSfx;
 
 
     public void TryTriggerAbility()
@@ -33,10 +35,22 @@ public class PlayerAbility : MonoBehaviour
 
             case AbilityTrigger.AbilityTypes.EmpoweredKick:
                 GetComponent<EmpoweredKick>().UseAbility();
-                break;
+                if (empoweredKickSfx.clip != null)
+                    empoweredKickSfx.Play();
+                else if (empoweredKickSfx.clip == null)
+                {
+                    Debug.LogWarning("No audio clip assigned to empoweredKickSfx on " + gameObject.name);
+                }
+                    break;
 
             case AbilityTrigger.AbilityTypes.MultiBall:
                 GetComponent<MultiBall>().UseAbility();
+                if (multiBallSfx.resource != null)
+                    multiBallSfx.Play();
+                else if (multiBallSfx.resource == null)
+                {
+                    Debug.LogWarning("No audio clip assigned to multiBallSfx on " + gameObject.name);
+                }
                 break;
 
         }

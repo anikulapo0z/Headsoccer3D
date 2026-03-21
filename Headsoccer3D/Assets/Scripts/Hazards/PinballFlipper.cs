@@ -25,7 +25,8 @@ public class PinballFlipper : MonoBehaviour, IPlayerControllable
     public List<Vector3> hitPoints = new List<Vector3>();
     [SerializeField] Transform fallbackKnockback;
 
-
+    [SerializeField] AudioSource flipSfx;
+    [SerializeField] AudioSource unFlipSfx;
     private void Start()
     {
         previousHitTime = Time.time;
@@ -54,6 +55,7 @@ public class PinballFlipper : MonoBehaviour, IPlayerControllable
         StartCoroutine(TurnOnThePain());
         offTween.Kill();
         onTween = objectToRotate.transform.DOLocalRotateQuaternion(Quaternion.Euler(endRotation), rotationSpeed);
+        PlayFlipSfx();
     }
 
     public void UnFlipFlipper()
@@ -61,6 +63,7 @@ public class PinballFlipper : MonoBehaviour, IPlayerControllable
         hitPlayers.Clear();
         onTween.Kill();
         offTween = objectToRotate.transform.DORotateQuaternion(Quaternion.Euler(startRotation), rotationSpeed);
+        PlayUnFlipSfx();
     }
 
     IEnumerator TurnOnThePain()
@@ -101,6 +104,29 @@ public class PinballFlipper : MonoBehaviour, IPlayerControllable
         }
     }
 
+    void PlayFlipSfx()
+    {
+        if(flipSfx.clip != null)
+        {
+            flipSfx.Play();
+        }
+        else
+        {
+            Debug.Log("Flip SFX clip is not assigned.");
+        }
+    }
+
+    void PlayUnFlipSfx()
+    {
+        if(unFlipSfx.clip != null)
+        {
+            unFlipSfx.Play();
+        }
+        else
+        {
+            Debug.Log("UnFlip SFX clip is not assigned.");
+        }
+    }
 
     #region Player Inputs
     public void OnSprint(bool held){}

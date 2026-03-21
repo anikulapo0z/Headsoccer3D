@@ -10,6 +10,7 @@ public class AbilityTrigger : MonoBehaviour
         MultiBall
     }
     public AbilityTypes ability = AbilityTypes.None;
+    [SerializeField] private AudioSource pickUpSfx;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -20,6 +21,14 @@ public class AbilityTrigger : MonoBehaviour
             {
                 pa.SetAbility(ability);
                 Destroy(gameObject);
+            }
+            if (pickUpSfx.resource != null)
+            {
+                pickUpSfx.Play();
+            }
+            else if (pickUpSfx.resource == null)
+            {
+                Debug.Log("PickUpSfx AudioSource has no clip assigned.");
             }
         }
     }

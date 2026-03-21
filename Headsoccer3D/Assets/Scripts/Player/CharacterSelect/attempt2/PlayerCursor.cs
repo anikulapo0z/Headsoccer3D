@@ -22,7 +22,8 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
     [SerializeField] Sprite defaultSpriteCursor;
     [SerializeField] Sprite selectedSpriteCursor;
 
-
+    [SerializeField] private AudioSource confirmSfx;
+    [SerializeField] private AudioSource cancelSfx;
 
 
     Vector2 moveInput;
@@ -136,6 +137,15 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
             isLocked = true;
             GetComponent<Image>().sprite = selectedSpriteCursor;
             currentItem.OnConfirm(playerIndex);
+
+            if (confirmSfx.clip != null)
+                {
+                    confirmSfx.Play();
+                }
+                else
+                {
+                    Debug.Log("Confirm SFX clip is not assigned.");
+            }
         }
     }
 
@@ -148,6 +158,15 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
 
         currentItem?.OnHoverExit(playerIndex);
         currentItem = null;
+
+           if (cancelSfx.clip != null)
+                    {
+                        cancelSfx.Play();
+                    }
+                    else
+                    {
+                        Debug.Log("Cancel SFX clip is not assigned.");
+        }
     }
 
     public void OnJump() { }
