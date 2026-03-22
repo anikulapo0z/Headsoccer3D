@@ -24424,6 +24424,7 @@ MonoBehaviour:
   maxGameTime: 150
   pausedGameTime: 0
   delayBeforeScoreScreen: 0
+  canScore: 0
   delayBeforeResetBall: 1
   delayBeforeUnlockPlayer: 3
   ballPrefab: {fileID: 675428509796539959, guid: ca4c47f2e6aaf174b89e550198a0efd7, type: 3}
@@ -24485,6 +24486,9 @@ MonoBehaviour:
   - {fileID: 870212009}
   - {fileID: 870212008}
   winAreaCamera: {fileID: 870212007}
+  totalWinAreaTime: 5
+  currentWinAreaTime: 0
+  startFadeWinArea: 2
 --- !u!4 &1951291691
 Transform:
   m_ObjectHideFlags: 0

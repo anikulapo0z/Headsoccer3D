@@ -61,7 +61,21 @@ public class MenuManager : MonoBehaviour
     private void Start()
     {
         Instance = this;
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
+
+        ResetMenu();
+    }
+
+    public void ResetMenu()
+    {
+        totalPlayerCount = 0;
+        lockedPlayerCount = 0;
+        canMoveToNextScreen = false;
+
+        pressConfirmPrompt.SetActive(false);
+
+        characterSelectMenu.SetActive(true);
+        mapSelectMenu.SetActive(false);
     }
 
     public void PlayerJoined(int count)

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static MenuManager;
 
 public class GameSceneManager : MonoBehaviour
@@ -64,11 +65,23 @@ public class GameSceneManager : MonoBehaviour
 
     public List<GameObject> fakeballList = new List<GameObject>();
 
+
+
+    // win game area
+
     [SerializeField] Transform[] winAreaSpawnPoints;
     List<GameObject> leftTeam = new List<GameObject>();
     List<GameObject> rightTeam = new List<GameObject>();
     [SerializeField] GameObject winAreaCamera;
     bool gameOver = false;
+
+    [SerializeField] float totalWinAreaTime;
+    [SerializeField] float currentWinAreaTime;
+    [SerializeField] float startFadeWinArea;
+    Coroutine winAreaCoroutine;
+
+
+
 
     void Start()
     {
@@ -241,9 +254,31 @@ public class GameSceneManager : MonoBehaviour
         }
         UnlockPlayers();
 
-
+        currentWinAreaTime = totalWinAreaTime;
+        winAreaCoroutine = StartCoroutine(WinAreaCountDown());
 
         // load score screen
+    }
+
+    IEnumerator WinAreaCountDown()
+    {
+
+        while(currentWinAreaTime >= 0)
+        {
+            if(currentWinAreaTime - 3 <= 0)
+            {
+                // PRASIN ADD SCREEN TRANSITION
+            }
+
+            currentWinAreaTime--;
+            yield return new WaitForSeconds(1);
+        }
+        //string name = SceneManager.GetActiveScene().name;
+
+        PlayerInputHolder.Instance.KillSingletons();
+
+        SceneManager.LoadScene("MainMenu");
+
     }
 
 
