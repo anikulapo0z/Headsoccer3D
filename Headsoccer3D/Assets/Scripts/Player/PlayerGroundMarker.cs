@@ -21,6 +21,26 @@ public class PlayerGroundMarker : MonoBehaviour
 
     [SerializeField] GameObject matObj;
 
+
+
+    [SerializeField] GameObject multiBallText;
+    GameObject multiBallObject;
+    [SerializeField] GameObject empoweredKickText;
+    GameObject empoweredKickObject;
+    [SerializeField] Vector3 mbOffset;
+    [SerializeField] Vector3 mbRotation;
+    [SerializeField] Vector3 ekOffset;
+    [SerializeField] Vector3 ekRotation;
+    [SerializeField] bool mbActive = false;
+    [SerializeField] bool ekActive = false;
+
+
+
+
+
+
+
+
     private void Start()
     {
         mainCam = Camera.main;
@@ -36,7 +56,7 @@ public class PlayerGroundMarker : MonoBehaviour
 
         Renderer rend = matObj.GetComponent<Renderer>();
         Material[] mats = rend.materials;
-        mats[1] = playerMat;
+        mats[0] = playerMat;
         rend.materials = mats;
 
     }
@@ -46,7 +66,53 @@ public class PlayerGroundMarker : MonoBehaviour
     {
         UpdateFloatingUIPosition();
         UpdateGroundIndicatorPosition();
+        if (mbActive)
+            UpdateMBText();
+        else if (ekActive)
+            UpdateEKText();
+
     }
+
+    void UpdateMBText()
+    {
+        if (multiBallObject == null)
+            multiBallObject = Instantiate(multiBallText);
+
+
+        Vector3 targetPos =
+            transform.position
+            + (mainCam.transform.right * mbOffset.z)
+            + (Vector3.up * mbOffset.y);
+
+        multiBallObject.transform.position = targetPos;
+        //multiBallObject.transform.rotation = Quaternion.Euler(mbRotation);
+
+        multiBallObject.transform.forward = mainCam.transform.forward;
+        multiBallObject.transform.rotation = Quaternion.Euler(multiBallObject.transform.rotation.x + mbRotation.x, multiBallObject.transform.rotation.y + mbRotation.y, multiBallObject.transform.rotation.z + mbRotation.z);
+
+
+    }
+    void UpdateEKText()
+    {
+        if (empoweredKickObject == null)
+            empoweredKickObject = Instantiate(empoweredKickText);
+
+
+        Vector3 targetPos =
+            transform.position
+            + (mainCam.transform.right * ekOffset.z)
+            + (Vector3.up * ekOffset.y);
+
+        empoweredKickObject.transform.position = targetPos;
+        //empoweredKickObject.transform.rotation = Quaternion.Euler(ekRotation);
+
+
+        empoweredKickObject.transform.forward = mainCam.transform.forward;
+        empoweredKickObject.transform.rotation = Quaternion.Euler(empoweredKickObject.transform.rotation.x + ekRotation.x, empoweredKickObject.transform.rotation.y + ekRotation.y, empoweredKickObject.transform.rotation.z + ekRotation.z);
+
+
+    }
+
 
     void UpdateFloatingUIPosition()
     {
@@ -75,5 +141,41 @@ public class PlayerGroundMarker : MonoBehaviour
             playerPositionIndicator.transform.position = hit.point + new Vector3(0, canvasOffset, 0);
         }
     }
+
+
+    public void ToggleMBActive()
+    {
+        if (mbActive)
+        {
+            mbActive = false;
+            if (multiBallObject != null)
+                Destroy(multiBallObject);
+        }
+        else
+        {
+            mbActive = true;
+            if (multiBallObject == null)
+                multiBallObject = Instantiate(multiBallText);
+
+        }
+    }
+    public void ToggleEKActive()
+    {
+        if (mbActive)
+        {
+            ekActive = false;
+            if (empoweredKickObject != null)
+                Destroy(empoweredKickObject);
+        }
+        else
+        {
+            ekActive = true;
+            if (empoweredKickObject == null)
+               empoweredKickObject = Instantiate(empoweredKickText);
+
+        }
+    }
+
+
 
 }

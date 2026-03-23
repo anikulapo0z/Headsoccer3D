@@ -68,6 +68,11 @@ public class PlayerTriggers : MonoBehaviour
         {
             otherPlayer.GetHitFromPlayer(momentum, hitDir);
             Debug.Log("Hit player with momentum: " + momentum + " and direction: " + hitDir);
+            SoccerBall ball = FindFirstObjectByType<SoccerBall>();
+            if (ball != null && ball.HasPossession(otherPlayer))
+            {
+                ball.ReleasePossession(playerController);
+            }
             return;
         }
         if (cpu != null)
@@ -76,6 +81,9 @@ public class PlayerTriggers : MonoBehaviour
             Debug.Log("Hit CPU with momentum: " + momentum + " and direction: " + hitDir);
             return;
         }
+
+        // If they had the ball, forcibly dispossess
+        
     }
 
 }

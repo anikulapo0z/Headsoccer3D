@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: M_CFlag_CoteDIvoire
+  m_Shader: {fileID: 4800000, guid: d67c0f1751ae0724ea7be98cfd6110cb, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _SHADOWSLIGHT
+  - _USESHADOWS
+  - _USEUV2
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _HalftoneMaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HalftonePattern:
+        m_Texture: {fileID: 2800000, guid: 59380a8c482907548898ef5ffad0bff6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: bc627583b04587a48a6e401328b7b75a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ShadowTexture:
+        m_Texture: {fileID: 2800000, guid: 59380a8c482907548898ef5ffad0bff6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _DesaturationValue: 0
+    - _HalftoneMaskInvertToggle: 0
+    - _HalftoneMaskToggle: 0
+    - _HalftoneToggle: 0
+    - _Lightness: 0
+    - _MaskToggle: 0
+    - _RemapInputMax: 1
+    - _RemapInputMin: 0
+    - _RemapOutputMax: 1
+    - _RemapOutputMin: 0
+    - _ShadowFrequency: 0.23
+    - _ShadowLightness: 0.095
+    - _ShadowsToggle: 1
+    - _UV1Toggle: 0
+    - _UV2Toggle: 1
+    - _UV3Toggle: 0
+    - _UV4Toggle: 0
+    - _UseShadowsToggle: 1
+    m_Colors:
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FirstMaskColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HalftoneColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SecondMaskColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
