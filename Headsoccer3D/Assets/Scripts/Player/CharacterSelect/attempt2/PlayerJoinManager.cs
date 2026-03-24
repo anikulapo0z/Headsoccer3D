@@ -42,11 +42,27 @@ public class PlayerJoinManager : MonoBehaviour
         InputSystem.onDeviceChange += OnDeviceChange;
     }
 
-
     void OnEnable()
     {
         InputSystem.onAnyButtonPress.Call(OnAnyButtonPressed);
     }
+
+    void Start()
+    {
+        ResetJoinManager();
+    }
+
+    void ResetJoinManager()
+    {
+        inputControllers.Clear();
+
+        characterSelectOpen = false;
+        isLocked = false;
+
+        pressAnyButtonScreen.SetActive(true);
+        characterSelectScreen.SetActive(false);
+    }
+
 
 
 

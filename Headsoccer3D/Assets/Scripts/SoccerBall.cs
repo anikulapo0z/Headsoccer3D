@@ -128,7 +128,7 @@ public class SoccerBall : MonoBehaviour
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
         if (currentActivePlayer == player)
             return;
-        if (player != null)
+        if (player != null && GameSceneManager.Instance.canScore)
         {
             //float momentum = rb.linearVelocity.magnitude * rb.mass * 50;
             //Vector3 hitDirection = rb.linearVelocity.normalized;
@@ -158,6 +158,9 @@ public class SoccerBall : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Goal"))
+            ReleasePossession();
+
         if (!isPossessed) return;
         if (currentActivePlayer == null) return;
 

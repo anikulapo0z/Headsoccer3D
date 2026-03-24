@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -7,8 +6,6 @@ public class PlayerInputHolder : MonoBehaviour
     public static PlayerInputHolder Instance;
     public List<PlayerInputController> playerList = new List<PlayerInputController>();
     public GameObject scene;
-
-
 
     private void Start()
     {
@@ -19,11 +16,18 @@ public class PlayerInputHolder : MonoBehaviour
     {
         foreach (var i in playerList)
         {
-            Destroy(i.gameObject);
+            if(i != null)
+                Destroy(i.gameObject);
         }
-        if(scene != null)
+
+        playerList.Clear();
+
+        if (scene != null)
             Destroy(scene);
+
+        Instance = null;
 
         Destroy(gameObject);
     }
+
 }
