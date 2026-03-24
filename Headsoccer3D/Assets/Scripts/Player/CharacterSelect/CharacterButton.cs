@@ -16,6 +16,16 @@ public class CharacterButton : MonoBehaviour, IMenuItem
     private Image image;
     private bool hovered;
 
+    public enum ButtonType
+    {
+        None,
+        character,
+        map
+    }
+
+    public ButtonType type;
+
+
     void Awake()
     {
         image = GetComponent<Image>();
@@ -23,13 +33,35 @@ public class CharacterButton : MonoBehaviour, IMenuItem
 
     public void OnHoverEnter(int playerIndex)
     {
-        MenuManager.Instance.SetPortraitInfo(
-            playerIndex,
-            selectedImage,
-            characterName
-        );
+        switch (type)
+        {
+            case ButtonType.map:
+                return;
+                break;
+
+            case ButtonType.character:
+                MenuManager.Instance.SetPortraitInfo(
+    playerIndex,
+    selectedImage,
+    characterName
+);/*
         if(characterID != -1 )
-            PlayerInputHolder.Instance.playerList[playerIndex].selectedCharacterID = characterID;
+            PlayerInputHolder.Instance.playerList[playerIndex].selectedCharacterID = characterID;*/
+
+                var player = MenuManager.Instance.joinManager.playerSlots[playerIndex];
+
+                if (player != null)
+                {
+                    player.selectedCharacterID = characterID;
+                }
+                break;
+
+
+        }
+
+
+
+
     }
 
     public void OnHoverExit(int playerIndex)
@@ -51,7 +83,7 @@ public class CharacterButton : MonoBehaviour, IMenuItem
             MenuManager.Instance.LoadGameLevel(sceneName);
 
 
-        Debug.Log($"Player {playerIndex} selected {characterName}");
+        //Debug.Log($"Player {playerIndex} selected {characterName}");
     }
 
 

@@ -374,6 +374,13 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         //jumpParticles.SetActive(false);
     }
 
+    public void SetFalling()
+    {
+        anim.SetTrigger("StartFall");
+        anim.SetBool("Falling", true);
+    }
+
+
     public void OnMove(Vector2 input)
     {
         //Debug.Log("Moving: " + input);

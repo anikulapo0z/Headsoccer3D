@@ -31,6 +31,11 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] Transform cursorParent;
     [SerializeField] GameObject mapCursorPrefab;
+
+    public PlayerJoinManager joinManager;
+
+    public bool isPaused = false;
+
     public enum TeamSizes
     {
         v1,
@@ -44,20 +49,6 @@ public class MenuManager : MonoBehaviour
         RandomBallAndStageHazards
     };
 
-
-
-
-/*    void OnEnable()
-    {
-        SceneManager.sceneLoaded += SetGameLevelFields;
-    }
-
-    // Called when the script is disabled
-    void OnDisable()
-    {
-        SceneManager.sceneLoaded -= SetGameLevelFields;
-    }
-*/
     private void Start()
     {
         Instance = this;
@@ -76,16 +67,23 @@ public class MenuManager : MonoBehaviour
 
         characterSelectMenu.SetActive(true);
         mapSelectMenu.SetActive(false);
+
+
+        foreach (var p in portraits)
+        {
+            p.SetNotJoined();
+        }
     }
 
     public void PlayerJoined(int count)
     {
-        totalPlayerCount = count;
+        totalPlayerCount = PlayerInputHolder.Instance.playerList.Count;
         canMoveToNextScreen = false;
         pressConfirmPrompt.SetActive(false);
     }
     public void CheckPlayerConfirm(bool isLocked)
     {
+
         if (!isLocked)
         {
             lockedPlayerCount++;
@@ -129,10 +127,17 @@ public class MenuManager : MonoBehaviour
 
         //PlayerInputHolder.Instance.playerList[0].SetControlledObject(controller);
 
-
+/*
         foreach(PlayerInputController t in PlayerInputHolder.Instance.playerList)
         {
-            t.SetControlledObject(controller, true);
+            t.SetControlledObject(controller, playerControllable, true);
+        }*/
+        foreach (var t in joinManager.playerSlots)
+        {
+            if (t != null)
+            {
+                t.SetControlledObject(controller, playerControllable, true);
+            }
         }
     }
 
@@ -176,7 +181,10 @@ public class MenuManager : MonoBehaviour
     // character portraits
     public void SetPortraitInfo(int index, Sprite image, string name)
     {
-        portraits[index].SetPortraitFields(image, name);
+        if (index < 0 || index >= portraits.Length)
+            return;
+
+        portraits[index].SetJoined(index, image, name);
     }
 
 
@@ -198,19 +206,78 @@ public class MenuManager : MonoBehaviour
 
     }
 
-/*    public void SetGameLevelFields(*//*Scene sceneName, LoadSceneMode mode*//*)
-    {
-        if(GameSceneManager.Instance == null)
+    /*    public void SetGameLevelFields(*//*Scene sceneName, LoadSceneMode mode*//*)
         {
-            Debug.LogError("No GameSceneManager, we are SOOooooo fucked");
+            if(GameSceneManager.Instance == null)
+            {
+                Debug.LogError("No GameSceneManager, we are SOOooooo fucked");
+                return;
+            }
+
+            GameSceneManager.Instance.SetUpGameLevel(currentTeamSize, currentGameMode);
+
+
+
+        }*/
+
+
+
+    public void DisconnectPlayer(int playerIndex)
+    {
+        var joinManager = this.joinManager;
+
+        if (joinManager == null)
             return;
+
+        PlayerInputController target = joinManager.playerSlots[playerIndex];
+
+        if (target == null)
+            return;
+
+        target.PlayerDisconnect();
+
+        foreach (var p in target.controlledGameObject)
+        {
+            Destroy(p);
         }
 
-        GameSceneManager.Instance.SetUpGameLevel(currentTeamSize, currentGameMode);
+        if (target.portraitIndex >= 0 && target.portraitIndex < portraits.Length)
+        {
+            portraits[target.portraitIndex].SetNotJoined();
+        }
+
+        joinManager.playerSlots[playerIndex] = null;
+
+        PlayerInputHolder.Instance.playerList.Remove(target);
+
+        Destroy(target.gameObject);
+
+        totalPlayerCount = PlayerInputHolder.Instance.playerList.Count;
+
+        Debug.Log(totalPlayerCount);
+
+        if (lockedPlayerCount > totalPlayerCount)
+            lockedPlayerCount = totalPlayerCount;
+
+        canMoveToNextScreen = false;
+        pressConfirmPrompt.SetActive(false);
+    }
+
+    public void AssignPlayerToPortrait(PlayerInputController controller)
+    {
+        for (int i = 0; i < portraits.Length; i++)
+        {
+            if (!portraits[i].IsOccupied)
+            {
+                portraits[i].SetJoined(controller.PlayerIndex, null, $"Player_{controller.PlayerIndex + 1}");
+                controller.portraitIndex = i;
+                return;
+            }
+        }
+
+    }
 
 
-
-    }*/
 
     public MenuManager.TeamSizes GetTeamSize()
     {

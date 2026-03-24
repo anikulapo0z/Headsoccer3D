@@ -10,9 +10,12 @@ public class PlayerInputController : MonoBehaviour
     public string ControllerId { get; private set; }
     public bool IsConnected { get; private set; }
 
-    public int selectedCharacterID = -1;
+    public int selectedCharacterID = -2;
 
-    List<IPlayerControllable> controlledObject = new List<IPlayerControllable>();
+    public int portraitIndex = -1;
+
+    public List<IPlayerControllable> controlledObject = new List<IPlayerControllable>();
+    public List<GameObject> controlledGameObject = new List<GameObject>();
 
     InputActionAsset actionsInstance;
     InputAction moveAction;
@@ -84,20 +87,35 @@ public class PlayerInputController : MonoBehaviour
         //sprintAction.canceled += OnSprint;
         //kickAction.canceled += OnKick;
 
-    public void MarkDisconnected()
+
+    public void PlayerDisconnect()
     {
         IsConnected = false;
         AssignedDevice = null;
 
+        ControllerId = null;
+
         actionsInstance?.Disable();
     }
 
-    public void SetControlledObject(IPlayerControllable obj, bool resetList)
+
+    public void SetControlledObject(IPlayerControllable obj, GameObject ob, bool resetControlledObjectList)
     {
-        if (resetList)
+        if (resetControlledObjectList)
+        {
             controlledObject.Clear();
 
+            foreach(var p in controlledGameObject)
+            {
+                Destroy(p);
+            }
+
+            controlledGameObject.Clear();
+
+        }
+
         controlledObject.Add(obj);
+        controlledGameObject.Add(ob);
     }
 
     static string BuildControllerId(InputDevice device)

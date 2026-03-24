@@ -230,10 +230,17 @@ public class GameSceneManager : MonoBehaviour
 
         if (scoreTracker.LeftTeamWon())
         {
+            // winning team
             foreach(var p in leftTeam)
             {
                 p.GetComponent<PlayerController>().SetWin();
                 p.transform.localScale = p.transform.localScale * 2f;
+            }
+
+            // losing team
+            foreach (var p in rightTeam)
+            {
+                p.GetComponent<PlayerController>().SetFalling();
             }
 
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("red team", -1);
@@ -242,11 +249,19 @@ public class GameSceneManager : MonoBehaviour
         }
         else
         {
+            // winning team
             foreach (var p in rightTeam)
             {
                 p.GetComponent<PlayerController>().SetWin();
                 p.transform.localScale = p.transform.localScale * 2f;
             }
+
+            // losing team
+            foreach (var p in leftTeam)
+            {
+                p.GetComponent<PlayerController>().SetFalling();
+            }
+
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("blue team", -1);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("wins", 7);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord(scoreTracker.GetScore(), 4);
@@ -480,7 +495,7 @@ public class GameSceneManager : MonoBehaviour
                 characterMaterials[player.selectedCharacterID]
             );*/
 
-            player.SetControlledObject(playerController, true);
+            player.SetControlledObject(playerController, playerObj, true);
 
             playerObj.GetComponent<CharacterController>().enabled = true;
         }
