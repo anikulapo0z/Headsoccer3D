@@ -511,15 +511,15 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         //Debug.LogError(kickChargeLevel);
 
-        if (!hasEmpoweredKick)
-        {
+        //if (!hasEmpoweredKick)
+        //{
             ball.LaunchAtDirection(kickDirection + (Vector3.up * currentKickHeight), finalForce);
-        }
-        else
-        {
-            ball.LaunchAtDirection(kickDirection + (Vector3.up * currentKickHeight), finalForce * empoweredKickStrength);
-            GetComponent<PlayerAbility>().ResetAbilityUse();
-        }
+        //}
+        //else
+        //{
+            //ball.LaunchAtDirection(kickDirection + (Vector3.up * currentKickHeight), finalForce * empoweredKickStrength);
+            //GetComponent<PlayerAbility>().ResetAbilityUse();
+        //}
 
 
 
