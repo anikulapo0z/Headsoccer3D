@@ -32,13 +32,13 @@ public class MapSelectionManager : MonoBehaviour
     {
         foreach (PlayerInputController i in inputControllers)
         {
-            IPlayerControllable cursor = CreateCursor(i.PlayerIndex);
-            i.SetControlledObject(cursor, true);
+            var (controllable, cursorGO) = CreateCursor(i.PlayerIndex);
+            i.SetControlledObject(controllable, cursorGO, true);
         }
         StartCountDown();
     }
 
-    IPlayerControllable CreateCursor(int playerIndex)
+    (IPlayerControllable, GameObject) CreateCursor(int playerIndex)
     {
         GameObject cursorObj = Instantiate(mapCursors[playerIndex], startingMapSelection);
 
@@ -46,7 +46,7 @@ public class MapSelectionManager : MonoBehaviour
         if (cursor == null)
         {
             Debug.LogError("Cursor prefab missing!");
-            return null;
+            return (null, null);
         }
 
         cursorObj.transform.SetParent(startingMapSelection, false);
@@ -55,7 +55,7 @@ public class MapSelectionManager : MonoBehaviour
         cursor.parent = startingMapSelection;
         cursor.SetStartValue();
 
-        return cursor;
+        return (cursor, cursorObj);
 
     }
 

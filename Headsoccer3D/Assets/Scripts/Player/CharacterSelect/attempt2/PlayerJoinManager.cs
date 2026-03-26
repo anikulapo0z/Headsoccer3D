@@ -18,13 +18,15 @@ public class PlayerJoinManager : MonoBehaviour
     [Header("Cursor")]
     [SerializeField] GameObject[] characterCursorPrefab;
     [SerializeField] RectTransform characterCursorParent;
+    [SerializeField] RectTransform mainCanvas;
 
     [Header("Input")]
     [SerializeField] InputActionAsset inputActions;
     [SerializeField] string actionMapName;
     [SerializeField] string joinActionName = "Join";
 
-    [SerializeField] List<PlayerInputController> inputControllers = new();
+    //public List<PlayerInputController> inputControllers = new();
+    public PlayerInputController[] playerSlots;
 
     bool characterSelectOpen;
     bool isLocked;
@@ -33,6 +35,8 @@ public class PlayerJoinManager : MonoBehaviour
 
     void Awake()
     {
+        playerSlots = new PlayerInputController[maxPlayers];
+
         var map = inputActions.FindActionMap(actionMapName);
         map.Enable();
 
@@ -54,7 +58,7 @@ public class PlayerJoinManager : MonoBehaviour
 
     void ResetJoinManager()
     {
-        inputControllers.Clear();
+        //inputControllers.Clear();
 
         characterSelectOpen = false;
         isLocked = false;
@@ -109,7 +113,7 @@ public class PlayerJoinManager : MonoBehaviour
 
         string controllerId = BuildControllerId(device);
 
-        foreach (var controller in inputControllers)
+/*        foreach (var controller in inputControllers)
         {
             if (!controller.IsConnected &&
                 controller.ControllerId == controllerId)
@@ -118,9 +122,9 @@ public class PlayerJoinManager : MonoBehaviour
                 Debug.Log($"Reconnected Player {controller.PlayerIndex + 1}");
                 return;
             }
-        }
+        }*/
 
-        foreach (var controller in inputControllers)
+/*        foreach (var controller in inputControllers)
         {
             if (!controller.IsConnected)
             {
@@ -128,51 +132,92 @@ public class PlayerJoinManager : MonoBehaviour
                 Debug.Log($"Reassigned controller to Player {controller.PlayerIndex + 1}");
                 return;
             }
-        }
+        }*/
 
-        if (inputControllers.Count >= maxPlayers)
+/*        if (inputControllers.Count >= maxPlayers)
+            return;*/
+
+
+
+        //int index = inputControllers.Count;
+
+        int index = GetNextAvailableSlot();
+
+        if (index == -1)
             return;
 
-        int index = inputControllers.Count;
-        PlayerInputController newController = CreatePlayerController(index, device);
-        IPlayerControllable cursor = CreateCursor(index);
-        newController.SetControlledObject(cursor, true);
 
-        inputControllers.Add(newController);
+        PlayerInputController newController = CreatePlayerController(index, device);
+
+        var (cursor, obj) = CreateCursor(index);
+
+        //IPlayerControllable cursor = CreateCursor(index);
+        newController.SetControlledObject(cursor, obj, true);
+
+        playerSlots[index] = newController;
+        //inputControllers.Add(newController);
         PlayerInputHolder.Instance.playerList.Add(newController);
         DontDestroyOnLoad(newController);
 
         Debug.Log($"New Player {index + 1} joined");
 
-        MenuManager.Instance.PlayerJoined(inputControllers.Count);
+        //MenuManager.Instance.PlayerJoined(inputControllers.Count);
+        MenuManager.Instance.PlayerJoined(GetActivePlayerCount());
 
-        if (inputControllers.Count > 2)
+
+        MenuManager.Instance.AssignPlayerToPortrait(newController);
+
+
+        if (GetActivePlayerCount() > 2)
         {
             MenuManager.Instance.Force2v2(true);
         }
 
     }
 
+    int GetActivePlayerCount()
+    {
+        int count = 0;
+
+        foreach (var p in playerSlots)
+        {
+            if (p != null)
+                count++;
+        }
+
+        return count;
+    }
+
     bool IsDeviceAlreadyAssigned(InputDevice device)
     {
-        foreach (var controller in inputControllers)
+        foreach (var controller in playerSlots)
         {
-            if (controller.IsConnected && controller.AssignedDevice == device)
+            if (controller != null && controller.IsConnected && controller.AssignedDevice == device)
                 return true;
         }
         return false;
     }
+
 
     void OnDeviceChange(InputDevice device, InputDeviceChange change)
     {
         if (change != InputDeviceChange.Disconnected)
             return;
 
-        foreach (var controller in inputControllers)
+/*        foreach (var controller in inputControllers)
         {
             if (controller.AssignedDevice == device)
             {
-                controller.MarkDisconnected();
+                controller.FullDisconnect();
+                Debug.Log($"Player {controller.PlayerIndex + 1} disconnected");
+            }
+        }*/
+
+        foreach (var controller in playerSlots)
+        {
+            if (controller != null && controller.AssignedDevice == device)
+            {
+                controller.PlayerDisconnect();
                 Debug.Log($"Player {controller.PlayerIndex + 1} disconnected");
             }
         }
@@ -186,7 +231,7 @@ public class PlayerJoinManager : MonoBehaviour
         return controller;
     }
 
-    IPlayerControllable CreateCursor(int index)
+    (IPlayerControllable, GameObject) CreateCursor(int index)
     {
         GameObject obj = Instantiate(
             characterCursorPrefab[index],
@@ -197,7 +242,7 @@ public class PlayerJoinManager : MonoBehaviour
 
         var cursor = obj.GetComponent<PlayerCursor>();
         cursor.playerIndex = index;
-        return cursor;
+        return (cursor, obj);
     }
 
     static string BuildControllerId(InputDevice device)
@@ -205,4 +250,25 @@ public class PlayerJoinManager : MonoBehaviour
         var d = device.description;
         return $"{d.interfaceName}_{d.product}_{device.deviceId}";
     }
+
+/*    public void RemoveController(PlayerInputController controller)
+    {
+        if (inputControllers.Contains(controller))
+        {
+            inputControllers.Remove(controller);
+        }
+    }*/
+
+
+    int GetNextAvailableSlot()
+    {
+        for (int i = 0; i < playerSlots.Length; i++)
+        {
+            if (playerSlots[i] == null)
+                return i;
+        }
+
+        return -1;
+    }
+
 }

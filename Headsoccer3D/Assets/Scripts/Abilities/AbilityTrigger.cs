@@ -7,7 +7,8 @@ public class AbilityTrigger : MonoBehaviour
     {
         None,
         EmpoweredKick,
-        MultiBall
+        MultiBall,
+        Earthquake
     }
     public AbilityTypes ability = AbilityTypes.None;
 

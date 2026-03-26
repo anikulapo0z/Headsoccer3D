@@ -13,6 +13,9 @@ public class CharacterSelectionPreview : MonoBehaviour
 
     public void SetPortraitInfo(int index, Sprite image, string name)
     {
-        portraits[index].SetPortraitFields(image, name);
+        if (index < 0 || index >= portraits.Length)
+            return;
+
+        portraits[index].SetJoined(index, image, name);
     }
 }
