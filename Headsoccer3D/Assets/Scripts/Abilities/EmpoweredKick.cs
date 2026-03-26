@@ -4,7 +4,7 @@ using DG.Tweening;
 public class EmpoweredKick : MonoBehaviour
 {
     public float empoweredKickStrength;
-    //public GameObject kickWave;
+    public GameObject player;
     PlayerAbility playerAbility;
 
 
@@ -18,7 +18,8 @@ public class EmpoweredKick : MonoBehaviour
         //Debug.LogError("try use ablity");
         GetComponent<PlayerController>().OnKick(false);
 
-        Instantiate(playerAbility.kickWave, transform.position + transform.forward, transform.rotation);
+        GameObject wave = Instantiate(playerAbility.kickWave, transform.position + transform.forward, transform.rotation);
+        wave.GetComponent<EmpoweredKickWave>().player = player;
         GetComponent<PlayerAbility>().ResetAbilityUse();
 
     }

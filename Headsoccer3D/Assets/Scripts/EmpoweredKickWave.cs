@@ -12,7 +12,7 @@ public class EmpoweredKickWave : MonoBehaviour
     [SerializeField] float yKick;
     [SerializeField] float ballKickForce;
     [SerializeField] float playerKickForce;
-
+    public GameObject player;
 
 
     private void Start()
@@ -43,7 +43,7 @@ public class EmpoweredKickWave : MonoBehaviour
         }
 
         PlayerController otherPlayer = other.GetComponent<PlayerController>();
-        if (otherPlayer == null) return;
+        if (otherPlayer == null || other == player.GetComponent<PlayerController>()) return;
 
         otherPlayer.GetHitFromPlayer(playerKickForce, kickDirection);
     }
