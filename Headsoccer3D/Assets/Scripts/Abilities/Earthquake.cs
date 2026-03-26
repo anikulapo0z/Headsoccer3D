@@ -1,6 +1,4 @@
-using Autodesk.Fbx;
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 
 public class Earthquake : MonoBehaviour
@@ -8,6 +6,7 @@ public class Earthquake : MonoBehaviour
 
     public LayerMask ground;
     public GameObject earthquakeRef;
+    public GameObject player;
     public float radius;
     public float aliveTime;
 
@@ -18,12 +17,22 @@ public class Earthquake : MonoBehaviour
 
     float currentTime;
     GameObject obj;
+    bool usedEarthquake = false;
 
     public void UseAbility()
     {
+        if(usedEarthquake) return;
+        usedEarthquake = true;
         currentTime = aliveTime;
         obj = Instantiate(earthquakeRef, transform.position, Quaternion.identity);
         obj.transform.localScale = new Vector3(radius, obj.transform.localScale.y, radius);
+
+        EarthquakeObject eqo = obj.GetComponent<EarthquakeObject>();
+        eqo.yKick = yKick;
+        eqo.ballKickForce = ballKickForce;
+        eqo.playerKickForce = playerKickForce;
+        eqo.controllingPlayer = player;
+
         StartCoroutine(EarthquakingInMyBoots());
     }
 
@@ -35,35 +44,22 @@ public class Earthquake : MonoBehaviour
 
 
         while (currentTime > 0) {
-            if (Physics.Raycast(transform.position, -transform.up, out hit, 100, ground))
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, 100, ground))
             {
-                obj.transform.position = hit.transform.position;
+                obj.transform.position = hit.point;
             }
-            currentTime -= 0.1f;
-            yield return new WaitForSeconds(0.1f);
+            currentTime -= 0.01f;
+            yield return new WaitForSeconds(0.01f);
         }
-        Destroy(gameObject);
+        Destroy(obj);
+        GetComponent<PlayerAbility>().ResetAbilityUse();
         yield return null;
     }
 
-    public void OnTriggerEnter(Collider other)
+    private void OnDrawGizmos()
     {
-        Vector3 kickDirection;
-        kickDirection = (other.transform.position - transform.position);
-
-        kickDirection.y = 0f;
-        kickDirection.Normalize();
-
-        if (other.CompareTag("Ball") || other.CompareTag("FakeBall"))
-        {
-
-            other.GetComponent<SoccerBall>().LaunchAtDirection(kickDirection + (Vector3.up * yKick), ballKickForce);
-        }
-
-        PlayerController otherPlayer = other.GetComponent<PlayerController>();
-        if (otherPlayer == null) return;
-
-        otherPlayer.GetHitFromPlayer(playerKickForce, kickDirection);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(transform.position, -transform.up * 100);
     }
 
 }

@@ -76,9 +76,11 @@ public class PlayerAbility : MonoBehaviour
                     gameObject.AddComponent<EmpoweredKick>();
 
                 GetComponent<EmpoweredKick>().empoweredKickStrength = empoweredKickStrength;
-                GetComponent<PlayerController>().hasEmpoweredKick = true;
-                GetComponent<PlayerController>().empoweredKickStrength = empoweredKickStrength;
-                GetComponent<PlayerController>().empoweredKickPlayerMultiplier = empoweredKickStrength * 0.6f;
+                GetComponent<EmpoweredKick>().player = gameObject;
+
+                //GetComponent<PlayerController>().hasEmpoweredKick = true;
+                //GetComponent<PlayerController>().empoweredKickStrength = empoweredKickStrength;
+                //GetComponent<PlayerController>().empoweredKickPlayerMultiplier = empoweredKickStrength * 0.6f;
                 GetComponent<PlayerGroundMarker>().ToggleEKActive();
 
                 originalScale = transform.localScale;
@@ -103,6 +105,7 @@ public class PlayerAbility : MonoBehaviour
                 eq.yKick = earthquakeYForce;
                 eq.ballKickForce = earthquakeOutForce;
                 eq.playerKickForce = earthquakePlayerForce;
+                eq.player = gameObject;
 
                 break;
 
@@ -118,8 +121,8 @@ public class PlayerAbility : MonoBehaviour
 
             case AbilityTrigger.AbilityTypes.EmpoweredKick:
                 GetComponent<EmpoweredKick>().ResetAbilityUse(originalScale, scaleTime);
-                GetComponent<PlayerController>().hasEmpoweredKick = false;
-                GetComponent<PlayerController>().empoweredKickStrength = 1f;
+                //GetComponent<PlayerController>().hasEmpoweredKick = false;
+                //GetComponent<PlayerController>().empoweredKickStrength = 1f;
                 GetComponent<PlayerGroundMarker>().ToggleEKActive();
                 Destroy(GetComponent<EmpoweredKick>());
                 break;
@@ -128,6 +131,11 @@ public class PlayerAbility : MonoBehaviour
                 Destroy(GetComponent<MultiBall>());
                 GetComponent<PlayerGroundMarker>().ToggleMBActive();
                 break;
+
+            case AbilityTrigger.AbilityTypes.Earthquake:
+                Destroy(GetComponent<Earthquake>());
+                break;
+
 
         }
         currentAbility = AbilityTrigger.AbilityTypes.None;

@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     private CharacterController controller;
     private Vector2 moveInput;
 
-    private float verticalVelocity;
+    public float verticalVelocity;
     private float nextKickTime = 0f;
     private float nextHeadTime = 0f;
 
@@ -128,9 +128,9 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] float maxPlayerKnockbackDuration;
 
 
-    public bool hasEmpoweredKick = false;
-    [HideInInspector] public float empoweredKickStrength;
-    [HideInInspector] public float empoweredKickPlayerMultiplier = 1f;
+    //public bool hasEmpoweredKick = false;
+    //[HideInInspector] public float empoweredKickStrength;
+    //[HideInInspector] public float empoweredKickPlayerMultiplier = 1f;
 
     public float KickPlayerThreshold1 => kickPlayerThreshold1;
     public float KickPlayerThreshold2 => kickPlayerThreshold2;
@@ -558,9 +558,9 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         float moveBonus = controller.velocity.magnitude * playerVelocityPercent;
 
-        float empoweredMult = hasEmpoweredKick ? empoweredKickPlayerMultiplier : 1f;
+        //float empoweredMult = hasEmpoweredKick ? empoweredKickPlayerMultiplier : 1f;
 
-        return (kickForce * mult * empoweredMult) + moveBonus;
+        return (kickForce * mult) + moveBonus;
     }
 
     public bool CanApplyKickPlayerHit()
@@ -600,6 +600,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     public void GetHitFromPlayer(float momentum, Vector3 hitDirection)
     {
+        Debug.Log(hitDirection);
         float kickForce = momentum * playerKnockbackForceMultiplier;
 
         float kickDuration = momentum * playerKnockbackDurationMultiplier;
@@ -614,6 +615,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         {
             force *= reduceKnockBackAmount;
         }
+        verticalVelocity = force.y;
 
         initialKnockbackVelocity = force;
         knockbackVelocity = force;
