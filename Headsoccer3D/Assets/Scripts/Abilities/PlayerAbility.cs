@@ -27,6 +27,18 @@ public class PlayerAbility : MonoBehaviour
     [SerializeField] int ballAmount;
     [SerializeField] GameObject ball;
 
+    [Space(5)]
+    [Header("Earthquake")]
+    [SerializeField] GameObject earthquakePrefab;
+    [SerializeField] float earthquakeRadius;
+    [SerializeField] float earthquakeDuration;
+    [SerializeField] LayerMask groundLayer;
+    [SerializeField] float earthquakeYForce;
+    [SerializeField] float earthquakeOutForce;
+    [SerializeField] float earthquakePlayerForce;
+
+
+
 
     public void TryTriggerAbility()
     {
@@ -41,6 +53,10 @@ public class PlayerAbility : MonoBehaviour
 
             case AbilityTrigger.AbilityTypes.MultiBall:
                 GetComponent<MultiBall>().UseAbility();
+                break;
+
+            case AbilityTrigger.AbilityTypes.Earthquake:
+                GetComponent<Earthquake>().UseAbility();
                 break;
 
         }
@@ -74,6 +90,20 @@ public class PlayerAbility : MonoBehaviour
                     gameObject.AddComponent<MultiBall>();
                 GetComponent<MultiBall>().SetVars(upAmount, outAmount, ballAmount, ball);
                 GetComponent<PlayerGroundMarker>().ToggleMBActive();
+                break;
+
+            case AbilityTrigger.AbilityTypes.Earthquake:
+                if (GetComponent<Earthquake>() == null)
+                    gameObject.AddComponent<Earthquake>();
+                Earthquake eq = GetComponent<Earthquake>();
+                eq.aliveTime = earthquakeDuration;
+                eq.ground = groundLayer;
+                eq.radius = earthquakeRadius;
+                eq.earthquakeRef = earthquakePrefab;
+                eq.yKick = earthquakeYForce;
+                eq.ballKickForce = earthquakeOutForce;
+                eq.playerKickForce = earthquakePlayerForce;
+
                 break;
 
         }

@@ -17,7 +17,6 @@ public class EmpoweredKickWave : MonoBehaviour
 
     private void Start()
     {
-        GetComponent<PlayerController>().OnKick(false);
         transform.DOMove(transform.position + transform.forward * moveDist, moveSpeed)
             .SetEase(Ease.Linear)
             .OnComplete(()=> transform.DOScale(new Vector3(.5f, .5f, .5f), .5f)
@@ -40,28 +39,12 @@ public class EmpoweredKickWave : MonoBehaviour
             if (hitObjects.Contains(other.gameObject)) return;
             hitObjects.Add(other.gameObject);
 
-
-/*            Vector3 kickDirection;
-            kickDirection = (other.transform.position - transform.position);
-
-            kickDirection.y = 0f;
-            kickDirection.Normalize();*/
-
             other.GetComponent<SoccerBall>().LaunchAtDirection(kickDirection + (Vector3.up * yKick), ballKickForce);
-
-
-
         }
 
         PlayerController otherPlayer = other.GetComponent<PlayerController>();
         if (otherPlayer == null) return;
 
-
-
-
         otherPlayer.GetHitFromPlayer(playerKickForce, kickDirection);
-
-
     }
-
 }
