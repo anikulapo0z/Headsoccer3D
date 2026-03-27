@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -39,6 +40,7 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] int maxGameTime;
     [SerializeField] int pausedGameTime;
     Coroutine gameTimeCoroutine;
+    public Action gameTimeTick;
 
     // time before score screen
     [SerializeField] float delayBeforeScoreScreen;
@@ -179,6 +181,7 @@ public class GameSceneManager : MonoBehaviour
 
             currentGameTime--;
             startCountdownText.text = currentGameTime.ToString();
+            gameTimeTick?.Invoke();
         }
         gameTimeCoroutine = null;
         TryEndGame();

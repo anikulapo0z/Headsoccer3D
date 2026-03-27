@@ -146,7 +146,7 @@ MonoBehaviour:
   headingForce: 5
   headerUpForce: 40
   headCooldown: 0.5
-  anim: {fileID: 6963225675879826849}
+  anim: {fileID: 3642132680225269484}
   kickchargeAnim: {fileID: 3598370525349734555}
   verticalVelocity: 0
   startingPos: {x: 0, y: 0, z: 0}
@@ -207,7 +207,7 @@ MonoBehaviour:
   lerpSpeed: 10
   uiSideOffset: 0.8
   uiHeightOffset: 0.8
-  matObj: {fileID: 6544384373899927326}
+  matObj: {fileID: 4568045828515812058}
   multiBallText: {fileID: 3798930661154949969, guid: ad6825c6a490e344abb915b4ce2a1143, type: 3}
   empoweredKickText: {fileID: 5041241853163221094, guid: f2d58010527d10c47b2a34888d282aca, type: 3}
   mbOffset: {x: 0, y: 1.5, z: 0.7}
@@ -1549,11 +1549,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -4105046628147852123, guid: 52c4a4c0a7a50ea4589b9c7cd93adc2c, type: 3}
   m_PrefabInstance: {fileID: 228479119720917522}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6544384373899927326 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6483470864907187468, guid: 52c4a4c0a7a50ea4589b9c7cd93adc2c, type: 3}
-  m_PrefabInstance: {fileID: 228479119720917522}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &399853635909168860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2127,6 +2122,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3642132680225269484}
   m_SourcePrefab: {fileID: 100100000, guid: da7154898be3d344485601e8641401ca, type: 3}
+--- !u!1 &4568045828515812058 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6483470864907187468, guid: da7154898be3d344485601e8641401ca, type: 3}
+  m_PrefabInstance: {fileID: 7394100372224141270}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6996243484214394941 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: da7154898be3d344485601e8641401ca, type: 3}

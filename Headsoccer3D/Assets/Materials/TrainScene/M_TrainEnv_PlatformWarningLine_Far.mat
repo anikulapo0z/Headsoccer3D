@@ -7,13 +7,12 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_TrainEnv_Pillar
+  m_Name: M_TrainEnv_PlatformWarningLine_Far
   m_Shader: {fileID: 4800000, guid: d67c0f1751ae0724ea7be98cfd6110cb, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _AMBIENTLIGHTING
-  - _HALFTONELIGHT
   - _SHADOWSLIGHT
   m_InvalidKeywords:
   - _IGNORESHADOWS
@@ -62,11 +61,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _HalftonePattern:
         m_Texture: {fileID: 2800000, guid: f792c5aded2ba1c4690d4c4923ea561a, type: 3}
-        m_Scale: {x: 20, y: 20}
+        m_Scale: {x: 30, y: 30}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: ba90e0d681c598644910bd718f5fc1b3, type: 3}
-        m_Scale: {x: 2, y: 2}
+        m_Texture: {fileID: 2800000, guid: 5a061fc6455b7db4fb0e29eab26806d8, type: 3}
+        m_Scale: {x: 1, y: 2.08}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
         m_Texture: {fileID: 0}
@@ -124,7 +123,7 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DesaturationValue: 0.005
+    - _DesaturationValue: 0.236
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -135,21 +134,21 @@ Material:
     - _GlossyReflections: 0
     - _HalftoneMaskInvertToggle: 0
     - _HalftoneMaskToggle: 0
-    - _HalftoneToggle: 1
+    - _HalftoneToggle: 0
     - _IgnoreShadowsToggle: 1
-    - _Lightness: 0.442
+    - _Lightness: 0.783
     - _MaskToggle: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RemapInputMax: 1
-    - _RemapInputMin: 0.27
+    - _RemapInputMax: 0.72
+    - _RemapInputMin: 0.14
     - _RemapOutputMax: 1
-    - _RemapOutputMin: -0.11
-    - _ShadowFrequency: 9.78
-    - _ShadowLightness: 0.37
+    - _RemapOutputMin: -0.14
+    - _ShadowFrequency: -0.26
+    - _ShadowLightness: 0.74
     - _ShadowsToggle: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
@@ -165,11 +164,11 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.12156863, g: 0.24313726, b: 0.6039216, a: 1}
+    - _BaseColor: {r: 0.3436276, g: 0.43686068, b: 0.735849, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FirstMaskColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HalftoneColor: {r: 0.25720897, g: 0.56658304, b: 0.6415094, a: 1}
+    - _HalftoneColor: {r: 0, g: 0.109237626, b: 0.38679248, a: 1}
     - _SecondMaskColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
