@@ -16,6 +16,15 @@ public class CharacterButton : MonoBehaviour, IMenuItem
     private Image image;
     private bool hovered;
 
+
+    // for map
+    [Space(5)]
+    [Header("Maps")]
+    [SerializeField] Sprite backGroundImage;
+    [SerializeField] MapSelectBackground selectBackground;
+
+
+
     public enum ButtonType
     {
         None,
@@ -36,15 +45,15 @@ public class CharacterButton : MonoBehaviour, IMenuItem
         switch (type)
         {
             case ButtonType.map:
+                selectBackground.SetBackground(backGroundImage);
                 return;
-                break;
 
             case ButtonType.character:
                 MenuManager.Instance.SetPortraitInfo(
-    playerIndex,
-    selectedImage,
-    characterName
-);/*
+                    playerIndex,
+                    selectedImage,
+                    characterName
+                );/*
         if(characterID != -1 )
             PlayerInputHolder.Instance.playerList[playerIndex].selectedCharacterID = characterID;*/
 
