@@ -22,14 +22,14 @@ public class Goal : MonoBehaviour
             {
                 scoreTracker.PointForRight();
             }
-            if (goalScoredAudioSource.clip != null)
-            {
+            //if (goalScoredAudioSource != null)
+            //{
                 goalScoredAudioSource.Play();
-            }
-            else
-            {
-                Debug.Log("Goal scored audio source has no clip assigned.");
-            }
+            //}
+            //else
+            //{
+             //   Debug.Log("Goal scored audio source has no clip assigned.");
+            //}
             other.GetComponent<SoccerBall>().resetBallParent();
 
         }

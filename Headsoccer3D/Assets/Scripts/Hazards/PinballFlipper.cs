@@ -25,8 +25,8 @@ public class PinballFlipper : MonoBehaviour, IPlayerControllable
     public List<Vector3> hitPoints = new List<Vector3>();
     [SerializeField] Transform fallbackKnockback;
 
-    [SerializeField] AudioSource flipSfx;
-    [SerializeField] AudioSource unFlipSfx;
+    [SerializeField] AudioSource[] flipSfx;
+    [SerializeField] AudioSource[] unFlipSfx;
     private void Start()
     {
         previousHitTime = Time.time;
@@ -106,25 +106,27 @@ public class PinballFlipper : MonoBehaviour, IPlayerControllable
 
     void PlayFlipSfx()
     {
-        if(flipSfx.clip != null)
+        if (flipSfx.Length > 0)
         {
-            flipSfx.Play();
+            int randomIndex = Random.Range(0, flipSfx.Length);
+            flipSfx[randomIndex].Play();
         }
         else
         {
-            Debug.Log("Flip SFX clip is not assigned.");
+            Debug.Log("Kick Ball SFX clips are not assigned.");
         }
     }
 
     void PlayUnFlipSfx()
     {
-        if(unFlipSfx.clip != null)
+        if (unFlipSfx.Length > 0)
         {
-            unFlipSfx.Play();
+            int randomIndex = Random.Range(0, unFlipSfx.Length);
+            unFlipSfx[randomIndex].Play();
         }
         else
         {
-            Debug.Log("UnFlip SFX clip is not assigned.");
+            Debug.Log("Kick Ball SFX clips are not assigned.");
         }
     }
 
