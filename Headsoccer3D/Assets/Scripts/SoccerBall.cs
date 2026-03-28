@@ -56,6 +56,7 @@ public class SoccerBall : MonoBehaviour
     [SerializeField] float minScale;
     [SerializeField] float maxScale;
     [SerializeField] Vector3 rotationOffset;
+    [SerializeField] bool useSlerp;
 
 
 
@@ -80,8 +81,17 @@ public class SoccerBall : MonoBehaviour
             Vector3 dir = -rb.linearVelocity.normalized;
 
             Quaternion targetRot = Quaternion.FromToRotation(Vector3.right, dir);
-            ballTrail.rotation = targetRot * Quaternion.Euler(rotationOffset);
-            
+            if (!useSlerp)
+            {
+                ballTrail.rotation = targetRot * Quaternion.Euler(rotationOffset);
+                return;
+            }
+
+            ballTrail.rotation = Quaternion.Slerp(
+    ballTrail.rotation,
+    targetRot * Quaternion.Euler(rotationOffset),
+    15f * Time.fixedDeltaTime
+);
         }
     }
 
