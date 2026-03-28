@@ -26,6 +26,7 @@ public class SeptaTrain : MonoBehaviour
     [SerializeField] private string[] destinationNames;
     [SerializeField] private TextMeshProUGUI UI_destinationName;
     [SerializeField] private TextMeshProUGUI UI_destinationTimer;
+    [SerializeField] private TextMeshProUGUI UI_destinationTimeNumber;
     [SerializeField] private int trainUITime = 10;
     [SerializeField] private string trainUIDestination;
 
@@ -116,12 +117,18 @@ public class SeptaTrain : MonoBehaviour
         if(trainArriving)
         {
             UI_destinationTimer.color = Color.white;
+            UI_destinationTimeNumber.color = Color.white;
+
             UI_destinationTimer.text = "In Platform";
+            UI_destinationTimeNumber.text = "";
+
             return;
         }
         trainUITime--;
-        UI_destinationTimer.text = (trainUITime < 0 ? "LATE " : "ON TIME ") + Mathf.Abs(trainUITime).ToString();
-        UI_destinationTimer.color = trainUITime < 0 ? Color.red : Color.green;
+        UI_destinationTimer.text = trainUITime < 0 ? "LATE " : "ON TIME ";
+        UI_destinationTimeNumber.text = Mathf.Abs(trainUITime).ToString();
+        UI_destinationTimer.color = trainUITime < 0 ? Color.yellow : Color.green;
+        UI_destinationTimeNumber.color = trainUITime < 0 ? Color.yellow : Color.green;
         UI_destinationName.text = trainUIDestination;
     }
 
