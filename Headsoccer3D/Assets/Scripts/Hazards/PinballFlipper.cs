@@ -25,8 +25,7 @@ public class PinballFlipper : MonoBehaviour, IPlayerControllable
     public List<Vector3> hitPoints = new List<Vector3>();
     [SerializeField] Transform fallbackKnockback;
 
-    [SerializeField] AudioSource[] flipSfx;
-    [SerializeField] AudioSource[] unFlipSfx;
+
     private void Start()
     {
         previousHitTime = Time.time;
@@ -55,7 +54,6 @@ public class PinballFlipper : MonoBehaviour, IPlayerControllable
         StartCoroutine(TurnOnThePain());
         offTween.Kill();
         onTween = objectToRotate.transform.DOLocalRotateQuaternion(Quaternion.Euler(endRotation), rotationSpeed);
-        PlayFlipSfx();
     }
 
     public void UnFlipFlipper()
@@ -63,7 +61,6 @@ public class PinballFlipper : MonoBehaviour, IPlayerControllable
         hitPlayers.Clear();
         onTween.Kill();
         offTween = objectToRotate.transform.DORotateQuaternion(Quaternion.Euler(startRotation), rotationSpeed);
-        PlayUnFlipSfx();
     }
 
     IEnumerator TurnOnThePain()
@@ -104,31 +101,6 @@ public class PinballFlipper : MonoBehaviour, IPlayerControllable
         }
     }
 
-    void PlayFlipSfx()
-    {
-        if (flipSfx.Length > 0)
-        {
-            int randomIndex = Random.Range(0, flipSfx.Length);
-            flipSfx[randomIndex].Play();
-        }
-        else
-        {
-            Debug.Log("Kick Ball SFX clips are not assigned.");
-        }
-    }
-
-    void PlayUnFlipSfx()
-    {
-        if (unFlipSfx.Length > 0)
-        {
-            int randomIndex = Random.Range(0, unFlipSfx.Length);
-            unFlipSfx[randomIndex].Play();
-        }
-        else
-        {
-            Debug.Log("Kick Ball SFX clips are not assigned.");
-        }
-    }
 
     #region Player Inputs
     public void OnSprint(bool held){}

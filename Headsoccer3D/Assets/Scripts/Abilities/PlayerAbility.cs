@@ -18,7 +18,6 @@ public class PlayerAbility : MonoBehaviour
     public GameObject kickWave;
 
 
-    [SerializeField] AudioSource empoweredKickSfx;
     Vector3 originalScale;
 
     [Space(3)]
@@ -27,7 +26,6 @@ public class PlayerAbility : MonoBehaviour
     [SerializeField] float outAmount;
     [SerializeField] int ballAmount;
     [SerializeField] GameObject ball;
-    [SerializeField] AudioSource multiBallSfx;
 
     [Space(5)]
     [Header("Earthquake")]
@@ -51,22 +49,10 @@ public class PlayerAbility : MonoBehaviour
 
             case AbilityTrigger.AbilityTypes.EmpoweredKick:
                 GetComponent<EmpoweredKick>().UseAbility();
-                if (empoweredKickSfx.clip != null)
-                    empoweredKickSfx.Play();
-                else if (empoweredKickSfx.clip == null)
-                {
-                    Debug.LogWarning("No audio clip assigned to empoweredKickSfx on " + gameObject.name);
-                }
-                    break;
+                break;
 
             case AbilityTrigger.AbilityTypes.MultiBall:
                 GetComponent<MultiBall>().UseAbility();
-                if (multiBallSfx.resource != null)
-                    multiBallSfx.Play();
-                else if (multiBallSfx.resource == null)
-                {
-                    Debug.LogWarning("No audio clip assigned to multiBallSfx on " + gameObject.name);
-                }
                 break;
 
             case AbilityTrigger.AbilityTypes.Earthquake:

@@ -10,7 +10,6 @@ public class PlayerTriggers : MonoBehaviour
     bool ballHit = false;
     [SerializeField] float letterKickForce;
     [SerializeField] float yLetterForce;
-    [SerializeField] PlayerAudioManager playerAudioManager;
 
     private void Awake()
     {
@@ -34,8 +33,6 @@ public class PlayerTriggers : MonoBehaviour
         {
             if (ballHit) return;
             ballHit = true;
-
-            playerAudioManager.PlayKickBallSfx();
 
             if (isKickTrigger)
             {
