@@ -143,6 +143,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] private float maxDribbleDistance = 5f;
     private SoccerBall possessedBall;
 
+    private PlayerAudioManager audioManager;
+
     public Vector3 DribbleOffset => dribbleOffset;
 
     [SerializeField] GameObject crown;
@@ -150,6 +152,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     void Awake()
     {
         controller = GetComponent<CharacterController>();
+        audioManager = GetComponent<PlayerAudioManager>();
         currentKickHeight = startingKickHeight;
         if(!anim)
             anim = GetComponentInChildren<Animator>();
@@ -364,6 +367,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         headTrigger.TurnOnCollider();
         StartCoroutine(DisableHeadAfterTime());
+
+        audioManager.PlayJumpSfx();
     }
     void TurnOffJumpParticles()
     {
@@ -437,6 +442,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
 
         }
+        audioManager?.PlayKickSfx();
     }
 
 
