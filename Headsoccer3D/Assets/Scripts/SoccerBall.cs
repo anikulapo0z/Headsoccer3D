@@ -50,11 +50,56 @@ public class SoccerBall : MonoBehaviour
 
     Vector3 lastTweenPosition;
 
+
+    public float dribbleSpeed = 14f;
+    public float ballRadius = 0.11f;
+
+    [Header("Ball Trail")]
+    [SerializeField] Transform ballTrail;
+    [SerializeField] float scaleMultiplier;
+    [SerializeField] float minScale;
+    [SerializeField] float maxScale;
+    [SerializeField] Vector3 rotationOffset;
+    [SerializeField] bool useSlerp;
+
+
+
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         ballCol = GetComponent<Collider>();
     }
+
+    void FixedUpdate()
+    {
+        float speed = rb.linearVelocity.magnitude;
+
+        float scale = Mathf.Clamp(speed * scaleMultiplier, minScale, maxScale);
+        Vector3 newScale = ballTrail.localScale;
+        newScale.x = scale;
+        ballTrail.localScale = newScale;
+
+        if (speed > 0.1f)
+        {
+            Vector3 dir = -rb.linearVelocity.normalized;
+
+            Quaternion targetRot = Quaternion.FromToRotation(Vector3.right, dir);
+            if (!useSlerp)
+            {
+                ballTrail.rotation = targetRot * Quaternion.Euler(rotationOffset);
+                return;
+            }
+
+            ballTrail.rotation = Quaternion.Slerp(
+    ballTrail.rotation,
+    targetRot * Quaternion.Euler(rotationOffset),
+    15f * Time.fixedDeltaTime
+);
+        }
+    }
+
+
 
     public void LaunchAtDirection(Vector3 dir, float force)
     {
@@ -354,8 +399,7 @@ public class SoccerBall : MonoBehaviour
 
         if (ballCol) ballCol.isTrigger = false;
     }
-    public float dribbleSpeed = 14f;
-    public float ballRadius = 0.11f;
+
 
     public void MoveTowardAnchor(Vector3 anchorPos, PlayerController requester)
     {

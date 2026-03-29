@@ -14,6 +14,10 @@ public class PlayerAbility : MonoBehaviour
     [SerializeField] float empoweredKickStrength;
     [SerializeField] float scaleTime;
     [SerializeField] Vector3 growSize;
+
+    public GameObject kickWave;
+
+
     [SerializeField] AudioSource empoweredKickSfx;
     Vector3 originalScale;
 

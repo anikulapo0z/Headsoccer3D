@@ -132,7 +132,6 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
         if (currentItem != null)
         {
             currentItem.OnConfirm(playerIndex);
-
             MenuManager.Instance.CheckPlayerConfirm(isLocked);
             isLocked = true;
             GetComponent<Image>().sprite = selectedSpriteCursor;
@@ -156,6 +155,8 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
         isLocked = false;
         GetComponent<Image>().sprite = defaultSpriteCursor;
 
+        //currentItem?.OnHoverExit(playerIndex);
+        //currentItem = null;
         currentItem?.OnHoverExit(playerIndex);
         currentItem = null;
 
