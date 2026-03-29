@@ -234,9 +234,7 @@ public class MenuManager : MonoBehaviour
         transitionMaterial.SetFloat("_Transition", 1f);
 
         //wait a min
-        yield return null;
-        yield return null;
-        yield return null;
+        yield return new WaitForSeconds(1.659f);
 
         SceneManager.LoadScene(sceneName);
     }

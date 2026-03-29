@@ -13,7 +13,7 @@ public class PlayerAudioManager : MonoBehaviour
 
     public void PlayKickSfx()
     {
-        if(kickSfx.resource != null)
+        if(kickSfx.resource)
         {
             kickSfx.Play();
         }
@@ -24,7 +24,7 @@ public class PlayerAudioManager : MonoBehaviour
     }
     public void PlayJumpSfx()
     {
-        if (jumpSfx.resource != null)
+        if (jumpSfx.resource)
         {
             jumpSfx.Play();
         }
@@ -35,7 +35,7 @@ public class PlayerAudioManager : MonoBehaviour
     }
     public void PlayLandSfx()
     {
-        if (landSfx.resource != null)
+        if (landSfx.resource)
         {
             landSfx.Play();
         }
@@ -46,7 +46,7 @@ public class PlayerAudioManager : MonoBehaviour
     }
     public void PlayGetHitSfx()
     {
-        if (getHitSfx.resource != null)
+        if (getHitSfx.resource)
         {
             getHitSfx.Play();
         }

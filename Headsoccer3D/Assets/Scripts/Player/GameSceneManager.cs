@@ -99,6 +99,9 @@ public class GameSceneManager : MonoBehaviour
 
     IEnumerator fadeTransitionThenLoad()
     {
+        yield return new WaitForSeconds(1.659f);
+
+
         float elapsed = 0f;
 
         transitionMaterial = transitionImage.material;

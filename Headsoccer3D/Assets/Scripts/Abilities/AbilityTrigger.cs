@@ -23,11 +23,11 @@ public class AbilityTrigger : MonoBehaviour
                 pa.SetAbility(ability);
                 Destroy(gameObject);
             }
-            if (pickUpSfx.resource != null)
+            if (pickUpSfx)
             {
                 pickUpSfx.Play();
             }
-            else if (pickUpSfx.resource == null)
+            else
             {
                 Debug.Log("PickUpSfx AudioSource has no clip assigned.");
             }
