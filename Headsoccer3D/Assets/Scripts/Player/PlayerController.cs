@@ -128,9 +128,9 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] float maxPlayerKnockbackDuration;
 
 
-    //public bool hasEmpoweredKick = false;
-    //[HideInInspector] public float empoweredKickStrength;
-    //[HideInInspector] public float empoweredKickPlayerMultiplier = 1f;
+    public bool hasEmpoweredKick = false;
+    [HideInInspector] public float empoweredKickStrength;
+    [HideInInspector] public float empoweredKickPlayerMultiplier = 1f;
 
     public float KickPlayerThreshold1 => kickPlayerThreshold1;
     public float KickPlayerThreshold2 => kickPlayerThreshold2;

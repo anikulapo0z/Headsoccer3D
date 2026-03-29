@@ -18,8 +18,8 @@ public class EmpoweredKick : MonoBehaviour
         //Debug.LogError("try use ablity");
         GetComponent<PlayerController>().OnKick(false);
 
-        GameObject wave = Instantiate(playerAbility.kickWave, transform.position + transform.forward, transform.rotation);
-        wave.GetComponent<EmpoweredKickWave>().player = player;
+        //GameObject wave = Instantiate(playerAbility.kickWave, transform.position + transform.forward, transform.rotation);
+        //wave.GetComponent<EmpoweredKickWave>().player = player;
         GetComponent<PlayerAbility>().ResetAbilityUse();
 
     }
