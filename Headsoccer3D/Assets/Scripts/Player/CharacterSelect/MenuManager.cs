@@ -1,5 +1,8 @@
+using System.Collections;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
@@ -35,6 +38,10 @@ public class MenuManager : MonoBehaviour
     public PlayerJoinManager joinManager;
 
     public bool isPaused = false;
+
+    [Space]
+    [SerializeField] Image transitionImage;
+    private Material transitionMaterial;
 
     public enum TeamSizes
     {
@@ -202,8 +209,36 @@ public class MenuManager : MonoBehaviour
 
     public void LoadGameLevel(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        StartCoroutine(fadeTransitionThenLoad(sceneName));
+    }
 
+    IEnumerator fadeTransitionThenLoad(string sceneName)
+    {
+        float elapsed = 0f;
+
+        transitionMaterial = transitionImage.material;
+        //make an instance at runtime 
+        transitionMaterial = Instantiate(transitionImage.material);
+        transitionImage.material = transitionMaterial;
+
+        while (elapsed < 2.05f)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / 2.05f);
+
+            transitionMaterial.SetFloat("_Transition", t);
+
+            yield return null;
+        }
+
+        transitionMaterial.SetFloat("_Transition", 1f);
+
+        //wait a min
+        yield return null;
+        yield return null;
+        yield return null;
+
+        SceneManager.LoadScene(sceneName);
     }
 
     /*    public void SetGameLevelFields(*//*Scene sceneName, LoadSceneMode mode*//*)

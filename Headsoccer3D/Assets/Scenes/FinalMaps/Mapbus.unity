@@ -181,7 +181,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2dafe7017bd8a824ea66fda92f384b9b, type: 2}
   m_sharedMaterial: {fileID: 3920812381677382911, guid: 2dafe7017bd8a824ea66fda92f384b9b, type: 2}
@@ -729,7 +729,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 76b86b3c4d5efdf48b0b684b822fcdb1, type: 2}
-  - {fileID: 3016479151454471876, guid: 64a97bbfb59a9c54081904fe479fbc57, type: 3}
+  - {fileID: 2100000, guid: bc72a05c1c25f324f83c4a2b0b64f791, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4323,12 +4323,12 @@ GameObject:
   - component: {fileID: 319846353}
   - component: {fileID: 319846352}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Transition Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &319846352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4387,7 +4387,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 1
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -4406,7 +4406,7 @@ RectTransform:
   m_Children:
   - {fileID: 537738696}
   - {fileID: 6572625}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1951291691}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6828,7 +6828,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &537738696
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6868,7 +6868,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bd410a176ffd0734785194bca319da79, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bbae2f37e6b49c94c81850f82b092e19, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -24475,6 +24475,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f6eb5abd8e5c024b939764b0cd80788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transitionImage: {fileID: 537738697}
   mapType: 1
   inputControllers: []
   playerCharacters: []
@@ -24573,7 +24574,8 @@ Transform:
   m_LocalPosition: {x: 366.85284, y: 251.52249, z: -140.87198}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 319846355}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1951291692
@@ -27541,6 +27543,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 5b9c7b4302cd75340a99cd611d3f598a, type: 2}
+    - target: {fileID: 7858729299988062257, guid: a41b5ddd62f4d1e40896148d2c286a8c, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: bc72a05c1c25f324f83c4a2b0b64f791, type: 2}
     - target: {fileID: 8251198846692497268, guid: a41b5ddd62f4d1e40896148d2c286a8c, type: 3}
       propertyPath: ballTransform
       value: 
@@ -27549,6 +27555,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 0bcf382899cbd4243bd9d0897c189a2b, type: 2}
+    - target: {fileID: 8455167428210546635, guid: a41b5ddd62f4d1e40896148d2c286a8c, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: bc72a05c1c25f324f83c4a2b0b64f791, type: 2}
     - target: {fileID: 8474148246007039119, guid: a41b5ddd62f4d1e40896148d2c286a8c, type: 3}
       propertyPath: m_Name
       value: Main Bus
@@ -27701,7 +27711,6 @@ SceneRoots:
   - {fileID: 361239687}
   - {fileID: 7691678867812145159}
   - {fileID: 605910383}
-  - {fileID: 319846355}
   - {fileID: 414057566}
   - {fileID: 697641154}
   - {fileID: 1340832239}

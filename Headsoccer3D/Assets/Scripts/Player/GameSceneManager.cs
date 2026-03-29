@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using static MenuManager;
 
 public class GameSceneManager : MonoBehaviour
@@ -18,6 +19,10 @@ public class GameSceneManager : MonoBehaviour
     }
 
     [Header("Map Setup")]
+
+    [SerializeField] Image transitionImage;
+    private Material transitionMaterial;
+
     [SerializeField] MapType mapType;
 
     public List<PlayerInputController> inputControllers = new List<PlayerInputController>();
@@ -89,6 +94,27 @@ public class GameSceneManager : MonoBehaviour
     {
         Instance = this;
         SetUpGameLevel(MenuManager.Instance.GetTeamSize(), MenuManager.Instance.GetGameMode());
+        StartCoroutine(fadeTransitionThenLoad());
+    }
+
+    IEnumerator fadeTransitionThenLoad()
+    {
+        float elapsed = 0f;
+
+        transitionMaterial = transitionImage.material;
+        //make an instance at runtime 
+        transitionMaterial = Instantiate(transitionImage.material);
+        transitionImage.material = transitionMaterial;
+
+        while (elapsed < 2.05f)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / 2.05f);
+
+            transitionMaterial.SetFloat("_Transition", t);
+
+            yield return null;
+        }
     }
 
     void LoadGameStart()
