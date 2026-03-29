@@ -99,6 +99,9 @@ public class GameSceneManager : MonoBehaviour
 
     IEnumerator fadeTransitionThenLoad()
     {
+        //make sure its on, in case we disable it in editor while working and we forget
+        transitionImage.gameObject.SetActive(true);
+
         yield return new WaitForSeconds(1.659f);
 
 
