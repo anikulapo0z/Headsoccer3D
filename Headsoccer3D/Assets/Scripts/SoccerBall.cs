@@ -44,6 +44,10 @@ public class SoccerBall : MonoBehaviour
 
     [SerializeField] private float maxClaimHeightAboveGround = 0.35f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource ballHitSoftSfx;
+    [SerializeField] private AudioSource ballHitHardSfx;
+
     Vector3 lastTweenPosition;
 
     private void Start()
@@ -239,6 +243,30 @@ public class SoccerBall : MonoBehaviour
 
             Physics.IgnoreCollision(ballCol, otherCol, true);
             StartCoroutine(ReenableCollision(otherCol, 0.2f));
+        }
+
+        if (ballHitSoftSfx != null && ballHitHardSfx != null)
+        {
+            if (momentum < threshold2)
+            {
+                ballHitSoftSfx.pitch = Random.Range(0.9f, 1.1f);
+                if (ballHitSoftSfx.resource != null)
+                    ballHitSoftSfx.Play();
+                else if (ballHitSoftSfx.resource == null)
+                {
+                    Debug.Log("No audio clip assigned to ballHitSoftSfx on " + gameObject.name);
+                }
+            }
+            else
+            {
+                ballHitHardSfx.pitch = Random.Range(0.9f, 1.1f);
+                if (ballHitHardSfx.resource != null)
+                    ballHitHardSfx.Play();
+                else if (ballHitHardSfx.resource == null)
+                {
+                    Debug.Log("No audio clip assigned to ballHitHardSfx on " + gameObject.name);
+                }
+            }
         }
     }
     private IEnumerator ReenableCollision(Collider col, float delay)

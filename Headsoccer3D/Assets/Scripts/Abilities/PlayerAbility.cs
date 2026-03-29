@@ -14,10 +14,7 @@ public class PlayerAbility : MonoBehaviour
     [SerializeField] float empoweredKickStrength;
     [SerializeField] float scaleTime;
     [SerializeField] Vector3 growSize;
-
-    public GameObject kickWave;
-
-
+    [SerializeField] AudioSource empoweredKickSfx;
     Vector3 originalScale;
 
     [Space(3)]
@@ -26,18 +23,7 @@ public class PlayerAbility : MonoBehaviour
     [SerializeField] float outAmount;
     [SerializeField] int ballAmount;
     [SerializeField] GameObject ball;
-
-    [Space(5)]
-    [Header("Earthquake")]
-    [SerializeField] GameObject earthquakePrefab;
-    [SerializeField] float earthquakeRadius;
-    [SerializeField] float earthquakeDuration;
-    [SerializeField] LayerMask groundLayer;
-    [SerializeField] float earthquakeYForce;
-    [SerializeField] float earthquakeOutForce;
-    [SerializeField] float earthquakePlayerForce;
-
-
+    [SerializeField] AudioSource multiBallSfx;
 
 
     public void TryTriggerAbility()
@@ -49,14 +35,22 @@ public class PlayerAbility : MonoBehaviour
 
             case AbilityTrigger.AbilityTypes.EmpoweredKick:
                 GetComponent<EmpoweredKick>().UseAbility();
-                break;
+                if (empoweredKickSfx.clip != null)
+                    empoweredKickSfx.Play();
+                else if (empoweredKickSfx.clip == null)
+                {
+                    Debug.LogWarning("No audio clip assigned to empoweredKickSfx on " + gameObject.name);
+                }
+                    break;
 
             case AbilityTrigger.AbilityTypes.MultiBall:
                 GetComponent<MultiBall>().UseAbility();
-                break;
-
-            case AbilityTrigger.AbilityTypes.Earthquake:
-                GetComponent<Earthquake>().UseAbility();
+                if (multiBallSfx.resource != null)
+                    multiBallSfx.Play();
+                else if (multiBallSfx.resource == null)
+                {
+                    Debug.LogWarning("No audio clip assigned to multiBallSfx on " + gameObject.name);
+                }
                 break;
 
         }
@@ -76,11 +70,9 @@ public class PlayerAbility : MonoBehaviour
                     gameObject.AddComponent<EmpoweredKick>();
 
                 GetComponent<EmpoweredKick>().empoweredKickStrength = empoweredKickStrength;
-                GetComponent<EmpoweredKick>().player = gameObject;
-
-                //GetComponent<PlayerController>().hasEmpoweredKick = true;
-                //GetComponent<PlayerController>().empoweredKickStrength = empoweredKickStrength;
-                //GetComponent<PlayerController>().empoweredKickPlayerMultiplier = empoweredKickStrength * 0.6f;
+                GetComponent<PlayerController>().hasEmpoweredKick = true;
+                GetComponent<PlayerController>().empoweredKickStrength = empoweredKickStrength;
+                GetComponent<PlayerController>().empoweredKickPlayerMultiplier = empoweredKickStrength * 0.6f;
                 GetComponent<PlayerGroundMarker>().ToggleEKActive();
 
                 originalScale = transform.localScale;
@@ -92,21 +84,6 @@ public class PlayerAbility : MonoBehaviour
                     gameObject.AddComponent<MultiBall>();
                 GetComponent<MultiBall>().SetVars(upAmount, outAmount, ballAmount, ball);
                 GetComponent<PlayerGroundMarker>().ToggleMBActive();
-                break;
-
-            case AbilityTrigger.AbilityTypes.Earthquake:
-                if (GetComponent<Earthquake>() == null)
-                    gameObject.AddComponent<Earthquake>();
-                Earthquake eq = GetComponent<Earthquake>();
-                eq.aliveTime = earthquakeDuration;
-                eq.ground = groundLayer;
-                eq.radius = earthquakeRadius;
-                eq.earthquakeRef = earthquakePrefab;
-                eq.yKick = earthquakeYForce;
-                eq.ballKickForce = earthquakeOutForce;
-                eq.playerKickForce = earthquakePlayerForce;
-                eq.player = gameObject;
-
                 break;
 
         }
@@ -121,8 +98,8 @@ public class PlayerAbility : MonoBehaviour
 
             case AbilityTrigger.AbilityTypes.EmpoweredKick:
                 GetComponent<EmpoweredKick>().ResetAbilityUse(originalScale, scaleTime);
-                //GetComponent<PlayerController>().hasEmpoweredKick = false;
-                //GetComponent<PlayerController>().empoweredKickStrength = 1f;
+                GetComponent<PlayerController>().hasEmpoweredKick = false;
+                GetComponent<PlayerController>().empoweredKickStrength = 1f;
                 GetComponent<PlayerGroundMarker>().ToggleEKActive();
                 Destroy(GetComponent<EmpoweredKick>());
                 break;
@@ -131,11 +108,6 @@ public class PlayerAbility : MonoBehaviour
                 Destroy(GetComponent<MultiBall>());
                 GetComponent<PlayerGroundMarker>().ToggleMBActive();
                 break;
-
-            case AbilityTrigger.AbilityTypes.Earthquake:
-                Destroy(GetComponent<Earthquake>());
-                break;
-
 
         }
         currentAbility = AbilityTrigger.AbilityTypes.None;

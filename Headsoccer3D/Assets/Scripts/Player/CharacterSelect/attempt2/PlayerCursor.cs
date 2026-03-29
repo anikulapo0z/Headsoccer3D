@@ -22,6 +22,9 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
     [SerializeField] Sprite defaultSpriteCursor;
     [SerializeField] Sprite selectedSpriteCursor;
 
+    [SerializeField] private AudioSource confirmSfx;
+    [SerializeField] private AudioSource cancelSfx;
+
 
     Vector2 moveInput;
     public bool isLocked = false;
@@ -55,6 +58,7 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
             RaycastForMenuItem();
         }
     }
+
 
     public void OnMove(Vector2 dir)
     {
@@ -127,24 +131,20 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
     {
         if (currentItem != null)
         {
-            MonoBehaviour mono = currentItem as MonoBehaviour;
-
-            if (mono.GetComponent<QuitMenu>() != null)
-                currentItem.OnConfirm(playerIndex);
-
-            if (MenuManager.Instance.isPaused)
-                return;
-
             currentItem.OnConfirm(playerIndex);
 
+            MenuManager.Instance.CheckPlayerConfirm(isLocked);
+            isLocked = true;
+            GetComponent<Image>().sprite = selectedSpriteCursor;
+            currentItem.OnConfirm(playerIndex);
 
-
-            if (mono.GetComponent<CharacterButton>() != null )
-            {
-                MenuManager.Instance.CheckPlayerConfirm(isLocked);
-                isLocked = true;
-                GetComponent<Image>().sprite = selectedSpriteCursor;
-                currentItem.OnConfirm(playerIndex);
+            if (confirmSfx.clip != null)
+                {
+                    confirmSfx.Play();
+                }
+                else
+                {
+                    Debug.Log("Confirm SFX clip is not assigned.");
             }
         }
     }
@@ -156,8 +156,17 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
         isLocked = false;
         GetComponent<Image>().sprite = defaultSpriteCursor;
 
-        //currentItem?.OnHoverExit(playerIndex);
-        //currentItem = null;
+        currentItem?.OnHoverExit(playerIndex);
+        currentItem = null;
+
+           if (cancelSfx.clip != null)
+                    {
+                        cancelSfx.Play();
+                    }
+                    else
+                    {
+                        Debug.Log("Cancel SFX clip is not assigned.");
+        }
     }
 
     public void OnJump() { }
