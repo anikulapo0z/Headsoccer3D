@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SceneTransition_StartMaptrain
+  m_Name: SceneTransition_WinArea
   m_Shader: {fileID: -6465566751694194690, guid: 371059d964ac22d45bb5215254d6531d, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -28,7 +28,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SDFTex:
-        m_Texture: {fileID: 2800000, guid: 1a91d7f76edb9324bb03a318c0282f0e, type: 3}
+        m_Texture: {fileID: 2800000, guid: f792c5aded2ba1c4690d4c4923ea561a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture2D:
@@ -52,7 +52,7 @@ Material:
     - _ColorMask: 15
     - _Float: -0.5
     - _Float_1: -0.87
-    - _OneMinus: 1
+    - _OneMinus: 0
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
@@ -61,12 +61,12 @@ Material:
     - _Transition: 0
     - _UIMaskSoftnessX: 1
     - _UIMaskSoftnessY: 1
-    - _Use_Alpha: 0
+    - _Use_Alpha: 1
     m_Colors:
     - _ClipRect: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 0.1533855, g: 0.3575933, b: 0.4867924, a: 0.9254902}
-    - _Tiling: {r: 40.5, g: 17.8, b: 0, a: 0}
-    - _Tiling_Main_Tex: {r: 0.7, g: 0.5, b: 0, a: 0}
+    - _Tiling: {r: 20, g: 14.78, b: 0, a: 0}
+    - _Tiling_Main_Tex: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &6005368224176124805

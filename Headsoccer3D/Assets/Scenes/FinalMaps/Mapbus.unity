@@ -2297,37 +2297,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4176021496890234021, guid: 07dcd9d59236e9843a75baece04da12d, type: 3}
   m_PrefabInstance: {fileID: 149117573}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &150532747
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 150532748}
-  m_Layer: 0
-  m_Name: Direction Light Dir1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &150532748
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 150532747}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0.17492981, y: 0.78018475, z: -0.48311764, w: 0.35680357}
-  m_LocalPosition: {x: -0.7814126, y: 3, z: 14.703394}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &179370594 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4176021496890234021, guid: 07dcd9d59236e9843a75baece04da12d, type: 3}
@@ -7839,6 +7808,10 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1156094032616886198, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1351784886542837699, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_SizeDelta.x
       value: 300
@@ -7871,6 +7844,10 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 4.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2644335407101162335, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 1088
+      objectReference: {fileID: 0}
     - target: {fileID: 2969699239203561612, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -7898,6 +7875,10 @@ PrefabInstance:
     - target: {fileID: 3488453712043610832, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_LocalPosition.z
       value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3565312799435005474, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: m_CameraType
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4018947393931663058, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8107,6 +8088,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6496951675931679485, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6496951675931679485, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 4909e6b7f75a90d4e95ae6bdd16ada4a, type: 2}
     - target: {fileID: 6526672738706504532, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0
@@ -8310,6 +8299,10 @@ PrefabInstance:
     - target: {fileID: 9153552356154351629, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: field of view
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 9153552356154351629, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 1023
       objectReference: {fileID: 0}
     - target: {fileID: 9157016170308761410, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: goalScoredAudioSource
@@ -11149,37 +11142,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4176021496890234021, guid: 07dcd9d59236e9843a75baece04da12d, type: 3}
   m_PrefabInstance: {fileID: 922323677}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &924989486
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 924989487}
-  m_Layer: 0
-  m_Name: Direction Light Dir2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &924989487
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 924989486}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0.50676155, y: 0.49179843, z: 0.08483055, w: -0.70294446}
-  m_LocalPosition: {x: -0.7814126, y: 3, z: 14.703394}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &929668414 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4176021496890234021, guid: 07dcd9d59236e9843a75baece04da12d, type: 3}
@@ -22832,6 +22794,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07dcd9d59236e9843a75baece04da12d, type: 3}
+--- !u!114 &1684473350 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6496951675931679485, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+  m_PrefabInstance: {fileID: 605910383}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1701729760 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4176021496890234021, guid: 07dcd9d59236e9843a75baece04da12d, type: 3}
@@ -25042,9 +25015,11 @@ MonoBehaviour:
   - {fileID: 870212009}
   - {fileID: 870212008}
   winAreaCamera: {fileID: 870212007}
-  totalWinAreaTime: 0
+  winAreaImage: {fileID: 1684473350}
+  blurMaterial: {fileID: 2100000, guid: 32a7477d5a46e07468c6b80dee2635ce, type: 2}
+  totalWinAreaTime: 10
   currentWinAreaTime: 0
-  startFadeWinArea: 0
+  startFadeWinArea: 2
 --- !u!4 &1951291691
 Transform:
   m_ObjectHideFlags: 0
@@ -28284,8 +28259,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1951291691}
-  - {fileID: 150532748}
-  - {fileID: 924989487}
   - {fileID: 1029861301}
   - {fileID: 361239687}
   - {fileID: 7691678867812145159}

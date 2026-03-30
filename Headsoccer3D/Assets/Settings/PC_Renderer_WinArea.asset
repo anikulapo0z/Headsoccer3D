@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de640fe3d0db1804a85f9fc8f5cadab6, type: 3}
-  m_Name: PC_Renderer
+  m_Name: PC_Renderer_WinArea
   m_EditorClassIdentifier: 
   debugShaders:
     debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7, type: 3}
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4483bef7ed5e5be4ca0134562bae149e, type: 3}
   m_Name: GaussianBlurRenderFeature
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   compositeMaterial: {fileID: 2100000, guid: 32a7477d5a46e07468c6b80dee2635ce, type: 2}
   blitShader: {fileID: 4800000, guid: 1a1395ddf29663940a6829613075ffa6, type: 3}
   profilerName: Gaussian Blur
@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f62c9c65cf3354c93be831c8bc075510, type: 3}
   m_Name: ScreenSpaceAmbientOcclusion
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   m_Settings:
     AOMethod: 0
     Downsample: 0
