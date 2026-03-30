@@ -1,5 +1,5 @@
 using System.Collections;
-using UnityEditorInternal;
+//using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -72,7 +72,7 @@ public class MenuManager : MonoBehaviour
 
         pressConfirmPrompt.SetActive(false);
 
-        characterSelectMenu.SetActive(true);
+        //characterSelectMenu.SetActive(true);
         mapSelectMenu.SetActive(false);
 
 
