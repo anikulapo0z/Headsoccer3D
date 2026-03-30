@@ -51,6 +51,8 @@ public class CharacterButton : MonoBehaviour, IMenuItem
                 return;
 
             case ButtonType.character:
+
+                Debug.Log(MenuManager.Instance + " : " + playerIndex + " : " + selectedImage + " : " + characterName);
                 MenuManager.Instance.SetPortraitInfo(
                     playerIndex,
                     selectedImage,
