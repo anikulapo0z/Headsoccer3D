@@ -181,6 +181,13 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             dribbleEnabled = !dribbleEnabled;
             Debug.Log($"[DRIBBLE] {name} dribbleEnabled={dribbleEnabled}");
         }
+
+        // VFX TESTING ONLY – comment out before shipping
+        if (Keyboard.current != null && Keyboard.current.jKey.wasPressedThisFrame)
+        {
+            OnJump();
+        }
+
     }
 
     void FixedUpdate()
@@ -300,6 +307,16 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             //possessedBall.TweenToAnchor(anchor, this);
             possessedBall.MoveTowardAnchor(anchor, this);
         }
+
+        //VFX Test
+        Vector2 testMove = Vector2.zero;
+        if (Keyboard.current.wKey.isPressed) testMove.y += 1f;
+        if (Keyboard.current.sKey.isPressed) testMove.y -= 1f;
+        if (Keyboard.current.aKey.isPressed) testMove.x -= 1f;
+        if (Keyboard.current.dKey.isPressed) testMove.x += 1f;
+        if (testMove != Vector2.zero) OnMove(testMove);
+        else OnMove(Vector2.zero);
+
     }
 
     public void OnAbility()
