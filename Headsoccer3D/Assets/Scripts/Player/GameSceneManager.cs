@@ -384,8 +384,8 @@ public class GameSceneManager : MonoBehaviour
         //reset materials
         //if (winAreaMaterial)
         //    winAreaMaterial.SetFloat("_Transition", 0f);
-        //if (blurMaterial)
-        //    blurMaterial.SetFloat("_GridSize", 0f);
+        if (blurMaterial)
+           blurMaterial.SetFloat("_GridSize", 0f);
 
         SceneManager.LoadScene("MainMenu");
     }
