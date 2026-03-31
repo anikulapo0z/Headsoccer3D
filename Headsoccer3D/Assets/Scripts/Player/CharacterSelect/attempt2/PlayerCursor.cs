@@ -61,11 +61,15 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
 
     public void OnMove(Vector2 dir)
     {
+        if (!gameObject.activeSelf)
+            return;
         moveInput = dir;
     }
 
     void MoveCursor(Vector2 dir)
     {
+        if (!gameObject.activeSelf)
+            return;
         Vector2 delta = dir * moveSpeed * Time.unscaledDeltaTime;
         cursorRect.anchoredPosition += delta;
 
@@ -128,22 +132,31 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
 
     public void OnConfirm()
     {
+        //Debug.Log(gameObject);
+        if (!gameObject.activeSelf)
+            return;
         if (currentItem != null)
         {
             //currentItem.OnConfirm(playerIndex);
             MonoBehaviour mono = currentItem as MonoBehaviour;
 
             if (mono.GetComponent<QuitMenu>() != null)
-                currentItem.OnConfirm(playerIndex);
+            {
 
+                currentItem.OnConfirm(playerIndex);
+            }
             if (MenuManager.Instance.isPaused)
                 return;
 
             //MenuManager.Instance.CheckPlayerConfirm(isLocked);
             //isLocked = true;
             //GetComponent<Image>().sprite = selectedSpriteCursor;
-            currentItem.OnConfirm(playerIndex);
+            //currentItem.OnConfirm(playerIndex);
+            if (mono.GetComponent<DisconnectPlayerButton>() != null)
+            {
 
+                currentItem.OnConfirm(playerIndex);
+            }
 
 
             if (mono.GetComponent<CharacterButton>() != null)
@@ -159,6 +172,8 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
 
     public void OnCancel()
     {
+        if (!gameObject.activeSelf)
+            return;
         MenuManager.Instance.PlayerCancel(isLocked);
         isLocked = false;
         GetComponent<Image>().sprite = defaultSpriteCursor;
