@@ -58,6 +58,9 @@ public class MenuManager : MonoBehaviour
     public GameObject[] objectsToTurnBackOn;
     public GameObject[] objectsToTurnBackOff;
 
+    [SerializeField] MenuMusic backgroundMusic;
+
+
     public enum TeamSizes
     {
         v1,
@@ -248,6 +251,8 @@ public class MenuManager : MonoBehaviour
 
     IEnumerator fadeTransitionThenLoad(string sceneName)
     {
+        backgroundMusic.FadeOut();
+
         float elapsed = 0f;
 
         transitionMaterial = transitionImage.material;

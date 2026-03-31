@@ -8942,8 +8942,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 1306717521}
-  fadeInRate: 0
-  fadeOutDuration: 0
+  fadeInRate: 0.3
+  fadeOutDuration: 3
+  maxVolume: 0.6
 --- !u!1 &1369722531
 GameObject:
   m_ObjectHideFlags: 0
@@ -10160,6 +10161,7 @@ MonoBehaviour:
   objectsToTurnBackOff:
   - {fileID: 2134799173}
   - {fileID: 1369722531}
+  backgroundMusic: {fileID: 1306717522}
 --- !u!4 &1456412592
 Transform:
   m_ObjectHideFlags: 0

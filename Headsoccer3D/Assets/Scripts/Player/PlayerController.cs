@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] private Animator kickchargeAnim;
 
     private CharacterController controller;
-    private Vector2 moveInput;
+    Vector2 moveInput;
 
     public float verticalVelocity;
     private float nextKickTime = 0f;
@@ -310,13 +310,13 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         }
 
         //VFX Test
-        Vector2 testMove = Vector2.zero;
+/*        Vector2 testMove = Vector2.zero;
         if (Keyboard.current.wKey.isPressed) testMove.y += 1f;
         if (Keyboard.current.sKey.isPressed) testMove.y -= 1f;
         if (Keyboard.current.aKey.isPressed) testMove.x -= 1f;
         if (Keyboard.current.dKey.isPressed) testMove.x += 1f;
         if (testMove != Vector2.zero) OnMove(testMove);
-        else OnMove(Vector2.zero);
+        else OnMove(Vector2.zero);*/
 
     }
 
@@ -404,7 +404,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     public void OnMove(Vector2 input)
     {
-        //Debug.Log("Moving: " + input);
+        //Debug.LogWarning("Moving: " + input);
         moveInput = input;
         //throw new System.NotImplementedException();
     }

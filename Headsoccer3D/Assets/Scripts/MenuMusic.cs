@@ -7,6 +7,7 @@ public class MenuMusic : MonoBehaviour
     [SerializeField] AudioSource source;
     [SerializeField] float fadeInRate;
     [SerializeField] float fadeOutDuration;
+    [SerializeField] float maxVolume;
 
     public void Start()
     {
@@ -23,7 +24,7 @@ public class MenuMusic : MonoBehaviour
         audioSource.volume = 0;
         audioSource.Play();
 
-        while (audioSource.volume < 1)
+        while (audioSource.volume < maxVolume)
         {
             audioSource.volume += t * Time.deltaTime;
             yield return null;

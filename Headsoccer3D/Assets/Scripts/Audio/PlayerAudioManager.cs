@@ -17,6 +17,7 @@ public class PlayerAudioManager : MonoBehaviour
         {
             if (kickSfx.resource)
             {
+                Debug.LogWarning("+++++++++++++++++++++++++++++++++++");
                 kickSfx.Play();
             }
             else
@@ -35,6 +36,8 @@ public class PlayerAudioManager : MonoBehaviour
     {
         if (jumpSfx.resource)
         {
+            Debug.LogWarning("+++++++++++++++++++++++++++++++++++");
+
             jumpSfx.Play();
         }
         else
@@ -46,6 +49,8 @@ public class PlayerAudioManager : MonoBehaviour
     {
         if (landSfx.resource)
         {
+            Debug.LogWarning("+++++++++++++++++++++++++++++++++++");
+
             landSfx.Play();
         }
         else
@@ -57,6 +62,8 @@ public class PlayerAudioManager : MonoBehaviour
     {
         if (getHitSfx.resource)
         {
+            Debug.LogWarning("+++++++++++++++++++++++++++++++++++");
+
             getHitSfx.Play();
         }
         else
@@ -69,6 +76,8 @@ public class PlayerAudioManager : MonoBehaviour
     {
         if (kickBallSfx.Length > 0)
         {
+            Debug.LogWarning("+++++++++++++++++++++++++++++++++++");
+
             int randomIndex = Random.Range(0, kickBallSfx.Length);
             kickBallSfx[randomIndex].Play();
         }
@@ -81,6 +90,8 @@ public class PlayerAudioManager : MonoBehaviour
     {
         if (footstepsSfx.Length > 0)
         {
+            Debug.LogWarning("+++++++++++++++++++++++++++++++++++");
+
             int randomIndex = Random.Range(0, footstepsSfx.Length);
             footstepsSfx[randomIndex].Play();
         }

@@ -366,6 +366,8 @@ public class GameSceneManager : MonoBehaviour
         PlayerInputHolder.Instance.KillSingletons();
 
         //load main menu after fade
+        backgroundMusic.FadeOut();
+
         exitTransitionImage.gameObject.SetActive(true);
         float elapsed = 0f;
         while (elapsed < 2.05f)

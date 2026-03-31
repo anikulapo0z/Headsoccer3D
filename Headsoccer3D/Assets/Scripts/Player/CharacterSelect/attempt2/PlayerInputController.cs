@@ -144,47 +144,56 @@ public class PlayerInputController : MonoBehaviour
 
     void OnMove(InputAction.CallbackContext ctx)
     {
-        foreach (var p in controlledObject) p?.OnMove(ctx.ReadValue<Vector2>());
+        foreach (var p in controlledObject)
+            p?.OnMove(ctx.ReadValue<Vector2>());
     }
 
     void OnMoveCancelled(InputAction.CallbackContext ctx)
     {
-        foreach (var p in controlledObject) p?.OnMove(Vector2.zero);
+        foreach (var p in controlledObject)
+            p?.OnMove(Vector2.zero);
     }
 
     void OnSprint(InputAction.CallbackContext ctx)
     {
-        foreach (var p in controlledObject) p?.OnSprint(ctx.ReadValueAsButton());
+        foreach (var p in controlledObject)
+            p?.OnSprint(ctx.ReadValueAsButton());
     }
 
     void OnConfirm(InputAction.CallbackContext ctx)
     {
-        foreach (var p in controlledObject) p?.OnConfirm();
+        foreach (var p in controlledObject)
+            p?.OnConfirm();
     }
 
     void OnCancel(InputAction.CallbackContext ctx)
     {
-        foreach (var p in controlledObject) p?.OnCancel();
+        foreach (var p in controlledObject)
+            p?.OnCancel();
     }
 
     void OnJump(InputAction.CallbackContext ctx)
     {
-        foreach (var p in controlledObject) p?.OnJump();
+        foreach (var p in controlledObject)
+            p?.OnJump();
     }
 
     void OnKick(InputAction.CallbackContext ctx)
     {
-        foreach (var p in controlledObject) p?.OnKick(ctx.ReadValueAsButton());
+        foreach (var p in controlledObject)
+            p?.OnKick(ctx.ReadValueAsButton());
     }
 
     void OnJoin(InputAction.CallbackContext ctx)
     {
-        foreach (var p in controlledObject) p?.OnJoin();
+        foreach (var p in controlledObject)
+            p?.OnJoin();
     }
 
     void OnAbility(InputAction.CallbackContext ctx)
     {
-        foreach (var p in controlledObject) p?.OnAbility();
+        foreach (var p in controlledObject)
+            p?.OnAbility();
     }
 
 
