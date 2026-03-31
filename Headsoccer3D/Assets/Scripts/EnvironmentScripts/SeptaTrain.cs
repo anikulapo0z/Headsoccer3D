@@ -181,4 +181,13 @@ public class SeptaTrain : MonoBehaviour
             UI_destinationTimeNumber.text = trainTicksRemaining.ToString();
         }
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            other.GetComponent<PlayerController>().GetFlattened();
+        }
+    }
+
 }
