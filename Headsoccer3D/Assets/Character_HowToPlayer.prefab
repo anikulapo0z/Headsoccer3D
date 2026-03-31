@@ -268,7 +268,6 @@ GameObject:
   m_Component:
   - component: {fileID: 909526382676242523}
   - component: {fileID: 87823349313922562}
-  - component: {fileID: 5715509517818701763}
   - component: {fileID: -1422199461870558157}
   - component: {fileID: 3142385861016129425}
   m_Layer: 7
@@ -328,122 +327,6 @@ CharacterController:
   m_SkinWidth: 0.05
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.04, z: 0}
---- !u!114 &5715509517818701763
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2105791413608084587}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aab1aac9d0bb6ed4b80164fd0c827344, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 2.5
-  rotationSpeed: 25
-  rotateToMovement: 1
-  kickForce: 10
-  startingKickHeight: 1
-  currentKickHeight: 1
-  kickCooldown: 0.5
-  useChargeKick: 1
-  chargeTime2: 0.5
-  chargeTime3: 1.5
-  kickMult1: 0.7
-  kickMult2: 1
-  kickMult3: 2
-  kickHeightMult1: 0.2
-  kickHeightMult2: 0.4
-  kickHeightMult3: 1
-  getHitSpeedCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: -0.00028051625
-      outSlope: -0.00028051625
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.3300598
-    - serializedVersion: 3
-      time: 0.6287449
-      value: 0.7103351
-      inSlope: -0.9752558
-      outSlope: -0.9752558
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.13193035
-      outWeight: 0.19174969
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -2.9750679
-      outSlope: -2.9750679
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.10572876
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  multi: 1.4
-  reduceKnockBackTime: 0.7
-  reduceKnockBackTimer: 0
-  reduceKnockBackAmount: 0.6
-  tapTime: 0.1
-  kickChargeLevel: 1
-  kickHeldSpeedMultiplierVal: 0.4
-  jumpVelocity: 10
-  gravity: -35
-  groundStick: -0.6
-  headingForce: 5
-  headerUpForce: 40
-  headCooldown: 0.5
-  anim: {fileID: 9087620164001031670}
-  kickchargeAnim: {fileID: 0}
-  verticalVelocity: 0
-  startingPos: {x: 0, y: 0, z: 0}
-  ballVelocityPercent: 0.5
-  playerVelocityPercent: 10
-  kickCollider: {fileID: 8544093924952792565}
-  kickTrigger: {fileID: 2943843792541657765}
-  headTrigger: {fileID: 558312512381974239}
-  kickActiveTime: 0.15
-  headActiveTime: 0.7
-  kickPlayerCooldown: 0.12
-  sprintMultiplier: 2.3
-  maxStamina: 10
-  staminaDrainRate: 1
-  staminaRegenRate: 1.5
-  staminaRegenDelay: 0.5
-  staminaBar: {fileID: 0}
-  knockbackDuration: 0.7
-  knockbackDrag: 18
-  knockbackForceMultiplier1: 3
-  knockbackForceMultiplier2: 7
-  kickPlayerThreshold1: 5
-  kickPlayerThreshold2: 15
-  jumpParticles:
-  - {fileID: 5200467761495164149}
-  - {fileID: 8274039907854162683}
-  - {fileID: 4898037634796534260}
-  - {fileID: 3892511614448148437}
-  sprintParticles: {fileID: 6980176931489698843}
-  playerKnockbackForceMultiplier: 0.4
-  playerKnockbackDurationMultiplier: 0.01
-  maxPlayerKnockbackDuration: 1.5
-  hasEmpoweredKick: 0
-  empoweredKickStrength: 0
-  empoweredKickPlayerMultiplier: 1
-  dribbleEnabled: 1
-  dribbleToggleKey: 18
-  dribbleForce: 15
-  dribbleOffset: {x: 0, y: 0, z: 0.1}
-  maxDribbleDistance: 1.6
-  crown: {fileID: 6364973919794946201}
 --- !u!114 &-1422199461870558157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -478,15 +361,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 12
-  jumpVelocity: 12
+  jumpVelocity: 5
   gravity: -15
   groundStick: -2
   kickCooldown: 0.5
   kickActiveTime: 0.3
   headActiveTime: 0.5
   anim: {fileID: 0}
-  kickchargeAnim: {fileID: 0}
   verticalVelocity: 0
+  jumpHighlight: {fileID: 0}
+  kickHighlight: {fileID: 0}
+  moveHighlight: {fileID: 0}
+  abilityHighlight: {fileID: 0}
+  objectsToTurnBackOn: []
+  cursorHolder: {fileID: 0}
 --- !u!1 &2578436691414235925
 GameObject:
   m_ObjectHideFlags: 0
@@ -895,7 +783,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f309e76de9dc6034e8b505fe7c6241f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 5715509517818701763}
+  playerController: {fileID: 0}
   isKickTrigger: 0
   isHeadTrigger: 1
   letterKickForce: 5
@@ -967,7 +855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f309e76de9dc6034e8b505fe7c6241f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 5715509517818701763}
+  playerController: {fileID: 0}
   isKickTrigger: 1
   isHeadTrigger: 0
   letterKickForce: 5
@@ -2805,11 +2693,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6323174594618006324, guid: 6cea7713be80c7247ac71c548d4d5789, type: 3}
   m_PrefabInstance: {fileID: 5568219818425237275}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6980176931489698843 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3285617286309178112, guid: 6cea7713be80c7247ac71c548d4d5789, type: 3}
-  m_PrefabInstance: {fileID: 5568219818425237275}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6094927064476802504
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2896,11 +2779,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 10d9d031377e6804ab8603e5e1cc0762, type: 3}
   m_PrefabInstance: {fileID: 6094927064476802504}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6364973919794946201 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 10d9d031377e6804ab8603e5e1cc0762, type: 3}
-  m_PrefabInstance: {fileID: 6094927064476802504}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7090076362430105366
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2978,28 +2856,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a56f81b63aab9e47a9e9dc3f533b382, type: 3}
---- !u!1 &3892511614448148437 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6080414009881385155, guid: 3a56f81b63aab9e47a9e9dc3f533b382, type: 3}
-  m_PrefabInstance: {fileID: 7090076362430105366}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4898037634796534260 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2421900465030627042, guid: 3a56f81b63aab9e47a9e9dc3f533b382, type: 3}
-  m_PrefabInstance: {fileID: 7090076362430105366}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5160265990068034408 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2736482616214723710, guid: 3a56f81b63aab9e47a9e9dc3f533b382, type: 3}
-  m_PrefabInstance: {fileID: 7090076362430105366}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5200467761495164149 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3048592814293124067, guid: 3a56f81b63aab9e47a9e9dc3f533b382, type: 3}
-  m_PrefabInstance: {fileID: 7090076362430105366}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8274039907854162683 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1204230860439018989, guid: 3a56f81b63aab9e47a9e9dc3f533b382, type: 3}
   m_PrefabInstance: {fileID: 7090076362430105366}
   m_PrefabAsset: {fileID: 0}

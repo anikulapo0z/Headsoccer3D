@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,11 +29,24 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
     public float verticalVelocity;
     private float nextKickTime = 0f;
 
-    Vector2 storedInput;
+    public int playerIndex;
+
+    //[SerializeField] HowToPlayHighlights jumpHighlight;
+    //[SerializeField] HowToPlayHighlights kickHighlight;
+    //[SerializeField] HowToPlayHighlights moveHighlight;
+    //[SerializeField] HowToPlayHighlights abilityHighlight;
+
+    [Space]
+    [SerializeField] GameObject[] objectsToTurnBackOn;
+    //[SerializeField] Transform cursorHolder;
+
+
+
 
     void Awake()
     {
-        controller = GetComponent<CharacterController>();
+        if(!controller)
+            controller = GetComponent<CharacterController>();
         if (!anim)
             anim = GetComponentInChildren<Animator>();
     }
@@ -64,13 +78,23 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
 
     public void OnMove(Vector2 input)
     {
+        bool held;
+
+        if(input.magnitude == 0f)
+            held = false;
+        else
+            held = true;
+        MenuManager.Instance.moveHighlight.SetHighlight(held, false);
+
         moveInput = input;
         //anim.SetFloat("Velocity", 10f);
     }
 
     public void OnJump()
     {
-        Debug.Log("sdfsdfgdfgdfg");
+        MenuManager.Instance.jumpHighlight.SetHighlight(true, true);
+
+        //Debug.Log("sdfsdfgdfgdfg");
         if (controller.isGrounded)
             verticalVelocity = jumpVelocity;
 
@@ -80,7 +104,7 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
 
     public void OnKick(bool held)
     {
-
+        MenuManager.Instance.kickHighlight.SetHighlight(held, false);
         if (!held)
         {
             if (Time.time < nextKickTime) return;
@@ -93,9 +117,24 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
     }
 
 
-    public void OnAbility() { }
+    public void OnAbility()
+    {
+        MenuManager.Instance.abilityHighlight.SetHighlight(true, true);
+    }
     public void OnCancel() { }
     public void OnConfirm() { }
-    public void OnJoin() { }
+    public void OnJoin()
+    {
+        MenuManager.Instance.CloseHowToPlay();
+        MenuManager.Instance.joinManager.playerSlots[playerIndex].GetComponent<PlayerInputController>().RemoveControlledObject(this, false);
+        Destroy(gameObject);
+
+    }
     public void OnSprint(bool held) { }
+
+    void OnDestroy()
+    {
+        anim = null;
+        controller = null;
+    }
 }
