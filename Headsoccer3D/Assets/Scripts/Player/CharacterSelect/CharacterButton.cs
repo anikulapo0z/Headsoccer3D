@@ -45,10 +45,14 @@ public class CharacterButton : MonoBehaviour, IMenuItem
         switch (type)
         {
             case ButtonType.map:
+                Debug.Log(selectBackground);
+                Debug.Log(backGroundImage);
                 selectBackground.SetBackground(backGroundImage);
                 return;
 
             case ButtonType.character:
+
+                Debug.Log(MenuManager.Instance + " : " + playerIndex + " : " + selectedImage + " : " + characterName);
                 MenuManager.Instance.SetPortraitInfo(
                     playerIndex,
                     selectedImage,
