@@ -121,6 +121,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [Space(5)]
     [Header("Particles")]
     [SerializeField] GameObject[] jumpParticles;
+    [SerializeField] Transform jumpParticlesParent;
     [SerializeField] GameObject sprintParticles;
 
     [SerializeField] float playerKnockbackForceMultiplier;
@@ -181,6 +182,13 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             dribbleEnabled = !dribbleEnabled;
             Debug.Log($"[DRIBBLE] {name} dribbleEnabled={dribbleEnabled}");
         }
+
+        // VFX TESTING ONLY – comment out before shipping
+        if (Keyboard.current != null && Keyboard.current.jKey.wasPressedThisFrame)
+        {
+            OnJump();
+        }
+
     }
 
     void FixedUpdate()
@@ -300,6 +308,16 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             //possessedBall.TweenToAnchor(anchor, this);
             possessedBall.MoveTowardAnchor(anchor, this);
         }
+
+        //VFX Test
+        Vector2 testMove = Vector2.zero;
+        if (Keyboard.current.wKey.isPressed) testMove.y += 1f;
+        if (Keyboard.current.sKey.isPressed) testMove.y -= 1f;
+        if (Keyboard.current.aKey.isPressed) testMove.x -= 1f;
+        if (Keyboard.current.dKey.isPressed) testMove.x += 1f;
+        if (testMove != Vector2.zero) OnMove(testMove);
+        else OnMove(Vector2.zero);
+
     }
 
     public void OnAbility()
@@ -338,11 +356,6 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     }
     public void OnJump()
     {
-        //throw new System.NotImplementedException();
-        Debug.Log
-            (
-        $"[JUMP] Fired | grounded: {controller.isGrounded} | verticalVelocity before: {verticalVelocity}"
-        );
 
         if (controller.isGrounded)
         {
@@ -354,15 +367,16 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             foreach (var p in jumpParticles)
             {
                 p.SetActive(true);
+                p.transform.parent = null; //world space
             }
             //jumpParticles.SetActive(true);
             Invoke("TurnOffJumpParticles", 0.5f);
 
-            Debug.Log($"[JUMP] APPLY jumpVelocity = {jumpVelocity}");
+            Debug.Log($"jump jumpVelocity = {jumpVelocity}");
         }
         else
         {
-            Debug.Log("[JUMP] Blocked � not grounded");
+            Debug.Log("jump Blocked, not grounded");
         }
 
         headTrigger.TurnOnCollider();
@@ -375,6 +389,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         foreach(var p in jumpParticles)
         {
             p.SetActive(false);
+            p.transform.parent = jumpParticlesParent;
+            p.transform.localPosition = Vector3.zero;   
         }
         //jumpParticles.SetActive(false);
     }
