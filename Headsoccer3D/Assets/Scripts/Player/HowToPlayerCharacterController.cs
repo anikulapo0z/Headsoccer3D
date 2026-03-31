@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
 {
@@ -92,7 +93,8 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
 
     public void OnJump()
     {
-        MenuManager.Instance.jumpHighlight.SetHighlight(true, true);
+        MenuManager.Instance.jumpHighlight1.SetHighlight(true, true);
+        MenuManager.Instance.jumpHighlight2.SetHighlight(true, true);
 
         //Debug.Log("sdfsdfgdfgdfg");
         if (controller.isGrounded)
@@ -130,7 +132,12 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
         Destroy(gameObject);
 
     }
-    public void OnSprint(bool held) { }
+    public void OnSprint(bool held)
+    {
+        MenuManager.Instance.sprintHighlight.SetHighlight(held, false);
+
+
+    }
 
     void OnDestroy()
     {

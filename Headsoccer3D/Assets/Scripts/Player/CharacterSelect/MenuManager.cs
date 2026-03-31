@@ -50,11 +50,13 @@ public class MenuManager : MonoBehaviour
     public Transform cursorHolder;
 
 
-    public HowToPlayHighlights jumpHighlight;
+    public HowToPlayHighlights jumpHighlight1;
+    public HowToPlayHighlights jumpHighlight2;
     public HowToPlayHighlights kickHighlight;
     public HowToPlayHighlights moveHighlight;
     public HowToPlayHighlights abilityHighlight;
     public HowToPlayHighlights sprintHighlight;
+
     public GameObject[] objectsToTurnBackOn;
     public GameObject[] objectsToTurnBackOff;
 
@@ -259,6 +261,7 @@ public class MenuManager : MonoBehaviour
 
         transitionMaterial = Instantiate(transitionImage.material);
         transitionImage.material = transitionMaterial;
+        transitionMaterial.SetFloat("_Transition", 0f);
 
         while (elapsed < 2.05f)
         {
