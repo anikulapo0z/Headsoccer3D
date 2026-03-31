@@ -5792,6 +5792,7 @@ RectTransform:
   - {fileID: 656467444}
   - {fileID: 1011999520}
   - {fileID: 1708430181}
+  - {fileID: 1857006185}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -10146,14 +10147,15 @@ MonoBehaviour:
   - {fileID: 1618815663}
   - {fileID: 1211563802}
   - {fileID: 1687111172}
-  cursorParent: {fileID: 1708430181}
+  cursorParent: {fileID: 0}
   mapCursorPrefab: {fileID: 587420913324717821, guid: 91ddd3ccd1074d744bd03e3c1212c543, type: 3}
   joinManager: {fileID: 1192239881}
   isPaused: 0
   transitionImage: {fileID: 1013016191}
   howToPlayerCharacter: {fileID: 2105791413608084587, guid: f1fc3f2ac92260740bbf1ee38b2b5cf6, type: 3}
   howToPlayerPosition: {fileID: 133457415}
-  cursorHolder: {fileID: 1708430181}
+  cursorHolder_map: {fileID: 1857006185}
+  cursorHolder_character: {fileID: 1708430181}
   jumpHighlight1: {fileID: 1185950330}
   jumpHighlight2: {fileID: 298055694}
   kickHighlight: {fileID: 1620739464}
@@ -12142,7 +12144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1708430181}
   m_Layer: 5
-  m_Name: Player Controlled Objects
+  m_Name: Player Controlled Objects_character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13707,6 +13709,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1852127552}
   m_CullTransparentMesh: 1
+--- !u!1 &1857006184
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1857006185}
+  m_Layer: 5
+  m_Name: Player Controlled Objects_map
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1857006185
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857006184}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 851397084}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1870964828
 GameObject:
   m_ObjectHideFlags: 0

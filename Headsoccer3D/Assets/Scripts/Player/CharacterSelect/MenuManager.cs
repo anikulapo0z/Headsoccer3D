@@ -47,7 +47,8 @@ public class MenuManager : MonoBehaviour
     [Header("How To Play")]
     [SerializeField] GameObject howToPlayerCharacter;
     [SerializeField] Transform howToPlayerPosition;
-    public Transform cursorHolder;
+    public Transform cursorHolder_map;
+    public Transform cursorHolder_character;
 
 
     public HowToPlayHighlights jumpHighlight1;
@@ -144,12 +145,13 @@ public class MenuManager : MonoBehaviour
         characterSelectMenu.SetActive(false);
         mapSelectMenu.SetActive(true);
 
-        foreach(Transform t in cursorParent)
+        // -------------------------------------------------------------
+        foreach(Transform t in cursorHolder_character)
         {
-            Destroy(t.gameObject);
+            t.gameObject.SetActive(false);
         }
 
-        GameObject playerControllable = Instantiate(mapCursorPrefab, Vector3.zero, Quaternion.identity, cursorParent);
+        GameObject playerControllable = Instantiate(mapCursorPrefab, Vector3.zero, Quaternion.identity, cursorHolder_map);
         IPlayerControllable controller = playerControllable.GetComponent<PlayerCursor>();
 
         //PlayerInputHolder.Instance.playerList[0].SetControlledObject(controller);
@@ -397,7 +399,7 @@ public class MenuManager : MonoBehaviour
         {
             g.SetActive(false);
         }
-        foreach (Transform t in cursorHolder)
+        foreach (Transform t in cursorHolder_character)
         {
             t.gameObject.SetActive(true);
         }
