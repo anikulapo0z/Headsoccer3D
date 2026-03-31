@@ -42,7 +42,9 @@ public class AbilityTrigger : MonoBehaviour
 
                 // Disable collider and start destroy coroutine
                 GetComponent<Collider>().enabled = false;
-                StartCoroutine(DestroyAfterDelay());
+                Destroy(gameObject);
+
+                //StartCoroutine(DestroyAfterDelay());
             }
         }
     }

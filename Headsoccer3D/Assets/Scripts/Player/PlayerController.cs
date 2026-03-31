@@ -1,11 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Android;
 using UnityEngine.InputSystem;
-using UnityEngine.Playables;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour, IPlayerControllable
 {
@@ -150,6 +147,24 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     [SerializeField] GameObject crown;
 
+
+    // get pancake bitch
+    [Space]
+    [SerializeField] float goToYVal;
+    [SerializeField] float flatenedDuration;
+    [SerializeField] float currentFlatenedTime;
+    [SerializeField] float goToFlatTime;
+    [SerializeField] bool isFlat = false;
+    [SerializeField] float flatSpeed;
+
+
+    // original values
+    float originalYScale;
+    float originalSpeed;
+
+
+
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -161,7 +176,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         //kickDisplayMat = kickCollider.GetComponent<Renderer>().material;
 
         currentStamina = maxStamina;
-
+        originalYScale = transform.localScale.y;
+        originalSpeed = moveSpeed;
     }
 
     public void SetStaminaBar(Slider bar)
@@ -309,6 +325,20 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             possessedBall.MoveTowardAnchor(anchor, this);
         }
 
+        if (isFlat)
+        {
+            currentFlatenedTime -= Time.deltaTime;
+
+            if(currentFlatenedTime < 0)
+            {
+                transform.DOScaleY(originalYScale, goToFlatTime);
+                this.moveSpeed = originalSpeed;
+                isFlat = false;
+            }
+        }
+
+
+
         //VFX Test
 /*        Vector2 testMove = Vector2.zero;
         if (Keyboard.current.wKey.isPressed) testMove.y += 1f;
@@ -361,6 +391,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         {
             // setting header active
             //isHeaderAcive = true;
+            audioManager.PlayJumpSfx();
 
             verticalVelocity = jumpVelocity;
 
@@ -370,7 +401,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
                 p.transform.parent = null; //world space
             }
             //jumpParticles.SetActive(true);
-            Invoke("TurnOffJumpParticles", 0.5f);
+            Invoke("TurnOffJumpParticles", .6f);
 
             Debug.Log($"jump jumpVelocity = {jumpVelocity}");
         }
@@ -382,7 +413,6 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         headTrigger.TurnOnCollider();
         StartCoroutine(DisableHeadAfterTime());
 
-        audioManager.PlayJumpSfx();
     }
     void TurnOffJumpParticles()
     {
@@ -687,5 +717,16 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     public void SetWin()
     {
         crown.SetActive(true);
+    }
+
+
+    public void GetFlattened()
+    {
+
+        isFlat = true;
+        transform.DOScaleY(goToYVal, goToFlatTime);
+        moveSpeed = flatSpeed;
+        currentFlatenedTime = flatenedDuration;
+
     }
 }
