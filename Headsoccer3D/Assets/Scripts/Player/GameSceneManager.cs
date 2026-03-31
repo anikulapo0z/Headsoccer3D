@@ -23,6 +23,8 @@ public class GameSceneManager : MonoBehaviour
 
     [SerializeField] Image transitionImage;
     private Material transitionMaterial;
+    [SerializeField] Image exitTransitionImage;
+    private Material exitTransitionMaterial;
 
     [SerializeField] MapType mapType;
 
@@ -105,6 +107,12 @@ public class GameSceneManager : MonoBehaviour
             winAreaMaterial.SetFloat("_Transition", 0f);
         if (blurMaterial)
             blurMaterial.SetFloat("_GridSize", 0f);
+        transitionMaterial = transitionImage.material;
+        transitionMaterial.SetFloat("_Transition", 0f);
+        //set exit materials now and reset
+        exitTransitionImage.gameObject.SetActive(false);
+        exitTransitionMaterial = exitTransitionImage.material;
+        exitTransitionMaterial.SetFloat("_Transition", 0);
 
         SetUpGameLevel(MenuManager.Instance.GetTeamSize(), MenuManager.Instance.GetGameMode());
         StartCoroutine(fadeTransitionThenLoad());
@@ -117,13 +125,7 @@ public class GameSceneManager : MonoBehaviour
 
         yield return new WaitForSeconds(1.659f);
 
-
         float elapsed = 0f;
-
-        transitionMaterial = transitionImage.material;
-        //make an instance at runtime 
-        transitionMaterial = Instantiate(transitionImage.material);
-        transitionImage.material = transitionMaterial;
 
         while (elapsed < 2.05f)
         {
@@ -363,16 +365,31 @@ public class GameSceneManager : MonoBehaviour
 
         PlayerInputHolder.Instance.KillSingletons();
 
+        //load main menu after fade
+        exitTransitionImage.gameObject.SetActive(true);
+        float elapsed = 0f;
+        while (elapsed < 2.05f)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / 2.05f);
+
+            exitTransitionMaterial.SetFloat("_Transition", t);
+
+            yield return null;
+        }
+
+        exitTransitionMaterial.SetFloat("_Transition", 1f);
+        yield return new WaitForSeconds(0.4986f);
+
         //reset materials
-        if(winAreaMaterial)
-            winAreaMaterial.SetFloat("_Transition", 0f);
-        if(blurMaterial)
-            blurMaterial.SetFloat("_GridSize", 0f);
+        //if (winAreaMaterial)
+        //    winAreaMaterial.SetFloat("_Transition", 0f);
+        //if (blurMaterial)
+        //    blurMaterial.SetFloat("_GridSize", 0f);
 
-        //load
         SceneManager.LoadScene("MainMenu");
-
     }
+
 
 
     public IEnumerator ResetBall()
