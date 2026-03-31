@@ -188,6 +188,14 @@ public class SeptaTrain : MonoBehaviour
         {
             other.GetComponent<PlayerController>().GetFlattened();
         }
+        else if (other.gameObject.CompareTag("Ball") || other.gameObject.CompareTag("FakeBall"))
+        {
+            Vector3 kickDirection = new Vector3(other.transform.position.x - transform.position.x, 5f, 0);
+
+
+
+            other.GetComponent<SoccerBall>().LaunchAtDirection(kickDirection, 4f);
+        }
     }
 
 }
