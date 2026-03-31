@@ -54,6 +54,7 @@ public class MenuManager : MonoBehaviour
     public HowToPlayHighlights kickHighlight;
     public HowToPlayHighlights moveHighlight;
     public HowToPlayHighlights abilityHighlight;
+    public HowToPlayHighlights sprintHighlight;
     public GameObject[] objectsToTurnBackOn;
     public GameObject[] objectsToTurnBackOff;
 
