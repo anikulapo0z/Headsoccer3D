@@ -13,14 +13,23 @@ public class PlayerAudioManager : MonoBehaviour
 
     public void PlayKickSfx()
     {
-        if(kickSfx.resource)
+        if(kickSfx)
         {
-            kickSfx.Play();
+            if (kickSfx.resource)
+            {
+                kickSfx.Play();
+            }
+            else
+            {
+                Debug.Log("Kick SFX clip is not assigned.");
+            }
         }
         else
         {
-            Debug.Log("Kick SFX clip is not assigned.");
+            Debug.Log("Kick SFX is not assigned.");
+
         }
+
     }
     public void PlayJumpSfx()
     {

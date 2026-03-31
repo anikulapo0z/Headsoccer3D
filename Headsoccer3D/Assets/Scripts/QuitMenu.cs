@@ -8,7 +8,8 @@ public class QuitMenu : MonoBehaviour, IMenuItem
         OpenMenu,
         Cancel,
         Quit,
-        BackToCharacters
+        BackToCharacters,
+        HowToPlay
     }
 
     public ButtonType type;
@@ -17,6 +18,9 @@ public class QuitMenu : MonoBehaviour, IMenuItem
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject characterMenu;
     [SerializeField] GameObject mapMenu;
+    [SerializeField] GameObject HowToPlayCamera;
+    [SerializeField] GameObject CharacterSelectBackground;
+    [SerializeField] GameObject CharacterSelectPreview;
 
 
     public void OnConfirm(int playerIndex)
@@ -40,7 +44,13 @@ public class QuitMenu : MonoBehaviour, IMenuItem
             case ButtonType.BackToCharacters:
                 characterMenu.SetActive(true);
                 mapMenu.SetActive(false);
+                break;
 
+            case ButtonType.HowToPlay:
+                HowToPlayCamera.SetActive(true);
+                CharacterSelectBackground.SetActive(false);
+                CharacterSelectPreview.SetActive(false);
+                MenuManager.Instance.SetHowToPlayer(playerIndex);
 
                 break;
         }

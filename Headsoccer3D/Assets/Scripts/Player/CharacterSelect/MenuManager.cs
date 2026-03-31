@@ -43,6 +43,11 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Image transitionImage;
     private Material transitionMaterial;
 
+
+
+    [Header("How To Play")]
+    [SerializeField] GameObject howToPlayerCharacter;
+
     public enum TeamSizes
     {
         v1,
@@ -192,6 +197,21 @@ public class MenuManager : MonoBehaviour
             return;
 
         portraits[index].SetJoined(index, image, name);
+    }
+
+
+    public void SetHowToPlayer(int playerIndex)
+    {
+        PlayerInputController target = joinManager.playerSlots[playerIndex];
+
+        //howToPlayerCharacter.GetComponent<PlayerInputController>().SetControlled
+
+        IPlayerControllable controller = howToPlayerCharacter.GetComponent<HowToPlayerCharacterController>();
+        joinManager.playerSlots[playerIndex].SetControlledObject(controller, howToPlayerCharacter, false);
+
+        //GameObject playerControllable = Instantiate(mapCursorPrefab, Vector3.zero, Quaternion.identity, cursorParent);
+        //IPlayerControllable controller = playerControllable.GetComponent<PlayerCursor>();
+
     }
 
 
