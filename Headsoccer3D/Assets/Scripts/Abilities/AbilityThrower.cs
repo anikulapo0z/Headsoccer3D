@@ -4,7 +4,7 @@ using UnityEngine;
 public class AbilityThrower : MonoBehaviour
 {
     [SerializeField] private GameObject[] abilities;
-    [SerializeField] private Transform spawnPoint;
+    [SerializeField] private Transform[] spawnPoint;
 
     [Header("Destination Range")]
     [SerializeField] float minX;
@@ -39,9 +39,12 @@ public class AbilityThrower : MonoBehaviour
 
     void ThrowRandomAbility()
     {
+        int point = Random.Range(0, spawnPoint.Length);
+
+
         GameObject abilityPrefab = abilities[Random.Range(0, abilities.Length)];
 
-        GameObject abilityInstance = Instantiate(abilityPrefab, spawnPoint.position, Quaternion.identity);
+        GameObject abilityInstance = Instantiate(abilityPrefab, spawnPoint[point].position, Quaternion.identity);
 
         float randomX = Random.Range(minX, maxX);
         float randomZ = Random.Range(minZ, maxZ);
@@ -50,12 +53,12 @@ public class AbilityThrower : MonoBehaviour
         float arcHeight = Random.Range(minArcHeight, maxArcHeight);
         float duration = Random.Range(minDuration, maxDuration);
 
-        Vector3 midPoint = (spawnPoint.position + destination) / 2f;
+        Vector3 midPoint = (spawnPoint[point].position + destination) / 2f;
         midPoint.y += arcHeight;
 
         Vector3[] path = new Vector3[]
         {
-            spawnPoint.position,
+            spawnPoint[point].position,
             midPoint,
             destination
         };
