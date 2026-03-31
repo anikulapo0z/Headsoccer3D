@@ -22,6 +22,9 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
     [SerializeField] Sprite defaultSpriteCursor;
     [SerializeField] Sprite selectedSpriteCursor;
 
+    [SerializeField] AudioSource uiSelectSound;
+    [SerializeField] AudioSource uiDeselectSound;
+
 
 
 
@@ -146,6 +149,14 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
             {
 
                 currentItem.OnConfirm(playerIndex);
+                if (uiSelectSound.clip != null)
+                {
+                    uiSelectSound.Play();
+                }
+                else
+                {
+                    Debug.Log("Confirm SFX clip is not assigned.");
+                }
             }
             if (MenuManager.Instance.isPaused)
                 return;
@@ -158,6 +169,14 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
             {
 
                 currentItem.OnConfirm(playerIndex);
+                if (uiSelectSound.clip != null)
+                {
+                    uiSelectSound.Play();
+                }
+                else
+                {
+                    Debug.Log("Confirm SFX clip is not assigned.");
+                }
             }
 
 
@@ -167,7 +186,17 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
                 isLocked = true;
                 GetComponent<Image>().sprite = selectedSpriteCursor;
                 currentItem.OnConfirm(playerIndex);
+                if (uiSelectSound.clip != null)
+                {
+                    uiSelectSound.Play();
+                }
+                else
+                {
+                    Debug.Log("Confirm SFX clip is not assigned.");
+                }
             }
+
+
         }
     }
 
@@ -184,6 +213,15 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
         currentItem = null;
         //currentItem?.OnHoverExit(playerIndex);
         //currentItem = null;
+
+        if (uiSelectSound.clip != null)
+        {
+            uiSelectSound.Play();
+        }
+        else
+        {
+            Debug.Log("Confirm SFX clip is not assigned.");
+        }
     }
 
     public void OnJump() { }
