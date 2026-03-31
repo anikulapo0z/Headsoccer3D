@@ -121,6 +121,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [Space(5)]
     [Header("Particles")]
     [SerializeField] GameObject[] jumpParticles;
+    [SerializeField] Transform jumpParticlesParent;
     [SerializeField] GameObject sprintParticles;
 
     [SerializeField] float playerKnockbackForceMultiplier;
@@ -355,11 +356,6 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     }
     public void OnJump()
     {
-        //throw new System.NotImplementedException();
-        Debug.Log
-            (
-        $"[JUMP] Fired | grounded: {controller.isGrounded} | verticalVelocity before: {verticalVelocity}"
-        );
 
         if (controller.isGrounded)
         {
@@ -371,15 +367,16 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             foreach (var p in jumpParticles)
             {
                 p.SetActive(true);
+                p.transform.parent = null; //world space
             }
             //jumpParticles.SetActive(true);
             Invoke("TurnOffJumpParticles", 0.5f);
 
-            Debug.Log($"[JUMP] APPLY jumpVelocity = {jumpVelocity}");
+            Debug.Log($"jump jumpVelocity = {jumpVelocity}");
         }
         else
         {
-            Debug.Log("[JUMP] Blocked � not grounded");
+            Debug.Log("jump Blocked, not grounded");
         }
 
         headTrigger.TurnOnCollider();
@@ -392,6 +389,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         foreach(var p in jumpParticles)
         {
             p.SetActive(false);
+            p.transform.parent = jumpParticlesParent;
+            p.transform.localPosition = Vector3.zero;   
         }
         //jumpParticles.SetActive(false);
     }
