@@ -87,7 +87,7 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] float startFadeWinArea;
     Coroutine winAreaCoroutine;
 
-
+    [SerializeField] MenuMusic backgroundMusic;
 
 
     void Start()
