@@ -13,40 +13,35 @@ public class MapSelectBackground : MonoBehaviour
 
     Tween panTween;
 
-    public void SetBackground(Sprite newImage)
+    public void SetBackground(Sprite newSprite)
     {
         Sequence seq = DOTween.Sequence();
-
         seq.Append(fadeOverlay.DOFade(1f, fadeDuration));
-
         seq.AppendCallback(() =>
         {
-            backgroundImage.sprite = newImage;
-            ResetPan();
+            backgroundImage.sprite = newSprite;
+            StartPan();
         });
-
         seq.Append(fadeOverlay.DOFade(0f, fadeDuration));
     }
 
-    void ResetPan()
+    void StartPan()
     {
         backgroundImage.color = Color.white;
-
         panTween?.Kill();
 
-        Vector2 startPos = new Vector2(0, 0);
-        Vector2 endPos = GetEndPos();
+        Vector2 backgroundSize = new Vector2(
+            backgroundRect.rect.width * backgroundRect.localScale.x,
+            backgroundRect.rect.height * backgroundRect.localScale.y
+        );
 
-        backgroundRect.anchoredPosition = startPos;
+        float x = backgroundSize.x - canvasRect.rect.width;
+        float y = backgroundSize.y - canvasRect.rect.height;
 
-        panTween = backgroundRect.DOAnchorPos(endPos, panDuration);
-    }
+        Vector2 end = new Vector2(0, 0);
+        Vector2 start = new Vector2(x, -y);
 
-    Vector2 GetEndPos()
-    {
-        float xOffset = canvasRect.rect.width - backgroundRect.rect.width;
-        float yOffset = canvasRect.rect.height - backgroundRect.rect.height;
-
-        return new Vector2(xOffset / 2, -yOffset / 2);
+        backgroundRect.anchoredPosition = start;
+        panTween = backgroundRect.DOAnchorPos(end, panDuration).SetEase(Ease.InOutSine);
     }
 }

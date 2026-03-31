@@ -447,6 +447,12 @@ MonoBehaviour:
   dribbleOffset: {x: 0, y: 0, z: 0.1}
   maxDribbleDistance: 1.6
   crown: {fileID: 6364973919794946201}
+  goToYVal: 2
+  flatenedDuration: 4
+  currentFlatenedTime: 0
+  goToFlatTime: 0.2
+  isFlat: 0
+  flatSpeed: 1.5
 --- !u!114 &2982971697010060558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,12 +554,19 @@ MonoBehaviour:
   scaleTime: 0.5
   growSize: {x: 15, y: 15, z: 15}
   kickWave: {fileID: 7966454566057911357, guid: 8a94511b6a724f34c9dd852756fdd36d, type: 3}
-  empoweredKickSfx: {fileID: 1777783957714740760}
   upAmount: 3
   outAmount: 5
   ballAmount: 5
   ball: {fileID: 675428509796539959, guid: 8029ba434dba37244858514be2ee96db, type: 3}
-  multiBallSfx: {fileID: 2713583405545530211}
+  earthquakePrefab: {fileID: 2019947001400537880, guid: 5638fc73666afc543afe109efcdd6af1, type: 3}
+  earthquakeRadius: 6
+  earthquakeDuration: 3
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  earthquakeYForce: 25
+  earthquakeOutForce: 15
+  earthquakePlayerForce: 0.8
 --- !u!114 &-1422199461870558157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1755,7 +1768,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: ad779fd2a5c48fb498497d583607821c, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -1852,7 +1865,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 4504ac891139b9f4f8183236edb49600, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

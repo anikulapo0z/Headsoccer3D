@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
@@ -25,7 +24,6 @@ public class PlayerJoinManager : MonoBehaviour
     [SerializeField] string actionMapName;
     [SerializeField] string joinActionName = "Join";
 
-    //public List<PlayerInputController> inputControllers = new();
     public PlayerInputController[] playerSlots;
 
     bool characterSelectOpen;
@@ -58,8 +56,6 @@ public class PlayerJoinManager : MonoBehaviour
 
     void ResetJoinManager()
     {
-        //inputControllers.Clear();
-
         characterSelectOpen = false;
         isLocked = false;
 
@@ -67,14 +63,12 @@ public class PlayerJoinManager : MonoBehaviour
         characterSelectScreen.SetActive(false);
     }
 
-
-
-
     void OnDestroy()
     {
         joinAction.performed -= OnJoinPerformed;
         InputSystem.onDeviceChange -= OnDeviceChange;
     }
+
 
     void OnAnyButtonPressed(InputControl control)
     {
@@ -88,7 +82,6 @@ public class PlayerJoinManager : MonoBehaviour
     IEnumerator OpenCharacterSelect()
     {
         isLocked = true;
-
         characterSelectScreen.SetActive(true);
         yield return new WaitForSeconds(characterSelectOpenDelay);
 
@@ -98,129 +91,117 @@ public class PlayerJoinManager : MonoBehaviour
         joinAction.Enable();
     }
 
+
     void OnJoinPerformed(InputAction.CallbackContext ctx)
     {
-        if (ctx.control.device == null)
-            return;
-
-
-        if (!characterSelectOpen)
-            return;
+        if (!characterSelectOpen) return;
+        if (ctx.control.device == null) return;
 
         InputDevice device = ctx.control.device;
-        if (IsDeviceAlreadyAssigned(device))
-            return;
-
         string controllerId = BuildControllerId(device);
 
-/*        foreach (var controller in inputControllers)
+        if (IsDeviceAlreadyAssigned(device))
         {
-            if (!controller.IsConnected &&
-                controller.ControllerId == controllerId)
+            Debug.Log($"Device {controllerId} is already assigned. Ignoring.");
+            return;
+        }
+
+        for (int i = 0; i < playerSlots.Length; i++)
+        {
+            var slot = playerSlots[i];
+            if (slot != null && !slot.IsConnected && slot.ControllerId == controllerId)
             {
-                controller.AssignDevice(device, inputActions, actionMapName);
-                Debug.Log($"Reconnected Player {controller.PlayerIndex + 1}");
+                slot.AssignDevice(device, inputActions, actionMapName);
+                Debug.Log($"Player {i + 1} reconnected with their original controller.");
                 return;
             }
-        }*/
+        }
 
-/*        foreach (var controller in inputControllers)
+        for (int i = 0; i < playerSlots.Length; i++)
         {
-            if (!controller.IsConnected)
+            var slot = playerSlots[i];
+            if (slot != null && !slot.IsConnected)
             {
-                controller.AssignDevice(device, inputActions, actionMapName);
-                Debug.Log($"Reassigned controller to Player {controller.PlayerIndex + 1}");
+                string oldId = slot.ControllerId;
+                slot.AssignDevice(device, inputActions, actionMapName);
+                Debug.Log($"Player {i + 1} slot taken over by a different controller " +
+                          $"(was: {oldId}, now: {controllerId}).");
                 return;
             }
-        }*/
-
-/*        if (inputControllers.Count >= maxPlayers)
-            return;*/
-
-
-
-        //int index = inputControllers.Count;
+        }
 
         int index = GetNextAvailableSlot();
-
         if (index == -1)
+        {
+            Debug.Log("All player slots are full. Cannot join.");
             return;
-
+        }
 
         PlayerInputController newController = CreatePlayerController(index, device);
 
         var (cursor, obj) = CreateCursor(index);
-
-        //IPlayerControllable cursor = CreateCursor(index);
         newController.SetControlledObject(cursor, obj, true);
 
         playerSlots[index] = newController;
-        //inputControllers.Add(newController);
         PlayerInputHolder.Instance.playerList.Add(newController);
         DontDestroyOnLoad(newController);
 
-        Debug.Log($"New Player {index + 1} joined");
+        Debug.Log($"New Player {index + 1} joined with controller {controllerId}.");
 
-        //MenuManager.Instance.PlayerJoined(inputControllers.Count);
-        MenuManager.Instance.PlayerJoined(GetActivePlayerCount());
-
-
+        int activeCount = GetActivePlayerCount();
+        MenuManager.Instance.PlayerJoined(activeCount);
         MenuManager.Instance.AssignPlayerToPortrait(newController);
 
-
-        if (GetActivePlayerCount() > 2)
-        {
+        if (activeCount > 2)
             MenuManager.Instance.Force2v2(true);
-        }
+    }
 
+    void OnDeviceChange(InputDevice device, InputDeviceChange change)
+    {
+        if (change != InputDeviceChange.Disconnected) return;
+
+        for (int i = 0; i < playerSlots.Length; i++)
+        {
+            var controller = playerSlots[i];
+            if (controller == null || controller.AssignedDevice != device) continue;
+
+            Debug.Log($"Player {controller.PlayerIndex + 1} disconnected — removing slot.");
+
+            PlayerInputHolder.Instance.playerList.Remove(controller);
+            playerSlots[i] = null;
+
+            MenuManager.Instance.PlayerLeft(controller);
+
+            Destroy(controller.gameObject);
+
+            if (GetActivePlayerCount() <= 2)
+                MenuManager.Instance.Force2v2(false);
+
+            break;
+        }
     }
 
     int GetActivePlayerCount()
     {
         int count = 0;
-
         foreach (var p in playerSlots)
-        {
-            if (p != null)
-                count++;
-        }
-
+            if (p != null) count++;
         return count;
     }
 
     bool IsDeviceAlreadyAssigned(InputDevice device)
     {
         foreach (var controller in playerSlots)
-        {
             if (controller != null && controller.IsConnected && controller.AssignedDevice == device)
                 return true;
-        }
         return false;
     }
 
-
-    void OnDeviceChange(InputDevice device, InputDeviceChange change)
+    int GetNextAvailableSlot()
     {
-        if (change != InputDeviceChange.Disconnected)
-            return;
-
-/*        foreach (var controller in inputControllers)
-        {
-            if (controller.AssignedDevice == device)
-            {
-                controller.FullDisconnect();
-                Debug.Log($"Player {controller.PlayerIndex + 1} disconnected");
-            }
-        }*/
-
-        foreach (var controller in playerSlots)
-        {
-            if (controller != null && controller.AssignedDevice == device)
-            {
-                controller.PlayerDisconnect();
-                Debug.Log($"Player {controller.PlayerIndex + 1} disconnected");
-            }
-        }
+        for (int i = 0; i < playerSlots.Length; i++)
+            if (playerSlots[i] == null) return i;
+        return -1;
     }
 
     PlayerInputController CreatePlayerController(int index, InputDevice device)
@@ -250,25 +231,4 @@ public class PlayerJoinManager : MonoBehaviour
         var d = device.description;
         return $"{d.interfaceName}_{d.product}_{device.deviceId}";
     }
-
-/*    public void RemoveController(PlayerInputController controller)
-    {
-        if (inputControllers.Contains(controller))
-        {
-            inputControllers.Remove(controller);
-        }
-    }*/
-
-
-    int GetNextAvailableSlot()
-    {
-        for (int i = 0; i < playerSlots.Length; i++)
-        {
-            if (playerSlots[i] == null)
-                return i;
-        }
-
-        return -1;
-    }
-
 }

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2871949844672299258}
   - component: {fileID: 4674138092183283801}
+  - component: {fileID: 1830189522412112224}
   m_Layer: 0
   m_Name: 'SEPTA Train '
   m_TagString: Untagged
@@ -55,7 +56,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPosition: {fileID: 0}
   endPosition: {fileID: 0}
+  trainArriving: 0
   railpath: {fileID: 0}
+  trainRandomLowerLimit: 9
+  trainRandomUpperLimit: 20
+  lateRandomLowerLimit: 2
+  lateRandomUpperLimit: 5
+  gameSceneManager: {fileID: 0}
+  destinationNames: []
+  UI_destinationName: {fileID: 0}
+  UI_destinationTimer: {fileID: 0}
+  UI_destinationTimeNumber: {fileID: 0}
+  trainUIDestination: 
+--- !u!65 &1830189522412112224
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4235163766753344667}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.02, y: 0.8, z: 0.04}
+  m_Center: {x: 0, y: 0, z: 0.02}
 --- !u!1001 &4919665164332581
 PrefabInstance:
   m_ObjectHideFlags: 0

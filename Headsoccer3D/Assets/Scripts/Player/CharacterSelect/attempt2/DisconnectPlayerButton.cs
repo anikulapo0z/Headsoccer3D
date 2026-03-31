@@ -9,7 +9,7 @@ public class DisconnectPlayerButton : MonoBehaviour, IMenuItem
     [SerializeField] Color hoveredColor;
     [SerializeField] CharacterPortrait characterPortrait;
 
-    int assignedPlayer;
+    [SerializeField] int assignedPlayer;
 
     public void SetPlayerVar(int ap)
     {
@@ -21,7 +21,7 @@ public class DisconnectPlayerButton : MonoBehaviour, IMenuItem
         if (assignedPlayer == playerIndex)
         {
             characterPortrait.OnDisconnectButton();
-            OnHoverExit(-1);
+            OnHoverExit(playerIndex);
         }
     }
 

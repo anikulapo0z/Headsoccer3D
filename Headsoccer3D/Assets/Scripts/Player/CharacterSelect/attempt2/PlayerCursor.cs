@@ -22,8 +22,7 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
     [SerializeField] Sprite defaultSpriteCursor;
     [SerializeField] Sprite selectedSpriteCursor;
 
-    [SerializeField] private AudioSource confirmSfx;
-    [SerializeField] private AudioSource cancelSfx;
+
 
 
     Vector2 moveInput;
@@ -62,11 +61,15 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
 
     public void OnMove(Vector2 dir)
     {
+        if (!gameObject.activeSelf)
+            return;
         moveInput = dir;
     }
 
     void MoveCursor(Vector2 dir)
     {
+        if (!gameObject.activeSelf)
+            return;
         Vector2 delta = dir * moveSpeed * Time.unscaledDeltaTime;
         cursorRect.anchoredPosition += delta;
 
@@ -129,21 +132,39 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
 
     public void OnConfirm()
     {
+        //Debug.Log(gameObject);
+        if (!gameObject.activeSelf)
+            return;
         if (currentItem != null)
         {
-            currentItem.OnConfirm(playerIndex);
-            MenuManager.Instance.CheckPlayerConfirm(isLocked);
-            isLocked = true;
-            GetComponent<Image>().sprite = selectedSpriteCursor;
-            currentItem.OnConfirm(playerIndex);
+            //currentItem.OnConfirm(playerIndex);
+            MonoBehaviour mono = currentItem as MonoBehaviour;
 
-            if (confirmSfx.clip != null)
-                {
-                    confirmSfx.Play();
-                }
-                else
-                {
-                    Debug.Log("Confirm SFX clip is not assigned.");
+            if (mono.GetComponent<QuitMenu>() != null)
+            {
+
+                currentItem.OnConfirm(playerIndex);
+            }
+            if (MenuManager.Instance.isPaused)
+                return;
+
+            //MenuManager.Instance.CheckPlayerConfirm(isLocked);
+            //isLocked = true;
+            //GetComponent<Image>().sprite = selectedSpriteCursor;
+            //currentItem.OnConfirm(playerIndex);
+            if (mono.GetComponent<DisconnectPlayerButton>() != null)
+            {
+
+                currentItem.OnConfirm(playerIndex);
+            }
+
+
+            if (mono.GetComponent<CharacterButton>() != null)
+            {
+                MenuManager.Instance.CheckPlayerConfirm(isLocked);
+                isLocked = true;
+                GetComponent<Image>().sprite = selectedSpriteCursor;
+                currentItem.OnConfirm(playerIndex);
             }
         }
     }
@@ -151,23 +172,16 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
 
     public void OnCancel()
     {
+        if (!gameObject.activeSelf)
+            return;
         MenuManager.Instance.PlayerCancel(isLocked);
         isLocked = false;
         GetComponent<Image>().sprite = defaultSpriteCursor;
 
-        //currentItem?.OnHoverExit(playerIndex);
-        //currentItem = null;
         currentItem?.OnHoverExit(playerIndex);
         currentItem = null;
-
-           if (cancelSfx.clip != null)
-                    {
-                        cancelSfx.Play();
-                    }
-                    else
-                    {
-                        Debug.Log("Cancel SFX clip is not assigned.");
-        }
+        //currentItem?.OnHoverExit(playerIndex);
+        //currentItem = null;
     }
 
     public void OnJump() { }

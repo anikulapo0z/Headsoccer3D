@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static MenuManager;
+using static UnityEngine.Rendering.DebugUI;
 
 public class GameSceneManager : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class GameSceneManager : MonoBehaviour
 
     [SerializeField] Image transitionImage;
     private Material transitionMaterial;
+    [SerializeField] Image exitTransitionImage;
+    private Material exitTransitionMaterial;
 
     [SerializeField] MapType mapType;
 
@@ -75,11 +78,15 @@ public class GameSceneManager : MonoBehaviour
 
 
     // win game area
-
+    [Space(10)]
+    [Header("Win Game")]
     [SerializeField] Transform[] winAreaSpawnPoints;
     List<GameObject> leftTeam = new List<GameObject>();
     List<GameObject> rightTeam = new List<GameObject>();
     [SerializeField] GameObject winAreaCamera;
+    [SerializeField] RawImage winAreaImage;
+    [SerializeField] Material blurMaterial;
+    Material winAreaMaterial;
     bool gameOver = false;
 
     [SerializeField] float totalWinAreaTime;
@@ -87,12 +94,26 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] float startFadeWinArea;
     Coroutine winAreaCoroutine;
 
-
+    [SerializeField] MenuMusic backgroundMusic;
 
 
     void Start()
     {
         Instance = this;
+
+        //reset materials
+        winAreaMaterial = winAreaImage.material;
+        if (winAreaMaterial)
+            winAreaMaterial.SetFloat("_Transition", 0f);
+        if (blurMaterial)
+            blurMaterial.SetFloat("_GridSize", 0f);
+        transitionMaterial = transitionImage.material;
+        transitionMaterial.SetFloat("_Transition", 0f);
+        //set exit materials now and reset
+        exitTransitionImage.gameObject.SetActive(false);
+        exitTransitionMaterial = exitTransitionImage.material;
+        exitTransitionMaterial.SetFloat("_Transition", 0);
+
         SetUpGameLevel(MenuManager.Instance.GetTeamSize(), MenuManager.Instance.GetGameMode());
         StartCoroutine(fadeTransitionThenLoad());
     }
@@ -104,13 +125,7 @@ public class GameSceneManager : MonoBehaviour
 
         yield return new WaitForSeconds(1.659f);
 
-
         float elapsed = 0f;
-
-        transitionMaterial = transitionImage.material;
-        //make an instance at runtime 
-        transitionMaterial = Instantiate(transitionImage.material);
-        transitionImage.material = transitionMaterial;
 
         while (elapsed < 2.05f)
         {
@@ -226,20 +241,38 @@ public class GameSceneManager : MonoBehaviour
         {
             scoreTracker.canScore = false;
             gameOver = true;
-            EndGame();
+            StartCoroutine(EndGame());
         }
     }
 
 
-    void EndGame()
+    IEnumerator EndGame()
     {
         scoreTracker.canScore = false;
 
         if (gameTimeCoroutine != null)
             StopCoroutine(gameTimeCoroutine);
 
-        winAreaCamera.SetActive(true);
         LockPlayers();
+
+        yield return new WaitForSeconds(startFadeWinArea);
+
+        //everything is locked
+        ////start blur
+        float _Timer = 0f;
+        float _blurTime = 2.0794f;
+        blurMaterial.SetFloat("_GridSize", 0f);
+        while (_Timer < _blurTime)
+        {
+            _Timer += Time.deltaTime ;
+            blurMaterial.SetFloat("_GridSize", (_Timer / _blurTime) * 10f);
+            yield return null;
+        }
+        blurMaterial.SetFloat("_GridSize", 10f);
+
+        //init Win area 
+        winAreaCamera.SetActive(true);
+        winAreaImage.gameObject.SetActive(true);
 
         foreach (var p in playerCharacters)
         {
@@ -302,34 +335,63 @@ public class GameSceneManager : MonoBehaviour
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord(scoreTracker.GetScore(), 4);
 
         }
+
+        //fade in the win area
+
+        _Timer = 0f;
+        _blurTime = 1.8736f;
+        winAreaMaterial = winAreaImage.material;
+        winAreaMaterial.SetFloat("_Transition", 0f);
+        while (_Timer < _blurTime)
+        {
+            _Timer += Time.deltaTime;
+            winAreaMaterial.SetFloat("_Transition", _Timer / _blurTime);
+            yield return null;
+        }
+        winAreaMaterial.SetFloat("_Transition", 1f);
+
+        //let them move
         UnlockPlayers();
 
+        //start end timer
         currentWinAreaTime = totalWinAreaTime;
         winAreaCoroutine = StartCoroutine(WinAreaCountDown());
-
-        // load score screen
     }
 
     IEnumerator WinAreaCountDown()
     {
-
-        while(currentWinAreaTime >= 0)
-        {
-            if(currentWinAreaTime - 3 <= 0)
-            {
-                // PRASIN ADD SCREEN TRANSITION
-            }
-
-            currentWinAreaTime--;
-            yield return new WaitForSeconds(1);
-        }
+        yield return new WaitForSeconds(currentWinAreaTime);
         //string name = SceneManager.GetActiveScene().name;
 
         PlayerInputHolder.Instance.KillSingletons();
 
-        SceneManager.LoadScene("MainMenu");
+        //load main menu after fade
+        backgroundMusic.FadeOut();
 
+        exitTransitionImage.gameObject.SetActive(true);
+        float elapsed = 0f;
+        while (elapsed < 2.05f)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / 2.05f);
+
+            exitTransitionMaterial.SetFloat("_Transition", t);
+
+            yield return null;
+        }
+
+        exitTransitionMaterial.SetFloat("_Transition", 1f);
+        yield return new WaitForSeconds(0.4986f);
+
+        //reset materials
+        //if (winAreaMaterial)
+        //    winAreaMaterial.SetFloat("_Transition", 0f);
+        if (blurMaterial)
+           blurMaterial.SetFloat("_GridSize", 0f);
+
+        SceneManager.LoadScene("MainMenu");
     }
+
 
 
     public IEnumerator ResetBall()

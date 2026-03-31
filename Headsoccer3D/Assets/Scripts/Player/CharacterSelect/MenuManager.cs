@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -43,6 +42,27 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Image transitionImage;
     private Material transitionMaterial;
 
+
+
+    [Header("How To Play")]
+    [SerializeField] GameObject howToPlayerCharacter;
+    [SerializeField] Transform howToPlayerPosition;
+    public Transform cursorHolder;
+
+
+    public HowToPlayHighlights jumpHighlight1;
+    public HowToPlayHighlights jumpHighlight2;
+    public HowToPlayHighlights kickHighlight;
+    public HowToPlayHighlights moveHighlight;
+    public HowToPlayHighlights abilityHighlight;
+    public HowToPlayHighlights sprintHighlight;
+
+    public GameObject[] objectsToTurnBackOn;
+    public GameObject[] objectsToTurnBackOff;
+
+    [SerializeField] MenuMusic backgroundMusic;
+
+
     public enum TeamSizes
     {
         v1,
@@ -72,7 +92,7 @@ public class MenuManager : MonoBehaviour
 
         pressConfirmPrompt.SetActive(false);
 
-        characterSelectMenu.SetActive(true);
+        //characterSelectMenu.SetActive(true);
         mapSelectMenu.SetActive(false);
 
 
@@ -195,6 +215,25 @@ public class MenuManager : MonoBehaviour
     }
 
 
+    public void SetHowToPlayer(int playerIndex)
+    {
+        Debug.Log("jghckhgcvkhvk");
+        GameObject playerObj = Instantiate(howToPlayerCharacter, howToPlayerPosition.position, Quaternion.identity);
+        playerObj.GetComponent<HowToPlayerCharacterController>().playerIndex = playerIndex;
+        PlayerInputController target = joinManager.playerSlots[playerIndex];
+
+        //howToPlayerCharacter.GetComponent<PlayerInputController>().SetControlled
+
+        //IPlayerControllable controller = howToPlayerCharacter.GetComponent<HowToPlayerCharacterController>();
+        IPlayerControllable controller = playerObj.GetComponent<HowToPlayerCharacterController>();
+        joinManager.playerSlots[playerIndex].SetControlledObject(controller, howToPlayerCharacter, false);
+
+        //GameObject playerControllable = Instantiate(mapCursorPrefab, Vector3.zero, Quaternion.identity, cursorParent);
+        //IPlayerControllable controller = playerControllable.GetComponent<PlayerCursor>();
+
+    }
+
+
 
 
     #endregion
@@ -214,12 +253,15 @@ public class MenuManager : MonoBehaviour
 
     IEnumerator fadeTransitionThenLoad(string sceneName)
     {
+        backgroundMusic.FadeOut();
+
         float elapsed = 0f;
 
         transitionMaterial = transitionImage.material;
-        //make an instance at runtime 
+
         transitionMaterial = Instantiate(transitionImage.material);
         transitionImage.material = transitionMaterial;
+        transitionMaterial.SetFloat("_Transition", 0f);
 
         while (elapsed < 2.05f)
         {
@@ -233,7 +275,6 @@ public class MenuManager : MonoBehaviour
 
         transitionMaterial.SetFloat("_Transition", 1f);
 
-        //wait a min
         yield return new WaitForSeconds(1.659f);
 
         SceneManager.LoadScene(sceneName);
@@ -309,8 +350,58 @@ public class MenuManager : MonoBehaviour
         }
 
     }
+    public void PlayerLeft(PlayerInputController controller)
+    {
+        if (controller == null) return;
 
+        foreach (var go in controller.controlledGameObject)
+        {
+            if (go != null) Destroy(go);
+        }
+        controller.controlledGameObject.Clear();
+        controller.controlledObject.Clear();
 
+        if (controller.portraitIndex >= 0 && controller.portraitIndex < portraits.Length)
+        {
+            portraits[controller.portraitIndex].SetNotJoined();
+            controller.portraitIndex = -1;
+        }
+
+        totalPlayerCount = PlayerInputHolder.Instance.playerList.Count;
+        lockedPlayerCount = Mathf.Min(lockedPlayerCount, totalPlayerCount);
+
+        canMoveToNextScreen = false;
+        pressConfirmPrompt.SetActive(false);
+
+        if (totalPlayerCount <= 2)
+        {
+            force2v2 = false;
+            StopForce2v2();
+        }
+
+        if (totalPlayerCount > 0 && lockedPlayerCount == totalPlayerCount)
+        {
+            canMoveToNextScreen = true;
+            pressConfirmPrompt.SetActive(true);
+        }
+
+        Debug.Log($"Player {controller.PlayerIndex + 1} left. Active players: {totalPlayerCount}");
+    }
+    public void CloseHowToPlay()
+    {
+        foreach (GameObject g in objectsToTurnBackOn)
+        {
+            g.SetActive(true);
+        }
+        foreach (GameObject g in objectsToTurnBackOff)
+        {
+            g.SetActive(false);
+        }
+        foreach (Transform t in cursorHolder)
+        {
+            t.gameObject.SetActive(true);
+        }
+    }
 
     public MenuManager.TeamSizes GetTeamSize()
     {
