@@ -93,6 +93,8 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
 
     void RaycastForMenuItem()
     {
+        if (!gameObject.activeSelf)
+            return;
         if (raycaster == null || eventSystem == null)
             return;
 

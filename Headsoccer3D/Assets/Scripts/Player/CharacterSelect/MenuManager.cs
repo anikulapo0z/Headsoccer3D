@@ -165,7 +165,7 @@ public class MenuManager : MonoBehaviour
         {
             if (t != null)
             {
-                t.SetControlledObject(controller, playerControllable, true);
+                t.SetControlledObject(controller, playerControllable, false);
             }
         }
     }
