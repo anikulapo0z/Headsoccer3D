@@ -478,12 +478,14 @@ MonoBehaviour:
   matObj: {fileID: 4863029050352406320}
   multiBallText: {fileID: 3798930661154949969, guid: ad6825c6a490e344abb915b4ce2a1143, type: 3}
   empoweredKickText: {fileID: 5041241853163221094, guid: f2d58010527d10c47b2a34888d282aca, type: 3}
+  earthquakeText: {fileID: 2268949771022234786, guid: 080da404cfbf9e047854e6885e282a6d, type: 3}
   mbOffset: {x: 0, y: 1.5, z: 0.7}
   mbRotation: {x: 0, y: 0, z: 17}
   ekOffset: {x: 0, y: 1.6, z: 0.6}
   ekRotation: {x: 0, y: 0, z: 16}
   mbActive: 0
   ekActive: 0
+  earthquakeActive: 0
   controllingFlipper: 0
   controlledFlippers: []
   lrYHeight: 0
@@ -557,7 +559,7 @@ MonoBehaviour:
   upAmount: 3
   outAmount: 5
   ballAmount: 5
-  ball: {fileID: 675428509796539959, guid: 8029ba434dba37244858514be2ee96db, type: 3}
+  ball: {fileID: 675428509796539959, guid: fca0fa1fa1898ad4780f02b33e85e02a, type: 3}
   earthquakePrefab: {fileID: 2019947001400537880, guid: 5638fc73666afc543afe109efcdd6af1, type: 3}
   earthquakeRadius: 6
   earthquakeDuration: 3

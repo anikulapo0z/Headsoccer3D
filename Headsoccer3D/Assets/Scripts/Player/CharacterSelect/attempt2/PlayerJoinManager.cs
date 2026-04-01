@@ -31,16 +31,15 @@ public class PlayerJoinManager : MonoBehaviour
 
     InputAction joinAction;
 
+
     void Awake()
     {
         playerSlots = new PlayerInputController[maxPlayers];
-
         var map = inputActions.FindActionMap(actionMapName);
         map.Enable();
-
-        joinAction = map.FindAction(joinActionName);
+        joinAction = new InputAction(binding: "/*/<button>");
         joinAction.performed += OnJoinPerformed;
-
+        joinAction.Enable();
         InputSystem.onDeviceChange += OnDeviceChange;
     }
 
@@ -94,6 +93,9 @@ public class PlayerJoinManager : MonoBehaviour
 
     void OnJoinPerformed(InputAction.CallbackContext ctx)
     {
+        if (ctx.control.device is Keyboard || ctx.control.device is Mouse)
+            return;
+
         if (!characterSelectOpen) return;
         if (ctx.control.device == null) return;
 
