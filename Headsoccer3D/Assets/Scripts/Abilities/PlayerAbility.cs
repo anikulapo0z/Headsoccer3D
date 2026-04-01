@@ -107,6 +107,8 @@ public class PlayerAbility : MonoBehaviour
                 eq.playerKickForce = earthquakePlayerForce;
                 eq.player = gameObject;
 
+                GetComponent<PlayerGroundMarker>().ToggleEarthquakeActive();
+
                 break;
 
         }
@@ -133,6 +135,8 @@ public class PlayerAbility : MonoBehaviour
                 break;
 
             case AbilityTrigger.AbilityTypes.Earthquake:
+                GetComponent<PlayerGroundMarker>().ToggleEarthquakeActive();
+
                 Destroy(GetComponent<Earthquake>());
                 break;
 

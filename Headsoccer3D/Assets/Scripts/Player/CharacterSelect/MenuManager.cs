@@ -12,6 +12,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] int totalPlayerCount;
     [SerializeField] bool canMoveToNextScreen = false;
     [SerializeField] GameObject pressConfirmPrompt;
+    [SerializeField] GameObject wrongPlayerCountPrompt;
     [SerializeField] int lockedPlayerCount;
 
 
@@ -92,6 +93,7 @@ public class MenuManager : MonoBehaviour
         canMoveToNextScreen = false;
 
         pressConfirmPrompt.SetActive(false);
+        wrongPlayerCountPrompt.SetActive(false);
 
         //characterSelectMenu.SetActive(true);
         mapSelectMenu.SetActive(false);
@@ -108,30 +110,42 @@ public class MenuManager : MonoBehaviour
         totalPlayerCount = PlayerInputHolder.Instance.playerList.Count;
         canMoveToNextScreen = false;
         pressConfirmPrompt.SetActive(false);
+        wrongPlayerCountPrompt.SetActive(false);
     }
     public void CheckPlayerConfirm(bool isLocked)
     {
-
-        if (!isLocked)
-        {
-            lockedPlayerCount++;
-            if (lockedPlayerCount == totalPlayerCount)
-            {
-                canMoveToNextScreen = true;
-                pressConfirmPrompt.SetActive(true);
-            }
-            return;
-        }
-
         if (canMoveToNextScreen)
         {
             MoveToNextScreen();
         }
+
+
+        if (!isLocked)
+        {
+            
+
+
+
+            lockedPlayerCount++;
+            if (lockedPlayerCount == totalPlayerCount && totalPlayerCount % 2 == 0)
+            {
+                canMoveToNextScreen = true;
+                pressConfirmPrompt.SetActive(true);
+            }
+            else if (lockedPlayerCount == totalPlayerCount)
+            {
+                wrongPlayerCountPrompt.SetActive(true);
+            }
+        }
+
+
     }
     public void PlayerCancel(bool isLocked)
     {
         if (isLocked)
         {
+            wrongPlayerCountPrompt.SetActive(false);
+
             if (canMoveToNextScreen)
             {
                 canMoveToNextScreen = false;
