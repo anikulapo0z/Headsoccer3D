@@ -301,7 +301,7 @@ public class GameSceneManager : MonoBehaviour
             }
         }
 
-        if (scoreTracker.LeftTeamWon())
+        if (scoreTracker.WhichTeamWon() == "left")
         {
             // winning team
             foreach(var p in leftTeam)
@@ -320,7 +320,7 @@ public class GameSceneManager : MonoBehaviour
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("wins", 7);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord(scoreTracker.GetScore(), 4);
         }
-        else
+        else if(scoreTracker.WhichTeamWon() == "right")
         {
             // winning team
             foreach (var p in rightTeam)
@@ -338,12 +338,31 @@ public class GameSceneManager : MonoBehaviour
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("blue team", -1);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("wins", 7);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord(scoreTracker.GetScore(), 4);
+        }
+        else
+        {
 
+            foreach (var p in rightTeam)
+            {
+                p.GetComponent<PlayerController>().SetFalling();
+            }
+            foreach (var p in leftTeam)
+            {
+                p.GetComponent<PlayerController>().SetFalling();
+            }
+
+            GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("tie game", -1);
+            GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("letters to", 7);
+            GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("play with", 4);
         }
 
-        //fade in the win area
 
-        _Timer = 0f;
+
+
+
+            //fade in the win area
+
+            _Timer = 0f;
         _blurTime = 1.8736f;
         winAreaMaterial = winAreaImage.material;
         winAreaMaterial.SetFloat("_Transition", 0f);

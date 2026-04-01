@@ -14,6 +14,8 @@ public class Earthquake : MonoBehaviour
     public float ballKickForce;
     public float playerKickForce;
 
+    public AudioSource source;
+
 
     float currentTime;
     GameObject obj;
@@ -39,6 +41,7 @@ public class Earthquake : MonoBehaviour
 
     IEnumerator EarthquakingInMyBoots()
     {
+        source.Play();
         Vector3 pos;
         RaycastHit hit;
 
