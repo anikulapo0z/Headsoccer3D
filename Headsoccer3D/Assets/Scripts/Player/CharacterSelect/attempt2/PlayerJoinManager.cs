@@ -216,9 +216,11 @@ public class PlayerJoinManager : MonoBehaviour
 
     (IPlayerControllable, GameObject) CreateCursor(int index)
     {
+        Vector3 centerPoint = mainCanvas.TransformPoint(mainCanvas.rect.center);
+
         GameObject obj = Instantiate(
             characterCursorPrefab[index],
-            Vector3.zero,
+            centerPoint,
             Quaternion.identity,
             characterCursorParent
         );
