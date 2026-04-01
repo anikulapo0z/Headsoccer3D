@@ -14,6 +14,7 @@ Material:
   m_ValidKeywords:
   - _AMBIENTLIGHTING
   - _HALFTONELIGHT
+  - _MASKING
   - _SHADOWSLIGHT
   m_InvalidKeywords:
   - _IGNORESHADOWS
@@ -69,7 +70,7 @@ Material:
         m_Scale: {x: 1, y: 2.08}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 97b3ee40b866cbf4ebcf2f095633ea61, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -124,7 +125,7 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DesaturationValue: 0
+    - _DesaturationValue: 0.31
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -138,7 +139,7 @@ Material:
     - _HalftoneToggle: 1
     - _IgnoreShadowsToggle: 1
     - _Lightness: 0.255
-    - _MaskToggle: 0
+    - _MaskToggle: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -149,7 +150,7 @@ Material:
     - _RemapOutputMax: 1
     - _RemapOutputMin: -0.14
     - _ShadowFrequency: -0.26
-    - _ShadowLightness: 0.74
+    - _ShadowLightness: 0.65
     - _ShadowsToggle: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
@@ -165,12 +166,12 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.7647059, g: 0.725131, b: 0.25098038, a: 1}
+    - _BaseColor: {r: 1, g: 0.95571077, b: 0.4198113, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FirstMaskColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HalftoneColor: {r: 0.3882353, g: 0.003687738, b: 0, a: 1}
-    - _SecondMaskColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FirstMaskColor: {r: 0.9528302, g: 0.4809096, b: 0.4809096, a: 1}
+    - _HalftoneColor: {r: 1, g: 0.62603104, b: 0.023584902, a: 1}
+    - _SecondMaskColor: {r: 0.9019608, g: 0.3529412, b: 0.3529412, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
