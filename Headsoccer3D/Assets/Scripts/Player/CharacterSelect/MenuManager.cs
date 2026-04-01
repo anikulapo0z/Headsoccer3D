@@ -157,6 +157,7 @@ public class MenuManager : MonoBehaviour
     }
     void MoveToNextScreen()
     {
+        canMoveToNextScreen = false;
         characterSelectMenu.SetActive(false);
         mapSelectMenu.SetActive(true);
 
