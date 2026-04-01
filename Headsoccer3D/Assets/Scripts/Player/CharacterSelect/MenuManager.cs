@@ -19,6 +19,7 @@ public class MenuManager : MonoBehaviour
     // menu space references
     [SerializeField] GameObject characterSelectMenu;
     [SerializeField] GameObject mapSelectMenu;
+    [SerializeField] RectTransform mainCanvas;
 
 
     bool force2v2 = false;
@@ -165,7 +166,10 @@ public class MenuManager : MonoBehaviour
             t.gameObject.SetActive(false);
         }
 
-        GameObject playerControllable = Instantiate(mapCursorPrefab, Vector3.zero, Quaternion.identity, cursorHolder_map);
+        Vector3 centerPoint = mainCanvas.TransformPoint(mainCanvas.rect.center);
+
+
+        GameObject playerControllable = Instantiate(mapCursorPrefab, centerPoint, Quaternion.identity, cursorHolder_map);
         IPlayerControllable controller = playerControllable.GetComponent<PlayerCursor>();
 
         //PlayerInputHolder.Instance.playerList[0].SetControlledObject(controller);
