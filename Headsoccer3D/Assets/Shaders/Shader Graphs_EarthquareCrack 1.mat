@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4851030267432919388
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 10
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -7,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_BallDrop_Train
-  m_Shader: {fileID: -6465566751694194690, guid: 5db164eb50f53114594e45fad2a27ef6, type: 3}
+  m_Name: Shader Graphs_EarthquareCrack 1
+  m_Shader: {fileID: -6465566751694194690, guid: d596d41c2b9ac9047a8a72770fecce13, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -24,8 +37,12 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _SampleTexture2D_5fcce769445545c7b714148479999d42_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: f792c5aded2ba1c4690d4c4923ea561a, type: 3}
+    - _SampleTexture2D_331bc763ca054306baca6c6531c49876_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 84f489a3fed904e4583c2096ad5264a3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2D:
+        m_Texture: {fileID: 2800000, guid: 5998f8368d1990a44a789cdf484c3ad7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -42,27 +59,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Farthest_Dist: 0.8
-    - _Farthest_Height: 1.24
-    - _MaxCircle_Size: 0.5
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Tiling: 0.28
+    - _clip: -6.2
     m_Colors:
-    - _Ball_Position: {r: -4.59, g: -1.35, b: -3.61, a: 0}
-    - _Color: {r: 1, g: 0.68713915, b: 0.06132078, a: 1}
+    - _Color: {r: 0.5, g: 0.33403215, b: 0.08726415, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &4019207741635900014
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 10
