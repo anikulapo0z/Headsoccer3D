@@ -13898,6 +13898,9 @@ MonoBehaviour:
   totalWinAreaTime: 5
   currentWinAreaTime: 0
   startFadeWinArea: 2
+  redWinColor: {r: 1, g: 0, b: 0, a: 1}
+  blueWinColor: {r: 0, g: 0, b: 1, a: 1}
+  drawColor: {r: 1, g: 1, b: 1, a: 1}
   backgroundMusic: {fileID: 1792353836}
 --- !u!4 &1951291691
 Transform:
@@ -13951,6 +13954,7 @@ MonoBehaviour:
   lineSpacing: 1.4
   letterScale: 0.7
   letterRotation: {x: 0, y: 180, z: 0}
+  wordSharedMaterial: {fileID: 2100000, guid: 72ccb9f29e303bb459fd4d8fc4e2a8a5, type: 2}
 --- !u!1 &2067711595
 GameObject:
   m_ObjectHideFlags: 0

@@ -93,6 +93,9 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] float currentWinAreaTime;
     [SerializeField] float startFadeWinArea;
     Coroutine winAreaCoroutine;
+    [SerializeField] Color redWinColor = Color.red;
+    [SerializeField] Color blueWinColor = Color.blue;
+    [SerializeField] Color drawColor = Color.white;
 
     [SerializeField] MenuMusic backgroundMusic;
 
@@ -300,6 +303,9 @@ public class GameSceneManager : MonoBehaviour
                 playerCharacters[3].transform.position = winAreaSpawnPoints[3].transform.position;
             }
         }
+
+        //set material
+        GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().setMaterialColor(scoreTracker.LeftTeamWon() ? redWinColor : blueWinColor);
 
         if (scoreTracker.LeftTeamWon())
         {
