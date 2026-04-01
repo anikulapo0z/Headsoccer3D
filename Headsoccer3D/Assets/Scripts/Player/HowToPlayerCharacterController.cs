@@ -85,7 +85,7 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
             held = false;
         else
             held = true;
-        MenuManager.Instance.moveHighlight.SetHighlight(held, false);
+        MenuManager.Instance.moveHighlight.SetHighlight(held, false, input.x, input.y);
 
         moveInput = input;
         //anim.SetFloat("Velocity", 10f);

@@ -421,6 +421,7 @@ MonoBehaviour:
   timeToTween: 0.15
   timeToTurnOff: 0.5
   targetColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  joystickDist: 5
 --- !u!224 &33274671
 RectTransform:
   m_ObjectHideFlags: 0
@@ -805,6 +806,7 @@ MonoBehaviour:
   timeToTween: 0.2
   timeToTurnOff: 0.4
   targetColor: {r: 0.9622642, g: 0.6906298, b: 0.29503384, a: 1}
+  joystickDist: 5
 --- !u!1 &116885714
 GameObject:
   m_ObjectHideFlags: 0
@@ -2189,6 +2191,7 @@ MonoBehaviour:
   timeToTween: 0.15
   timeToTurnOff: 0.5
   targetColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  joystickDist: 5
 --- !u!1 &292497735
 GameObject:
   m_ObjectHideFlags: 0
@@ -2356,6 +2359,7 @@ MonoBehaviour:
   timeToTween: 0.2
   timeToTurnOff: 0.4
   targetColor: {r: 0.9607843, g: 0.6901961, b: 0.29411766, a: 1}
+  joystickDist: 5
 --- !u!1 &298938146
 GameObject:
   m_ObjectHideFlags: 0
@@ -4404,7 +4408,7 @@ RectTransform:
   m_GameObject: {fileID: 636299339}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.58457, y: 0.58457, z: 0.58457}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1720053192}
@@ -4412,7 +4416,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0.0000015497208, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &636299341
 MonoBehaviour:
@@ -4467,6 +4471,7 @@ MonoBehaviour:
   timeToTween: 0.2
   timeToTurnOff: 0.4
   targetColor: {r: 0.9622642, g: 0.6906298, b: 0.29503384, a: 1}
+  joystickDist: 5
 --- !u!1 &643338101
 GameObject:
   m_ObjectHideFlags: 0
@@ -6890,7 +6895,7 @@ RectTransform:
   m_GameObject: {fileID: 1122148112}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.69031155, y: 0.86291254, z: 0.92044}
+  m_LocalScale: {x: 0.5065575, y: 0.86291254, z: 0.92044}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1939540928}
@@ -7283,6 +7288,7 @@ MonoBehaviour:
   timeToTween: 0.2
   timeToTurnOff: 0.4
   targetColor: {r: 0.9622642, g: 0.6906298, b: 0.29503384, a: 1}
+  joystickDist: 5
 --- !u!1 &1189408422
 GameObject:
   m_ObjectHideFlags: 0
@@ -7969,7 +7975,7 @@ RectTransform:
   m_GameObject: {fileID: 1231861913}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0713352, y: 1.1768, z: 1.1768}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 84897424}
@@ -8500,7 +8506,7 @@ RectTransform:
   m_GameObject: {fileID: 1286422588}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3624, y: 1.3624, z: 1.3624}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 84897424}
@@ -8513,7 +8519,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -630, y: -443}
+  m_AnchoredPosition: {x: -947, y: -529}
   m_SizeDelta: {x: 1260, y: 709}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1286422590
@@ -10525,7 +10531,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1522218993
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11426,6 +11432,7 @@ MonoBehaviour:
   timeToTween: 0.2
   timeToTurnOff: 0.4
   targetColor: {r: 0.9622642, g: 0.6906298, b: 0.29503384, a: 1}
+  joystickDist: 5
 --- !u!1 &1634107154
 GameObject:
   m_ObjectHideFlags: 0
@@ -12320,7 +12327,7 @@ RectTransform:
   m_GameObject: {fileID: 1720053191}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalScale: {x: 0.72726005, y: 0.72726005, z: 0.72726005}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 636299340}
@@ -12328,7 +12335,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -324.3, y: -335.9}
+  m_AnchoredPosition: {x: -350.4, y: -335.9}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1720053193
@@ -13133,6 +13140,7 @@ MonoBehaviour:
   timeToTween: 0.15
   timeToTurnOff: 0.5
   targetColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  joystickDist: 5
 --- !u!1 &1801695203
 GameObject:
   m_ObjectHideFlags: 0
@@ -13490,6 +13498,7 @@ MonoBehaviour:
   timeToTween: 0.15
   timeToTurnOff: 0.5
   targetColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  joystickDist: 5
 --- !u!1 &1847010276
 GameObject:
   m_ObjectHideFlags: 0
@@ -14000,6 +14009,7 @@ MonoBehaviour:
   timeToTween: 0.2
   timeToTurnOff: 0.4
   targetColor: {r: 0.9622642, g: 0.6906298, b: 0.29503384, a: 1}
+  joystickDist: 5
 --- !u!1 &1887464352
 GameObject:
   m_ObjectHideFlags: 0
