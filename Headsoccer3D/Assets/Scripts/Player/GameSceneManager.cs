@@ -93,6 +93,9 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] float currentWinAreaTime;
     [SerializeField] float startFadeWinArea;
     Coroutine winAreaCoroutine;
+    [SerializeField] Color redWinColor = Color.red;
+    [SerializeField] Color blueWinColor = Color.blue;
+    [SerializeField] Color drawColor = Color.white;
 
     [SerializeField] MenuMusic backgroundMusic;
 
@@ -316,6 +319,7 @@ public class GameSceneManager : MonoBehaviour
                 p.GetComponent<PlayerController>().SetFalling();
             }
 
+            GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().setMaterialColor(redWinColor);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("red team", -1);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("wins", 7);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord(scoreTracker.GetScore(), 4);
@@ -335,6 +339,7 @@ public class GameSceneManager : MonoBehaviour
                 p.GetComponent<PlayerController>().SetFalling();
             }
 
+            GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().setMaterialColor(blueWinColor);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("blue team", -1);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("wins", 7);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord(scoreTracker.GetScore(), 4);
@@ -351,6 +356,7 @@ public class GameSceneManager : MonoBehaviour
                 p.GetComponent<PlayerController>().SetFalling();
             }
 
+            GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().setMaterialColor(drawColor);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("tie game", -1);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("letters to", 7);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("play with", 4);

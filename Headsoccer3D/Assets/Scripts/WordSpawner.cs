@@ -19,7 +19,7 @@ public class WordSpawner : MonoBehaviour
 
     private Dictionary<char, GameObject> letterPrefabs = new Dictionary<char, GameObject>();
 
-
+    [SerializeField] Material wordSharedMaterial;
     void Awake()
     {
         LoadLetters();
@@ -37,6 +37,11 @@ public class WordSpawner : MonoBehaviour
                 letterPrefabs[c] = letter;
             }
         }
+    }
+
+    public void setMaterialColor(Color _color)
+    {
+        wordSharedMaterial.SetColor("_BaseColor", _color);
     }
 
 
