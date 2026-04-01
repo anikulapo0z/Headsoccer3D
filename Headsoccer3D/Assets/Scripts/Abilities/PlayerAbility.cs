@@ -36,6 +36,7 @@ public class PlayerAbility : MonoBehaviour
     [SerializeField] float earthquakeYForce;
     [SerializeField] float earthquakeOutForce;
     [SerializeField] float earthquakePlayerForce;
+    [SerializeField] AudioSource earthquakeSound;
 
 
 
@@ -106,6 +107,9 @@ public class PlayerAbility : MonoBehaviour
                 eq.ballKickForce = earthquakeOutForce;
                 eq.playerKickForce = earthquakePlayerForce;
                 eq.player = gameObject;
+                eq.source = earthquakeSound;
+
+                GetComponent<PlayerGroundMarker>().ToggleEarthquakeActive();
 
                 break;
 
@@ -133,6 +137,8 @@ public class PlayerAbility : MonoBehaviour
                 break;
 
             case AbilityTrigger.AbilityTypes.Earthquake:
+                GetComponent<PlayerGroundMarker>().ToggleEarthquakeActive();
+
                 Destroy(GetComponent<Earthquake>());
                 break;
 

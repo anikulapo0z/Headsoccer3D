@@ -5,10 +5,13 @@ using UnityEngine.UI;
 public class CharacterPortrait : MonoBehaviour
 {
     [SerializeField] Image portrait;
+    [SerializeField] Image border;
     [SerializeField] TMP_Text characterName;
 
     [Header("States")]
     [SerializeField] Sprite notJoinedSprite;
+    [SerializeField] Sprite notJoinedBorder;
+    [SerializeField] Sprite[] joinedBorder;
     [SerializeField] string notJoinedText = "PRESS JOIN";
 
     public int assignedPlayerIndex = -1;
@@ -27,6 +30,8 @@ public class CharacterPortrait : MonoBehaviour
         portrait.sprite = defaultSprite;
         characterName.text = name.ToUpper();
 
+        border.sprite = joinedBorder[playerIndex];
+
         disconnectButton.SetPlayerVar(assignedPlayerIndex);
     }
 
@@ -35,6 +40,7 @@ public class CharacterPortrait : MonoBehaviour
         assignedPlayerIndex = -1;
 
         portrait.sprite = notJoinedSprite;
+        border.sprite = notJoinedBorder;
         characterName.text = notJoinedText;
     }
 
@@ -44,6 +50,8 @@ public class CharacterPortrait : MonoBehaviour
         {
             MenuManager.Instance.DisconnectPlayer(assignedPlayerIndex);
             Destroy(playerCursor);
+            border.sprite = notJoinedBorder;
+
         }
     }
 }

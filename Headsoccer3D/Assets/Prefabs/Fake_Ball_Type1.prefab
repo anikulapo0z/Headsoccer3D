@@ -394,6 +394,12 @@ MonoBehaviour:
   ballHitHardSfx: {fileID: -6743032039996207225}
   dribbleSpeed: 14
   ballRadius: 0.11
+  ballTrail: {fileID: 0}
+  scaleMultiplier: 0
+  minScale: 0
+  maxScale: 0
+  rotationOffset: {x: 0, y: 0, z: 0}
+  useSlerp: 0
 --- !u!82 &-6743032039996207225
 AudioSource:
   m_ObjectHideFlags: 0

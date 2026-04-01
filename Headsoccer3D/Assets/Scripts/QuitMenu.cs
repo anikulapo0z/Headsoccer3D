@@ -50,6 +50,17 @@ public class QuitMenu : MonoBehaviour, IMenuItem
             case ButtonType.BackToCharacters:
                 characterMenu.SetActive(true);
                 mapMenu.SetActive(false);
+
+                foreach (Transform t in MenuManager.Instance.cursorHolder_character)
+                {
+                    t.gameObject.SetActive(true);
+                    t.GetComponent<PlayerCursor>().OnCancel();
+                }
+                foreach (Transform t in MenuManager.Instance.cursorHolder_map)
+                {
+                    t.gameObject.SetActive(false);
+                }
+
                 break;
 
             case ButtonType.HowToPlay:
@@ -57,7 +68,7 @@ public class QuitMenu : MonoBehaviour, IMenuItem
                 {
                     g.SetActive(false);
                 }
-                foreach(Transform t in MenuManager.Instance.cursorHolder)
+                foreach(Transform t in MenuManager.Instance.cursorHolder_character)
                 {
                     t.gameObject.SetActive(false);
                 }
