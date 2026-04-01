@@ -597,7 +597,7 @@ public class GameSceneManager : MonoBehaviour
 
             playerObj.GetComponent<CharacterController>().enabled = false;
 
-            if (teamSizes == MenuManager.TeamSizes.v1)
+            if (inputControllers.Count == 2)
                 playerObj.transform.position = TwoP_SpawnPoints[inputControllers.IndexOf(player)].transform.position;
             else
                 playerObj.transform.position = FourP_SpawnPoints[inputControllers.IndexOf(player)].transform.position;
