@@ -7,6 +7,8 @@ public class PlayerAudioManager : MonoBehaviour
     [SerializeField] private AudioSource jumpSfx;
     [SerializeField] private AudioSource landSfx;
     [SerializeField] private AudioSource getHitSfx;
+    [SerializeField] private AudioSource empoweredKickSfx;
+    [SerializeField] private AudioSource multiBallSfx;
 
     [SerializeField] private AudioSource[] kickBallSfx;
     [SerializeField] private AudioSource[] footstepsSfx;
@@ -88,5 +90,46 @@ public class PlayerAudioManager : MonoBehaviour
         {
             Debug.Log("Footstep SFX clips are not assigned.");
         }
+    }
+
+    public void PlayEmpoweredKickKickSfx()
+    {
+        if (empoweredKickSfx)
+        {
+            if (empoweredKickSfx.resource)
+            {
+                empoweredKickSfx.Play();
+            }
+            else
+            {
+                Debug.Log("empoweredKickSfx clip is not assigned.");
+            }
+        }
+        else
+        {
+            Debug.Log("empoweredKickSfx is not assigned.");
+
+        }
+
+    }
+    public void PlayMultiBallSfx()
+    {
+        if (multiBallSfx)
+        {
+            if (multiBallSfx.resource)
+            {
+                multiBallSfx.Play();
+            }
+            else
+            {
+                Debug.Log("multiBallSfx clip is not assigned.");
+            }
+        }
+        else
+        {
+            Debug.Log("multiBallSfx is not assigned.");
+
+        }
+
     }
 }
