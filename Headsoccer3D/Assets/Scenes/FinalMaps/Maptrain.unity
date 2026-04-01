@@ -2626,6 +2626,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2644335407101162335, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: m_TargetTexture
+      value: 
+      objectReference: {fileID: 8400000, guid: a331f50a176575344868d3bca2c421c4, type: 2}
     - target: {fileID: 2736634896933055878, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_fontColor.b
       value: 0.26032394
@@ -2664,6 +2668,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3537780810692498510, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3565312799435005474, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: m_CameraType
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4012700148705251424, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
@@ -13784,9 +13792,9 @@ MonoBehaviour:
   totalWinAreaTime: 13
   currentWinAreaTime: 0
   startFadeWinArea: 2
-  redWinColor: {r: 1, g: 0, b: 0, a: 1}
-  blueWinColor: {r: 0, g: 0, b: 1, a: 1}
-  drawColor: {r: 1, g: 1, b: 1, a: 1}
+  redWinColor: {r: 0.7372549, g: 0.21960784, b: 0.18431373, a: 1}
+  blueWinColor: {r: 0.43137255, g: 0.43137255, b: 0.8901961, a: 1}
+  drawColor: {r: 0.68235296, g: 0.68235296, b: 0.68235296, a: 1}
   backgroundMusic: {fileID: 1792353836}
 --- !u!4 &1951291691
 Transform:

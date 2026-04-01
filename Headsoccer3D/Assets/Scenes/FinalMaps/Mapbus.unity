@@ -7008,7 +7008,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 200
   m_TargetDisplay: 0
 --- !u!4 &562181333 stripped
 Transform:
@@ -7666,14 +7666,6 @@ PrefabInstance:
       propertyPath: goalSign
       value: 
       objectReference: {fileID: 472860465}
-    - target: {fileID: 121180679605582305, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
-      propertyPath: leftScoreText
-      value: 
-      objectReference: {fileID: 674493707}
-    - target: {fileID: 121180679605582305, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
-      propertyPath: rightScoreText
-      value: 
-      objectReference: {fileID: 674493706}
     - target: {fileID: 121180679605582305, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: cameraController
       value: 
@@ -9258,28 +9250,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4176021496890234021, guid: 07dcd9d59236e9843a75baece04da12d, type: 3}
   m_PrefabInstance: {fileID: 562258079}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &674493706 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5724224237120646320, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
-  m_PrefabInstance: {fileID: 605910383}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &674493707 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2736634896933055878, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
-  m_PrefabInstance: {fileID: 605910383}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &692429545
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11240,10 +11210,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1737741969}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &965821690
 PrefabInstance:
@@ -16201,10 +16171,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 558225711}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &1442357956 stripped
 Transform:
@@ -25255,12 +25225,12 @@ MonoBehaviour:
   winAreaCamera: {fileID: 870212007}
   winAreaImage: {fileID: 1684473350}
   blurMaterial: {fileID: 2100000, guid: 32a7477d5a46e07468c6b80dee2635ce, type: 2}
-  totalWinAreaTime: 13
+  totalWinAreaTime: 10
   currentWinAreaTime: 0
   startFadeWinArea: 2
-  redWinColor: {r: 1, g: 0, b: 0, a: 1}
-  blueWinColor: {r: 0, g: 0, b: 1, a: 1}
-  drawColor: {r: 1, g: 1, b: 1, a: 1}
+  redWinColor: {r: 0.7372549, g: 0.21960784, b: 0.18431373, a: 1}
+  blueWinColor: {r: 0.43137255, g: 0.43137255, b: 0.8901961, a: 1}
+  drawColor: {r: 0.68235296, g: 0.68235296, b: 0.68235296, a: 1}
   backgroundMusic: {fileID: 1701321367}
 --- !u!4 &1951291691
 Transform:
@@ -28404,7 +28374,7 @@ PrefabInstance:
     - target: {fileID: 7858729299988062257, guid: a41b5ddd62f4d1e40896148d2c286a8c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 0bcf382899cbd4243bd9d0897c189a2b, type: 2}
+      objectReference: {fileID: 2100000, guid: 5b9c7b4302cd75340a99cd611d3f598a, type: 2}
     - target: {fileID: 8251198846692497268, guid: a41b5ddd62f4d1e40896148d2c286a8c, type: 3}
       propertyPath: ballTransform
       value: 
@@ -28412,7 +28382,7 @@ PrefabInstance:
     - target: {fileID: 8455167428210546635, guid: a41b5ddd62f4d1e40896148d2c286a8c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 76b86b3c4d5efdf48b0b684b822fcdb1, type: 2}
+      objectReference: {fileID: 2100000, guid: 0bcf382899cbd4243bd9d0897c189a2b, type: 2}
     - target: {fileID: 8474148246007039119, guid: a41b5ddd62f4d1e40896148d2c286a8c, type: 3}
       propertyPath: m_Name
       value: Main Bus
