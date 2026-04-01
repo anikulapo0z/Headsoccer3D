@@ -93,6 +93,9 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] float currentWinAreaTime;
     [SerializeField] float startFadeWinArea;
     Coroutine winAreaCoroutine;
+    [SerializeField] Color redWinColor = Color.red;
+    [SerializeField] Color blueWinColor = Color.blue;
+    [SerializeField] Color drawColor = Color.white;
 
     [SerializeField] MenuMusic backgroundMusic;
 
@@ -115,11 +118,16 @@ public class GameSceneManager : MonoBehaviour
         exitTransitionMaterial.SetFloat("_Transition", 0);
 
         SetUpGameLevel(MenuManager.Instance.GetTeamSize(), MenuManager.Instance.GetGameMode());
+
+        Debug.Log("HUIS");
         StartCoroutine(fadeTransitionThenLoad());
     }
 
     IEnumerator fadeTransitionThenLoad()
     {
+
+        Debug.Log("FDEYHP*AEHFP uisyhfep i");
+
         //make sure its on, in case we disable it in editor while working and we forget
         transitionImage.gameObject.SetActive(true);
 
@@ -296,7 +304,7 @@ public class GameSceneManager : MonoBehaviour
             }
         }
 
-        if (scoreTracker.LeftTeamWon())
+        if (scoreTracker.WhichTeamWon() == "left")
         {
             // winning team
             foreach(var p in leftTeam)
@@ -311,11 +319,12 @@ public class GameSceneManager : MonoBehaviour
                 p.GetComponent<PlayerController>().SetFalling();
             }
 
+            GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().setMaterialColor(redWinColor);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("red team", -1);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("wins", 7);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord(scoreTracker.GetScore(), 4);
         }
-        else
+        else if(scoreTracker.WhichTeamWon() == "right")
         {
             // winning team
             foreach (var p in rightTeam)
@@ -330,15 +339,36 @@ public class GameSceneManager : MonoBehaviour
                 p.GetComponent<PlayerController>().SetFalling();
             }
 
+            GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().setMaterialColor(blueWinColor);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("blue team", -1);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("wins", 7);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord(scoreTracker.GetScore(), 4);
+        }
+        else
+        {
 
+            foreach (var p in rightTeam)
+            {
+                p.GetComponent<PlayerController>().SetFalling();
+            }
+            foreach (var p in leftTeam)
+            {
+                p.GetComponent<PlayerController>().SetFalling();
+            }
+
+            GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().setMaterialColor(drawColor);
+            GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("tie game", -1);
+            GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("letters to", 7);
+            GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("play with", 4);
         }
 
-        //fade in the win area
 
-        _Timer = 0f;
+
+
+
+            //fade in the win area
+
+            _Timer = 0f;
         _blurTime = 1.8736f;
         winAreaMaterial = winAreaImage.material;
         winAreaMaterial.SetFloat("_Transition", 0f);

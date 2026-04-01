@@ -95,12 +95,14 @@ public class ScoreTracker : MonoBehaviour
         goalSign.TriggerGoalSign();
     }
 
-    public bool LeftTeamWon()
+    public string WhichTeamWon()
     {
-        if(leftScore > rightScore)
-            return true;
+        if (leftScore > rightScore)
+            return "left";
+        else if (leftScore < rightScore)
+            return "right";
         else
-            return false;
+            return "tie";
     }
     public string GetScore()
     {

@@ -12,12 +12,14 @@ public class MenuManager : MonoBehaviour
     [SerializeField] int totalPlayerCount;
     [SerializeField] bool canMoveToNextScreen = false;
     [SerializeField] GameObject pressConfirmPrompt;
+    [SerializeField] GameObject wrongPlayerCountPrompt;
     [SerializeField] int lockedPlayerCount;
 
 
     // menu space references
     [SerializeField] GameObject characterSelectMenu;
     [SerializeField] GameObject mapSelectMenu;
+    [SerializeField] RectTransform mainCanvas;
 
 
     bool force2v2 = false;
@@ -92,6 +94,7 @@ public class MenuManager : MonoBehaviour
         canMoveToNextScreen = false;
 
         pressConfirmPrompt.SetActive(false);
+        wrongPlayerCountPrompt.SetActive(false);
 
         //characterSelectMenu.SetActive(true);
         mapSelectMenu.SetActive(false);
@@ -108,30 +111,42 @@ public class MenuManager : MonoBehaviour
         totalPlayerCount = PlayerInputHolder.Instance.playerList.Count;
         canMoveToNextScreen = false;
         pressConfirmPrompt.SetActive(false);
+        wrongPlayerCountPrompt.SetActive(false);
     }
     public void CheckPlayerConfirm(bool isLocked)
     {
-
-        if (!isLocked)
-        {
-            lockedPlayerCount++;
-            if (lockedPlayerCount == totalPlayerCount)
-            {
-                canMoveToNextScreen = true;
-                pressConfirmPrompt.SetActive(true);
-            }
-            return;
-        }
-
         if (canMoveToNextScreen)
         {
             MoveToNextScreen();
         }
+
+
+        if (!isLocked)
+        {
+            
+
+
+
+            lockedPlayerCount++;
+            if (lockedPlayerCount == totalPlayerCount && totalPlayerCount % 2 == 0)
+            {
+                canMoveToNextScreen = true;
+                pressConfirmPrompt.SetActive(true);
+            }
+            else if (lockedPlayerCount == totalPlayerCount)
+            {
+                wrongPlayerCountPrompt.SetActive(true);
+            }
+        }
+
+
     }
     public void PlayerCancel(bool isLocked)
     {
         if (isLocked)
         {
+            wrongPlayerCountPrompt.SetActive(false);
+
             if (canMoveToNextScreen)
             {
                 canMoveToNextScreen = false;
@@ -142,6 +157,7 @@ public class MenuManager : MonoBehaviour
     }
     void MoveToNextScreen()
     {
+        canMoveToNextScreen = false;
         characterSelectMenu.SetActive(false);
         mapSelectMenu.SetActive(true);
 
@@ -151,7 +167,10 @@ public class MenuManager : MonoBehaviour
             t.gameObject.SetActive(false);
         }
 
-        GameObject playerControllable = Instantiate(mapCursorPrefab, Vector3.zero, Quaternion.identity, cursorHolder_map);
+        Vector3 centerPoint = mainCanvas.TransformPoint(mainCanvas.rect.center);
+
+
+        GameObject playerControllable = Instantiate(mapCursorPrefab, centerPoint, Quaternion.identity, cursorHolder_map);
         IPlayerControllable controller = playerControllable.GetComponent<PlayerCursor>();
 
         //PlayerInputHolder.Instance.playerList[0].SetControlledObject(controller);
