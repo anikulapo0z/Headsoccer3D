@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Android;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
 
@@ -32,6 +33,8 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
 
     public int playerIndex;
 
+
+    [SerializeField] ParticleSystem sprint;
     //[SerializeField] HowToPlayHighlights jumpHighlight;
     //[SerializeField] HowToPlayHighlights kickHighlight;
     //[SerializeField] HowToPlayHighlights moveHighlight;
@@ -107,15 +110,24 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
     public void OnKick(bool held)
     {
         MenuManager.Instance.kickHighlight.SetHighlight(held, false);
-        if (!held)
+        if (held)
         {
             if (Time.time < nextKickTime) return;
             nextKickTime = Time.time + kickCooldown;
 
-            anim.SetTrigger("Kick");
+            anim.SetTrigger("Charge");
+
             //kickTrigger.TurnOnCollider();
             //StartCoroutine(DisableKickAfterTime());
         }
+        else
+        {
+            anim.ResetTrigger("Charge");
+
+            anim.SetTrigger("Kick");
+
+        }
+
     }
 
 
@@ -135,6 +147,18 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
     public void OnSprint(bool held)
     {
         MenuManager.Instance.sprintHighlight.SetHighlight(held, false);
+
+        if (held && moveInput.magnitude > 0)
+        {
+            var emission = sprint.GetComponent<ParticleSystem>().emission;
+            emission.rateOverTime = 5f;
+        }
+        else
+        {
+            var emission = sprint.GetComponent<ParticleSystem>().emission;
+            emission.rateOverTime = 0;
+        }
+
 
 
     }
