@@ -2638,6 +2638,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2644335407101162335, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: m_TargetTexture
+      value: 
+      objectReference: {fileID: 8400000, guid: a331f50a176575344868d3bca2c421c4, type: 2}
     - target: {fileID: 2736634896933055878, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_fontColor.b
       value: 0.26032394
@@ -13806,7 +13810,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionImage: {fileID: 173643454}
   exitTransitionImage: {fileID: 503548565}
-  mapType: 1
+  mapType: 0
   inputControllers: []
   playerCharacters: []
   characterPrefab: {fileID: 2105791413608084587, guid: 800baf70555564c47a97f962130bb9ee, type: 3}
