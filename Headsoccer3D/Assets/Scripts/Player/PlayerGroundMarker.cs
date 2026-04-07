@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class PlayerGroundMarker : MonoBehaviour
 {
@@ -27,16 +28,21 @@ public class PlayerGroundMarker : MonoBehaviour
     GameObject multiBallObject;
     [SerializeField] GameObject empoweredKickText;
     GameObject empoweredKickObject;
+    [SerializeField] GameObject earthquakeText;
+    GameObject earthquakeObject;
     [SerializeField] Vector3 mbOffset;
     [SerializeField] Vector3 mbRotation;
     [SerializeField] Vector3 ekOffset;
     [SerializeField] Vector3 ekRotation;
+    [SerializeField] Vector3 earthquakeOffset;
+    [SerializeField] Vector3 earthquakeRotation;
     [SerializeField] bool mbActive = false;
     [SerializeField] bool ekActive = false;
+    [SerializeField] bool earthquakeActive = false;
 
-
-
-
+    public bool controllingFlipper = false;
+    public List<GameObject> controlledFlippers = new List<GameObject>();
+    [SerializeField] float lrYHeight;
 
 
 
@@ -61,6 +67,10 @@ public class PlayerGroundMarker : MonoBehaviour
 
     }
 
+    public void DestroyGroundMarker()
+    {
+        Destroy(playerPositionIndicator);
+    }
 
     private void FixedUpdate()
     {
@@ -70,7 +80,19 @@ public class PlayerGroundMarker : MonoBehaviour
             UpdateMBText();
         else if (ekActive)
             UpdateEKText();
+        else if (earthquakeActive)
+            UpdateEarthquakeText();
+        if (controllingFlipper)
+            UpdateFlipperLine();
+    }
 
+    void UpdateFlipperLine()
+    {
+        foreach(GameObject t in controlledFlippers)
+        {
+            t.GetComponent<LineRenderer>().SetPosition(0, new Vector3(t.transform.position.x, lrYHeight, t.transform.position.z));
+            t.GetComponent<LineRenderer>().SetPosition(1, new Vector3(transform.position.x, lrYHeight, transform.position.z));
+        }
     }
 
     void UpdateMBText()
@@ -97,7 +119,6 @@ public class PlayerGroundMarker : MonoBehaviour
         if (empoweredKickObject == null)
             empoweredKickObject = Instantiate(empoweredKickText);
 
-
         Vector3 targetPos =
             transform.position
             + (mainCam.transform.right * ekOffset.z)
@@ -106,11 +127,24 @@ public class PlayerGroundMarker : MonoBehaviour
         empoweredKickObject.transform.position = targetPos;
         //empoweredKickObject.transform.rotation = Quaternion.Euler(ekRotation);
 
-
         empoweredKickObject.transform.forward = mainCam.transform.forward;
         empoweredKickObject.transform.rotation = Quaternion.Euler(empoweredKickObject.transform.rotation.x + ekRotation.x, empoweredKickObject.transform.rotation.y + ekRotation.y, empoweredKickObject.transform.rotation.z + ekRotation.z);
+    }
+    void UpdateEarthquakeText()
+    {
+        if (earthquakeObject == null)
+            earthquakeObject = Instantiate(earthquakeText);
 
+        Vector3 targetPos =
+            transform.position
+            + (mainCam.transform.right * ekOffset.z)
+            + (Vector3.up * ekOffset.y);
 
+        earthquakeObject.transform.position = targetPos;
+        //empoweredKickObject.transform.rotation = Quaternion.Euler(ekRotation);
+
+        earthquakeObject.transform.forward = mainCam.transform.forward;
+        earthquakeObject.transform.rotation = Quaternion.Euler(earthquakeObject.transform.rotation.x + earthquakeRotation.x, earthquakeObject.transform.rotation.y + earthquakeRotation.y, earthquakeObject.transform.rotation.z + earthquakeRotation.z);
     }
 
 
@@ -161,7 +195,7 @@ public class PlayerGroundMarker : MonoBehaviour
     }
     public void ToggleEKActive()
     {
-        if (mbActive)
+        if (ekActive)
         {
             ekActive = false;
             if (empoweredKickObject != null)
@@ -175,7 +209,22 @@ public class PlayerGroundMarker : MonoBehaviour
 
         }
     }
+    public void ToggleEarthquakeActive()
+    {
+        if (earthquakeActive)
+        {
+            earthquakeActive = false;
+            if (earthquakeObject != null)
+                Destroy(earthquakeObject);
+        }
+        else
+        {
+            earthquakeActive = true;
+            if (earthquakeObject == null)
+                earthquakeObject = Instantiate(earthquakeText);
 
+        }
+    }
 
 
 }

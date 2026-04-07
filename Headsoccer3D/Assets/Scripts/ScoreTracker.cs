@@ -52,14 +52,14 @@ public class ScoreTracker : MonoBehaviour
         leftScoreText.text = leftScore.ToString();
         gameSceneManager.GoalScored('l');
 
-        Debug.LogWarning(leftGoalParticles.Count);
+        //Debug.LogWarning(leftGoalParticles.Count);
 
         //leftGoalParticles[0].Play();
         //testConfett.Play();
 
 
 
-        var particles = leftGoalParticles;
+        var particles = rightGoalParticles;
 
         foreach (var p in particles)
         {
@@ -84,7 +84,7 @@ public class ScoreTracker : MonoBehaviour
 
 
 
-        var particles = rightGoalParticles;
+        var particles = leftGoalParticles;
 
         foreach (var p in particles)
         {
@@ -93,6 +93,20 @@ public class ScoreTracker : MonoBehaviour
         Invoke("TurnOffParticles", timeUntilTurnParticlesOff);
 
         goalSign.TriggerGoalSign();
+    }
+
+    public string WhichTeamWon()
+    {
+        if (leftScore > rightScore)
+            return "left";
+        else if (leftScore < rightScore)
+            return "right";
+        else
+            return "tie";
+    }
+    public string GetScore()
+    {
+        return leftScore + " - " + rightScore;
     }
     
     void TurnOffParticles()

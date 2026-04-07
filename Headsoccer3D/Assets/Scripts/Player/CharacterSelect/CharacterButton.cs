@@ -16,6 +16,25 @@ public class CharacterButton : MonoBehaviour, IMenuItem
     private Image image;
     private bool hovered;
 
+
+    // for map
+    [Space(5)]
+    [Header("Maps")]
+    [SerializeField] Sprite backGroundImage;
+    [SerializeField] MapSelectBackground selectBackground;
+
+
+
+    public enum ButtonType
+    {
+        None,
+        character,
+        map
+    }
+
+    public ButtonType type;
+
+
     void Awake()
     {
         image = GetComponent<Image>();
@@ -23,13 +42,39 @@ public class CharacterButton : MonoBehaviour, IMenuItem
 
     public void OnHoverEnter(int playerIndex)
     {
-        MenuManager.Instance.SetPortraitInfo(
-            playerIndex,
-            selectedImage,
-            characterName
-        );
+        switch (type)
+        {
+            case ButtonType.map:
+                Debug.Log(selectBackground);
+                Debug.Log(backGroundImage);
+                selectBackground.SetBackground(backGroundImage);
+                return;
+
+            case ButtonType.character:
+
+                Debug.Log(MenuManager.Instance + " : " + playerIndex + " : " + selectedImage + " : " + characterName);
+                MenuManager.Instance.SetPortraitInfo(
+                    playerIndex,
+                    selectedImage,
+                    characterName
+                );/*
         if(characterID != -1 )
-            PlayerInputHolder.Instance.playerList[playerIndex].selectedCharacterID = characterID;
+            PlayerInputHolder.Instance.playerList[playerIndex].selectedCharacterID = characterID;*/
+
+                var player = MenuManager.Instance.joinManager.playerSlots[playerIndex];
+
+                if (player != null)
+                {
+                    player.selectedCharacterID = characterID;
+                }
+                break;
+
+
+        }
+
+
+
+
     }
 
     public void OnHoverExit(int playerIndex)
@@ -51,7 +96,7 @@ public class CharacterButton : MonoBehaviour, IMenuItem
             MenuManager.Instance.LoadGameLevel(sceneName);
 
 
-        Debug.Log($"Player {playerIndex} selected {characterName}");
+        //Debug.Log($"Player {playerIndex} selected {characterName}");
     }
 
 

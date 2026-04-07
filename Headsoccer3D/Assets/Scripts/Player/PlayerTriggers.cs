@@ -8,7 +8,9 @@ public class PlayerTriggers : MonoBehaviour
     [SerializeField] bool isKickTrigger;
     [SerializeField] bool isHeadTrigger;
     bool ballHit = false;
-
+    [SerializeField] float letterKickForce;
+    [SerializeField] float yLetterForce;
+    [SerializeField] PlayerAudioManager playerAudioManager;
 
     private void Awake()
     {
@@ -33,6 +35,8 @@ public class PlayerTriggers : MonoBehaviour
             if (ballHit) return;
             ballHit = true;
 
+            playerAudioManager.PlayKickBallSfx();
+
             if (isKickTrigger)
             {
                 playerController.OnKickTrigger(other.GetComponent<SoccerBall>());
@@ -44,6 +48,13 @@ public class PlayerTriggers : MonoBehaviour
                 playerController.OnHeadTrigger(other.GetComponent<SoccerBall>());
                 return;
             }
+            return;
+        }
+
+        if (other.CompareTag("Letter"))
+        {
+            Vector3 xz = (other.gameObject.transform.position - transform.position).normalized;
+            other.GetComponent<Rigidbody>().AddForce(new Vector3(xz.x, yLetterForce, xz.z) * letterKickForce, ForceMode.Impulse);
             return;
         }
 

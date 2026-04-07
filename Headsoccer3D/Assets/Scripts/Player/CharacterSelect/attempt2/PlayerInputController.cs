@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class PlayerInputController : MonoBehaviour
 {
@@ -9,9 +10,11 @@ public class PlayerInputController : MonoBehaviour
     public string ControllerId { get; private set; }
     public bool IsConnected { get; private set; }
 
-    public int selectedCharacterID = -1;
+    public int selectedCharacterID = -2;
+    public int portraitIndex = -1;
 
-    IPlayerControllable controlledObject;
+    public List<IPlayerControllable> controlledObject = new List<IPlayerControllable>();
+    public List<GameObject> controlledGameObject = new List<GameObject>();
 
     InputActionAsset actionsInstance;
     InputAction moveAction;
@@ -23,37 +26,34 @@ public class PlayerInputController : MonoBehaviour
     InputAction abilityAction;
     InputAction sprintAction;
 
+
     public void Initialize(
         int playerIndex,
         InputDevice device,
         InputActionAsset sourceActions,
-        string actionMapName
-    )
+        string actionMapName)
     {
         PlayerIndex = playerIndex;
         AssignDevice(device, sourceActions, actionMapName);
     }
 
-    public void AssignDevice(
-        InputDevice device,
-        InputActionAsset sourceActions,
-        string actionMapName
-    )
+
+    public void AssignDevice(InputDevice device, InputActionAsset sourceActions, string actionMapName)
     {
-        AssignedDevice = device;
-        IsConnected = true;
-
-        ControllerId = BuildControllerId(device);
-
         if (actionsInstance != null)
         {
+            UnsubscribeActions();
             actionsInstance.Disable();
             Destroy(actionsInstance);
+            actionsInstance = null;
         }
+
+        AssignedDevice = device;
+        IsConnected = true;
+        ControllerId = BuildControllerId(device);
 
         actionsInstance = Instantiate(sourceActions);
         var map = actionsInstance.FindActionMap(actionMapName);
-
         map.devices = new[] { device };
 
         moveAction = map.FindAction("Move");
@@ -65,9 +65,61 @@ public class PlayerInputController : MonoBehaviour
         abilityAction = map.FindAction("Ability");
         sprintAction = map.FindAction("Sprint");
 
+        SubscribeActions();
+
+        map.Enable();
+    }
+    
+
+    public void PlayerDisconnect()
+    {
+        IsConnected = false;
+        AssignedDevice = null;
+
+        if (actionsInstance != null)
+        {
+            UnsubscribeActions();
+            actionsInstance.Disable();
+        }
+    }
+
+
+    public void SetControlledObject(IPlayerControllable obj, GameObject go, bool resetList)
+    {
+        if (resetList)
+        {
+            controlledObject.Clear();
+
+            foreach (var p in controlledGameObject)
+                Destroy(p);
+
+            controlledGameObject.Clear();
+        }
+
+        controlledObject.Add(obj);
+        controlledGameObject.Add(go);
+    }
+
+    public void RemoveControlledObject(IPlayerControllable obj, bool destroyGameObject)
+    {
+        int index = controlledObject.IndexOf(obj);
+        if (index == -1) return;
+
+        if (index < controlledGameObject.Count)
+        {
+            if (destroyGameObject)
+                Destroy(controlledGameObject[index]);
+            controlledGameObject.RemoveAt(index);
+        }
+
+        controlledObject.RemoveAt(index);
+    }
+
+
+    void SubscribeActions()
+    {
         moveAction.performed += OnMove;
         moveAction.canceled += OnMoveCancelled;
-
         confirmAction.performed += OnConfirm;
         cancelAction.performed += OnCancel;
         joinAction.performed += OnJoin;
@@ -75,61 +127,90 @@ public class PlayerInputController : MonoBehaviour
         kickAction.performed += OnKick;
         abilityAction.performed += OnAbility;
         sprintAction.performed += OnSprint;
-
-        map.Enable();
     }
 
-        //moveAction.canceled += OnMoveCancelled;
-        //sprintAction.canceled += OnSprint;
-        //kickAction.canceled += OnKick;
-
-    public void MarkDisconnected()
+    void UnsubscribeActions()
     {
-        IsConnected = false;
-        AssignedDevice = null;
-
-        actionsInstance?.Disable();
+        if (moveAction != null) { moveAction.performed -= OnMove; moveAction.canceled -= OnMoveCancelled; }
+        if (confirmAction != null) confirmAction.performed -= OnConfirm;
+        if (cancelAction != null) cancelAction.performed -= OnCancel;
+        if (joinAction != null) joinAction.performed -= OnJoin;
+        if (jumpAction != null) jumpAction.performed -= OnJump;
+        if (kickAction != null) kickAction.performed -= OnKick;
+        if (abilityAction != null) abilityAction.performed -= OnAbility;
+        if (sprintAction != null) sprintAction.performed -= OnSprint;
     }
 
-    public void SetControlledObject(IPlayerControllable obj)
+
+    void OnMove(InputAction.CallbackContext ctx)
     {
-        controlledObject = obj;
+        foreach (var p in controlledObject)
+            p?.OnMove(ctx.ReadValue<Vector2>());
     }
+
+    void OnMoveCancelled(InputAction.CallbackContext ctx)
+    {
+        foreach (var p in controlledObject)
+            p?.OnMove(Vector2.zero);
+    }
+
+    void OnSprint(InputAction.CallbackContext ctx)
+    {
+        foreach (var p in controlledObject)
+            p?.OnSprint(ctx.ReadValueAsButton());
+    }
+
+    void OnConfirm(InputAction.CallbackContext ctx)
+    {
+        foreach (var p in controlledObject)
+            p?.OnConfirm();
+    }
+
+    void OnCancel(InputAction.CallbackContext ctx)
+    {
+        foreach (var p in controlledObject)
+            p?.OnCancel();
+    }
+
+    void OnJump(InputAction.CallbackContext ctx)
+    {
+        foreach (var p in controlledObject)
+            p?.OnJump();
+    }
+
+    void OnKick(InputAction.CallbackContext ctx)
+    {
+        foreach (var p in controlledObject)
+            p?.OnKick(ctx.ReadValueAsButton());
+    }
+
+    void OnJoin(InputAction.CallbackContext ctx)
+    {
+        foreach (var p in controlledObject)
+            p?.OnJoin();
+    }
+
+    void OnAbility(InputAction.CallbackContext ctx)
+    {
+        foreach (var p in controlledObject)
+            p?.OnAbility();
+    }
+
+
+    void OnDestroy()
+    {
+        UnsubscribeActions();
+        if (actionsInstance != null)
+        {
+            actionsInstance.Disable();
+            Destroy(actionsInstance);
+        }
+    }
+
 
     static string BuildControllerId(InputDevice device)
     {
         var d = device.description;
         return $"{d.interfaceName}_{d.product}_{device.deviceId}";
-    }
-
-    void OnMove(InputAction.CallbackContext ctx)
-    {
-        controlledObject?.OnMove(ctx.ReadValue<Vector2>());
-    }
-
-    void OnMoveCancelled(InputAction.CallbackContext ctx)
-    {
-        controlledObject?.OnMove(Vector2.zero);
-    }
-
-    void OnSprint(InputAction.CallbackContext ctx)
-    {
-        controlledObject?.OnSprint(ctx.ReadValueAsButton());
-    }
-
-    void OnConfirm(InputAction.CallbackContext ctx) => controlledObject?.OnConfirm();
-    void OnCancel(InputAction.CallbackContext ctx) => controlledObject?.OnCancel();
-    void OnJump(InputAction.CallbackContext ctx) => controlledObject?.OnJump();
-    void OnKick(InputAction.CallbackContext ctx)
-    {
-        controlledObject?.OnKick(ctx.ReadValueAsButton());
-    }
-    void OnJoin(InputAction.CallbackContext ctx) => controlledObject?.OnJoin();
-    void OnAbility(InputAction.CallbackContext ctx) => controlledObject?.OnAbility();
-
-    void OnDestroy()
-    {
-        actionsInstance?.Disable();
-        Destroy(actionsInstance);
     }
 }

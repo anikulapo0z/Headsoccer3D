@@ -30,7 +30,7 @@ public class SoccerBall : MonoBehaviour
     private Collider ballCol;
     private Tweener followTween;
 
-    [SerializeField] private float followDuration = 0.06f; // small = snappy (0.04–0.10)
+    [SerializeField] private float followDuration = 0.06f; // small = snappy (0.04â€“0.10)
     [SerializeField] private Ease followEase = Ease.OutQuad;
 
     private bool isPossessed;
@@ -44,13 +44,62 @@ public class SoccerBall : MonoBehaviour
 
     [SerializeField] private float maxClaimHeightAboveGround = 0.35f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource ballHitSoftSfx;
+    [SerializeField] private AudioSource ballHitHardSfx;
+
     Vector3 lastTweenPosition;
+
+
+    public float dribbleSpeed = 14f;
+    public float ballRadius = 0.11f;
+
+    [Header("Ball Trail")]
+    [SerializeField] Transform ballTrail;
+    [SerializeField] float scaleMultiplier;
+    [SerializeField] float minScale;
+    [SerializeField] float maxScale;
+    [SerializeField] Vector3 rotationOffset;
+    [SerializeField] bool useSlerp;
+
+
+
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         ballCol = GetComponent<Collider>();
     }
+
+    void FixedUpdate()
+    {
+        float speed = rb.linearVelocity.magnitude;
+
+        float scale = Mathf.Clamp(speed * scaleMultiplier, minScale, maxScale);
+        Vector3 newScale = ballTrail.localScale;
+        newScale.x = scale;
+        ballTrail.localScale = newScale;
+
+        if (speed > 0.1f)
+        {
+            Vector3 dir = -rb.linearVelocity.normalized;
+
+            Quaternion targetRot = Quaternion.FromToRotation(Vector3.right, dir);
+            if (!useSlerp)
+            {
+                ballTrail.rotation = targetRot * Quaternion.Euler(rotationOffset);
+                return;
+            }
+
+            ballTrail.rotation = Quaternion.Slerp(
+    ballTrail.rotation,
+    targetRot * Quaternion.Euler(rotationOffset),
+    15f * Time.fixedDeltaTime
+);
+        }
+    }
+
+
 
     public void LaunchAtDirection(Vector3 dir, float force)
     {
@@ -128,7 +177,7 @@ public class SoccerBall : MonoBehaviour
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
         if (currentActivePlayer == player)
             return;
-        if (player != null)
+        if (player != null && GameSceneManager.Instance.canScore)
         {
             //float momentum = rb.linearVelocity.magnitude * rb.mass * 50;
             //Vector3 hitDirection = rb.linearVelocity.normalized;
@@ -158,6 +207,9 @@ public class SoccerBall : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Goal"))
+            ReleasePossession();
+
         if (!isPossessed) return;
         if (currentActivePlayer == null) return;
 
@@ -208,7 +260,7 @@ public class SoccerBall : MonoBehaviour
             rb.linearVelocity *= Mathf.Lerp(0.05f, 1f, blend01);
             rb.angularVelocity *= Mathf.Lerp(0.05f, 1f, blend01);
 
-            // Only assign control if it’s still pretty low
+            // Only assign control if itâ€™s still pretty low
             if (blend01 < 0.35f)
                 TryClaimPossession(player);
 
@@ -237,6 +289,30 @@ public class SoccerBall : MonoBehaviour
             Physics.IgnoreCollision(ballCol, otherCol, true);
             StartCoroutine(ReenableCollision(otherCol, 0.2f));
         }
+
+        if (ballHitSoftSfx != null && ballHitHardSfx != null)
+        {
+            if (momentum < threshold2)
+            {
+                ballHitSoftSfx.pitch = Random.Range(0.9f, 1.1f);
+                if (ballHitSoftSfx.resource != null)
+                    ballHitSoftSfx.Play();
+                else if (ballHitSoftSfx.resource == null)
+                {
+                    Debug.Log("No audio clip assigned to ballHitSoftSfx on " + gameObject.name);
+                }
+            }
+            else
+            {
+                ballHitHardSfx.pitch = Random.Range(0.9f, 1.1f);
+                if (ballHitHardSfx.resource != null)
+                    ballHitHardSfx.Play();
+                else if (ballHitHardSfx.resource == null)
+                {
+                    Debug.Log("No audio clip assigned to ballHitHardSfx on " + gameObject.name);
+                }
+            }
+        }
     }
     private IEnumerator ReenableCollision(Collider col, float delay)
     {
@@ -245,7 +321,7 @@ public class SoccerBall : MonoBehaviour
     }
     public bool TryClaimPossession(PlayerController player)
     {
-        Debug.LogWarning($"[POSSESSION] TryClaim called | player={(player ? player.name : "NULL")} | current={(currentActivePlayer ? currentActivePlayer.name : "NULL")} | t={Time.time:F2} next={nextPossessionTime:F2}");
+        //Debug.LogWarning($"[POSSESSION] TryClaim called | player={(player ? player.name : "NULL")} | current={(currentActivePlayer ? currentActivePlayer.name : "NULL")} | t={Time.time:F2} next={nextPossessionTime:F2}");
         if (!CanClaimHere()) return false;
         if (player == null) return false;
         if (Time.time < nextPossessionTime) return false;
@@ -290,10 +366,15 @@ public class SoccerBall : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
-        rb.isKinematic = true;
+        /*rb.isKinematic = true;
         rb.useGravity = false;
 
-        if (ballCol) ballCol.isTrigger = true;
+        if (ballCol) ballCol.isTrigger = true;*/
+
+        rb.isKinematic = false;
+        rb.useGravity = false;
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
 
         // SNAP ON CLAIM so there is no huge first tween
         if (player != null)
@@ -318,62 +399,47 @@ public class SoccerBall : MonoBehaviour
 
         if (ballCol) ballCol.isTrigger = false;
     }
-    public void TweenToAnchor(Vector3 anchorPos, PlayerController requester)
+
+
+    public void MoveTowardAnchor(Vector3 anchorPos, PlayerController requester)
     {
         if (!isPossessed) return;
         if (currentActivePlayer != requester) return;
 
-        //anchorPos.y = transform.position.y + holdHeight;
         anchorPos = ClampAnchorToGround(anchorPos);
         anchorPos.y += holdHeight;
 
-        // Clamp end position if too far (prevents huge pops)
-        Vector3 delta = anchorPos - transform.position;
-        float dist = delta.magnitude;
+        Vector3 toTarget = anchorPos - rb.position;
+        toTarget.y = 0f;
 
-        if (dist > maxTweenDistance)
-            anchorPos = transform.position + delta.normalized * maxTweenDistance;
+        float dist = toTarget.magnitude;
+        if (dist < 0.001f) return;
 
-        if (followTween == null || !followTween.IsActive())
+        Vector3 dir = toTarget / dist;
+
+        float step = dribbleSpeed * Time.fixedDeltaTime;
+        step = Mathf.Min(step, dist);
+
+        Vector3 start = rb.position;
+
+        if (Physics.SphereCast(start, ballRadius, dir, out RaycastHit hit, step))
         {
-            lastTweenPosition = transform.position;
-
-            followTween = transform.DOMove(anchorPos, followDuration)
-                .SetEase(followEase)
-                .SetUpdate(UpdateType.Normal)
-                .SetAutoKill(false)
-                .OnUpdate(() =>
-                {
-                    Vector3 currentPos = transform.position;
-                    Vector3 move = currentPos - lastTweenPosition;
-                    float dist = move.magnitude;
-
-                    if (dist > 0.0001f)
-                    {
-                        Vector3 dir = move.normalized;
-
-                        if (Physics.SphereCast(lastTweenPosition, 0.11f, dir, out RaycastHit hit, dist))
-                        {
-                            if (!hit.collider.CompareTag("Player"))
-                            {
-                                followTween.Kill();
-                                ReleasePossession(currentActivePlayer);
-                                return;
-                            }
-                        }
-                    }
-
-                    lastTweenPosition = currentPos;
-                });
+            if (!hit.collider.CompareTag("Player"))
+            {
+                step = hit.distance - 0.005f; // small buffer
+            }
         }
-        else
-        {
-            followTween.ChangeEndValue(anchorPos, true);
-        }
+
+        Vector3 newPos = start + dir * step;
+
+        // lock height
+        newPos.y = ClampAnchorToGround(newPos).y + holdHeight;
+
+        rb.MovePosition(newPos);
     }
+
     private Vector3 ClampAnchorToGround(Vector3 anchor)
     {
-        // Start ray above the desired anchor
         Vector3 origin = anchor + Vector3.up * groundRayHeight;
 
         if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, groundRayDistance, groundMask, QueryTriggerInteraction.Ignore))
@@ -382,8 +448,7 @@ public class SoccerBall : MonoBehaviour
             return anchor;
         }
 
-        // Fallback: just keep current y if we didn't hit ground
-        anchor.y = transform.position.y;
+        anchor.y = groundOffset;
         return anchor;
     }
     private bool CanClaimHere()
@@ -395,6 +460,6 @@ public class SoccerBall : MonoBehaviour
             float height = transform.position.y - hit.point.y;
             return height <= maxClaimHeightAboveGround;
         }
-        return true; // if no ground found, don’t block
+        return true; // if no ground found, donâ€™t block
     }
 }

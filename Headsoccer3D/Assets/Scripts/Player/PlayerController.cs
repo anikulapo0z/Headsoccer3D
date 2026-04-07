@@ -1,11 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Android;
 using UnityEngine.InputSystem;
-using UnityEngine.Playables;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour, IPlayerControllable
 {
@@ -65,9 +62,9 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] private Animator kickchargeAnim;
 
     private CharacterController controller;
-    private Vector2 moveInput;
+    Vector2 moveInput;
 
-    private float verticalVelocity;
+    public float verticalVelocity;
     private float nextKickTime = 0f;
     private float nextHeadTime = 0f;
 
@@ -121,6 +118,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [Space(5)]
     [Header("Particles")]
     [SerializeField] GameObject[] jumpParticles;
+    [SerializeField] Transform jumpParticlesParent;
     [SerializeField] GameObject sprintParticles;
 
     [SerializeField] float playerKnockbackForceMultiplier;
@@ -143,11 +141,34 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] private float maxDribbleDistance = 5f;
     private SoccerBall possessedBall;
 
+    private PlayerAudioManager audioManager;
+
     public Vector3 DribbleOffset => dribbleOffset;
+
+    [SerializeField] GameObject crown;
+
+
+    // get pancake bitch
+    [Space]
+    [SerializeField] float goToYVal;
+    [SerializeField] float flatenedDuration;
+    [SerializeField] float currentFlatenedTime;
+    [SerializeField] float goToFlatTime;
+    [SerializeField] bool isFlat = false;
+    [SerializeField] float flatSpeed;
+
+
+    // original values
+    float originalYScale;
+    float originalSpeed;
+
+
+
 
     void Awake()
     {
         controller = GetComponent<CharacterController>();
+        audioManager = GetComponent<PlayerAudioManager>();
         currentKickHeight = startingKickHeight;
         if(!anim)
             anim = GetComponentInChildren<Animator>();
@@ -155,7 +176,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         //kickDisplayMat = kickCollider.GetComponent<Renderer>().material;
 
         currentStamina = maxStamina;
-
+        originalYScale = transform.localScale.y;
+        originalSpeed = moveSpeed;
     }
 
     public void SetStaminaBar(Slider bar)
@@ -176,6 +198,13 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             dribbleEnabled = !dribbleEnabled;
             Debug.Log($"[DRIBBLE] {name} dribbleEnabled={dribbleEnabled}");
         }
+
+        // VFX TESTING ONLY – comment out before shipping
+        if (Keyboard.current != null && Keyboard.current.jKey.wasPressedThisFrame)
+        {
+            OnJump();
+        }
+
     }
 
     void FixedUpdate()
@@ -292,8 +321,33 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         if (dribbleEnabled && possessedBall != null)
         {
             Vector3 anchor = transform.TransformPoint(dribbleOffset);
-            possessedBall.TweenToAnchor(anchor, this);
+            //possessedBall.TweenToAnchor(anchor, this);
+            possessedBall.MoveTowardAnchor(anchor, this);
         }
+
+        if (isFlat)
+        {
+            currentFlatenedTime -= Time.deltaTime;
+
+            if(currentFlatenedTime < 0)
+            {
+                transform.DOScaleY(originalYScale, goToFlatTime);
+                this.moveSpeed = originalSpeed;
+                isFlat = false;
+            }
+        }
+
+
+
+        //VFX Test
+/*        Vector2 testMove = Vector2.zero;
+        if (Keyboard.current.wKey.isPressed) testMove.y += 1f;
+        if (Keyboard.current.sKey.isPressed) testMove.y -= 1f;
+        if (Keyboard.current.aKey.isPressed) testMove.x -= 1f;
+        if (Keyboard.current.dKey.isPressed) testMove.x += 1f;
+        if (testMove != Vector2.zero) OnMove(testMove);
+        else OnMove(Vector2.zero);*/
+
     }
 
     public void OnAbility()
@@ -332,48 +386,55 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     }
     public void OnJump()
     {
-        //throw new System.NotImplementedException();
-        Debug.Log
-            (
-        $"[JUMP] Fired | grounded: {controller.isGrounded} | verticalVelocity before: {verticalVelocity}"
-        );
 
         if (controller.isGrounded)
         {
             // setting header active
             //isHeaderAcive = true;
+            audioManager.PlayJumpSfx();
 
             verticalVelocity = jumpVelocity;
 
             foreach (var p in jumpParticles)
             {
                 p.SetActive(true);
+                p.transform.parent = null; //world space
             }
             //jumpParticles.SetActive(true);
-            Invoke("TurnOffJumpParticles", 0.5f);
+            Invoke("TurnOffJumpParticles", .6f);
 
-            Debug.Log($"[JUMP] APPLY jumpVelocity = {jumpVelocity}");
+            Debug.Log($"jump jumpVelocity = {jumpVelocity}");
         }
         else
         {
-            Debug.Log("[JUMP] Blocked � not grounded");
+            Debug.Log("jump Blocked, not grounded");
         }
 
         headTrigger.TurnOnCollider();
         StartCoroutine(DisableHeadAfterTime());
+
     }
     void TurnOffJumpParticles()
     {
         foreach(var p in jumpParticles)
         {
             p.SetActive(false);
+            p.transform.parent = jumpParticlesParent;
+            p.transform.localPosition = Vector3.zero;   
         }
         //jumpParticles.SetActive(false);
     }
 
+    public void SetFalling()
+    {
+        anim.SetTrigger("StartFall");
+        anim.SetBool("Falling", true);
+    }
+
+
     public void OnMove(Vector2 input)
     {
-        //Debug.Log("Moving: " + input);
+        //Debug.LogWarning("Moving: " + input);
         moveInput = input;
         //throw new System.NotImplementedException();
     }
@@ -427,6 +488,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
 
         }
+        audioManager?.PlayKickSfx();
     }
 
 
@@ -435,7 +497,10 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     }
 
-
+    public void SetReadyForEndArea()
+    {
+        GetComponent<PlayerGroundMarker>().DestroyGroundMarker();
+    }
 
     #region Kicking Logic
     void ChargeKick(int level)
@@ -498,15 +563,15 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         //Debug.LogError(kickChargeLevel);
 
-        if (!hasEmpoweredKick)
-        {
+        //if (!hasEmpoweredKick)
+        //{
             ball.LaunchAtDirection(kickDirection + (Vector3.up * currentKickHeight), finalForce);
-        }
-        else
-        {
-            ball.LaunchAtDirection(kickDirection + (Vector3.up * currentKickHeight), finalForce * empoweredKickStrength);
-            GetComponent<PlayerAbility>().ResetAbilityUse();
-        }
+        //}
+        //else
+        //{
+            //ball.LaunchAtDirection(kickDirection + (Vector3.up * currentKickHeight), finalForce * empoweredKickStrength);
+            //GetComponent<PlayerAbility>().ResetAbilityUse();
+        //}
 
 
 
@@ -545,9 +610,9 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         float moveBonus = controller.velocity.magnitude * playerVelocityPercent;
 
-        float empoweredMult = hasEmpoweredKick ? empoweredKickPlayerMultiplier : 1f;
+        //float empoweredMult = hasEmpoweredKick ? empoweredKickPlayerMultiplier : 1f;
 
-        return (kickForce * mult * empoweredMult) + moveBonus;
+        return (kickForce * mult) + moveBonus;
     }
 
     public bool CanApplyKickPlayerHit()
@@ -587,6 +652,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     public void GetHitFromPlayer(float momentum, Vector3 hitDirection)
     {
+        Debug.Log(hitDirection);
         float kickForce = momentum * playerKnockbackForceMultiplier;
 
         float kickDuration = momentum * playerKnockbackDurationMultiplier;
@@ -601,6 +667,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         {
             force *= reduceKnockBackAmount;
         }
+        verticalVelocity = force.y;
 
         initialKnockbackVelocity = force;
         knockbackVelocity = force;
@@ -647,4 +714,19 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             Gizmos.DrawLine(possessedBall.transform.position, anchor);
     }
 
+    public void SetWin()
+    {
+        crown.SetActive(true);
+    }
+
+
+    public void GetFlattened()
+    {
+
+        isFlat = true;
+        transform.DOScaleY(goToYVal, goToFlatTime);
+        moveSpeed = flatSpeed;
+        currentFlatenedTime = flatenedDuration;
+
+    }
 }
