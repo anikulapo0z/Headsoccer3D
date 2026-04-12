@@ -3380,17 +3380,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 472624897}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5.431591, y: 5.431591, z: 5.431591}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1541055008}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0.000015258789, y: 0}
+  m_SizeDelta: {x: 130, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &472624899
 MonoBehaviour:
@@ -3412,7 +3412,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Press Start button
+  m_text: 'Press Start button on controller
 
     to exit'
   m_isRightToLeft: 0
@@ -3441,8 +3441,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7
-  m_fontSizeBase: 7
+  m_fontSize: 9
+  m_fontSizeBase: 9
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3971,7 +3971,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: can only continue with 2 or 4 players
+  m_text: 2 or 4 players required to continue
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2dafe7017bd8a824ea66fda92f384b9b, type: 2}
   m_sharedMaterial: {fileID: 3920812381677382911, guid: 2dafe7017bd8a824ea66fda92f384b9b, type: 2}
@@ -8721,6 +8721,7 @@ RectTransform:
   m_LocalScale: {x: 1.3624, y: 1.3624, z: 1.3624}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1541055008}
   - {fileID: 84897424}
   - {fileID: 1720053192}
   - {fileID: 292497736}
@@ -10402,6 +10403,7 @@ MonoBehaviour:
   - {fileID: 1522218992}
   - {fileID: 2140883892}
   - {fileID: 1978195070}
+  - {fileID: 1071671905}
   objectsToTurnBackOff:
   - {fileID: 2134799173}
   - {fileID: 1369722531}
@@ -10893,18 +10895,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1541055007}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 472624898}
-  m_Father: {fileID: 1760161184}
+  m_Father: {fileID: 1286422589}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -50.100006, y: -15.199997}
-  m_SizeDelta: {x: 90, y: 20}
+  m_AnchoredPosition: {x: -150, y: -50}
+  m_SizeDelta: {x: 730, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1541055009
 MonoBehaviour:
@@ -10927,7 +10929,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 8b43c53fef62b9b4faa9ed3fc22edbc6, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -11991,7 +11993,7 @@ MonoBehaviour:
   selectedImage: {fileID: 21300000, guid: ae6998658be4de94091f6b9c5d5ace5d, type: 3}
   deselectedImage: {fileID: 21300000, guid: 6a98484292fd7e743a27919bf8ba5992, type: 3}
   sceneName: Mapbus
-  backGroundImage: {fileID: 21300000, guid: fd6fbce4f51d45a40ac3fc2e72edae15, type: 3}
+  backGroundImage: {fileID: 21300000, guid: 72e872819df22d240b453c982514b685, type: 3}
   selectBackground: {fileID: 851397089}
   type: 2
 --- !u!1 &1687111170
@@ -12930,8 +12932,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3.7, y: 3.7, z: 3.7}
   m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 1541055008}
+  m_Children: []
   m_Father: {fileID: 2134799174}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -14710,6 +14711,7 @@ MonoBehaviour:
   - {fileID: 1522218992}
   - {fileID: 2140883892}
   - {fileID: 1978195070}
+  - {fileID: 1071671905}
   pauseMenu: {fileID: 1011999519}
   characterMenu: {fileID: 0}
   mapMenu: {fileID: 0}

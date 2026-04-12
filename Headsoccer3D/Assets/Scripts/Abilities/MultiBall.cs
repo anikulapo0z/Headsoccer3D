@@ -9,6 +9,7 @@ public class MultiBall : MonoBehaviour
 
     public void UseAbility()
     {
+        GetComponent<PlayerAudioManager>().PlayMultiBallSfx();
         float angleStep = 360f / ballAmount;
 
         for (int i = 0; i < ballAmount; i++)

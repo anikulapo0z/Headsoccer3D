@@ -220,7 +220,7 @@ public class GameSceneManager : MonoBehaviour
 
         foreach (var player in playerCharacters)
         {
-            if (MenuManager.Instance.GetTeamSize() == MenuManager.TeamSizes.v1)
+            if (playerCharacters.Count == 2)
                 player.transform.position = TwoP_SpawnPoints[playerCharacters.IndexOf(player)].transform.position;
             else
                 player.transform.position = FourP_SpawnPoints[playerCharacters.IndexOf(player)].transform.position;
@@ -597,7 +597,7 @@ public class GameSceneManager : MonoBehaviour
 
             playerObj.GetComponent<CharacterController>().enabled = false;
 
-            if (teamSizes == MenuManager.TeamSizes.v1)
+            if (inputControllers.Count == 2)
                 playerObj.transform.position = TwoP_SpawnPoints[inputControllers.IndexOf(player)].transform.position;
             else
                 playerObj.transform.position = FourP_SpawnPoints[inputControllers.IndexOf(player)].transform.position;
