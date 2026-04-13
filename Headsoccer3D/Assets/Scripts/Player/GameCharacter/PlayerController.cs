@@ -163,6 +163,17 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     float originalSpeed;
 
 
+    // ground / parent check
+    [SerializeField] LayerMask groundLayer;
+
+    [Space]
+    [Header("Base Camera Shake Stats")]
+    [SerializeField] float shakeDuration;
+    [SerializeField] float shakeStrength;
+    [SerializeField] int shakeVibrato;
+    [Tooltip("Divide shake amount by this value")]
+    [SerializeField] float shakeReduceAmount;
+
 
 
     void Awake()
@@ -191,22 +202,26 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         }
     }
 
-    void Update()
-    {
-        if (Keyboard.current != null && Keyboard.current[dribbleToggleKey].wasPressedThisFrame)
+    /*    void Update()
         {
-            dribbleEnabled = !dribbleEnabled;
-            Debug.Log($"[DRIBBLE] {name} dribbleEnabled={dribbleEnabled}");
-        }
+            if (Keyboard.current != null && Keyboard.current[dribbleToggleKey].wasPressedThisFrame)
+            {
+                dribbleEnabled = !dribbleEnabled;
+                Debug.Log($"[DRIBBLE] {name} dribbleEnabled={dribbleEnabled}");
+            }
 
-        // VFX TESTING ONLY – comment out before shipping
-        if (Keyboard.current != null && Keyboard.current.jKey.wasPressedThisFrame)
-        {
-            OnJump();
-        }
+            // VFX TESTING ONLY – comment out before shipping
+            if (Keyboard.current != null && Keyboard.current.jKey.wasPressedThisFrame)
+            {
+                OnJump();
+            }
 
-    }
+        }*/
 
+
+    // At the top of your class, add:
+    private Vector3 lastPlatformPosition;
+    private Transform currentPlatform;
     void FixedUpdate()
     {
         
@@ -292,8 +307,20 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         if (staminaBar)
             staminaBar.value = currentStamina / maxStamina;
 
+
+
+
+
+        Vector3 platformDelta = Vector3.zero;
+        if (currentPlatform != null)
+        {
+            platformDelta = currentPlatform.position - lastPlatformPosition;
+            lastPlatformPosition = currentPlatform.position;
+        }
+
         if (controller.enabled)
-            controller.Move(velocity * Time.fixedDeltaTime);
+            controller.Move((velocity * Time.fixedDeltaTime) + platformDelta);
+
 
         // Face movement direction
         if (rotateToMovement && moveDir.sqrMagnitude > 0.001f)
@@ -325,6 +352,23 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             possessedBall.MoveTowardAnchor(anchor, this);
         }
 
+
+        Debug.DrawRay(transform.position, Vector3.down * 100, Color.blue);
+
+        // ground / parent check
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 100f, groundLayer) && controller.isGrounded)
+        {
+            if (currentPlatform != hit.transform)
+            {
+                currentPlatform = hit.transform;
+                transform.SetParent(hit.transform);
+                lastPlatformPosition = hit.transform.position;
+            }
+        }
+
+
+        // flattened by train
         if (isFlat)
         {
             currentFlatenedTime -= Time.deltaTime;
@@ -652,12 +696,15 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     public void GetHitFromPlayer(float momentum, Vector3 hitDirection)
     {
+
+
         Debug.Log(hitDirection);
         float kickForce = momentum * playerKnockbackForceMultiplier;
 
         float kickDuration = momentum * playerKnockbackDurationMultiplier;
         kickDuration = Mathf.Clamp(kickDuration, knockbackDuration, maxPlayerKnockbackDuration);
 
+        CameraController.Instance.ShakeCamera(shakeDuration * (momentum / shakeReduceAmount), shakeStrength * (momentum / shakeReduceAmount), (int)(shakeVibrato * (momentum / shakeReduceAmount)));
         ApplyPlayerKickKnockback(hitDirection * kickForce, kickDuration);
     }
 

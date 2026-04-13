@@ -557,13 +557,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 2745452100233998954}
-  cameraPivot: {fileID: 0}
+  cameraPivot: {fileID: 2745452100233998954}
   rotationLerpSpeed: 5
   maxLeftRightAngle: 2
   maxUpDownAngle: 2
   shakeDuration: 0
   shakeStrength: 0
   shakeVibrato: 0
+  shakeActive: 0
+  isBusMap: 0
+  targetA: {fileID: 0}
+  targetB: {fileID: 0}
+  padding: 0
+  speed: 0
+  xOffset: 0
+  minDistance: 0
+  maxDistance: 0
+  xOffsetAtMin: 0
+  xOffsetAtMax: 0
 --- !u!82 &5554216541391488515
 AudioSource:
   m_ObjectHideFlags: 0

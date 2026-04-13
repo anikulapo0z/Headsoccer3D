@@ -3,6 +3,9 @@ using DG.Tweening;
 
 public class CameraController : MonoBehaviour
 {
+    public static CameraController Instance;
+
+
     [Header("Target")]
     public Transform target;
     [SerializeField] Transform cameraPivot;
@@ -17,11 +20,18 @@ public class CameraController : MonoBehaviour
     [Space(10)]
     [Header("Camera Shake")]
     Tween shakeTween;
+
+    [Space]
+    [Header("For Debugging")]
+    [Tooltip("How long it moves for")]
     public float shakeDuration;
+    [Tooltip("How far it moves")]
     public float shakeStrength;
+    [Tooltip("How fast it moves")]
     public int shakeVibrato;
+    public bool shakeActive = false;
 
-
+    [Space]
     [Header("bus map framing")]
     [SerializeField] bool isBusMap = false;
     [SerializeField] Transform targetA;
@@ -39,16 +49,17 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
+        Instance = this;
         cam = GetComponent<Camera>();
         startRotation = transform.rotation;
     }
 
-    /*    private void Update()
+        private void Update()
         {
             if (Input.GetKeyDown(KeyCode.M))
                 ShakeCamera(shakeDuration, shakeStrength, shakeVibrato);
 
-        }*/
+        }
 
     void FixedUpdate()
     {
@@ -58,7 +69,7 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        if (!target) return;
+        //if (!target) return;
 
         Vector3 midpoint = (targetA.position + targetB.position) * 0.5f;
 
@@ -112,18 +123,15 @@ public class CameraController : MonoBehaviour
         return angle;
     }
 
-    public void ShakeCamera(
-        float duration = -1f,
-        float strength = -1f,
-        int vibrato = -1
-    )
+    public void ShakeCamera(float duration = 0.1f, float strength = 0.01f, int vibrato = 1)
     {
-        if (!cameraPivot) return;
+        if (!cameraPivot || shakeActive) return;
 
         shakeTween?.Kill();
 
         cameraPivot.localPosition = Vector3.zero;
 
+        shakeActive = true;
         shakeTween = cameraPivot.DOShakePosition(
             duration,
             strength,
@@ -134,6 +142,7 @@ public class CameraController : MonoBehaviour
         ).OnComplete(() =>
         {
             cameraPivot.localPosition = Vector3.zero;
+            shakeActive = false;
         });
     }
 
