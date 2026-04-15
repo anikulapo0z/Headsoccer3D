@@ -92,10 +92,10 @@ public class SoccerBall : MonoBehaviour
             }
 
             ballTrail.rotation = Quaternion.Slerp(
-    ballTrail.rotation,
-    targetRot * Quaternion.Euler(rotationOffset),
-    15f * Time.fixedDeltaTime
-);
+                ballTrail.rotation,
+                targetRot * Quaternion.Euler(rotationOffset),
+                15f * Time.fixedDeltaTime
+            );
         }
     }
 
@@ -372,7 +372,7 @@ public class SoccerBall : MonoBehaviour
         if (ballCol) ballCol.isTrigger = true;*/
 
         rb.isKinematic = false;
-        rb.useGravity = false;
+        //rb.useGravity = false;
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
