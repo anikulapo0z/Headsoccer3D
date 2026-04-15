@@ -553,20 +553,6 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
-                    "m_Id": "068d128e5b3f4a54b43d8c50df6c6999"
-                },
-                "m_SlotId": 2
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "6a4e6bcdd8194f5089a7725e0541c180"
-                },
-                "m_SlotId": 0
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
                     "m_Id": "07100ad874c346698f932e0181c0bbc1"
                 },
                 "m_SlotId": 2
@@ -854,6 +840,34 @@
             "m_InputSlot": {
                 "m_Node": {
                     "m_Id": "303969b5b02048e6b7c5a0f3aeda9caa"
+                },
+                "m_SlotId": 1
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "23dd9d98282844efb94f1acaf3ff812c"
+                },
+                "m_SlotId": 1
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "6a4e6bcdd8194f5089a7725e0541c180"
+                },
+                "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "23dd9d98282844efb94f1acaf3ff812c"
+                },
+                "m_SlotId": 2
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "6a4e6bcdd8194f5089a7725e0541c180"
                 },
                 "m_SlotId": 1
             }
@@ -2130,20 +2144,6 @@
                     "m_Id": "146a30e198e3410eba21d4d9d193ace1"
                 },
                 "m_SlotId": 0
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
-                    "m_Id": "d9e570561a5c4fee82b3e68378f03bdb"
-                },
-                "m_SlotId": 2
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "6a4e6bcdd8194f5089a7725e0541c180"
-                },
-                "m_SlotId": 1
             }
         },
         {
@@ -4994,8 +4994,8 @@
     "m_ObjectId": "2477e3ee8939419f9d68fb17a1126c40",
     "m_Title": "Get Halftone with Screen UV",
     "m_Position": {
-        "x": -5239.0,
-        "y": 240.0
+        "x": -5239.00048828125,
+        "y": 240.00001525878907
     }
 }
 
@@ -5293,7 +5293,7 @@
     "m_ObjectId": "2a7d0c7417c0493596c83957e4b7aae6",
     "m_Title": "Halftone",
     "m_Position": {
-        "x": -1721.0,
+        "x": -1721.0001220703125,
         "y": 392.0
     }
 }
@@ -8092,8 +8092,8 @@
     "m_ObjectId": "616ea59fcc3d4744a79fde5ed6b6ab88",
     "m_Title": "Light",
     "m_Position": {
-        "x": -1882.0,
-        "y": 701.0
+        "x": -1882.0001220703125,
+        "y": 700.9998779296875
     }
 }
 
@@ -11802,8 +11802,8 @@
     "m_ObjectId": "a1996f7e2cc24e768bcc806d56c5fe4c",
     "m_Title": "change",
     "m_Position": {
-        "x": -1716.0,
-        "y": 508.0
+        "x": -1716.0001220703125,
+        "y": 507.9999084472656
     }
 }
 
@@ -13711,8 +13711,8 @@
     "m_ObjectId": "cb66a11d017f4bff9ab0055f168861d7",
     "m_Title": "fwidth in hlsl",
     "m_Position": {
-        "x": -2484.0,
-        "y": 616.0
+        "x": -2484.000244140625,
+        "y": 615.9998779296875
     }
 }
 
@@ -14163,9 +14163,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -337.0000305175781,
-            "y": -868.0,
-            "width": 125.99996948242188,
+            "x": -259.0000915527344,
+            "y": -689.0000610351563,
+            "width": 126.0,
             "height": 118.0
         }
     },
@@ -14214,8 +14214,8 @@
     "m_ObjectId": "dc2b74d2024e471ba6325cc248de92ae",
     "m_Title": "Remap",
     "m_Position": {
-        "x": -3332.0,
-        "y": 256.0
+        "x": -3332.000244140625,
+        "y": 255.99998474121095
     }
 }
 
