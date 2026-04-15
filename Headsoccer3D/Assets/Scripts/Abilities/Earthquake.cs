@@ -20,6 +20,7 @@ public class Earthquake : MonoBehaviour
     float currentTime;
     GameObject obj;
     bool usedEarthquake = false;
+    public bool earthQuakeActive = false;
 
     public void UseAbility()
     {
@@ -45,7 +46,7 @@ public class Earthquake : MonoBehaviour
         Vector3 pos;
         RaycastHit hit;
 
-
+        earthQuakeActive = true;
         while (currentTime > 0) {
             if (Physics.Raycast(transform.position, Vector3.down, out hit, 100, ground))
             {
@@ -54,15 +55,19 @@ public class Earthquake : MonoBehaviour
             currentTime -= 0.01f;
             yield return new WaitForSeconds(0.01f);
         }
-        Destroy(obj);
-        GetComponent<PlayerAbility>().ResetAbilityUse();
+        StopQuake();
         yield return null;
     }
 
-    private void OnDrawGizmos()
+    public void StopQuake()
     {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(transform.position, -transform.up * 100);
+        Destroy(obj);
+        GetComponent<PlayerAbility>().ResetAbilityUse();
+    }
+
+    private void OnDestroy()
+    {
+        StopQuake();
     }
 
 }
