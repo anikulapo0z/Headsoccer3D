@@ -67,7 +67,7 @@ public class ScoreTracker : MonoBehaviour
         }
         Invoke("TurnOffParticles", timeUntilTurnParticlesOff);
 
-        goalSign.TriggerGoalSign();
+        //goalSign.TriggerGoalSign();
 
     }
     public void PointForRight()
@@ -92,7 +92,7 @@ public class ScoreTracker : MonoBehaviour
         }
         Invoke("TurnOffParticles", timeUntilTurnParticlesOff);
 
-        goalSign.TriggerGoalSign();
+        //goalSign.TriggerGoalSign();
     }
 
     public string WhichTeamWon()

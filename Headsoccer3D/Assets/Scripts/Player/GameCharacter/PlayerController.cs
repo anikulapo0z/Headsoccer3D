@@ -174,7 +174,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [Tooltip("Divide shake amount by this value")]
     [SerializeField] float shakeReduceAmount;
 
-
+    bool playerLocked = false;
 
     void Awake()
     {
@@ -311,7 +311,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
 
 
-        Vector3 platformDelta = Vector3.zero;
+        /*Vector3 platformDelta = Vector3.zero;
         if (currentPlatform != null)
         {
             platformDelta = currentPlatform.position - lastPlatformPosition;
@@ -319,7 +319,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         }
 
         if (controller.enabled)
-            controller.Move((velocity * Time.fixedDeltaTime) + platformDelta);
+            controller.Move((velocity * Time.fixedDeltaTime) + platformDelta);*/
 
 
         // Face movement direction
@@ -362,10 +362,19 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             if (currentPlatform != hit.transform)
             {
                 currentPlatform = hit.transform;
-                transform.SetParent(hit.transform);
                 lastPlatformPosition = hit.transform.position;
             }
         }
+
+        Vector3 platformDelta = Vector3.zero;
+        if (currentPlatform != null)
+        {
+            platformDelta = currentPlatform.position - lastPlatformPosition;
+            lastPlatformPosition = currentPlatform.position;
+        }
+
+        if (controller.enabled)
+            controller.Move((velocity * Time.fixedDeltaTime) + platformDelta);
 
 
         // flattened by train
@@ -415,6 +424,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     }
     public void OnSprint(bool held)
     {
+        if (playerLocked || isFlat)
+            return;
         sprintHeld = held;
 
         if (held)
@@ -670,10 +681,14 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     public void LockPlayerMove()
     {
+        sprintHeld = false;
+        playerLocked = true;
+        GetComponent<PlayerAbility>().StopEarthquake();
         GetComponent<CharacterController>().enabled = false;
     }
     public void UnlockPlayerMove()
     {
+        playerLocked = false;
         GetComponent<CharacterController>().enabled = true;
     }
     public void GetHit(SoccerBall ball, float momentum, Vector3 hitDirection, float threshold1, float threshold2)
@@ -769,7 +784,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     public void GetFlattened()
     {
-
+        sprintHeld = false;
         isFlat = true;
         transform.DOScaleY(goToYVal, goToFlatTime);
         moveSpeed = flatSpeed;

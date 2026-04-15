@@ -147,4 +147,10 @@ public class PlayerAbility : MonoBehaviour
         currentAbility = AbilityTrigger.AbilityTypes.None;
 
     }
+
+    public void StopEarthquake()
+    {
+        if(GetComponent<Earthquake>() != null && GetComponent<Earthquake>().earthQuakeActive)
+            Destroy(GetComponent<Earthquake>());
+    }
 }
