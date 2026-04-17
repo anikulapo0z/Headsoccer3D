@@ -9,16 +9,22 @@ public class WaterWaveSample : MonoBehaviour
     private float actualWaveFrequency;
     [SerializeField] private float timer;
 
+    [SerializeField] private Material waterMaterial;
 
     private void Start()
     {
         //timer = 0;
         actualWaveFrequency = waveFrequency;
+
+        waterMaterial.SetFloat("_actualWaveFrequency", actualWaveFrequency);
+        waterMaterial.SetFloat("_waveAmplitude", waveAmplitude / 4.79258f);
     }
 
     private void Update()
     {
         //timer += Time.deltaTime;
+        waterMaterial.SetFloat("_Timer", timer);
+
     }
 
     //here will be the math for reference later

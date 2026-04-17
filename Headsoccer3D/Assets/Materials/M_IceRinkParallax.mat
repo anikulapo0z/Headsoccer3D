@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tall Horse_Principle Parallax
+  m_Name: M_IceRinkParallax
   m_Shader: {fileID: 4800000, guid: f895831546cdf0845a65a35c85f66ba4, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -24,20 +24,29 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 3239d751550e2bc47aec42016fea2949, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: eabe01be96d04ce40a3c4a9fa3bd2c64, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OverlayMap:
+        m_Texture: {fileID: 2800000, guid: 29c3392474ab4d2439246e903c932c68, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BumpScale: 1
-    - _Depth: -0.4
-    - _Parallax_Layers: 1
-    - _Screen_Mix: 1
+    - _BumpScale: 1.94
+    - _Depth: -0.26
+    - _FloatAmplitude: 0.154
+    - _FloatStrength: 0.45
+    - _OverlayStrength: 2
+    - _Parallax_Layers: 10.38
+    - _Screen_Mix: 0.809
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.5803922, g: 0.8392157, b: 0.7790114, a: 1}
+    - _BaseColor1: {r: 0.6383577, g: 0.43390095, b: 0.773, a: 1}
+    - _BaseColor2: {r: 0.738484, g: 0.5921569, b: 0.972549, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
