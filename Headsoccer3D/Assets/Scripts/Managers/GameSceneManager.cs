@@ -98,11 +98,13 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] Color drawColor = Color.white;
 
     [SerializeField] MenuMusic backgroundMusic;
+    private SceneAudioManager audioManager;
 
 
     void Start()
     {
         Instance = this;
+        audioManager = GetComponent<SceneAudioManager>();
 
         //reset materials
         winAreaMaterial = winAreaImage.material;
@@ -257,6 +259,8 @@ public class GameSceneManager : MonoBehaviour
     IEnumerator EndGame()
     {
         scoreTracker.canScore = false;
+
+        audioManager.PlayWhistleSfx();
 
         if (gameTimeCoroutine != null)
             StopCoroutine(gameTimeCoroutine);

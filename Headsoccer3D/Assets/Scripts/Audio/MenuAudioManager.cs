@@ -11,17 +11,17 @@ public class MenuAudioManager : MonoBehaviour
         {
             backgroundMusicSfx.Play();
         }
-        else if (ambienceSfx.resource != null)
+        else if (backgroundMusicSfx.resource != null)
         {
-            Debug.Log("No audio clip assigned to ambienceSfx on " + gameObject.name);
+            Debug.Log("No audio clip assigned to backgroundMusicSfx on " + gameObject.name);
         }
         if (ambienceSfx.resource != null)
         {
             ambienceSfx.Play();
         }
-        else if (backgroundMusicSfx.resource != null)
+        else if (ambienceSfx.resource != null)
         {
-             Debug.Log("No audio clip assigned to backgroundMusicSfx on " + gameObject.name);
+            Debug.Log("No audio clip assigned to ambienceSfx on " + gameObject.name);
         }
     }
 }

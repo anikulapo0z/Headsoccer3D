@@ -4,6 +4,7 @@ public class SceneAudioManager : MonoBehaviour
 {
     [SerializeField] private AudioSource backgroundMusic;
     [SerializeField] private AudioSource crowdAmbience;
+    [SerializeField] private AudioSource whistleSfx;
 
     private void Start()
     {
@@ -13,7 +14,7 @@ public class SceneAudioManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Background music clip is not assigned.");
+            Debug.Log("Background music clip is not assigned");
         }
         if (crowdAmbience != null)
         {
@@ -21,7 +22,18 @@ public class SceneAudioManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Crowd ambience clip is not assigned.");
+            Debug.Log("Crowd ambience clip is not assigned");
+        }
+    }
+    public void PlayWhistleSfx()
+    {
+        if (whistleSfx.resource)
+        {
+            whistleSfx.Play();
+        }
+        else
+        {
+            Debug.Log("Whistle SFX clip is not assigned");
         }
     }
 }
