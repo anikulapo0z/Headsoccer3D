@@ -15,15 +15,22 @@ public class IceShard : MonoBehaviour
 
     private float yInitialPos;
 
+
+
+    private float minZ = -7.866985f;
+    private float maxZ = 2.195376f;
+    private float myNormalizedZPosition;
+
     private void Start()
     {
         yInitialPos = transform.position.y;
+        myNormalizedZPosition = Mathf.Clamp01((maxZ - transform.position.z) / (maxZ - minZ));
     }
 
     // Update is called once per frame
     void Update()
     {
-        temp = waveSample.getWaveOffsetAndRotation(transform.position);
+        temp = waveSample.getWaveOffsetAndRotation(myNormalizedZPosition);
         offset = temp.x;
         sign = temp.y < 0 ? -1 : 1;
         rotationLerp = temp.y;
