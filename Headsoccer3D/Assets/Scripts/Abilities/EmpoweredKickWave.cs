@@ -46,5 +46,11 @@ public class EmpoweredKickWave : MonoBehaviour
         if (otherPlayer == null || other == player.GetComponent<PlayerController>()) return;
 
         otherPlayer.GetHitFromPlayer(playerKickForce, kickDirection);
+
+
+        if (other.CompareTag("Bell"))
+        {
+            other.GetComponent<BellGetHit>().BGetHit();
+        }
     }
 }
