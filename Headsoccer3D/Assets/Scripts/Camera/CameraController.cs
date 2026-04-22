@@ -54,12 +54,12 @@ public class CameraController : MonoBehaviour
         startRotation = transform.rotation;
     }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.M))
-                ShakeCamera(shakeDuration, shakeStrength, shakeVibrato);
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+            ShakeCamera(shakeDuration, shakeStrength, shakeVibrato);
 
-        }
+    }
 
     void FixedUpdate()
     {
