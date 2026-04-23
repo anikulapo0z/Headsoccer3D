@@ -14,7 +14,7 @@ public class IceController : MonoBehaviour
     Coroutine fractureRoutine;
 
 
-    public void StartIceFracture()
+    public void Start()
     {
         fractureRoutine = StartCoroutine(Fracture());
     }
@@ -27,8 +27,10 @@ public class IceController : MonoBehaviour
         while (!paused)
         {
             int index = Random.Range(0, iceFragments.Length);
+            iceFragments[index].GetComponent<IceShard>().sinking = true;
 
-            iceFragments[index].DOMoveY(sinkPosition, moveSpeed);
+            iceFragments[index].DOLocalMoveY(0.6f, moveSpeed)
+                .OnComplete(() => iceFragments[index].DOLocalMoveY(sinkPosition, moveSpeed * 5));
 
 
             yield return new WaitForSeconds(fractureDelay);

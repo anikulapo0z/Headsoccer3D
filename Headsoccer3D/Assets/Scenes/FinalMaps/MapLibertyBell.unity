@@ -5033,6 +5033,26 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4559309096327672285, guid: 87f6f7e5ae460e24094bec3e584b05ae, type: 3}
   m_PrefabInstance: {fileID: 1198883925}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1743749980 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4087660412171398269, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+  m_PrefabInstance: {fileID: 1686241423}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1743749981 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4019141913438629303, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+  m_PrefabInstance: {fileID: 1686241423}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1743749982 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7820028790653360079, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+  m_PrefabInstance: {fileID: 1686241423}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1743749983 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3491518671155468136, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+  m_PrefabInstance: {fileID: 1686241423}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1758940526
 GameObject:
   m_ObjectHideFlags: 0
@@ -6104,10 +6124,10 @@ MonoBehaviour:
   rightTeamPositionIndicator: {fileID: 2272880412295671249, guid: 1cbc517d48694874a830577297739654, type: 3}
   fakeballList: []
   winAreaSpawnPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1743749983}
+  - {fileID: 1743749982}
+  - {fileID: 1743749981}
+  - {fileID: 1743749980}
   winAreaCamera: {fileID: 1583327006}
   winAreaImage: {fileID: 1686241427}
   blurMaterial: {fileID: 2100000, guid: 32a7477d5a46e07468c6b80dee2635ce, type: 2}

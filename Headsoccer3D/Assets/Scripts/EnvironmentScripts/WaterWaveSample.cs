@@ -8,6 +8,7 @@ public class WaterWaveSample : MonoBehaviour
 
     private float actualWaveFrequency;
     [SerializeField] private float timer;
+    [SerializeField] float waveSpeed;
 
     [SerializeField] private Material waterMaterial;
 
@@ -22,7 +23,7 @@ public class WaterWaveSample : MonoBehaviour
 
     private void Update()
     {
-        //timer += Time.deltaTime;
+        timer += Time.deltaTime * waveSpeed;
         waterMaterial.SetFloat("_Timer", timer);
 
     }
