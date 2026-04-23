@@ -21,6 +21,10 @@ public class IceShard : MonoBehaviour
     private float maxZ = 2.195376f;
     private float myNormalizedZPosition;
 
+    public bool sinking = false;
+    
+
+
     private void Start()
     {
         yInitialPos = transform.position.y;
@@ -30,13 +34,16 @@ public class IceShard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        temp = waveSample.getWaveOffsetAndRotation(myNormalizedZPosition);
-        offset = temp.x;
-        sign = temp.y < 0 ? -1 : 1;
-        rotationLerp = temp.y;
+        if (!sinking)
+        {
+            temp = waveSample.getWaveOffsetAndRotation(myNormalizedZPosition);
+            offset = temp.x;
+            sign = temp.y < 0 ? -1 : 1;
+            rotationLerp = temp.y;
 
-        transform.position = new Vector3(transform.position.x, yInitialPos + offset , transform.position.z);
-        transform.localEulerAngles = new Vector3(-90 + ( maxRotation * rotationLerp), 0, 0);
-        //transform.Rotate(sign < 0 ? Vector3.left : Vector3.right, maxRotation * rotationLerp);
+            transform.position = new Vector3(transform.position.x, yInitialPos + offset, transform.position.z);
+            transform.localEulerAngles = new Vector3(-90 + (maxRotation * rotationLerp), 0, 0);
+            //transform.Rotate(sign < 0 ? Vector3.left : Vector3.right, maxRotation * rotationLerp);
+        }
     }
 }
