@@ -29,9 +29,7 @@ public class PlayerAudioManager : MonoBehaviour
         else
         {
             Debug.Log("Kick SFX is not assigned.");
-
         }
-
     }
     public void PlayJumpSfx()
     {
