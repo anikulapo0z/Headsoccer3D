@@ -9,6 +9,9 @@ public class PlayerJoinManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] GameObject pressAnyButtonScreen;
     [SerializeField] GameObject characterSelectScreen;
+    
+    [SerializeField] private MenuAudioManager menuAudioManager;
+
 
     [Header("Settings")]
     [SerializeField] float characterSelectOpenDelay = 3f;
@@ -30,7 +33,6 @@ public class PlayerJoinManager : MonoBehaviour
     bool isLocked;
 
     InputAction joinAction;
-
 
     void Awake()
     {
@@ -167,7 +169,7 @@ public class PlayerJoinManager : MonoBehaviour
             var controller = playerSlots[i];
             if (controller == null || controller.AssignedDevice != device) continue;
 
-            Debug.Log($"Player {controller.PlayerIndex + 1} disconnected — removing slot.");
+            Debug.Log($"Player {controller.PlayerIndex + 1} disconnected ï¿½ removing slot.");
 
             PlayerInputHolder.Instance.playerList.Remove(controller);
             playerSlots[i] = null;
@@ -216,6 +218,8 @@ public class PlayerJoinManager : MonoBehaviour
 
     (IPlayerControllable, GameObject) CreateCursor(int index)
     {
+        menuAudioManager.PlayCharacterJoinSfx();
+        
         Vector3 centerPoint = mainCanvas.TransformPoint(mainCanvas.rect.center);
 
         GameObject obj = Instantiate(
