@@ -14,7 +14,9 @@ Material:
   m_ValidKeywords:
   - _AMBIENTLIGHTING
   - _HALFTONELIGHT
+  - _MASKING
   - _SHADOWSLIGHT
+  - _USESHADOWS
   m_InvalidKeywords:
   - _IGNORESHADOWS
   m_LightmapFlags: 4
@@ -61,15 +63,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _HalftonePattern:
-        m_Texture: {fileID: 2800000, guid: f792c5aded2ba1c4690d4c4923ea561a, type: 3}
-        m_Scale: {x: 15, y: 15}
+        m_Texture: {fileID: 2800000, guid: 59380a8c482907548898ef5ffad0bff6, type: 3}
+        m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: ba90e0d681c598644910bd718f5fc1b3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 266ce12a5869bcb478757fb4dae44c80, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -137,7 +139,7 @@ Material:
     - _HalftoneToggle: 1
     - _IgnoreShadowsToggle: 1
     - _Lightness: 0
-    - _MaskToggle: 0
+    - _MaskToggle: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -148,7 +150,7 @@ Material:
     - _RemapOutputMax: 1
     - _RemapOutputMin: 0
     - _ShadowFrequency: 3.63
-    - _ShadowLightness: 0.38
+    - _ShadowLightness: 0.575
     - _ShadowsToggle: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
@@ -160,16 +162,16 @@ Material:
     - _UV2Toggle: 0
     - _UV3Toggle: 0
     - _UV4Toggle: 0
-    - _UseShadowsToggle: 0
+    - _UseShadowsToggle: 1
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 0.4575472, b: 0.9378902, a: 0.015686275}
+    - _BaseColor: {r: 0.54901963, g: 0.74509805, b: 0.85882354, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FirstMaskColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HalftoneColor: {r: 1, g: 0.2971698, b: 0.91851246, a: 1}
-    - _SecondMaskColor: {r: 1, g: 1, b: 1, a: 0}
+    - _FirstMaskColor: {r: 0.35294116, g: 1, b: 0.8493821, a: 1}
+    - _HalftoneColor: {r: 0.3294118, g: 0.93333334, b: 0.7335526, a: 1}
+    - _SecondMaskColor: {r: 0.49411762, g: 1, b: 0.7450684, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
