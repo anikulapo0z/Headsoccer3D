@@ -187,6 +187,7 @@ public class SeptaTrain : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             other.GetComponent<PlayerController>().GetFlattened();
+            // get hit sound
         }
         else if (other.gameObject.CompareTag("Ball") || other.gameObject.CompareTag("FakeBall"))
         {
