@@ -1,0 +1,35 @@
+{
+    "os-remap": {
+        "Min": [
+            -5.1,
+            -4.2,
+            -7.6
+        ],
+        "Max": [
+            6.5,
+            9.1,
+            8.8
+        ],
+        "Frames": 361
+    },
+    "animations": {
+        "Walk": {
+            "startFrame": 1,
+            "endFrame": 120,
+            "framerate": 60,
+            "looping": true
+        },
+        "Scared": {
+            "startFrame": 121,
+            "endFrame": 240,
+            "framerate": 60,
+            "looping": true
+        },
+        "Panic": {
+            "startFrame": 241,
+            "endFrame": 360,
+            "framerate": 60,
+            "looping": true
+        }
+    }
+}

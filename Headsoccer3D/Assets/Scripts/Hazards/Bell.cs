@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using DG.Tweening;
+using System.Runtime.CompilerServices;
 
 public class Bell : MonoBehaviour
 {
@@ -20,6 +21,11 @@ public class Bell : MonoBehaviour
 
     [SerializeField] GoalMoverManager goalMoverManager;
 
+
+    [Header("GOING crazy")]
+    [SerializeField] Transform muralParent;
+    [SerializeField] FreedomMapPedestrians freedomLovingIndependenceHallWatchingMoneyHavingTouristsWhoSomehowCanAffordTravellingInUSAInThisEconomy;
+
     bool isBreaking = false;
 
     Tween t1;
@@ -29,6 +35,8 @@ public class Bell : MonoBehaviour
     {
         currentHitUntilBreak = totalHitsUntilBreak;
         lastHitTime = Time.time;
+
+        StartCoroutine(BreakBell());
     }
 
     public void BellGetHit()
@@ -67,10 +75,14 @@ public class Bell : MonoBehaviour
             child.GetComponent<Rigidbody>().AddForce((transform.position - child.position).normalized * forceStrength, ForceMode.Impulse);
         }
 
-        yield return new WaitForSeconds(5);
-
+        yield return new WaitForSeconds(1);
+        freedomLovingIndependenceHallWatchingMoneyHavingTouristsWhoSomehowCanAffordTravellingInUSAInThisEconomy.SetAnimation(1);
+        yield return new WaitForSeconds(1);
+        StartCoroutine(triggerMurals(true));
+        yield return new WaitForSeconds(3);
         goalMoverManager.TriggerSequence();
 
+        freedomLovingIndependenceHallWatchingMoneyHavingTouristsWhoSomehowCanAffordTravellingInUSAInThisEconomy.SetAnimation(0);
         yield return new WaitForSeconds(15);
 
         foreach(Transform child in crackedBell.transform)
@@ -82,6 +94,8 @@ public class Bell : MonoBehaviour
 
     public void ResetBell()
     {
+        freedomLovingIndependenceHallWatchingMoneyHavingTouristsWhoSomehowCanAffordTravellingInUSAInThisEconomy.SetAnimation(2);
+
         Vector3 originalPos = bellStand.transform.position;
         t1 = bellStand.transform.DOMove(
             originalPos + new Vector3(0, originalPos.y - 5, 0), 5)
@@ -112,7 +126,21 @@ public class Bell : MonoBehaviour
                 
 
     }
+
+    private IEnumerator triggerMurals(bool _goCrazy)
+    {
+        for (int i = 0; i < muralParent.childCount; i++)
+        {
+            if(_goCrazy)
+                muralParent.GetChild(i).GetComponent<Animation>().Play();
+            else
+                muralParent.GetChild(i).GetComponent<Animation>().Play();
+            yield return new WaitForSeconds(0.1891f);
+        }
+    }
 }
+
+
 /*bellStand.transform.DOMove(
 originalPos +
 new Vector3(
