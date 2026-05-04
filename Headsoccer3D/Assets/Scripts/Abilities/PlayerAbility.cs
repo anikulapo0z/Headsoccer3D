@@ -4,8 +4,7 @@ using DG.Tweening;
 public class PlayerAbility : MonoBehaviour
 {
     public AbilityTrigger.AbilityTypes currentAbility;
-
-
+    private PlayerAudioManager audioManager;
 
     [Space(5)]
     [Header("Ability Stats")]
@@ -38,8 +37,10 @@ public class PlayerAbility : MonoBehaviour
     [SerializeField] float earthquakePlayerForce;
     [SerializeField] AudioSource earthquakeSound;
 
-
-
+    public void Awake()
+    {
+        audioManager = GetComponent<PlayerAudioManager>();
+    }
 
     public void TryTriggerAbility()
     {
@@ -65,6 +66,8 @@ public class PlayerAbility : MonoBehaviour
 
     public void SetAbility(AbilityTrigger.AbilityTypes ability)
     {
+        audioManager.PlayPickupSfx();
+
         currentAbility = ability;
 
         switch (currentAbility)

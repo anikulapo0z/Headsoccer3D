@@ -461,6 +461,8 @@ public class GameSceneManager : MonoBehaviour
         canScore = false;
         PauseTimer();
 
+        audioManager.PlayConfettiCheersSfx();
+
         sideThatScored = c;
 
         scoreTracker.canScore = false;

@@ -6,12 +6,16 @@ public class SceneAudioManager : MonoBehaviour
     [SerializeField] private AudioSource crowdAmbience;
     [SerializeField] private AudioSource crowdCheers;
     [SerializeField] private AudioSource crowdGasp;
-    
+    [SerializeField] private AudioSource confetti;
     [SerializeField] private AudioSource crowdBoos;
     [SerializeField] private AudioSource whistleSfx;
+    [Header("Bus map")]
+    [SerializeField] private AudioSource busSfx;
+    [Header("Train map")]
     [SerializeField] private AudioSource trainHornSfx;
     [SerializeField] private AudioSource[] trainPlayerImpactSfx;
-    [SerializeField] private AudioSource trainAnnouncementSfx;
+    [SerializeField] private AudioSource announcementSfx;
+    [Header("Bell map")]
     [SerializeField] private AudioSource[] bellRingSfx;
     [SerializeField] private AudioSource bellBreakSfx;
 
@@ -35,15 +39,16 @@ public class SceneAudioManager : MonoBehaviour
             Debug.Log("Crowd ambience clip is not assigned");
         }
     }
-    public void PlayCheersSfx()
+    public void PlayConfettiCheersSfx()
     {
-        if (crowdCheers.resource)
+        if (crowdCheers.resource && confetti.resource)
         {
             crowdCheers.Play();
+            confetti.Play();
         }
         else
         {
-            Debug.Log("Crowd cheers SFX clip is not assigned");
+            Debug.Log("Crowd cheers or confetti SFX clip is not assigned");
         }
     }
     public void PlayGaspSfx()
@@ -72,7 +77,7 @@ public class SceneAudioManager : MonoBehaviour
     // bus
     public void PlayBusSfx()
     {
-        if (busHornSfx.resource)
+        if (busSfx.resource)
         {
             busSfx.Play();
         }
@@ -83,10 +88,11 @@ public class SceneAudioManager : MonoBehaviour
     }
 
     // train
-    public void PlayTrainHornSfx()
+    public void PlayTrainHornSfx(float pan)
     {
-        if (trainHornSfx.resource)
+        if (trainHornSfx != null && trainHornSfx.clip != null)
         {
+            trainHornSfx.panStereo = pan;
             trainHornSfx.Play();
         }
         else
@@ -94,28 +100,47 @@ public class SceneAudioManager : MonoBehaviour
             Debug.Log("Train Horn SFX clip is not assigned");
         }
     }
-    public void PlayTrainHornSfx()
+    public void PlayTrainPlayerImpactSfx(float pan)
     {
-        if (trainHornSfx.resource)
+        if (trainPlayerImpactSfx.Length > 0)
         {
-            trainHornSfx.Play();
+            int randomIndex = Random.Range(0, trainPlayerImpactSfx.Length);
+            AudioSource source = trainPlayerImpactSfx[randomIndex];
+            if (source != null)
+            {
+                source.panStereo = pan;
+                source.Play();
+            }
         }
         else
         {
-            Debug.Log("Train Horn SFX clip is not assigned");
+            Debug.Log("Train Player Impact SFX clips are not assigned.");
+        }
+    }
+    public void PlayAnnouncementSfx(float pan)
+    {
+        if (announcementSfx != null && announcementSfx.clip != null)
+        {
+            announcementSfx.panStereo = pan; // -0.75 for left, 0.75 for right
+            announcementSfx.Play();
+        }
+        else
+        {   
+            Debug.Log("Announcement SFX is not assigned.");
         }
     }
 
     // bell
     public void PlayBellRingSfx()
     {
-        if (bellRingSfx.resource)
+        if (bellRingSfx.Length > 0)
         {
-            bellRingSfx.Play();
+            int randomIndex = Random.Range(0, bellRingSfx.Length);
+            bellRingSfx[randomIndex].Play();
         }
         else
         {
-            Debug.Log("Bell Ring SFX clip is not assigned");
+            Debug.Log("Bell Ring SFX clips are not assigned.");
         }
     }
     public void PlayBellBreakSfx()
