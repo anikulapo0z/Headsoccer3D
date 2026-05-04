@@ -3,7 +3,42 @@ guid: d2b2ddcd55cc4f149b356b614d0765e3
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ClockMain
+    second: {fileID: 2100000, guid: 2ca6f72b562702e47aeed513ef7d27b7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Divider
+    second: {fileID: 2100000, guid: ed0336db22780034a9bf1e1fb619ce32, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MainBrick
+    second: {fileID: 2100000, guid: 243b680a031b65c4b8ee03f6940f5af6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Roof
+    second: {fileID: 2100000, guid: 8dd2da21593674d44a9d8ea0bac9a5fb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RoofUnder
+    second: {fileID: 2100000, guid: 38a330bcc5208ee4da9eec1536c808b2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SidesBrick
+    second: {fileID: 2100000, guid: 31f3de1d72495064bbe2aca57cf3f237, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Windows
+    second: {fileID: 2100000, guid: 21edc35766351ed40ac44c16118315b2, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
