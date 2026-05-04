@@ -58,6 +58,13 @@ public class PlayerTriggers : MonoBehaviour
             return;
         }
 
+
+        Debug.Log(other.tag);
+        if (other.CompareTag("Bell"))
+        {
+            other.GetComponent<BellGetHit>().BGetHit();
+        }
+
         if (!isKickTrigger) return;
         PlayerController otherPlayer = other.GetComponent<PlayerController>();
         CPUEnemy cpu  = other.GetComponent<CPUEnemy>();
@@ -93,8 +100,8 @@ public class PlayerTriggers : MonoBehaviour
             return;
         }
 
-        // If they had the ball, forcibly dispossess
-        
+
+
     }
 
 }
