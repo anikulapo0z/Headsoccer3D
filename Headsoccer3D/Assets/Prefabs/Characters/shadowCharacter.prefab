@@ -269,13 +269,15 @@ GameObject:
   - component: {fileID: 909526382676242523}
   - component: {fileID: 87823349313922562}
   - component: {fileID: 5715509517818701763}
-  - component: {fileID: 2982971697010060558}
   - component: {fileID: 8232834016103739514}
   - component: {fileID: 8709485042399580388}
+  - component: {fileID: 5864520699391055450}
+  - component: {fileID: 3642166222951863763}
+  - component: {fileID: 2982971697010060558}
   - component: {fileID: -7854826647095062619}
   - component: {fileID: -1422199461870558157}
   m_Layer: 7
-  m_Name: character1
+  m_Name: shadowCharacter
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -461,44 +463,6 @@ MonoBehaviour:
   shakeStrength: 0.008
   shakeVibrato: 1
   shakeReduceAmount: 5
---- !u!114 &2982971697010060558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2105791413608084587}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b46f7f98f733ec54082a2a1a456311c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  playerPositionIndicatorPrefab: {fileID: 2272880412295671249, guid: 412ae84f259104d448b55a1e358b6694, type: 3}
-  playerFloatingUIPrefab: {fileID: 2272880412295671249, guid: 6bc0f7e23f17e37458f5f290d5ab733d, type: 3}
-  AbilityText: {fileID: 0}
-  canvasOffset: 0.1
-  lerpSpeed: 10
-  uiSideOffset: 0.8
-  uiHeightOffset: 0.8
-  matObj: {fileID: 4863029050352406320}
-  multiBallText: {fileID: 3798930661154949969, guid: ad6825c6a490e344abb915b4ce2a1143, type: 3}
-  empoweredKickText: {fileID: 5041241853163221094, guid: f2d58010527d10c47b2a34888d282aca, type: 3}
-  earthquakeText: {fileID: 2268949771022234786, guid: 080da404cfbf9e047854e6885e282a6d, type: 3}
-  mbOffset: {x: 0, y: 1.5, z: 0.7}
-  mbRotation: {x: 0, y: 0, z: 17}
-  ekOffset: {x: 0, y: 1.6, z: 0.6}
-  ekRotation: {x: 0, y: 0, z: 16}
-  earthquakeOffset: {x: 0, y: 0, z: 0}
-  earthquakeRotation: {x: 0, y: 0, z: 0}
-  mbActive: 0
-  ekActive: 0
-  earthquakeActive: 0
-  controllingFlipper: 0
-  controlledFlippers: []
-  lrYHeight: 0
 --- !u!54 &8232834016103739514
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -549,7 +513,7 @@ CapsuleCollider:
   m_Height: 0.1
   m_Direction: 1
   m_Center: {x: 0, y: 0.04, z: 0}
---- !u!114 &-7854826647095062619
+--- !u!114 &5864520699391055450
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -557,6 +521,84 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2105791413608084587}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c534ed6e86fe87644b8db8c1545ad1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnScaleTime: 0.12
+  despawnScaleTime: 0.2
+  flashScale: 1.25
+--- !u!114 &3642166222951863763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105791413608084587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d04edb3e639c694692fbe7a755aa715, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  clonePrefab: {fileID: 0}
+  lifetime: 0
+  spawnDistance: 0
+  moveSpeed: 0
+  kickInterval: 0
+  kickRadius: 0
+  kickForce: 0
+  kickMask:
+    serializedVersion: 2
+    m_Bits: 0
+  mode: 0
+  spawnPattern: 0
+--- !u!114 &2982971697010060558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105791413608084587}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46f7f98f733ec54082a2a1a456311c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  playerPositionIndicatorPrefab: {fileID: 2272880412295671249, guid: 412ae84f259104d448b55a1e358b6694, type: 3}
+  playerFloatingUIPrefab: {fileID: 2272880412295671249, guid: 6bc0f7e23f17e37458f5f290d5ab733d, type: 3}
+  AbilityText: {fileID: 0}
+  canvasOffset: 0.1
+  lerpSpeed: 10
+  uiSideOffset: 0.8
+  uiHeightOffset: 0.8
+  matObj: {fileID: 4863029050352406320}
+  multiBallText: {fileID: 3798930661154949969, guid: ad6825c6a490e344abb915b4ce2a1143, type: 3}
+  empoweredKickText: {fileID: 5041241853163221094, guid: f2d58010527d10c47b2a34888d282aca, type: 3}
+  earthquakeText: {fileID: 2268949771022234786, guid: 080da404cfbf9e047854e6885e282a6d, type: 3}
+  mbOffset: {x: 0, y: 1.5, z: 0.7}
+  mbRotation: {x: 0, y: 0, z: 17}
+  ekOffset: {x: 0, y: 1.6, z: 0.6}
+  ekRotation: {x: 0, y: 0, z: 16}
+  earthquakeOffset: {x: 0, y: 0, z: 0}
+  earthquakeRotation: {x: 0, y: 0, z: 0}
+  mbActive: 0
+  ekActive: 0
+  earthquakeActive: 0
+  controllingFlipper: 0
+  controlledFlippers: []
+  lrYHeight: 0
+--- !u!114 &-7854826647095062619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105791413608084587}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2fb7c290dd699d41b41775129a54d99, type: 3}
   m_Name: 
@@ -580,9 +622,9 @@ MonoBehaviour:
   earthquakeOutForce: 15
   earthquakePlayerForce: 0.8
   earthquakeSound: {fileID: 7886514214405249738}
-  shadowClonePrefab: {fileID: 2105791413608084587, guid: 427ede9fe8491b04abc95739f31b58b0, type: 3}
-  shadowCloneLifetime: 5
-  shadowCloneSpawnDistance: 1.5
+  shadowClonePrefab: {fileID: 6260731303373890100, guid: ea051bf105ae9754a8da5a1e604858e7, type: 3}
+  shadowCloneLifetime: 2.5
+  shadowCloneSpawnDistance: 2
   shadowCloneMoveSpeed: 7
   shadowCloneKickInterval: 0.5
   shadowCloneKickRadius: 0.5
@@ -591,7 +633,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 768
   shadowCloneMode: 1
-  shadowCloneSpawnPattern: 1
+  shadowCloneSpawnPattern: 0
 --- !u!114 &-1422199461870558157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -599,7 +641,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2105791413608084587}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0001fa97e799f594ea7defdfec235ba2, type: 3}
   m_Name: 

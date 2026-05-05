@@ -5804,6 +5804,17 @@ MonoBehaviour:
   shakeDuration: 0
   shakeStrength: 0
   shakeVibrato: 0
+  shakeActive: 0
+  isBusMap: 0
+  targetA: {fileID: 0}
+  targetB: {fileID: 0}
+  padding: 0
+  speed: 0
+  xOffset: 0
+  minDistance: 0
+  maxDistance: 0
+  xOffsetAtMin: 0
+  xOffsetAtMax: 0
 --- !u!114 &1234389238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6255,6 +6266,17 @@ MonoBehaviour:
   shakeDuration: 0
   shakeStrength: 0
   shakeVibrato: 0
+  shakeActive: 0
+  isBusMap: 0
+  targetA: {fileID: 0}
+  targetB: {fileID: 0}
+  padding: 0
+  speed: 0
+  xOffset: 0
+  minDistance: 0
+  maxDistance: 0
+  xOffsetAtMin: 0
+  xOffsetAtMax: 0
 --- !u!114 &1399605123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12551,8 +12573,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilities:
-  - {fileID: 7314400718525558973, guid: a49421f22b27e3e43a3f08773ab265db, type: 3}
+  - {fileID: 7314400718525558973, guid: 596f52c30bc4a424fb002516b9c01daf, type: 3}
   - {fileID: 7314400718525558973, guid: 916a3e2a271c7bc45b5360ba3521ab1f, type: 3}
+  - {fileID: 7314400718525558973, guid: a49421f22b27e3e43a3f08773ab265db, type: 3}
   - {fileID: 7314400718525558973, guid: 66e1517f66f3238488dbdb9667b05a0c, type: 3}
   spawnPoint:
   - {fileID: 1442687321}

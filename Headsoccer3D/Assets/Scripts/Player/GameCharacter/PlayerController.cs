@@ -176,6 +176,12 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     bool playerLocked = false;
 
+    //KageBushin no Jutsu
+    public Vector2 MoveInput => moveInput;
+    public bool KickHeld => kickHeld;
+    public bool SprintHeld => sprintHeld;
+    public Vector3 FacingDirection => transform.forward;
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
