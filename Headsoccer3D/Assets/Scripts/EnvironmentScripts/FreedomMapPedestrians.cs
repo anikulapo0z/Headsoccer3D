@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class FreedomMapPedestrians : MonoBehaviour
 {
-    public Transform startZone, endZone;
+    //public Transform startZone, endZone;
     public float walkSpeed = 0.2f;
     public float runSpeed = 0.5f;
 

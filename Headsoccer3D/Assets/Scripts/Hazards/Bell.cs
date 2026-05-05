@@ -25,6 +25,17 @@ public class Bell : MonoBehaviour
     [Header("GOING crazy")]
     [SerializeField] Transform muralParent;
     [SerializeField] FreedomMapPedestrians freedomLovingIndependenceHallWatchingMoneyHavingTouristsWhoSomehowCanAffordTravellingInUSAInThisEconomy;
+    [SerializeField] FreedomMapCrowd crowd1;
+    [SerializeField] FreedomMapCrowd crowd2;
+    [SerializeField] GameObject independenceHall;
+    [SerializeField] GameObject independenceHallClockTower;
+    [SerializeField] Transform clockTowerLookTransform;
+    Vector3 clockTowerInitPosition;
+    Quaternion clockTowerInitRotation;
+    Animator iHallAnim;
+    Animator iHallClockTowerAnim;
+    [SerializeField] GameObject BellCrowd;
+
 
     bool isBreaking = false;
 
@@ -35,6 +46,12 @@ public class Bell : MonoBehaviour
     {
         currentHitUntilBreak = totalHitsUntilBreak;
         lastHitTime = Time.time;
+
+        iHallAnim = independenceHall.GetComponent<Animator>();
+        iHallClockTowerAnim = independenceHallClockTower.GetComponent<Animator>();
+
+        clockTowerInitPosition = independenceHallClockTower.transform.localPosition;
+        clockTowerInitRotation = independenceHallClockTower.transform.localRotation;
 
         StartCoroutine(BreakBell());
     }
@@ -76,13 +93,30 @@ public class Bell : MonoBehaviour
         }
 
         yield return new WaitForSeconds(1);
+
         freedomLovingIndependenceHallWatchingMoneyHavingTouristsWhoSomehowCanAffordTravellingInUSAInThisEconomy.SetAnimation(1);
+        crowd1.SetAnimation(1);
+        crowd2.SetAnimation(1);
+        iHallAnim.SetTrigger("Start Panic");
+        iHallClockTowerAnim.SetTrigger("Start Panic");
+        independenceHallClockTower.transform.DOLocalMove(clockTowerLookTransform.localPosition, 0.2367f);
+        independenceHallClockTower.transform.DOLocalRotateQuaternion(clockTowerLookTransform.localRotation, 0.2367f);
+
         yield return new WaitForSeconds(1);
+
         StartCoroutine(triggerMurals(true));
+
         yield return new WaitForSeconds(3);
+
         goalMoverManager.TriggerSequence();
+        iHallAnim.SetTrigger("Zoom Out");
+        iHallClockTowerAnim.SetTrigger("Zoom Out");
+        independenceHallClockTower.transform.DOLocalMove(clockTowerInitPosition, 0.2367f);
+        independenceHallClockTower.transform.DOLocalRotateQuaternion(clockTowerInitRotation, 0.2367f);
 
         freedomLovingIndependenceHallWatchingMoneyHavingTouristsWhoSomehowCanAffordTravellingInUSAInThisEconomy.SetAnimation(0);
+        crowd1.SetAnimation(0);
+        crowd2.SetAnimation(0);
         yield return new WaitForSeconds(15);
 
         foreach(Transform child in crackedBell.transform)
@@ -94,7 +128,13 @@ public class Bell : MonoBehaviour
 
     public void ResetBell()
     {
+        //crowd control
         freedomLovingIndependenceHallWatchingMoneyHavingTouristsWhoSomehowCanAffordTravellingInUSAInThisEconomy.SetAnimation(2);
+        crowd1.SetAnimation(2);
+        crowd2.SetAnimation(2);
+        iHallAnim.SetTrigger("Stop Panic");
+        iHallClockTowerAnim.SetTrigger("Stop Panic");
+
 
         Vector3 originalPos = bellStand.transform.position;
         t1 = bellStand.transform.DOMove(
@@ -134,7 +174,10 @@ public class Bell : MonoBehaviour
             if(_goCrazy)
                 muralParent.GetChild(i).GetComponent<Animation>().Play();
             else
-                muralParent.GetChild(i).GetComponent<Animation>().Play();
+            {
+                muralParent.GetChild(i).GetComponent<Animation>().Stop();
+                muralParent.GetChild(i).GetComponent<Animation>().Rewind();
+            }
             yield return new WaitForSeconds(0.1891f);
         }
     }
