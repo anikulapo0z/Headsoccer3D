@@ -141,12 +141,14 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] private float maxDribbleDistance = 5f;
     private SoccerBall possessedBall;
 
-    private PlayerAudioManager audioManager;
-
     public Vector3 DribbleOffset => dribbleOffset;
-
     [SerializeField] GameObject crown;
 
+    [Header("Audio Settings")]
+    private PlayerAudioManager audioManager;
+    [SerializeField] private float footstepInterval = 0.2f;
+    private float footstepTimer;
+    private bool isChargeSoundPlaying = false;
 
     // get pancake bitch
     [Space]
@@ -396,7 +398,46 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             }
         }
 
+        // foosteps sound
+        if (controller.isGrounded && moveInput.sqrMagnitude > 0.1f && !kickHeld)
+        {
+            footstepTimer -= Time.fixedDeltaTime;
+            if (footstepTimer <= 0f)
+            {
+                audioManager.PlayFootstepSfx();
+                float currentInterval = isSprinting ? footstepInterval * 0.7f : footstepInterval;
+                footstepTimer = currentInterval;
+            }
+        }
+        else
+        {
+            footstepTimer = 0f; 
+        }
 
+        // charge sound
+        if (useChargeKick && kickHeld)
+        {
+            kickHoldTime += Time.deltaTime;
+            kickHeldSpeedMultiplier = kickHeldSpeedMultiplierVal;
+
+            // Only play the sound if we have held it longer than a "Tap"
+            // and we haven't already started the sound for this kick.
+            if (kickHoldTime > tapTime + .3f && !isChargeSoundPlaying)
+            {
+                audioManager.PlayChargeSfx();
+                isChargeSoundPlaying = true; 
+            }
+
+            if (kickHoldTime >= chargeTime3) kickChargeLevel = 3;
+            else if (kickHoldTime >= chargeTime2) kickChargeLevel = 2;
+            else kickChargeLevel = 1;
+        }
+        else
+        {
+            kickHeldSpeedMultiplier = 1f;
+            // Reset the flag when the button is released
+            isChargeSoundPlaying = false; 
+        }
 
         //VFX Test
 /*        Vector2 testMove = Vector2.zero;
@@ -546,12 +587,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
             int levelToUse = (kickHoldTime <= tapTime) ? 1 : kickChargeLevel;
             ChargeKick(levelToUse);
-
-
         }
-        audioManager?.PlayKickSfx();
     }
-
 
     public void HitBall(SoccerBall ball)
     {
@@ -576,6 +613,11 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         anim.SetTrigger("Kick");
 
+        if (audioManager != null)
+        {
+            audioManager.PlayWhooshSfx();
+        }
+
         StartCoroutine(KickVisualAndReset(0.3f));
         Debug.Log($"KICK! Level: {level} | hold: {kickHoldTime:F2}S");
 
@@ -597,6 +639,12 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     public void OnKickTrigger(SoccerBall ball)
     {
+        if (audioManager != null)
+        {
+            audioManager.PlayKickBallSfx();
+            audioManager.PlayHitBall();
+        }
+        
         Vector3 kickDirection;
 
         if(kickUsesFacingDirection)
@@ -644,6 +692,11 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         nextHeadTime = Time.time + headCooldown;
 
+        if (audioManager != null)
+        {
+            audioManager.PlayHitBall();
+        }
+        
         Vector3 headerDirection = transform.forward;
 
         headerDirection += Vector3.up * headerUpForce;
@@ -717,7 +770,10 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     public void GetHitFromPlayer(float momentum, Vector3 hitDirection)
     {
-
+        if (audioManager != null)
+        {
+            audioManager.PlayKickBallSfx();
+        }
 
         Debug.Log(hitDirection);
         float kickForce = momentum * playerKnockbackForceMultiplier;

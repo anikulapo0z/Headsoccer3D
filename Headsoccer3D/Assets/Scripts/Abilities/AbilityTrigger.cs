@@ -32,15 +32,6 @@ public class AbilityTrigger : MonoBehaviour
                     Debug.Log("Animation trigger set");
                 }
 
-                if (pickUpSfx)
-                {
-                    pickUpSfx.Play();
-                }
-                else
-                {
-                    Debug.Log("PickUpSfx AudioSource has no clip assigned.");
-                }
-
                 // Disable collider and start destroy coroutine
                 GetComponent<Collider>().enabled = false;
                 Destroy(gameObject);

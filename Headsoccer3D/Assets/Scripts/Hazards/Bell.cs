@@ -11,16 +11,13 @@ public class Bell : MonoBehaviour
     [SerializeField] float timeBetweenHits;
     [SerializeField] float lastHitTime;
     [SerializeField] float forceStrength;
-    [SerializeField] AudioSource audioSource;
 
     [SerializeField] int breakIndex = 0;
     [SerializeField] GameObject[] bellCracks;
     [SerializeField] GameObject crackedBell;
     [SerializeField] GameObject wholeBell;
     [SerializeField] GameObject bellStand;
-
     [SerializeField] GoalMoverManager goalMoverManager;
-
 
     [Header("GOING crazy")]
     [SerializeField] Transform muralParent;
@@ -36,6 +33,8 @@ public class Bell : MonoBehaviour
     Animator iHallClockTowerAnim;
     [SerializeField] GameObject BellCrowd;
 
+    [Header("Audio")]
+    [SerializeField] private SceneAudioManager audioManager;
 
     bool isBreaking = false;
 
@@ -79,8 +78,12 @@ public class Bell : MonoBehaviour
                 }
             //}
             currentHitUntilBreak--;
+
+            audioManager.PlayBellRingSfx();
+
             if(currentHitUntilBreak <= 0 && !isBreaking)
                 StartCoroutine(BreakBell());
+                audioManager.PlayBellBreakSfx();
 
         }
     }
@@ -112,6 +115,7 @@ public class Bell : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
+        audioManager.PlayGaspSfx();
         StartCoroutine(triggerMurals(true));
 
         yield return new WaitForSeconds(3);
