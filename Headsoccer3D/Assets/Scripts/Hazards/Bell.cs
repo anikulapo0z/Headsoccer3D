@@ -41,6 +41,19 @@ public class Bell : MonoBehaviour
     Tween t1;
 
 
+    [Header("Camera Shake")]
+    [SerializeField] float shakeDuration_break;
+    [SerializeField] float shakeStrength_break;
+    [SerializeField] int shakeVibrato_break;
+
+    [Space]
+    [SerializeField] float shakeDuration_crack;
+    [SerializeField] float shakeStrength_crack;
+    [SerializeField] int shakeVibrato_crack;
+
+
+
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.M))
@@ -71,11 +84,13 @@ public class Bell : MonoBehaviour
             lastHitTime = Time.time;
             //if (currentHitUntilBreak % 2 == 1)
             //{
-                if (breakIndex <= bellCracks.Length -1)
-                {
-                    bellCracks[breakIndex].gameObject.SetActive(true);
-                    breakIndex++;
-                }
+            if (breakIndex <= bellCracks.Length - 1)
+            {
+                bellCracks[breakIndex].gameObject.SetActive(true);
+                breakIndex++;
+                CameraController.Instance.ShakeCamera(shakeDuration_crack, shakeStrength_crack, shakeVibrato_crack);
+
+            }
             //}
             currentHitUntilBreak--;
 
@@ -90,6 +105,8 @@ public class Bell : MonoBehaviour
 
     IEnumerator BreakBell()
     {
+        CameraController.Instance.ShakeCamera(shakeDuration_break, shakeStrength_break, shakeVibrato_break);
+
         isBreaking = true;
         wholeBell.SetActive(false);
         crackedBell.SetActive(true);
