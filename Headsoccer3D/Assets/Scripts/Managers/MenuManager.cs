@@ -63,8 +63,7 @@ public class MenuManager : MonoBehaviour
     public GameObject[] objectsToTurnBackOn;
     public GameObject[] objectsToTurnBackOff;
 
-    [SerializeField] MenuMusic backgroundMusic;
-
+    [SerializeField] MenuAudioManager menuAudioManager;
 
     public enum TeamSizes
     {
@@ -274,7 +273,7 @@ public class MenuManager : MonoBehaviour
 
     IEnumerator fadeTransitionThenLoad(string sceneName)
     {
-        backgroundMusic.FadeOut();
+        menuAudioManager.FadeOut();
 
         float elapsed = 0f;
 
@@ -422,6 +421,8 @@ public class MenuManager : MonoBehaviour
         {
             t.gameObject.SetActive(true);
         }
+
+        menuAudioManager.PlayUIBackSfx();
     }
 
     public MenuManager.TeamSizes GetTeamSize()

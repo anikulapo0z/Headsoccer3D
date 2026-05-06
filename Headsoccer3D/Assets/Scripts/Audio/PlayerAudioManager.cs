@@ -3,35 +3,64 @@ using UnityEngine;
 public class PlayerAudioManager : MonoBehaviour
 {
     [Header("Audio Sources")]
-    [SerializeField] private AudioSource kickSfx;
+    [SerializeField] private AudioSource[] kickBallSfx;
+    [SerializeField] private AudioSource[] chargeSfx;
+    [SerializeField] private AudioSource[] kickWhooshSfx;
+    [SerializeField] private AudioSource[] hitBallSfx;
+    [SerializeField] private AudioSource[] footstepsSfx;
     [SerializeField] private AudioSource jumpSfx;
     [SerializeField] private AudioSource landSfx;
-    [SerializeField] private AudioSource getHitSfx;
+    [SerializeField] private AudioSource pickupSfx;
     [SerializeField] private AudioSource empoweredKickSfx;
     [SerializeField] private AudioSource multiBallSfx;
 
-    [SerializeField] private AudioSource[] kickBallSfx;
-    [SerializeField] private AudioSource[] footstepsSfx;
-
-    public void PlayKickSfx()
+    public void PlayKickBallSfx()
     {
-        if(kickSfx)
+        if (kickBallSfx.Length > 0)
         {
-            if (kickSfx.resource)
-            {
-                kickSfx.Play();
-            }
-            else
-            {
-                Debug.Log("Kick SFX clip is not assigned.");
-            }
+            int randomIndex = Random.Range(0, kickBallSfx.Length);
+            kickBallSfx[randomIndex].Play();
         }
         else
         {
-            Debug.Log("Kick SFX is not assigned.");
-
+            Debug.Log("Kick Ball SFX clips are not assigned.");
         }
-
+    }
+    public void PlayChargeSfx()
+    {
+        if (chargeSfx.Length > 0)
+        {
+            int randomIndex = Random.Range(0, chargeSfx.Length);
+            chargeSfx[randomIndex].Play();
+        }
+        else
+        {
+            Debug.Log("Charge SFX clips are not assigned.");
+        }
+    }
+    public void PlayWhooshSfx()
+    {
+        if (kickWhooshSfx.Length > 0)
+        {
+            int randomIndex = Random.Range(0, kickWhooshSfx.Length);
+            kickWhooshSfx[randomIndex].Play();
+        }
+        else
+        {
+            Debug.Log("Kick Whoosh SFX clips are not assigned.");
+        }
+    }
+    public void PlayHitBall()
+    {
+        if (hitBallSfx.Length > 0)
+        {
+            int randomIndex = Random.Range(0, hitBallSfx.Length);
+            hitBallSfx[randomIndex].Play();
+        }
+        else
+        {
+            Debug.Log("Hit Ball SFX clips are not assigned.");
+        }
     }
     public void PlayJumpSfx()
     {
@@ -55,30 +84,7 @@ public class PlayerAudioManager : MonoBehaviour
             Debug.Log("Land SFX clip is not assigned.");
         }
     }
-    public void PlayGetHitSfx()
-    {
-        if (getHitSfx.resource)
-        {
-            getHitSfx.Play();
-        }
-        else
-        {
-            Debug.Log("Get Hit SFX clip is not assigned.");
-        }
-    }
 
-    public void PlayKickBallSfx()
-    {
-        if (kickBallSfx.Length > 0)
-        {
-            int randomIndex = Random.Range(0, kickBallSfx.Length);
-            kickBallSfx[randomIndex].Play();
-        }
-        else
-        {
-            Debug.Log("Kick Ball SFX clips are not assigned.");
-        }
-    }
     public void PlayFootstepSfx()
     {
         if (footstepsSfx.Length > 0)
@@ -91,7 +97,18 @@ public class PlayerAudioManager : MonoBehaviour
             Debug.Log("Footstep SFX clips are not assigned.");
         }
     }
+    public void PlayPickupSfx()
+    {
+        if (pickupSfx && pickupSfx.resource)
+        {
+            pickupSfx.Play();
+        }
+        else
+        {
+            Debug.Log("empoweredKickSfx is not assigned.");
 
+        }
+    }
     public void PlayEmpoweredKickKickSfx()
     {
         if (empoweredKickSfx)
@@ -110,7 +127,6 @@ public class PlayerAudioManager : MonoBehaviour
             Debug.Log("empoweredKickSfx is not assigned.");
 
         }
-
     }
     public void PlayMultiBallSfx()
     {

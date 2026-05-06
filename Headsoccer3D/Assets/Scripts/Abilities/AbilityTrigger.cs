@@ -8,7 +8,8 @@ public class AbilityTrigger : MonoBehaviour
         None,
         EmpoweredKick,
         MultiBall,
-        Earthquake
+        Earthquake,
+        ShadowClone
     }
     public AbilityTypes ability = AbilityTypes.None;
     [SerializeField] private AudioSource pickUpSfx;
@@ -29,15 +30,6 @@ public class AbilityTrigger : MonoBehaviour
                 {
                     animator.SetTrigger("PickedUp");
                     Debug.Log("Animation trigger set");
-                }
-
-                if (pickUpSfx)
-                {
-                    pickUpSfx.Play();
-                }
-                else
-                {
-                    Debug.Log("PickUpSfx AudioSource has no clip assigned.");
                 }
 
                 // Disable collider and start destroy coroutine

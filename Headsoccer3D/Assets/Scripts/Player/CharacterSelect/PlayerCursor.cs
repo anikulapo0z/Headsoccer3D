@@ -22,11 +22,10 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
     [SerializeField] Sprite defaultSpriteCursor;
     [SerializeField] Sprite selectedSpriteCursor;
 
-    [SerializeField] AudioSource uiSelectSound;
-    [SerializeField] AudioSource uiDeselectSound;
-
-
-
+    [Header("Audio")]
+    [SerializeField] private AudioSource uiSelectSfx;
+    [SerializeField] private AudioSource uiHoverSfx;
+    [SerializeField] private AudioSource uiBackSfx;
 
     Vector2 moveInput;
     public bool isLocked = false;
@@ -38,6 +37,8 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
         cursorRect = GetComponent<RectTransform>();
 
         canvas = GetComponentInParent<Canvas>();
+
+        // menuManager = GameObject.Find("MenuManager");
 
         canvasRect = canvas.GetComponent<RectTransform>();
         raycaster = canvas.GetComponent<GraphicRaycaster>();
@@ -132,6 +133,9 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
             currentItem?.OnHoverExit(playerIndex);
             currentItem = hitItem;
             currentItem?.OnHoverEnter(playerIndex);
+
+            if (hitItem != null)
+                PlayUIHoverSfx();
         }
     }
 
@@ -149,14 +153,7 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
             {
 
                 currentItem.OnConfirm(playerIndex);
-                if (uiSelectSound.clip != null)
-                {
-                    uiSelectSound.Play();
-                }
-                else
-                {
-                    Debug.Log("Confirm SFX clip is not assigned.");
-                }
+                PlayUISelectSfx();
             }
             if (MenuManager.Instance.isPaused)
                 return;
@@ -169,14 +166,7 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
             {
 
                 currentItem.OnConfirm(playerIndex);
-                if (uiSelectSound.clip != null)
-                {
-                    uiSelectSound.Play();
-                }
-                else
-                {
-                    Debug.Log("Confirm SFX clip is not assigned.");
-                }
+                PlayUISelectSfx();
             }
 
 
@@ -186,20 +176,10 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
                 isLocked = true;
                 GetComponent<Image>().sprite = selectedSpriteCursor;
                 currentItem.OnConfirm(playerIndex);
-                if (uiSelectSound.clip != null)
-                {
-                    uiSelectSound.Play();
-                }
-                else
-                {
-                    Debug.Log("Confirm SFX clip is not assigned.");
-                }
+                PlayUISelectSfx();
             }
-
-
         }
     }
-
 
     public void OnCancel()
     {
@@ -214,16 +194,70 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
         //currentItem?.OnHoverExit(playerIndex);
         //currentItem = null;
 
-        if (uiSelectSound.clip != null)
+        PlayUIBackSfx();
+    }
+
+    public void PlayUISelectSfx()
+    {
+        if(uiSelectSfx)
         {
-            uiSelectSound.Play();
+            if (uiSelectSfx.resource)
+            {
+                uiSelectSfx.Play();
+            }
+            else
+            {
+                Debug.Log("uiSelect SFX clip is not assigned.");
+            }
         }
         else
         {
-            Debug.Log("Confirm SFX clip is not assigned.");
+            Debug.Log("uiSelect SFX is not assigned.");
+
         }
     }
 
+    public void PlayUIHoverSfx()
+    {
+        if(uiHoverSfx)
+        {
+            if (uiHoverSfx.resource)
+            {
+                uiHoverSfx.Play();
+            }
+            else
+            {
+                Debug.Log("uiHover SFX clip is not assigned.");
+            }
+        }
+        else
+        {
+            Debug.Log("uiHover SFX is not assigned.");
+
+        }
+    }
+
+    public void PlayUIBackSfx()
+    {
+        if(uiBackSfx)
+        {
+            if (uiBackSfx.resource)
+            {
+                uiBackSfx.Play();
+            }
+            else
+            {
+                Debug.Log("uiBack SFX clip is not assigned.");
+            }
+        }
+        else
+        {
+            Debug.Log("uiBack SFX is not assigned.");
+
+        }
+    }
+
+    // Requirements for controllable object
     public void OnJump() { }
     public void OnKick(bool val) { }
     public void OnSprint(bool val) { }
