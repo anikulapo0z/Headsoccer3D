@@ -28,7 +28,7 @@ public class GoalMovement : MonoBehaviour
 
         pathPositions = new Vector3[waypoints.Length];
         for (int i = 0; i < waypoints.Length; i++)
-            pathPositions[i] = new Vector3(waypoints[i].position.x, transform.position.y, waypoints[i].position.z);
+            pathPositions[i] = new Vector3(waypoints[i].position.x, transform.position.y + 0.25f, waypoints[i].position.z);
 
         float totalLength = 0f;
         Vector3 prev = transform.position;

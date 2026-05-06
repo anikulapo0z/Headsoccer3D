@@ -42,6 +42,14 @@ public class Bell : MonoBehaviour
     Tween t1;
 
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            StartCoroutine(BreakBell());
+        }
+    }
+
     private void Start()
     {
         currentHitUntilBreak = totalHitsUntilBreak;
@@ -53,7 +61,7 @@ public class Bell : MonoBehaviour
         clockTowerInitPosition = independenceHallClockTower.transform.localPosition;
         clockTowerInitRotation = independenceHallClockTower.transform.localRotation;
 
-        StartCoroutine(BreakBell());
+        //StartCoroutine(BreakBell());
     }
 
     public void BellGetHit()
@@ -62,14 +70,14 @@ public class Bell : MonoBehaviour
         {
             //audioSource.Play();
             lastHitTime = Time.time;
-            if (currentHitUntilBreak % 2 == 1)
-            {
+            //if (currentHitUntilBreak % 2 == 1)
+            //{
                 if (breakIndex <= bellCracks.Length -1)
                 {
                     bellCracks[breakIndex].gameObject.SetActive(true);
                     breakIndex++;
                 }
-            }
+            //}
             currentHitUntilBreak--;
             if(currentHitUntilBreak <= 0 && !isBreaking)
                 StartCoroutine(BreakBell());

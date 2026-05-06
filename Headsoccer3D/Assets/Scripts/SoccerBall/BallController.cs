@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
+    [SerializeField] float minVelocityToHitBell;
+
     public bool grounded = false;
 
     [SerializeField] float xz_Drag;
@@ -117,6 +119,12 @@ public class BallController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
             grounded = true;
+
+
+        if (rb.linearVelocity.magnitude >= minVelocityToHitBell && collision.gameObject.CompareTag("Bell"))
+        {
+            collision.gameObject.GetComponent<BellGetHit>().BGetHit();
+        }
     }
     private void OnCollisionExit(Collision collision)
     {
