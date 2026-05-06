@@ -38,6 +38,18 @@ public class PlayerAbility : MonoBehaviour
     [SerializeField] float earthquakePlayerForce;
     [SerializeField] AudioSource earthquakeSound;
 
+    [Space(5)]
+    [Header("Shadow Clone")]
+    [SerializeField] GameObject shadowClonePrefab;
+    [SerializeField] float shadowCloneLifetime = 3f;
+    [SerializeField] float shadowCloneSpawnDistance = 2f;
+    [SerializeField] float shadowCloneMoveSpeed = 7f;
+    [SerializeField] float shadowCloneKickInterval = 0.5f;
+    [SerializeField] float shadowCloneKickRadius = 1.5f;
+    [SerializeField] float shadowCloneKickForce = 10f;
+    [SerializeField] private LayerMask shadowCloneKickMask;
+    [SerializeField] private ShadowCloneAbility.CloneMode shadowCloneMode;
+    [SerializeField] private ShadowCloneAbility.SpawnPattern shadowCloneSpawnPattern;
 
 
 
@@ -58,6 +70,10 @@ public class PlayerAbility : MonoBehaviour
 
             case AbilityTrigger.AbilityTypes.Earthquake:
                 GetComponent<Earthquake>().UseAbility();
+                break;
+
+            case AbilityTrigger.AbilityTypes.ShadowClone:
+                GetComponent<ShadowCloneAbility>().UseAbility();
                 break;
 
         }
@@ -113,6 +129,23 @@ public class PlayerAbility : MonoBehaviour
 
                 break;
 
+            case AbilityTrigger.AbilityTypes.ShadowClone:
+                if (GetComponent<ShadowCloneAbility>() == null)
+                    gameObject.AddComponent<ShadowCloneAbility>();
+                ShadowCloneAbility sc = GetComponent<ShadowCloneAbility>();
+                sc.player = gameObject;
+                sc.clonePrefab = shadowClonePrefab;
+                sc.lifetime = shadowCloneLifetime;
+                sc.spawnDistance = shadowCloneSpawnDistance;
+                sc.moveSpeed = shadowCloneMoveSpeed;
+                sc.kickInterval = shadowCloneKickInterval;
+                sc.kickRadius = shadowCloneKickRadius;
+                sc.kickForce = shadowCloneKickForce;
+                sc.kickMask = shadowCloneKickMask;
+                sc.mode = shadowCloneMode;
+                sc.spawnPattern = shadowCloneSpawnPattern;
+                break;
+
         }
     }
 
@@ -142,6 +175,9 @@ public class PlayerAbility : MonoBehaviour
                 Destroy(GetComponent<Earthquake>());
                 break;
 
+            case AbilityTrigger.AbilityTypes.ShadowClone:
+                Destroy(GetComponent<ShadowCloneAbility>());
+                break;
 
         }
         currentAbility = AbilityTrigger.AbilityTypes.None;
