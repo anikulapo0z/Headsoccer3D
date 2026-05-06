@@ -6,8 +6,8 @@ public class SceneAudioManager : MonoBehaviour
     [SerializeField] private AudioSource crowdAmbience;
     [SerializeField] private AudioSource crowdCheers;
     [SerializeField] private AudioSource crowdGasp;
-    [SerializeField] private AudioSource confetti;
     [SerializeField] private AudioSource crowdBoos;
+    [SerializeField] private AudioSource[] confetti;
     [SerializeField] private AudioSource whistleSfx;
     [Header("Bus map")]
     [SerializeField] private AudioSource busSfx;
@@ -41,10 +41,23 @@ public class SceneAudioManager : MonoBehaviour
     }
     public void PlayConfettiCheersSfx()
     {
-        if (crowdCheers.resource && confetti.resource)
+        if (confetti.Length > 0)
+        {
+            int randomIndex = Random.Range(0, confetti.Length);
+            AudioSource source = confetti[randomIndex];
+            if (source != null)
+            {
+                // source.panStereo = pan;
+                source.Play();
+            }
+        }
+        else
+        {
+            Debug.Log("Crowd cheers or confetti SFX clip is not assigned");
+        }
+        if (crowdCheers.resource)
         {
             crowdCheers.Play();
-            confetti.Play();
         }
         else
         {
