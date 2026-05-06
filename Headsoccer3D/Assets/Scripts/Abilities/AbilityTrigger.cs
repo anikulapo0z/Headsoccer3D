@@ -8,7 +8,8 @@ public class AbilityTrigger : MonoBehaviour
         None,
         EmpoweredKick,
         MultiBall,
-        Earthquake
+        Earthquake,
+        ShadowClone
     }
     public AbilityTypes ability = AbilityTypes.None;
     [SerializeField] private AudioSource pickUpSfx;
