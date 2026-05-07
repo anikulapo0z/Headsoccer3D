@@ -26,11 +26,11 @@ public class AbilityTrigger : MonoBehaviour
                 pa.SetAbility(ability);
 
                 // Trigger the animation
-                if (animator != null)
-                {
-                    animator.SetTrigger("PickedUp");
-                    Debug.Log("Animation trigger set");
-                }
+                //if (animator != null)
+                //{
+                  //  animator.SetTrigger("PickedUp");
+                    //Debug.Log("Animation trigger set");
+                //}
 
                 // Disable collider and start destroy coroutine
                 GetComponent<Collider>().enabled = false;

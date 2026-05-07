@@ -100,6 +100,8 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] MenuMusic backgroundMusic;
     private SceneAudioManager audioManager;
 
+    [SerializeField] AbilityThrower abilityThrower;
+
 
     void Start()
     {
@@ -160,6 +162,7 @@ public class GameSceneManager : MonoBehaviour
         camera.target = ballObject.transform;
 
         StartCoroutine(StartGameCountDown());
+        abilityThrower.StartThrow();
     }
 
 

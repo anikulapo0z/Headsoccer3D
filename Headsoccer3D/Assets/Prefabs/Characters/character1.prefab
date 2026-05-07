@@ -1290,15 +1290,19 @@ MonoBehaviour:
   multiBallText: {fileID: 3798930661154949969, guid: ad6825c6a490e344abb915b4ce2a1143, type: 3}
   empoweredKickText: {fileID: 5041241853163221094, guid: f2d58010527d10c47b2a34888d282aca, type: 3}
   earthquakeText: {fileID: 2268949771022234786, guid: 080da404cfbf9e047854e6885e282a6d, type: 3}
+  shadowCloneText: {fileID: 1005211866159699361, guid: 5ad97342895878b429e45ff5f301d34e, type: 3}
   mbOffset: {x: 0, y: 1.5, z: 0.7}
   mbRotation: {x: 0, y: 0, z: 17}
   ekOffset: {x: 0, y: 1.6, z: 0.6}
   ekRotation: {x: 0, y: 0, z: 16}
   earthquakeOffset: {x: 0, y: 0, z: 0}
   earthquakeRotation: {x: 0, y: 0, z: 0}
+  shadowCloneOffset: {x: 0, y: 1.5, z: 0.6}
+  shadowCloneRotation: {x: 0, y: 0, z: 16}
   mbActive: 0
   ekActive: 0
   earthquakeActive: 0
+  shadowCloneActive: 0
   controllingFlipper: 0
   controlledFlippers: []
   lrYHeight: 0
@@ -1393,7 +1397,7 @@ MonoBehaviour:
   shadowCloneKickMask:
     serializedVersion: 2
     m_Bits: 768
-  shadowCloneMode: 1
+  shadowCloneMode: 0
   shadowCloneSpawnPattern: 1
 --- !u!114 &-1422199461870558157
 MonoBehaviour:

@@ -24,15 +24,41 @@ public class AbilityThrower : MonoBehaviour
     [SerializeField] float maxThrowTime;
     [SerializeField] float throwTime = 5f;
 
+    bool start = false;
 
+    [Space]
+    [Header("Bus Map Specific")]
+    [SerializeField] bool isBusMap = false;
+    [SerializeField] Transform bus1;
+    [SerializeField] Collider bus1Collider;
+    [Space]
+    [SerializeField] Transform bus2;
+    [SerializeField] Collider bus2Collider;
+
+
+    public void StartThrow()
+    {
+        if (GameSceneManager.Instance.inputControllers.Count < 3)
+        {
+            minThrowTime = 5;
+            maxThrowTime = 8;
+        }
+        start = true;
+    }
 
     private void FixedUpdate()
     {
+        if(Input.GetKey(KeyCode.M)) start = true;
+        if (!start) return;
+
         throwTime -= Time.deltaTime;
 
         if(throwTime < 0)
         {
-            ThrowRandomAbility();
+            if(isBusMap)
+                ThrowRandomAbilityOnBus();
+            else
+                ThrowRandomAbility();
             throwTime = Random.Range(minThrowTime, maxThrowTime);
         }
     }
@@ -66,6 +92,54 @@ public class AbilityThrower : MonoBehaviour
 
     }
 
+    void ThrowRandomAbilityOnBus()
+    {
+        int point = Random.Range(0, spawnPoint.Length);
+
+        GameObject abilityPrefab = abilities[Random.Range(0, abilities.Length)];
+
+        GameObject abilityInstance = Instantiate(abilityPrefab, spawnPoint[point].position, Quaternion.identity);
+
+
+
+        float randomX;
+        float randomZ;
+
+        int x = Random.Range(0, 2);
+        if (x == 0)
+        {
+            randomX = Random.Range(bus1Collider.bounds.min.x, bus1Collider.bounds.max.x);
+            randomZ = Random.Range(bus1Collider.bounds.min.z, bus1Collider.bounds.max.z);
+            abilityInstance.transform.SetParent(bus1);
+        }
+        else
+        {
+            randomX = Random.Range(bus2Collider.bounds.min.x, bus2Collider.bounds.max.x);
+            randomZ = Random.Range(bus2Collider.bounds.min.z, bus2Collider.bounds.max.z);
+            abilityInstance.transform.SetParent(bus2);
+        }
+
+
+
+        //float randomX = Random.Range(minX, maxX);
+        //float randomZ = Random.Range(minZ, maxZ);
+        Vector3 destination = new Vector3(randomX, destinationY, randomZ);
+
+        float arcHeight = Random.Range(minArcHeight, maxArcHeight);
+        float duration = Random.Range(minDuration, maxDuration);
+
+        Vector3 midPoint = (spawnPoint[point].position + destination) / 2f;
+        midPoint.y += arcHeight;
+
+        Vector3[] path = new Vector3[]
+        {
+            spawnPoint[point].position,
+            midPoint,
+            destination
+        };
+        abilityInstance.transform.DOJump(destination, arcHeight, 1, duration); ;
+
+    }
 
 
 }
