@@ -12571,6 +12571,37 @@ Transform:
   - {fileID: 1969204330}
   m_Father: {fileID: 372665513}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1476100460
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1476100461}
+  m_Layer: 0
+  m_Name: Ability Spawn Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1476100461
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476100460}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.47, y: 2.3291528, z: -9.28}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1481915847}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1481915845
 GameObject:
   m_ObjectHideFlags: 0
@@ -12604,7 +12635,9 @@ MonoBehaviour:
   - {fileID: 7314400718525558973, guid: a49421f22b27e3e43a3f08773ab265db, type: 3}
   - {fileID: 7314400718525558973, guid: 916a3e2a271c7bc45b5360ba3521ab1f, type: 3}
   spawnPoint:
-  - {fileID: 0}
+  - {fileID: 1919037259}
+  - {fileID: 1476100461}
+  - {fileID: 1809006815}
   minX: -5.5
   maxX: 5.5
   minZ: -6
@@ -12629,7 +12662,10 @@ Transform:
   m_LocalPosition: {x: 5.48, y: 0.57, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1919037259}
+  - {fileID: 1476100461}
+  - {fileID: 1809006815}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1507844019
@@ -17496,6 +17532,37 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 265289504570012559, guid: 87f6f7e5ae460e24094bec3e584b05ae, type: 3}
   m_PrefabInstance: {fileID: 1198883925}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1809006814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1809006815}
+  m_Layer: 0
+  m_Name: Ability Spawn Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1809006815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1809006814}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.25, y: 2.3291528, z: -9.28}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1481915847}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1826562774
 GameObject:
   m_ObjectHideFlags: 0
@@ -18403,6 +18470,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1591531457491157189, guid: bffb81b0ae7375f41bc3d5b9a016f2cd, type: 3}
   m_PrefabInstance: {fileID: 2094054518}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1919037258
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1919037259}
+  m_Layer: 0
+  m_Name: Ability Spawn Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1919037259
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919037258}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -9.05, y: 2.3291528, z: -9.28}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1481915847}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1920323337 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 80cf457e9867f644e8f03aa8442c90f0, type: 3}
