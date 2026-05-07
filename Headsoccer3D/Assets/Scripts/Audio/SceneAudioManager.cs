@@ -168,4 +168,15 @@ public class SceneAudioManager : MonoBehaviour
             Debug.Log("Bell Break SFX clip is not assigned");
         }
     }
+    public void PlayJawnSfx()
+    {
+        if (jawnSfx.resource)
+        {
+            jawnSfx.Play();
+        }
+        else
+        {
+            Debug.Log("Jawn SFX clip is not assigned");
+        }
+    }
 }
