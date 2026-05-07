@@ -24,10 +24,22 @@ public class AbilityThrower : MonoBehaviour
     [SerializeField] float maxThrowTime;
     [SerializeField] float throwTime = 5f;
 
+    bool start = false;
 
+    public void StartThrow()
+    {
+        if (GameSceneManager.Instance.inputControllers.Count < 3)
+        {
+            minThrowTime = 5;
+            maxThrowTime = 7;
+        }
+        start = true;
+    }
 
     private void FixedUpdate()
     {
+        if (!start) return;
+
         throwTime -= Time.deltaTime;
 
         if(throwTime < 0)
