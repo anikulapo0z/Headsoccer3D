@@ -18,6 +18,7 @@ public class SceneAudioManager : MonoBehaviour
     [Header("Bell map")]
     [SerializeField] private AudioSource[] bellRingSfx;
     [SerializeField] private AudioSource bellBreakSfx;
+    [SerializeField] private AudioSource jawnSfx;
 
     // general
     private void Start()

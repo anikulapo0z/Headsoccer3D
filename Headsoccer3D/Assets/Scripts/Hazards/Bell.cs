@@ -35,10 +35,24 @@ public class Bell : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] private SceneAudioManager audioManager;
+    [SerializeField] private AudioSource gameMusic;
 
     bool isBreaking = false;
 
     Tween t1;
+
+
+    [Header("Camera Shake")]
+    [SerializeField] float shakeDuration_break;
+    [SerializeField] float shakeStrength_break;
+    [SerializeField] int shakeVibrato_break;
+
+    [Space]
+    [SerializeField] float shakeDuration_crack;
+    [SerializeField] float shakeStrength_crack;
+    [SerializeField] int shakeVibrato_crack;
+
+
 
 
     private void Update()
@@ -71,25 +85,32 @@ public class Bell : MonoBehaviour
             lastHitTime = Time.time;
             //if (currentHitUntilBreak % 2 == 1)
             //{
-                if (breakIndex <= bellCracks.Length -1)
-                {
-                    bellCracks[breakIndex].gameObject.SetActive(true);
-                    breakIndex++;
-                }
+            if (breakIndex <= bellCracks.Length - 1)
+            {
+                bellCracks[breakIndex].gameObject.SetActive(true);
+                breakIndex++;
+                CameraController.Instance.ShakeCamera(shakeDuration_crack, shakeStrength_crack, shakeVibrato_crack);
+
+            }
             //}
             currentHitUntilBreak--;
 
             audioManager.PlayBellRingSfx();
+                audioManager.PlayBellBreakSfx();
 
             if(currentHitUntilBreak <= 0 && !isBreaking)
                 StartCoroutine(BreakBell());
-                audioManager.PlayBellBreakSfx();
 
         }
     }
 
     IEnumerator BreakBell()
     {
+        CameraController.Instance.ShakeCamera(shakeDuration_break, shakeStrength_break, shakeVibrato_break);
+
+        audioManager.PlayBellRingSfx();
+        audioManager.PlayBellBreakSfx();
+
         isBreaking = true;
         wholeBell.SetActive(false);
         crackedBell.SetActive(true);
@@ -102,6 +123,8 @@ public class Bell : MonoBehaviour
             child.GetComponent<Rigidbody>().isKinematic = false;
             child.GetComponent<Rigidbody>().AddForce((transform.position - child.position).normalized * forceStrength, ForceMode.Impulse);
         }
+
+        gameMusic.mute = true;
 
         yield return new WaitForSeconds(1);
 
@@ -119,6 +142,8 @@ public class Bell : MonoBehaviour
         StartCoroutine(triggerMurals(true));
 
         yield return new WaitForSeconds(3);
+
+        gameMusic.mute = false;
 
         goalMoverManager.TriggerSequence();
         iHallAnim.SetTrigger("Zoom Out");
