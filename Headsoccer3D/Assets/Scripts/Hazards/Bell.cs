@@ -35,6 +35,7 @@ public class Bell : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] private SceneAudioManager audioManager;
+    [SerializeField] private AudioSource gameMusic;
 
     bool isBreaking = false;
 
@@ -95,10 +96,10 @@ public class Bell : MonoBehaviour
             currentHitUntilBreak--;
 
             audioManager.PlayBellRingSfx();
+                audioManager.PlayBellBreakSfx();
 
             if(currentHitUntilBreak <= 0 && !isBreaking)
                 StartCoroutine(BreakBell());
-                audioManager.PlayBellBreakSfx();
 
         }
     }
@@ -106,6 +107,9 @@ public class Bell : MonoBehaviour
     IEnumerator BreakBell()
     {
         CameraController.Instance.ShakeCamera(shakeDuration_break, shakeStrength_break, shakeVibrato_break);
+
+        audioManager.PlayBellRingSfx();
+        audioManager.PlayBellBreakSfx();
 
         isBreaking = true;
         wholeBell.SetActive(false);
@@ -119,6 +123,8 @@ public class Bell : MonoBehaviour
             child.GetComponent<Rigidbody>().isKinematic = false;
             child.GetComponent<Rigidbody>().AddForce((transform.position - child.position).normalized * forceStrength, ForceMode.Impulse);
         }
+
+        gameMusic.mute = true;
 
         yield return new WaitForSeconds(1);
 
@@ -136,6 +142,8 @@ public class Bell : MonoBehaviour
         StartCoroutine(triggerMurals(true));
 
         yield return new WaitForSeconds(3);
+
+        gameMusic.mute = false;
 
         goalMoverManager.TriggerSequence();
         iHallAnim.SetTrigger("Zoom Out");
