@@ -13836,6 +13836,7 @@ MonoBehaviour:
   blueWinColor: {r: 0.43137255, g: 0.43137255, b: 0.8901961, a: 1}
   drawColor: {r: 0.68235296, g: 0.68235296, b: 0.68235296, a: 1}
   backgroundMusic: {fileID: 1792353836}
+  abilityThrower: {fileID: 1749373052}
 --- !u!4 &1951291691
 Transform:
   m_ObjectHideFlags: 0
@@ -14293,8 +14294,9 @@ MonoBehaviour:
   crowdAmbience: {fileID: 0}
   crowdCheers: {fileID: 1951291706}
   crowdGasp: {fileID: 1951291705}
-  confetti: {fileID: 1951291707}
   crowdBoos: {fileID: 1951291704}
+  confetti:
+  - {fileID: 0}
   whistleSfx: {fileID: 1951291697}
   busSfx: {fileID: 0}
   trainHornSfx: {fileID: 1951291696}
@@ -14307,6 +14309,7 @@ MonoBehaviour:
   announcementSfx: {fileID: 1951291703}
   bellRingSfx: []
   bellBreakSfx: {fileID: 0}
+  jawnSfx: {fileID: 0}
 --- !u!82 &1951291699
 AudioSource:
   m_ObjectHideFlags: 0
