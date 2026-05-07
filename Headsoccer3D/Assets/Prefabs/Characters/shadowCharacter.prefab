@@ -450,6 +450,7 @@ MonoBehaviour:
   dribbleOffset: {x: 0, y: 0, z: 0.1}
   maxDribbleDistance: 1.6
   crown: {fileID: 6364973919794946201}
+  footstepInterval: 0.2
   goToYVal: 2
   flatenedDuration: 4
   currentFlatenedTime: 0
@@ -646,20 +647,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0001fa97e799f594ea7defdfec235ba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kickSfx: {fileID: 0}
-  jumpSfx: {fileID: 8979881466436029038}
-  landSfx: {fileID: 0}
-  getHitSfx: {fileID: 9047179127388915425}
-  empoweredKickSfx: {fileID: 1777783957714740760}
-  multiBallSfx: {fileID: 2713583405545530211}
   kickBallSfx:
   - {fileID: 1675169700247278354}
   - {fileID: 1010397433741439737}
   - {fileID: 9203590312329077973}
+  chargeSfx: []
+  kickWhooshSfx: []
+  hitBallSfx: []
   footstepsSfx:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  jumpSfx: {fileID: 8979881466436029038}
+  landSfx: {fileID: 0}
+  pickupSfx: {fileID: 0}
+  empoweredKickSfx: {fileID: 1777783957714740760}
+  multiBallSfx: {fileID: 2713583405545530211}
 --- !u!1 &2578436691414235925
 GameObject:
   m_ObjectHideFlags: 0
@@ -2787,14 +2790,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3014676512476233849}
     m_Modifications:
-    - target: {fileID: 2826871211292261292, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4615716246373951051, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 52c4a4c0a7a50ea4589b9c7cd93adc2c, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.61993
@@ -2866,6 +2861,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 52c4a4c0a7a50ea4589b9c7cd93adc2c, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2826871211292261292, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4615716246373951051, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3137,19 +3140,19 @@ PrefabInstance:
     - target: {fileID: -3519962591465119764, guid: da7154898be3d344485601e8641401ca, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: c3d595a54d9de0442bcc925d3b5b4d6b, type: 2}
+      objectReference: {fileID: 2100000, guid: 69ba73b5ad348924db3dcf1e5c05e659, type: 2}
     - target: {fileID: -3519962591465119764, guid: da7154898be3d344485601e8641401ca, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: 86a194be05611ad40a43ab4eda0db274, type: 2}
+      objectReference: {fileID: 2100000, guid: 69ba73b5ad348924db3dcf1e5c05e659, type: 2}
     - target: {fileID: -3519962591465119764, guid: da7154898be3d344485601e8641401ca, type: 3}
       propertyPath: 'm_Materials.Array.data[2]'
       value: 
-      objectReference: {fileID: 2100000, guid: e8551549172e03e4ca0b3e529f1b7195, type: 2}
+      objectReference: {fileID: 2100000, guid: 69ba73b5ad348924db3dcf1e5c05e659, type: 2}
     - target: {fileID: -3519962591465119764, guid: da7154898be3d344485601e8641401ca, type: 3}
       propertyPath: 'm_Materials.Array.data[3]'
       value: 
-      objectReference: {fileID: 2100000, guid: 5ae3682cddd841842acc46486101317f, type: 2}
+      objectReference: {fileID: 2100000, guid: 69ba73b5ad348924db3dcf1e5c05e659, type: 2}
     - target: {fileID: -1413695943152035794, guid: da7154898be3d344485601e8641401ca, type: 3}
       propertyPath: m_Layer
       value: 7

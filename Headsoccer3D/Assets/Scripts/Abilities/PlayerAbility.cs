@@ -146,6 +146,10 @@ public class PlayerAbility : MonoBehaviour
                 sc.kickMask = shadowCloneKickMask;
                 sc.mode = shadowCloneMode;
                 sc.spawnPattern = shadowCloneSpawnPattern;
+
+                GetComponent<PlayerGroundMarker>().ToggleShadowCloneActive();
+
+
                 break;
 
         }
@@ -179,6 +183,9 @@ public class PlayerAbility : MonoBehaviour
 
             case AbilityTrigger.AbilityTypes.ShadowClone:
                 Destroy(GetComponent<ShadowCloneAbility>());
+
+                GetComponent<PlayerGroundMarker>().ToggleShadowCloneActive();
+
                 break;
 
         }
