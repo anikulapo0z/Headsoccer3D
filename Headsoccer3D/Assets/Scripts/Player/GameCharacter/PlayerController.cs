@@ -404,7 +404,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             footstepTimer -= Time.fixedDeltaTime;
             if (footstepTimer <= 0f)
             {
-                audioManager.PlayFootstepSfx();
+                //if(audioManager != null)
+                    //audioManager.PlayFootstepSfx();
                 float currentInterval = isSprinting ? footstepInterval * 0.7f : footstepInterval;
                 footstepTimer = currentInterval;
             }

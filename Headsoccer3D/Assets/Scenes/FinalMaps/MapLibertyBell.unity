@@ -12792,6 +12792,11 @@ MonoBehaviour:
   minThrowTime: 12
   maxThrowTime: 18
   throwTime: 11
+  isBusMap: 0
+  bus1: {fileID: 0}
+  bus1Collider: {fileID: 0}
+  bus2: {fileID: 0}
+  bus2Collider: {fileID: 0}
 --- !u!4 &1481915847
 Transform:
   m_ObjectHideFlags: 0
@@ -15656,7 +15661,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4095072348296306652, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_Center.z
-      value: 0.0018
+      value: 0.0004
       objectReference: {fileID: 0}
     - target: {fileID: 4152786578199830391, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_Speed
@@ -15692,7 +15697,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4624424009470115766, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4624424009470115766, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_LocalPosition.z
