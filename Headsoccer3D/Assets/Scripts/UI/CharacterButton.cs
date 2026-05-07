@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CharacterButton : MonoBehaviour, IMenuItem
 {
@@ -16,12 +15,6 @@ public class CharacterButton : MonoBehaviour, IMenuItem
 
     private Image image;
     private bool hovered;
-
-
-    [Header("Selection Visuals")]
-    [SerializeField] private GameObject[] playerSelectionSprites; // size = 4
-
-    private List<int> hoveringPlayers = new List<int>(); 
 
 
     // for map
@@ -45,16 +38,10 @@ public class CharacterButton : MonoBehaviour, IMenuItem
     void Awake()
     {
         image = GetComponent<Image>();
-        DisableAllSelections();
     }
 
     public void OnHoverEnter(int playerIndex)
     {
-        Debug.Log($"Hover ENTER: {gameObject.name} by player {playerIndex}");
-        hoveringPlayers.Remove(playerIndex); 
-        hoveringPlayers.Add(playerIndex);    // last = highest priority
-        UpdateSelectionVisuals();
-
         switch (type)
         {
             case ButtonType.map:
@@ -94,9 +81,6 @@ public class CharacterButton : MonoBehaviour, IMenuItem
     {
         hovered = false;
 
-        hoveringPlayers.Remove(playerIndex);
-        UpdateSelectionVisuals();
-
         MenuManager.Instance.SetPortraitInfo(
             playerIndex,
             deselectedImage,
@@ -116,28 +100,9 @@ public class CharacterButton : MonoBehaviour, IMenuItem
     }
 
 
-    private void UpdateSelectionVisuals()
-    {
-        DisableAllSelections();
 
-        if (hoveringPlayers.Count == 0)
-            return;
 
-        int lastPlayer = hoveringPlayers[hoveringPlayers.Count - 1];
 
-        if (lastPlayer >= 0 && lastPlayer < playerSelectionSprites.Length)
-        {
-            playerSelectionSprites[lastPlayer].SetActive(true);
-        }
-    }
-
-    private void DisableAllSelections()
-    {
-        for (int i = 0; i < playerSelectionSprites.Length; i++)
-        {
-            playerSelectionSprites[i].SetActive(false);
-        }
-    }
 
 
     /*    public int characterID;
