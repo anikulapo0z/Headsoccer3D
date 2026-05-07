@@ -52,7 +52,7 @@ public class FreedomMapCrowd : MonoBehaviour
         {
             //set mate data
             crowdMats[i].SetFloat("_Animation_Index", _index + 0.5f);
-            crowdMats[i].SetFloat("_speed", _index == 0 ? 481 : 50); //fast speed if panic, other wise slow
+            crowdMats[i].SetFloat("_speed", _index == 0 ? 201 : 51); //fast speed if panic, other wise slow
 
             //if in shock, face the bell
             if (_index == 1)
@@ -61,7 +61,7 @@ public class FreedomMapCrowd : MonoBehaviour
                 crowdActualObj[i].localEulerAngles = Vector3.zero;
 
             //and set the speed along the spline // some random to add variatoin
-            crowdPivot[i].GetComponent<SplineAnimate>().MaxSpeed = _index == 0 ? Random.Range(0.98f, 1.02f) * runSpeed : 0.001f; 
+            crowdPivot[i].GetComponent<SplineAnimate>().MaxSpeed = _index == 0 ? Random.Range(0.99f, 1.01f) * runSpeed : 0.001f; 
         }
 
     }

@@ -7,14 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_CFlag_Croatia
+  m_Name: M_CFlag_Sweden
   m_Shader: {fileID: 4800000, guid: d67c0f1751ae0724ea7be98cfd6110cb, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _USESHADOWS
-  - _USEUV2
-  - _USEUV4
+  - _USEUV1
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -35,7 +34,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 9cd59c555cee9414b8da32d9484c12fd, type: 3}
+        m_Texture: {fileID: 2800000, guid: 747a8c9fb049e184cb4ddccfd74d9edf, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
@@ -61,10 +60,10 @@ Material:
     - _ShadowFrequency: 0.23
     - _ShadowLightness: 0.095
     - _ShadowsToggle: 0
-    - _UV1Toggle: 0
-    - _UV2Toggle: 1
+    - _UV1Toggle: 1
+    - _UV2Toggle: 0
     - _UV3Toggle: 0
-    - _UV4Toggle: 1
+    - _UV4Toggle: 0
     - _UseShadowsToggle: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
