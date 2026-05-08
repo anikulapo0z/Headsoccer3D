@@ -18,6 +18,8 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
     [Header("Kicking Settings")]
     [SerializeField] private float kickCooldown = 0.5f;
     [SerializeField] private float kickActiveTime = 0.3f;
+    [SerializeField] private Animator kickchargeAnim;
+
 
     [Header("Heading Settings")]
     [SerializeField] private float headActiveTime = 0.5f;
@@ -110,6 +112,11 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
     public void OnKick(bool held)
     {
         MenuManager.Instance.kickHighlight.SetHighlight(held, false);
+        
+        kickchargeAnim.gameObject.SetActive(held);
+        kickchargeAnim.SetBool("charge", held);
+
+
         if (held)
         {
             if (Time.time < nextKickTime) return;
