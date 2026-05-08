@@ -125,11 +125,10 @@ public class Bell : MonoBehaviour
         }
 
         gameMusic.mute = true;
-        yield return new WaitForSeconds(0.5f);
-
+        yield return new WaitForSeconds(.5f);
         audioManager.PlayGaspSfx();
+        yield return new WaitForSeconds(.5f);
 
-        yield return new WaitForSeconds(0.5f);
 
         freedomLovingIndependenceHallWatchingMoneyHavingTouristsWhoSomehowCanAffordTravellingInUSAInThisEconomy.SetAnimation(1);
         crowd1.SetAnimation(1);
