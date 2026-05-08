@@ -177,10 +177,6 @@ public class ShadowCloneActor : MonoBehaviour
 
     public void setShadowMaterials(Material[] _mats)
     {
-        for (int i = 0; i < meshWithMaterials.materials.Length; i++)
-        {
-            if (_mats[i])
-                meshWithMaterials.materials[i] = _mats[i];
-        }
+        meshWithMaterials.materials = _mats;
     }
 }
