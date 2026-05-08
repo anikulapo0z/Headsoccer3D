@@ -23,6 +23,8 @@ public class ShadowCloneActor : MonoBehaviour
     [SerializeField] private float spawnScaleTime = 0.12f;
     [SerializeField] private float despawnScaleTime = 0.2f;
     [SerializeField] private float flashScale = 1.25f;
+    [SerializeField] private Renderer meshWithMaterials;
+
 
     public void Init(
         PlayerController owner,
@@ -171,5 +173,14 @@ public class ShadowCloneActor : MonoBehaviour
         seq.Append(transform.DOScale(transform.localScale * flashScale, 0.08f));
         seq.Append(transform.DOScale(Vector3.zero, despawnScaleTime));
         seq.OnComplete(() => Destroy(gameObject));
+    }
+
+    public void setShadowMaterials(Material[] _mats)
+    {
+        for (int i = 0; i < meshWithMaterials.materials.Length; i++)
+        {
+            if (_mats[i])
+                meshWithMaterials.materials[i] = _mats[i];
+        }
     }
 }

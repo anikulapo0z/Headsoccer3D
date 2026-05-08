@@ -48,6 +48,7 @@ public class PlayerAbility : MonoBehaviour
     [SerializeField] private LayerMask shadowCloneKickMask;
     [SerializeField] private ShadowCloneAbility.CloneMode shadowCloneMode;
     [SerializeField] private ShadowCloneAbility.SpawnPattern shadowCloneSpawnPattern;
+    [SerializeField] private Renderer meshWithCharMaterials;
 
     public void Awake()
     {
@@ -146,7 +147,7 @@ public class PlayerAbility : MonoBehaviour
                 sc.kickMask = shadowCloneKickMask;
                 sc.mode = shadowCloneMode;
                 sc.spawnPattern = shadowCloneSpawnPattern;
-
+                sc.setMaterialsToBeUsed(meshWithCharMaterials.materials);
                 GetComponent<PlayerGroundMarker>().ToggleShadowCloneActive();
 
 

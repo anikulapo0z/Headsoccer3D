@@ -28,6 +28,8 @@ public class ShadowCloneAbility : MonoBehaviour
     [HideInInspector] public CloneMode mode;
     [HideInInspector] public SpawnPattern spawnPattern;
 
+    private Material[] spawnerDudeMaterials;
+
     private bool usedAbility;
 
     public void UseAbility()
@@ -79,6 +81,8 @@ public class ShadowCloneAbility : MonoBehaviour
                 lifetime: lifetime,
                 kickInterval: kickInterval
             );
+
+            clone.setShadowMaterials(spawnerDudeMaterials);
         }
 
         GetComponent<PlayerAbility>().ResetAbilityUse();
@@ -109,5 +113,10 @@ public class ShadowCloneAbility : MonoBehaviour
             backRight * spawnDistance,
             backLeft * spawnDistance
         };
+    }
+
+    public void setMaterialsToBeUsed(Material[] _mats)
+    {
+        spawnerDudeMaterials = _mats;
     }
 }
