@@ -1,4 +1,4 @@
-Shader "Saphead Studios/Principle Parallax"
+Shader "Saphead Studios/Ice Parallax"
 {
     
 	Properties
