@@ -7,16 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_BoathouseEnv_FakeSky
+  m_Name: M_Boathouse_Roof1
   m_Shader: {fileID: 4800000, guid: d67c0f1751ae0724ea7be98cfd6110cb, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _AMBIENTLIGHTING
   - _HALFTONELIGHT
-  - _MASKING
-  m_InvalidKeywords:
-  - _IGNORESHADOWS
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -28,12 +25,8 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _AOTexture:
-        m_Texture: {fileID: 2800000, guid: 5a061fc6455b7db4fb0e29eab26806d8, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 80949659a3943c34c9be402098ba9bc4, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -61,12 +54,12 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _HalftonePattern:
-        m_Texture: {fileID: 2800000, guid: f792c5aded2ba1c4690d4c4923ea561a, type: 3}
-        m_Scale: {x: 25, y: 25}
+        m_Texture: {fileID: 2800000, guid: 01e912327e9113d489f1a188a7963e36, type: 3}
+        m_Scale: {x: 150, y: 150}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 97b3ee40b866cbf4ebcf2f095633ea61, type: 3}
-        m_Scale: {x: 5, y: 5}
+        m_Texture: {fileID: 2800000, guid: ba90e0d681c598644910bd718f5fc1b3, type: 3}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
         m_Texture: {fileID: 2800000, guid: 97b3ee40b866cbf4ebcf2f095633ea61, type: 3}
@@ -84,12 +77,8 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _ShadowTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _ShadowTexture:
-        m_Texture: {fileID: 2800000, guid: 81446ed0ece35c041a864b75ecc69767, type: 3}
+        m_Texture: {fileID: 2800000, guid: 59380a8c482907548898ef5ffad0bff6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -110,13 +99,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AOFrequency: 1
-    - _AOLightness: 0
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
-    - _AmbientToggle: 1
-    - _BaseStrength: 0.718
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
@@ -130,26 +115,26 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
-    - _GlossMapScale: 0
-    - _Glossiness: 0
-    - _GlossyReflections: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
     - _HalftoneMaskInvertToggle: 0
     - _HalftoneMaskToggle: 0
     - _HalftoneToggle: 1
-    - _IgnoreShadowsToggle: 1
-    - _Lightness: 0.386
-    - _MaskToggle: 1
+    - _Lightness: 0
+    - _MaskToggle: 0
     - _Metallic: 0
+    - _Mode: 0
     - _OcclusionStrength: 1
-    - _Parallax: 0.005
+    - _Parallax: 0.02
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _RemapInputMax: 1
-    - _RemapInputMin: 0.27
+    - _RemapInputMin: 0
     - _RemapOutputMax: 1
-    - _RemapOutputMin: -0.11
-    - _ShadowFrequency: 9.78
-    - _ShadowLightness: 0.37
+    - _RemapOutputMin: 0
+    - _ShadowFrequency: 7.92
+    - _ShadowLightness: 0.537
     - _ShadowsToggle: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
@@ -161,20 +146,21 @@ Material:
     - _UV2Toggle: 0
     - _UV3Toggle: 0
     - _UV4Toggle: 0
+    - _UVSec: 0
     - _UseShadowsToggle: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0, g: 0.8867924, b: 0.4878764, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FirstMaskColor: {r: 0.48627448, g: 1, b: 0.85068256, a: 1}
-    - _HalftoneColor: {r: 0.08627448, g: 0.8, b: 0.49738887, a: 1}
-    - _SecondMaskColor: {r: 0, g: 1, b: 0.7815788, a: 1}
+    - _BaseColor: {r: 0.5849374, g: 0.37744507, b: 0.8544448, a: 1}
+    - _Color: {r: 0.5849374, g: 0.37744504, b: 0.8544448, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
+    - _FirstMaskColor: {r: 0.8005106, g: 0.24951048, b: 0.8396226, a: 1}
+    - _HalftoneColor: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 1}
+    - _SecondMaskColor: {r: 0.64340085, g: 0.07075471, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &3243998746232204602
+--- !u!114 &5540037325810671300
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
