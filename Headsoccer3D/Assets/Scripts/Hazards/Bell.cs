@@ -18,6 +18,7 @@ public class Bell : MonoBehaviour
     [SerializeField] GameObject wholeBell;
     [SerializeField] GameObject bellStand;
     [SerializeField] GoalMoverManager goalMoverManager;
+    [SerializeField] Collider bellCollider;
 
     [Header("GOING crazy")]
     [SerializeField] Transform muralParent;
@@ -106,6 +107,7 @@ public class Bell : MonoBehaviour
 
     IEnumerator BreakBell()
     {
+        bellCollider.enabled = false;
         CameraController.Instance.ShakeCamera(shakeDuration_break, shakeStrength_break, shakeVibrato_break);
 
         audioManager.PlayBellRingSfx();
@@ -201,7 +203,8 @@ public class Bell : MonoBehaviour
 
 
         bellStand.transform.DOMove(pos, 3).SetEase(Ease.Linear);
-                
+        bellCollider.enabled = true;
+
 
     }
 

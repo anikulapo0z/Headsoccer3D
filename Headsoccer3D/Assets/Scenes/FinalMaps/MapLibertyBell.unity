@@ -3382,6 +3382,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6185807284049529743}
     - target: {fileID: 3222944521492069627, guid: 36e50ba9c9a7f704eba6f4bbb402ff45, type: 3}
+      propertyPath: bellCollider
+      value: 
+      objectReference: {fileID: 1198883927}
+    - target: {fileID: 3222944521492069627, guid: 36e50ba9c9a7f704eba6f4bbb402ff45, type: 3}
       propertyPath: goalMoverManager
       value: 
       objectReference: {fileID: 257552252}
@@ -9868,6 +9872,11 @@ PrefabInstance:
 --- !u!4 &1198883926 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3723023556740735066, guid: 87f6f7e5ae460e24094bec3e584b05ae, type: 3}
+  m_PrefabInstance: {fileID: 1198883925}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &1198883927 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 446561399310902913, guid: 87f6f7e5ae460e24094bec3e584b05ae, type: 3}
   m_PrefabInstance: {fileID: 1198883925}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1203726999
@@ -20807,6 +20816,8 @@ MonoBehaviour:
   startCountdownText: {fileID: 108783412}
   startDelay: 3
   currentGameTime: 0
+  timeToAddWhenScoreAndLowTime: 1
+  lowTimeThreshold: 10
   maxGameTime: 150
   pausedGameTime: 0
   delayBeforeScoreScreen: 0
