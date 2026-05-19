@@ -557,13 +557,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 2745452100233998954}
-  cameraPivot: {fileID: 0}
+  cameraPivot: {fileID: 2745452100233998954}
   rotationLerpSpeed: 5
   maxLeftRightAngle: 2
   maxUpDownAngle: 2
   shakeDuration: 0
   shakeStrength: 0
   shakeVibrato: 0
+  shakeActive: 0
+  isBusMap: 0
+  targetA: {fileID: 0}
+  targetB: {fileID: 0}
+  padding: 0
+  speed: 0
+  xOffset: 0
+  minDistance: 0
+  maxDistance: 0
+  xOffsetAtMin: 0
+  xOffsetAtMax: 0
 --- !u!82 &5554216541391488515
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2336,8 +2347,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.007, y: 0.0016, z: 0.003}
-  m_Center: {x: 0.000022621125, y: -0.0008, z: 0.0018427629}
+  m_Size: {x: 0.007, y: 0.0016, z: 0.006}
+  m_Center: {x: 0.000022621125, y: -0.0008, z: 0.0005}
 --- !u!65 &8263222122247348896
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5747,8 +5758,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.007, y: 0.0016, z: 0.003}
-  m_Center: {x: 0.000022621125, y: -0.0008, z: 0.0018427629}
+  m_Size: {x: 0.007, y: 0.0016, z: 0.006}
+  m_Center: {x: 0.000022621125, y: -0.0008, z: 0.0005}
 --- !u!65 &6211768167094441699
 BoxCollider:
   m_ObjectHideFlags: 0

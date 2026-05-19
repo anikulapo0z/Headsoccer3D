@@ -1,9 +1,11 @@
 using UnityEngine;
 using DG.Tweening;
-using Unity.VisualScripting;
 
 public class CameraController : MonoBehaviour
 {
+    public static CameraController Instance;
+
+
     [Header("Target")]
     public Transform target;
     [SerializeField] Transform cameraPivot;
@@ -18,13 +20,37 @@ public class CameraController : MonoBehaviour
     [Space(10)]
     [Header("Camera Shake")]
     Tween shakeTween;
-    public float shakeDuration;
-    public float shakeStrength;
-    public int shakeVibrato;
 
+    [Space]
+    [Header("For Debugging")]
+    [Tooltip("How long it moves for")]
+    public float shakeDuration;
+    [Tooltip("How far it moves")]
+    public float shakeStrength;
+    [Tooltip("How fast it moves")]
+    public int shakeVibrato;
+    public bool shakeActive = false;
+
+    [Space]
+    [Header("bus map framing")]
+    [SerializeField] bool isBusMap = false;
+    [SerializeField] Transform targetA;
+    [SerializeField] Transform targetB;
+
+    [SerializeField] float padding;
+    [SerializeField] float speed;
+    [SerializeField] float xOffset;
+    [SerializeField] float minDistance;
+    [SerializeField] float maxDistance;
+    [SerializeField] float xOffsetAtMin;
+    [SerializeField] float xOffsetAtMax;
+
+    Camera cam;
 
     void Start()
     {
+        Instance = this;
+        cam = GetComponent<Camera>();
         startRotation = transform.rotation;
     }
 
@@ -37,8 +63,33 @@ public class CameraController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!target) return;
-        HandleRotation();
+        if (!isBusMap)
+        {
+            HandleRotation();
+            return;
+        }
+
+        //if (!target) return;
+
+        Vector3 midpoint = (targetA.position + targetB.position) * 0.5f;
+
+        float xSep = Mathf.Abs(targetA.position.x - targetB.position.x);
+        float zSep = Mathf.Abs(targetA.position.z - targetB.position.z);
+
+        float horizontalDist = Mathf.Sqrt(xSep * xSep + zSep * zSep);
+
+        float fov = cam.fieldOfView * Mathf.Deg2Rad;
+        float aspect = cam.aspect;
+        float requiredDist = (horizontalDist * padding) / (2f * Mathf.Tan(fov / 2f) * aspect);
+
+        requiredDist = Mathf.Clamp(requiredDist, minDistance, maxDistance);
+
+        float distT = Mathf.InverseLerp(minDistance, maxDistance, requiredDist);
+        xOffset = Mathf.Lerp(xOffsetAtMin, xOffsetAtMax, distT);
+
+        Vector3 goToPosition = new Vector3(midpoint.x + xOffset, transform.position.y, midpoint.z - requiredDist);
+
+        transform.position = Vector3.Lerp(transform.position, goToPosition, Time.deltaTime * speed);
     }
 
 
@@ -72,18 +123,15 @@ public class CameraController : MonoBehaviour
         return angle;
     }
 
-    public void ShakeCamera(
-        float duration = -1f,
-        float strength = -1f,
-        int vibrato = -1
-    )
+    public void ShakeCamera(float duration = 0.1f, float strength = 0.01f, int vibrato = 1)
     {
-        if (!cameraPivot) return;
+        if (!cameraPivot || shakeActive) return;
 
         shakeTween?.Kill();
 
         cameraPivot.localPosition = Vector3.zero;
 
+        shakeActive = true;
         shakeTween = cameraPivot.DOShakePosition(
             duration,
             strength,
@@ -94,7 +142,10 @@ public class CameraController : MonoBehaviour
         ).OnComplete(() =>
         {
             cameraPivot.localPosition = Vector3.zero;
+            shakeActive = false;
         });
     }
 
 }
+
+
