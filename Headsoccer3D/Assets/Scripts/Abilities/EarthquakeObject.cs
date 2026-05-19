@@ -31,6 +31,11 @@ public class EarthquakeObject : MonoBehaviour
         if (otherPlayer == null || otherPlayer == controllingPlayer.GetComponent<PlayerController>()) return;
 
         otherPlayer.GetHitFromPlayer(playerKickForce, t + (Vector3.up * yKick));
+
+        if (other.CompareTag("Bell"))
+        {
+            other.GetComponent<BellGetHit>().BGetHit();
+        }
     }
 
 }

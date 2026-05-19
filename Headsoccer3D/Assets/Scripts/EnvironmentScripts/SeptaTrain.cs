@@ -20,6 +20,8 @@ public class SeptaTrain : MonoBehaviour
 
     [Space]
     public GameSceneManager gameSceneManager;
+    public SceneAudioManager sceneAudioManager;
+    [SerializeField] private bool isLeftTrain;
 
     [Space]
     [Header("UI")]
@@ -77,6 +79,10 @@ public class SeptaTrain : MonoBehaviour
 
         if (trainTicksRemaining <= 0)
         {
+            if (sceneAudioManager != null)
+            {
+                sceneAudioManager.PlayAnnouncementSfx(GetPan());
+            }
             if (!gameSceneManager.canScore)
             {
                 trainTicksRemaining = 1;
@@ -134,6 +140,8 @@ public class SeptaTrain : MonoBehaviour
 
         yield return null; // wait a frame
 
+        sceneAudioManager.PlayTrainHornSfx(GetPan());
+
         //better to create a sequence and play
         railpath.DOShakePosition(1.764f, 0.0198f, 10, 90, false, false)// rail shake
             .OnComplete(() =>
@@ -182,20 +190,31 @@ public class SeptaTrain : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            sceneAudioManager.PlayTrainPlayerImpactSfx(GetPan());
+            
+            PlayerController pc = other.GetComponent<PlayerController>();
+            if (pc != null) pc.GetFlattened();
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            PlayerController pc = other.GetComponent<PlayerController>();
             other.GetComponent<PlayerController>().GetFlattened();
         }
         else if (other.gameObject.CompareTag("Ball") || other.gameObject.CompareTag("FakeBall"))
         {
             Vector3 kickDirection = new Vector3(other.transform.position.x - transform.position.x, 5f, 0);
 
-
-
             other.GetComponent<SoccerBall>().LaunchAtDirection(kickDirection, 4f);
         }
     }
 
+    private float GetPan() => isLeftTrain ? -0.75f : 0.75f;
 }
