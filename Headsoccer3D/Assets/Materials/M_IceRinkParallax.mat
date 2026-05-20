@@ -12,13 +12,16 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _HALFTONELIGHT
+  - _MASKING
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
-  disabledShaderPasses: []
+  disabledShaderPasses:
+  - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -31,22 +34,91 @@ Material:
         m_Texture: {fileID: 2800000, guid: eabe01be96d04ce40a3c4a9fa3bd2c64, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Crack_Texture:
+        m_Texture: {fileID: 2800000, guid: 776e11bb830062943a2b4fbc714daf6b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HalftoneMaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HalftonePattern:
+        m_Texture: {fileID: 2800000, guid: 60fa5b673a20fe84b95a3749122439d4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: ba90e0d681c598644910bd718f5fc1b3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 2800000, guid: 3239d751550e2bc47aec42016fea2949, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OverlayMap:
         m_Texture: {fileID: 2800000, guid: 29c3392474ab4d2439246e903c932c68, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _ShadowTexture:
+        m_Texture: {fileID: 2800000, guid: 81446ed0ece35c041a864b75ecc69767, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BumpScale: 1.94
-    - _Depth: -0.26
+    - _Amplitude: 30.69
+    - _Break_Intensity: 0
+    - _BumpScale: 3.7
+    - _Depth: -0.1
+    - _DesaturationValue: 0
     - _FloatAmplitude: 0.154
-    - _FloatStrength: 0.45
-    - _OverlayStrength: 2
-    - _Parallax_Layers: 10.38
-    - _Screen_Mix: 0.809
+    - _FloatStrength: 0.322
+    - _Fresnel_Power: 0
+    - _HalftoneMaskInvertToggle: 0
+    - _HalftoneMaskToggle: 0
+    - _HalftoneToggle: 1
+    - _HalftoneUVToggle: 0
+    - _Lightness: 0
+    - _MaskToggle: 1
+    - _Noise_Scale: 0
+    - _OverlayStrength: 1.781
+    - _Parallax_Layers: 3.87
+    - _QueueControl: 1
+    - _QueueOffset: 0
+    - _RemapInputMax: 1
+    - _RemapInputMin: -0.13
+    - _RemapOutputMax: 1
+    - _RemapOutputMin: 0.62
+    - _Screen_Mix: 0.972
+    - _ShadowFrequency: 1
+    - _ShadowLightness: 0
+    - _ShadowsToggle: 0
+    - _Tile: 1
+    - _UV1Toggle: 0
+    - _UV2Toggle: 0
+    - _UV3Toggle: 0
+    - _UV4Toggle: 0
+    - _UseShadowsToggle: 0
+    - _Use_UV1: 0
     m_Colors:
     - _BaseColor: {r: 0.5803922, g: 0.8392157, b: 0.7790114, a: 1}
-    - _BaseColor1: {r: 0.6383577, g: 0.43390095, b: 0.773, a: 1}
-    - _BaseColor2: {r: 0.738484, g: 0.5921569, b: 0.972549, a: 1}
+    - _BaseColor1: {r: 0.70241815, g: 0.31984904, b: 0.9811321, a: 1}
+    - _BaseColor2: {r: 0.8430464, g: 0.603, b: 1, a: 1}
+    - _Crack_Color: {r: 1, g: 1, b: 1, a: 0}
+    - _FirstMaskColor: {r: 0.68325585, g: 0.43805626, b: 0.8679245, a: 1}
+    - _HalftoneColor: {r: 0.69551206, g: 0.46973333, b: 0.8666667, a: 1}
+    - _Ice_Color_1: {r: 0.41429326, g: 0.9053366, b: 0.9245283, a: 0}
+    - _Ice_Color_2: {r: 0.6986472, g: 0.9339828, b: 0.9433962, a: 0}
+    - _SecondMaskColor: {r: 0.9838667, g: 0.879, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
