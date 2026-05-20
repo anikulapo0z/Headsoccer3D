@@ -134,14 +134,14 @@ public class GameSceneManager : MonoBehaviour
 
         SetUpGameLevel(MenuManager.Instance.GetTeamSize(), MenuManager.Instance.GetGameMode());
 
-        Debug.Log("HUIS");
+        //Debug.Log("HUIS");
         StartCoroutine(fadeTransitionThenLoad());
     }
 
     IEnumerator fadeTransitionThenLoad()
     {
 
-        Debug.Log("FDEYHP*AEHFP uisyhfep i");
+        //Debug.Log("FDEYHP*AEHFP uisyhfep i");
 
         //make sure its on, in case we disable it in editor while working and we forget
         transitionImage.gameObject.SetActive(true);

@@ -184,6 +184,10 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     public bool SprintHeld => sprintHeld;
     public Vector3 FacingDirection => transform.forward;
 
+    public bool isFrozen = false;
+
+
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -453,6 +457,12 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     public void OnAbility()
     {
+        if (isFrozen)
+        {
+            GetComponent<PlayerIceController>().HurtIce();
+            return;
+        }
+
         GetComponent<PlayerAbility>().TryTriggerAbility();
     }
 
@@ -489,6 +499,11 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     }
     public void OnJump()
     {
+        if (isFrozen)
+        {
+            GetComponent<PlayerIceController>().HurtIce();
+            return;
+        }
 
         if (controller.isGrounded)
         {
@@ -537,6 +552,11 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     public void OnMove(Vector2 input)
     {
+        if (isFrozen)
+        {
+            GetComponent<PlayerIceController>().HurtIce();
+            return;
+        }
         //Debug.LogWarning("Moving: " + input);
         moveInput = input;
         //throw new System.NotImplementedException();
@@ -561,6 +581,12 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     }
     public void OnKick(bool held)
     {
+        if (isFrozen)
+        {
+            GetComponent<PlayerIceController>().HurtIce();
+            return;
+        }
+
         kickchargeAnim.SetBool("charge", held);
         if (!useChargeKick)
         {
