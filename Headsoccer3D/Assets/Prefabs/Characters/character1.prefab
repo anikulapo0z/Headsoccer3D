@@ -1336,8 +1336,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 3
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!136 &8709485042399580388
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1460,9 +1460,11 @@ MonoBehaviour:
   iceBlock: {fileID: 6304088918195126543}
   yVal: 7
   moveYSpeed: 5
-  maxIceHP: 15
+  maxIceHP: 8
   currentIceHP: 0
   allowHurtIce: 0
+  iceHitCooldown: 0.5
+  canHitIce: 1
 --- !u!1 &2226667314074175103
 GameObject:
   m_ObjectHideFlags: 0
@@ -8765,7 +8767,7 @@ Transform:
   m_GameObject: {fileID: 6304088918195126543}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: 0.033, z: -0.003}
+  m_LocalPosition: {x: 0, y: 0.0532, z: -0.003}
   m_LocalScale: {x: 0.059999995, y: 0.059999995, z: 0.059999995}
   m_ConstrainProportionsScale: 1
   m_Children: []
