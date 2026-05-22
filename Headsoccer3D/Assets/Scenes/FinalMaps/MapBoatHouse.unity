@@ -10967,6 +10967,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1295271149}
   m_Mesh: {fileID: 6255687079079774844, guid: 3833d8f7c282c4c4fb97e85675b0546e, type: 3}
+--- !u!4 &1297212926 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6845717326491429905, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+  m_PrefabInstance: {fileID: 1686241423}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1300605969
 GameObject:
   m_ObjectHideFlags: 0
@@ -14540,7 +14545,7 @@ PrefabInstance:
     - target: {fileID: 121180679605582305, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: gameSceneManager
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1181163858200513543}
     - target: {fileID: 121180679605582305, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: 'leftGoalParticles.Array.data[0]'
       value: 
@@ -22969,13 +22974,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 275529035860807098}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e168d47699b01684c92d781c1292d145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   letterFolder: Letters
-  startPosition: {fileID: 0}
+  startPosition: {fileID: 1297212926}
   letterSpacing: 0.8
   lineSpacing: 1.4
   letterScale: 0.7
@@ -24609,7 +24614,7 @@ MonoBehaviour:
   - {fileID: 8670871031431781386}
   startDelay: 2
   fractureDelay: 3
-  sinkPosition: -1.6
+  sinkPosition: -4
   moveSpeed: 1
   unpauseDelay: 4
 --- !u!114 &6241461190226760900

@@ -12,16 +12,20 @@ public class PlayerIceController : MonoBehaviour
 
     [SerializeField] float iceHitCooldown;
     [SerializeField] bool canHitIce = true;
+    Rigidbody rb;
 
     private void Start()
     {
         currentIceHP = maxIceHP;
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.B))
             HurtIce();
+        Debug.LogWarning("linear vel: " + GetComponent<Rigidbody>().linearVelocity);
+        Debug.LogWarning("angular vel: " + GetComponent<Rigidbody>().angularVelocity);
     }
 
     public void SetFrozen()
@@ -30,7 +34,7 @@ public class PlayerIceController : MonoBehaviour
         iceBlock.SetActive(true);
 
         GetComponent<PlayerController>().isFrozen = true;
-        GetComponent<Rigidbody>().isKinematic = true;
+        rb.isKinematic = true;
 
         allowHurtIce = false;
 
@@ -47,8 +51,8 @@ public class PlayerIceController : MonoBehaviour
     void UnlockPlayers()
     {
         allowHurtIce = true;
-        GetComponent<Rigidbody>().isKinematic = false;
-        GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+        rb.isKinematic = false;
+        rb.linearVelocity = Vector3.zero;
         //GetComponent<PlayerController>().UnlockPlayerMove();
     }
 
@@ -76,8 +80,11 @@ public class PlayerIceController : MonoBehaviour
     {
         GetComponent<PlayerController>().isFrozen = false;
         GetComponent<PlayerController>().UnlockPlayerMove();
-        GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
-        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        rb.isKinematic = true;
+
         currentIceHP = maxIceHP;
         allowHurtIce = false;
         iceBlock.SetActive(false);
