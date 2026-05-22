@@ -13,7 +13,7 @@ public class IceShard : MonoBehaviour
     private float sign = -1;
     Vector2 temp;
 
-    private float yInitialPos;
+    public float yInitialPos;
 
 
 
@@ -22,7 +22,8 @@ public class IceShard : MonoBehaviour
     private float myNormalizedZPosition;
 
     public bool sinking = false;
-    
+    //public float startYPos;
+    [SerializeField] float lerpSpeed;
 
 
     private void Start()
@@ -41,9 +42,13 @@ public class IceShard : MonoBehaviour
             sign = temp.y < 0 ? -1 : 1;
             rotationLerp = temp.y;
 
-            transform.position = new Vector3(transform.position.x, yInitialPos + offset, transform.position.z);
-            transform.localEulerAngles = new Vector3(-90 + (maxRotation * rotationLerp), 0, 0);
+            Vector3 targetPosition = new Vector3(transform.position.x, yInitialPos + offset, transform.position.z);
+            transform.position = Vector3.Lerp(transform.position, targetPosition, lerpSpeed * Time.deltaTime);
+
+            Quaternion targetRotation = Quaternion.Euler(-90 + (maxRotation * rotationLerp), 0, 0);
+            transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRotation, lerpSpeed * Time.deltaTime);
             //transform.Rotate(sign < 0 ? Vector3.left : Vector3.right, maxRotation * rotationLerp);
         }
+
     }
 }

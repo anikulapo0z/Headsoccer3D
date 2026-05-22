@@ -32,6 +32,8 @@ public class PlayerIceController : MonoBehaviour
         GetComponent<PlayerController>().isFrozen = true;
         GetComponent<Rigidbody>().isKinematic = true;
 
+        allowHurtIce = false;
+
         GetComponent<PlayerController>().LockPlayerMove();
         MoveBlock();
     }
@@ -74,6 +76,8 @@ public class PlayerIceController : MonoBehaviour
     {
         GetComponent<PlayerController>().isFrozen = false;
         GetComponent<PlayerController>().UnlockPlayerMove();
+        GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         currentIceHP = maxIceHP;
         allowHurtIce = false;
         iceBlock.SetActive(false);

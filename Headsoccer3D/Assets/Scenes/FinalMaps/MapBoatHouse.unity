@@ -166,6 +166,7 @@ GameObject:
   m_Component:
   - component: {fileID: 20439505}
   - component: {fileID: 20439506}
+  - component: {fileID: 20439507}
   m_Layer: 0
   m_Name: IceCrack_33_Collision
   m_TagString: Untagged
@@ -183,7 +184,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2516245356850229586}
@@ -210,6 +211,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4583407886439279732, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &20439507
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20439504}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &41762201
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,6 +248,7 @@ GameObject:
   m_Component:
   - component: {fileID: 41762202}
   - component: {fileID: 41762203}
+  - component: {fileID: 41762204}
   m_Layer: 0
   m_Name: IceCrack_20_Collision
   m_TagString: Untagged
@@ -237,7 +266,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4011764626962532519}
@@ -264,6 +293,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7771613508976059695, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &41762204
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41762201}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &67088316
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,7 +478,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &98939300
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -486,6 +544,7 @@ GameObject:
   m_Component:
   - component: {fileID: 113206421}
   - component: {fileID: 113206422}
+  - component: {fileID: 113206423}
   m_Layer: 0
   m_Name: IceCrack_9_Collision
   m_TagString: Untagged
@@ -503,7 +562,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7879684878966150380}
@@ -530,6 +589,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5741174448488666723, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &113206423
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113206420}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &113407654
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,7 +837,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &121077411
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -931,7 +1019,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 6
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &168154877
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1043,7 +1133,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &168925020
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1194,6 +1286,7 @@ GameObject:
   m_Component:
   - component: {fileID: 175530235}
   - component: {fileID: 175530236}
+  - component: {fileID: 175530237}
   m_Layer: 0
   m_Name: IceCrack_15_Collision
   m_TagString: Untagged
@@ -1211,7 +1304,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4931119647239239653}
@@ -1238,6 +1331,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5928785198427282456, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &175530237
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175530234}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &192208057
 GameObject:
   m_ObjectHideFlags: 0
@@ -1357,6 +1477,7 @@ GameObject:
   m_Component:
   - component: {fileID: 194253936}
   - component: {fileID: 194253937}
+  - component: {fileID: 194253938}
   m_Layer: 0
   m_Name: IceCrack_10_Collision
   m_TagString: Untagged
@@ -1374,7 +1495,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6132089607923563885}
@@ -1401,6 +1522,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 7807538432633192378, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &194253938
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194253935}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1001 &212709371
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1504,6 +1652,7 @@ GameObject:
   m_Component:
   - component: {fileID: 214419107}
   - component: {fileID: 214419108}
+  - component: {fileID: 214419109}
   m_Layer: 0
   m_Name: IceCrack_32_Collision
   m_TagString: Untagged
@@ -1521,7 +1670,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7822719856159350681}
@@ -1548,6 +1697,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2363565981455421637, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &214419109
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214419106}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &226035509
 GameObject:
   m_ObjectHideFlags: 0
@@ -1558,6 +1734,7 @@ GameObject:
   m_Component:
   - component: {fileID: 226035510}
   - component: {fileID: 226035511}
+  - component: {fileID: 226035512}
   m_Layer: 0
   m_Name: IceCrack_47_Collision
   m_TagString: Untagged
@@ -1575,7 +1752,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5811123935543130325}
@@ -1602,6 +1779,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3785296276508407262, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &226035512
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226035509}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &232801065
 GameObject:
   m_ObjectHideFlags: 0
@@ -1997,7 +2201,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 6
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &334604864
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2099,7 +2305,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &340942119
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2201,7 +2409,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 12.38
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &342508494
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2389,7 +2599,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 12.38
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &365760052
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2453,6 +2665,7 @@ GameObject:
   m_Component:
   - component: {fileID: 376060221}
   - component: {fileID: 376060222}
+  - component: {fileID: 376060223}
   m_Layer: 0
   m_Name: IceCrack_8_Collision
   m_TagString: Untagged
@@ -2470,7 +2683,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 585119993182259028}
@@ -2497,6 +2710,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 8385836491182413749, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &376060223
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376060220}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &391848999
 GameObject:
   m_ObjectHideFlags: 0
@@ -2545,7 +2785,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 12.38
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &391849002
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2609,6 +2851,7 @@ GameObject:
   m_Component:
   - component: {fileID: 395441194}
   - component: {fileID: 395441195}
+  - component: {fileID: 395441196}
   m_Layer: 0
   m_Name: IceCrack_23_Collision
   m_TagString: Untagged
@@ -2626,7 +2869,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 663074913004058263}
@@ -2653,6 +2896,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4142219771195877799, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &395441196
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395441193}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1001 &403725597
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2934,7 +3204,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &414964561
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3036,7 +3308,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &416880044
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3100,6 +3374,7 @@ GameObject:
   m_Component:
   - component: {fileID: 419169314}
   - component: {fileID: 419169315}
+  - component: {fileID: 419169316}
   m_Layer: 0
   m_Name: IceCrack_38_Collision
   m_TagString: Untagged
@@ -3117,7 +3392,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5151716008646633500}
@@ -3144,6 +3419,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6055277006425145491, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &419169316
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 419169313}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &438024457
 GameObject:
   m_ObjectHideFlags: 0
@@ -3192,7 +3494,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &438024460
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3256,6 +3560,7 @@ GameObject:
   m_Component:
   - component: {fileID: 438590558}
   - component: {fileID: 438590559}
+  - component: {fileID: 438590560}
   m_Layer: 0
   m_Name: IceCrack_37_Collision
   m_TagString: Untagged
@@ -3273,7 +3578,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3034691792850602488}
@@ -3300,6 +3605,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4453806867672132484, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &438590560
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438590557}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &450212163
 GameObject:
   m_ObjectHideFlags: 0
@@ -3310,6 +3642,7 @@ GameObject:
   m_Component:
   - component: {fileID: 450212164}
   - component: {fileID: 450212165}
+  - component: {fileID: 450212166}
   m_Layer: 0
   m_Name: IceCrack_19_Collision
   m_TagString: Untagged
@@ -3327,7 +3660,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2633159587561172999}
@@ -3354,6 +3687,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1353746659569323740, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &450212166
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450212163}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &470705541
 GameObject:
   m_ObjectHideFlags: 0
@@ -3364,6 +3724,7 @@ GameObject:
   m_Component:
   - component: {fileID: 470705542}
   - component: {fileID: 470705543}
+  - component: {fileID: 470705544}
   m_Layer: 0
   m_Name: IceCrack_11_Collision
   m_TagString: Untagged
@@ -3381,7 +3742,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8750828073152913844}
@@ -3408,6 +3769,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2865104911859505335, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &470705544
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470705541}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &475004262
 GameObject:
   m_ObjectHideFlags: 0
@@ -3456,7 +3844,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &475004265
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3520,6 +3910,7 @@ GameObject:
   m_Component:
   - component: {fileID: 493969301}
   - component: {fileID: 493969302}
+  - component: {fileID: 493969303}
   m_Layer: 0
   m_Name: IceCrack_14_Collision
   m_TagString: Untagged
@@ -3537,7 +3928,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8051523229498377679}
@@ -3564,6 +3955,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -1716842359454501035, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &493969303
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493969300}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &500637647
 GameObject:
   m_ObjectHideFlags: 0
@@ -3574,6 +3992,7 @@ GameObject:
   m_Component:
   - component: {fileID: 500637648}
   - component: {fileID: 500637649}
+  - component: {fileID: 500637650}
   m_Layer: 0
   m_Name: IceCrack_52_Collision
   m_TagString: Untagged
@@ -3591,7 +4010,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8670871031431781386}
@@ -3618,6 +4037,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7087473724099325196, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &500637650
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500637647}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &502138417
 GameObject:
   m_ObjectHideFlags: 0
@@ -3628,6 +4074,7 @@ GameObject:
   m_Component:
   - component: {fileID: 502138418}
   - component: {fileID: 502138419}
+  - component: {fileID: 502138420}
   m_Layer: 0
   m_Name: IceCrack_46_Collision
   m_TagString: Untagged
@@ -3645,7 +4092,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8417100031387558249}
@@ -3672,6 +4119,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -1515144191993293674, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &502138420
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502138417}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &512105984
 GameObject:
   m_ObjectHideFlags: 0
@@ -3720,7 +4194,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &512105987
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3784,6 +4260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 523732337}
   - component: {fileID: 523732338}
+  - component: {fileID: 523732339}
   m_Layer: 0
   m_Name: IceCrack_43_Collision
   m_TagString: Untagged
@@ -3801,7 +4278,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5869600082284185526}
@@ -3828,6 +4305,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6851752233551798572, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &523732339
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523732336}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &540458840
 GameObject:
   m_ObjectHideFlags: 0
@@ -3962,7 +4466,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &549625775
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4064,7 +4570,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 12.38
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &557298992
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4209,6 +4717,7 @@ GameObject:
   m_Component:
   - component: {fileID: 567112485}
   - component: {fileID: 567112486}
+  - component: {fileID: 567112487}
   m_Layer: 0
   m_Name: IceCrack_2_Collision
   m_TagString: Untagged
@@ -4226,7 +4735,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3744153200347730581}
@@ -4253,6 +4762,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -1550514412580984892, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &567112487
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567112484}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &578570962
 GameObject:
   m_ObjectHideFlags: 0
@@ -4301,7 +4837,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &578570965
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4404,7 +4942,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 1.5
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &582844243
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4679,7 +5219,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &614968806
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4743,6 +5285,7 @@ GameObject:
   m_Component:
   - component: {fileID: 633778296}
   - component: {fileID: 633778297}
+  - component: {fileID: 633778298}
   m_Layer: 0
   m_Name: IceCrack_12_Collision
   m_TagString: Untagged
@@ -4760,7 +5303,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5016259405721534048}
@@ -4787,6 +5330,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3537709356157935800, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &633778298
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633778295}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &641529032
 GameObject:
   m_ObjectHideFlags: 0
@@ -5059,7 +5629,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &651908849
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5388,6 +5960,7 @@ GameObject:
   m_Component:
   - component: {fileID: 729558438}
   - component: {fileID: 729558439}
+  - component: {fileID: 729558440}
   m_Layer: 0
   m_Name: IceCrack_3_Collision
   m_TagString: Untagged
@@ -5405,7 +5978,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5682340250949791266}
@@ -5432,6 +6005,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &729558440
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 729558437}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &732600016
 GameObject:
   m_ObjectHideFlags: 0
@@ -5480,7 +6080,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &732600019
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5636,7 +6238,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 3
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!1 &762199135
 GameObject:
   m_ObjectHideFlags: 0
@@ -5647,6 +6251,7 @@ GameObject:
   m_Component:
   - component: {fileID: 762199136}
   - component: {fileID: 762199137}
+  - component: {fileID: 762199138}
   m_Layer: 0
   m_Name: IceCrack_45_Collision
   m_TagString: Untagged
@@ -5664,7 +6269,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 630787613630382185}
@@ -5691,6 +6296,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -8259417878425161692, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &762199138
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762199135}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &764213559
 GameObject:
   m_ObjectHideFlags: 0
@@ -5701,6 +6333,7 @@ GameObject:
   m_Component:
   - component: {fileID: 764213560}
   - component: {fileID: 764213561}
+  - component: {fileID: 764213562}
   m_Layer: 0
   m_Name: IceCrack_51_Collision
   m_TagString: Untagged
@@ -5718,7 +6351,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7581254879616712154}
@@ -5745,6 +6378,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4563637298700409943, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &764213562
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 764213559}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &767450635
 GameObject:
   m_ObjectHideFlags: 0
@@ -5863,6 +6523,7 @@ GameObject:
   m_Component:
   - component: {fileID: 777359843}
   - component: {fileID: 777359844}
+  - component: {fileID: 777359845}
   m_Layer: 0
   m_Name: IceCrack_41_Collision
   m_TagString: Untagged
@@ -5880,7 +6541,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9056820616373308138}
@@ -5907,6 +6568,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3048851310703494, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &777359845
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 777359842}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &794641689
 GameObject:
   m_ObjectHideFlags: 0
@@ -5917,6 +6605,7 @@ GameObject:
   m_Component:
   - component: {fileID: 794641690}
   - component: {fileID: 794641691}
+  - component: {fileID: 794641692}
   m_Layer: 0
   m_Name: IceCrack_5_Collision
   m_TagString: Untagged
@@ -5934,7 +6623,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7946673796397178676}
@@ -5961,6 +6650,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 8552134717624371188, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &794641692
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794641689}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &794824439
 GameObject:
   m_ObjectHideFlags: 0
@@ -5971,6 +6687,7 @@ GameObject:
   m_Component:
   - component: {fileID: 794824440}
   - component: {fileID: 794824441}
+  - component: {fileID: 794824442}
   m_Layer: 0
   m_Name: IceCrack_31_Collision
   m_TagString: Untagged
@@ -5988,7 +6705,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8353230149615804790}
@@ -6015,6 +6732,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6657180443270484345, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &794824442
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794824439}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &828694158
 GameObject:
   m_ObjectHideFlags: 0
@@ -6025,6 +6769,7 @@ GameObject:
   m_Component:
   - component: {fileID: 828694159}
   - component: {fileID: 828694160}
+  - component: {fileID: 828694161}
   m_Layer: 0
   m_Name: IceCrack_18_Collision
   m_TagString: Untagged
@@ -6042,7 +6787,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2824865494283155586}
@@ -6069,6 +6814,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2746142260806068395, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &828694161
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828694158}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &840474186
 GameObject:
   m_ObjectHideFlags: 0
@@ -6117,7 +6889,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 12.38
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &840474189
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6527,7 +7301,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &893244805
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6965,7 +7741,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &910808155
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7155,7 +7933,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 1.5
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &946760420
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7257,7 +8037,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &962142421
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7326,6 +8108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 969511937}
   - component: {fileID: 969511938}
+  - component: {fileID: 969511939}
   m_Layer: 0
   m_Name: IceCrack_34_Collision
   m_TagString: Untagged
@@ -7343,7 +8126,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8245519409184125555}
@@ -7370,6 +8153,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 7860663910981750377, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &969511939
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969511936}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &980004598
 GameObject:
   m_ObjectHideFlags: 0
@@ -7418,7 +8228,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &980004601
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7706,7 +8518,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1016237753
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7770,6 +8584,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1025413556}
   - component: {fileID: 1025413557}
+  - component: {fileID: 1025413558}
   m_Layer: 0
   m_Name: IceCrack_16_Collision
   m_TagString: Untagged
@@ -7787,7 +8602,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8434988492701561942}
@@ -7814,6 +8629,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3541629673168548286, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &1025413558
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1025413555}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1039335323
 GameObject:
   m_ObjectHideFlags: 0
@@ -8041,7 +8883,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1064215325
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8143,7 +8987,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1073005357
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8245,7 +9091,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1083033702
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8474,6 +9322,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1106009361}
   - component: {fileID: 1106009362}
+  - component: {fileID: 1106009363}
   m_Layer: 0
   m_Name: IceCrack_35_Collision
   m_TagString: Untagged
@@ -8491,7 +9340,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7328597242844821956}
@@ -8518,6 +9367,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1969476169269212006, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &1106009363
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1106009360}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1137789579
 GameObject:
   m_ObjectHideFlags: 0
@@ -8762,7 +9638,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1150815569
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8826,6 +9704,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1151086357}
   - component: {fileID: 1151086358}
+  - component: {fileID: 1151086359}
   m_Layer: 0
   m_Name: IceCrack_39_Collision
   m_TagString: Untagged
@@ -8843,7 +9722,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8367634133452486285}
@@ -8870,6 +9749,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3925360246919112806, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &1151086359
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151086356}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1157005117
 GameObject:
   m_ObjectHideFlags: 0
@@ -8880,6 +9786,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1157005118}
   - component: {fileID: 1157005119}
+  - component: {fileID: 1157005120}
   m_Layer: 0
   m_Name: IceCrack_26_Collision
   m_TagString: Untagged
@@ -8897,7 +9804,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3806328386042676571}
@@ -8924,6 +9831,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -362046790695249943, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &1157005120
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1157005117}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1167022360
 GameObject:
   m_ObjectHideFlags: 0
@@ -8972,7 +9906,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1167022363
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9215,7 +10151,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 3
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!1 &1196861943
 GameObject:
   m_ObjectHideFlags: 0
@@ -9264,7 +10202,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1196861946
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9328,6 +10268,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1203435453}
   - component: {fileID: 1203435454}
+  - component: {fileID: 1203435455}
   m_Layer: 0
   m_Name: IceCrack_50_Collision
   m_TagString: Untagged
@@ -9345,7 +10286,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4430341737077791780}
@@ -9372,6 +10313,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6335965048631572536, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &1203435455
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1203435452}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1207307197
 GameObject:
   m_ObjectHideFlags: 0
@@ -9382,6 +10350,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1207307198}
   - component: {fileID: 1207307199}
+  - component: {fileID: 1207307200}
   m_Layer: 0
   m_Name: IceCrack_48_Collision
   m_TagString: Untagged
@@ -9399,7 +10368,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5888700469460751462}
@@ -9426,6 +10395,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -8301338372331653424, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &1207307200
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207307197}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1224939645
 GameObject:
   m_ObjectHideFlags: 0
@@ -9474,7 +10470,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1224939648
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9663,7 +10661,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1229469250
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9736,7 +10736,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 1.5
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!1 &1243842598
 GameObject:
   m_ObjectHideFlags: 0
@@ -9785,7 +10787,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1243842601
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10011,7 +11015,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1300605972
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10286,7 +11292,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1375534124
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10350,6 +11358,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1387986975}
   - component: {fileID: 1387986976}
+  - component: {fileID: 1387986977}
   m_Layer: 0
   m_Name: IceCrack_6_Collision
   m_TagString: Untagged
@@ -10367,7 +11376,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4206568432578092865}
@@ -10394,6 +11403,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 8467973019869391972, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &1387986977
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1387986974}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1393891191
 GameObject:
   m_ObjectHideFlags: 0
@@ -10850,6 +11886,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1449455380}
   - component: {fileID: 1449455381}
+  - component: {fileID: 1449455382}
   m_Layer: 0
   m_Name: IceCrack_17_Collision
   m_TagString: Untagged
@@ -10867,7 +11904,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 485142059066610299}
@@ -10894,6 +11931,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2911736426955009642, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &1449455382
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449455379}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1455136154
 GameObject:
   m_ObjectHideFlags: 0
@@ -10904,6 +11968,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1455136155}
   - component: {fileID: 1455136156}
+  - component: {fileID: 1455136157}
   m_Layer: 0
   m_Name: IceCrack_28_Collision
   m_TagString: Untagged
@@ -10921,7 +11986,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3505926674884713392}
@@ -10948,6 +12013,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6163357941915963767, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &1455136157
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455136154}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1456105945
 GameObject:
   m_ObjectHideFlags: 0
@@ -11500,7 +12592,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1470864223
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11833,7 +12927,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 12.38
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1512608812
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11897,6 +12993,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1513255341}
   - component: {fileID: 1513255342}
+  - component: {fileID: 1513255343}
   m_Layer: 0
   m_Name: IceCrack_44_Collision
   m_TagString: Untagged
@@ -11914,7 +13011,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6326678005252635759}
@@ -11941,6 +13038,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4753976898039024662, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &1513255343
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513255340}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1518139023
 GameObject:
   m_ObjectHideFlags: 0
@@ -11951,6 +13075,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1518139024}
   - component: {fileID: 1518139025}
+  - component: {fileID: 1518139026}
   m_Layer: 0
   m_Name: IceCrack_30_Collision
   m_TagString: Untagged
@@ -11968,7 +13093,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1376457452918472671}
@@ -11995,6 +13120,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -939061152623264921, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &1518139026
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518139023}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1530745383
 GameObject:
   m_ObjectHideFlags: 0
@@ -12044,7 +13196,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 1.5
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1530745386
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12493,7 +13647,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1571290054
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12735,7 +13891,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 3
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!1 &1609632225
 GameObject:
   m_ObjectHideFlags: 0
@@ -12784,7 +13942,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1609632228
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12935,6 +14095,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1625910898}
   - component: {fileID: 1625910899}
+  - component: {fileID: 1625910900}
   m_Layer: 0
   m_Name: IceCrack_22_Collision
   m_TagString: Untagged
@@ -12952,7 +14113,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3448856832924863051}
@@ -12979,6 +14140,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -8936622394817868014, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &1625910900
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625910897}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1629538545
 GameObject:
   m_ObjectHideFlags: 0
@@ -12989,6 +14177,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1629538546}
   - component: {fileID: 1629538547}
+  - component: {fileID: 1629538548}
   m_Layer: 0
   m_Name: IceCrack_21_Collision
   m_TagString: Untagged
@@ -13006,7 +14195,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 840898742987626725}
@@ -13033,6 +14222,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1879900250216117662, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &1629538548
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629538545}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1652185434
 GameObject:
   m_ObjectHideFlags: 0
@@ -13043,6 +14259,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1652185435}
   - component: {fileID: 1652185436}
+  - component: {fileID: 1652185437}
   m_Layer: 0
   m_Name: IceCrack_49_Collision
   m_TagString: Untagged
@@ -13060,7 +14277,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 732232564023835424}
@@ -13087,6 +14304,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -1997392669490731943, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &1652185437
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652185434}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1658206006
 GameObject:
   m_ObjectHideFlags: 0
@@ -13135,7 +14379,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1658206009
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -13199,6 +14445,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1680681487}
   - component: {fileID: 1680681488}
+  - component: {fileID: 1680681489}
   m_Layer: 0
   m_Name: IceCrack_36_Collision
   m_TagString: Untagged
@@ -13216,7 +14463,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6950767071615848278}
@@ -13243,6 +14490,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -745928167409971724, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &1680681489
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680681486}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1001 &1686241423
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13788,6 +15062,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1694213490}
   - component: {fileID: 1694213491}
+  - component: {fileID: 1694213492}
   m_Layer: 0
   m_Name: IceCrack_29_Collision
   m_TagString: Untagged
@@ -13805,7 +15080,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4270422335632432715}
@@ -13832,6 +15107,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6505552537926968463, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &1694213492
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694213489}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1694343049
 GameObject:
   m_ObjectHideFlags: 0
@@ -13842,6 +15144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1694343050}
   - component: {fileID: 1694343051}
+  - component: {fileID: 1694343052}
   m_Layer: 0
   m_Name: IceCrack_1_Collision
   m_TagString: Untagged
@@ -13859,7 +15162,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5011142011946535681}
@@ -13886,6 +15189,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4493585093827132993, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &1694343052
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694343049}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1696489217
 GameObject:
   m_ObjectHideFlags: 0
@@ -14215,7 +15545,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1733872998
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -14279,6 +15611,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1738746518}
   - component: {fileID: 1738746519}
+  - component: {fileID: 1738746520}
   m_Layer: 0
   m_Name: IceCrack_40_Collision
   m_TagString: Untagged
@@ -14296,7 +15629,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6341063082156824638}
@@ -14323,6 +15656,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3874432442672741690, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &1738746520
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738746517}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1001 &1756484636
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14418,7 +15778,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 1.5
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!1 &1756754368
 GameObject:
   m_ObjectHideFlags: 0
@@ -14521,7 +15883,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 3
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!1 &1756965399
 GameObject:
   m_ObjectHideFlags: 0
@@ -14532,6 +15896,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1756965400}
   - component: {fileID: 1756965401}
+  - component: {fileID: 1756965402}
   m_Layer: 0
   m_Name: IceCrack_4_Collision
   m_TagString: Untagged
@@ -14549,7 +15914,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2588656197615613803}
@@ -14576,6 +15941,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -153830957423991239, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &1756965402
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756965399}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1766974202
 GameObject:
   m_ObjectHideFlags: 0
@@ -14765,7 +16157,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 3
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!1 &1772888100
 GameObject:
   m_ObjectHideFlags: 0
@@ -14814,7 +16208,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1772888103
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -15002,7 +16398,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1783466574
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -15749,6 +17147,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1822173023}
   - component: {fileID: 1822173024}
+  - component: {fileID: 1822173025}
   m_Layer: 0
   m_Name: IceCrack_13_Collision
   m_TagString: Untagged
@@ -15766,7 +17165,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7259493268589712269}
@@ -15793,6 +17192,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 855131390749405241, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &1822173025
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822173022}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1001 &1850118852
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16220,6 +17646,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1921369898}
   - component: {fileID: 1921369899}
+  - component: {fileID: 1921369900}
   m_Layer: 0
   m_Name: IceCrack_42_Collision
   m_TagString: Untagged
@@ -16237,7 +17664,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 725920098899869103}
@@ -16264,6 +17691,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6593217175389860584, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &1921369900
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921369897}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1937298954
 GameObject:
   m_ObjectHideFlags: 0
@@ -16313,7 +17767,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 1.5
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1937298957
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -16415,7 +17871,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 12.38
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1939667313
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -16625,7 +18083,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &1959298054
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -16895,6 +18355,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2009243532}
   - component: {fileID: 2009243533}
+  - component: {fileID: 2009243534}
   m_Layer: 0
   m_Name: IceCrack_24_Collision
   m_TagString: Untagged
@@ -16912,7 +18373,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8555441139456049277}
@@ -16939,6 +18400,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 7414509850709746518, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &2009243534
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2009243531}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &2023490189
 GameObject:
   m_ObjectHideFlags: 0
@@ -17137,6 +18625,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2032620602}
   - component: {fileID: 2032620603}
+  - component: {fileID: 2032620604}
   m_Layer: 0
   m_Name: IceCrack_7_Collision
   m_TagString: Untagged
@@ -17154,7 +18643,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4643550320726558700}
@@ -17181,6 +18670,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2477511411847689622, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &2032620604
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032620601}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &2036122593
 GameObject:
   m_ObjectHideFlags: 0
@@ -17229,7 +18745,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 12.38
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &2036122596
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -17293,6 +18811,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2038642189}
   - component: {fileID: 2038642190}
+  - component: {fileID: 2038642191}
   m_Layer: 0
   m_Name: IceCrack_27_Collision
   m_TagString: Untagged
@@ -17310,7 +18829,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8490154139081885808}
@@ -17337,6 +18856,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1890910595786045333, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &2038642191
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038642188}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &2048377975
 GameObject:
   m_ObjectHideFlags: 0
@@ -17439,7 +18985,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 3
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!1 &2051845770
 GameObject:
   m_ObjectHideFlags: 0
@@ -17488,7 +19036,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &2051845773
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -17727,6 +19277,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2099223296}
   - component: {fileID: 2099223297}
+  - component: {fileID: 2099223298}
   m_Layer: 0
   m_Name: IceCrack_25_Collision
   m_TagString: Untagged
@@ -17744,7 +19295,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4613211103875548627}
@@ -17771,6 +19322,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5198267681279241171, guid: b14440dbeba636d47b13650223145c0c, type: 3}
+--- !u!54 &2099223298
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099223295}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &2100343502
 GameObject:
   m_ObjectHideFlags: 0
@@ -17927,7 +19505,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &2127849631
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -18171,7 +19751,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &2133106187
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -18273,7 +19855,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 12.38
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 0
 --- !u!23 &2141763779
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -18619,6 +20203,7 @@ GameObject:
   - component: {fileID: 2170881458661440955}
   - component: {fileID: 4021798065125961384}
   - component: {fileID: 6185807283422244030}
+  - component: {fileID: 6185807283422244031}
   m_Layer: 0
   m_Name: GameSceneManager
   m_TagString: Untagged
@@ -21519,7 +23104,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!1 &4223800493513233360
 GameObject:
   m_ObjectHideFlags: 0
@@ -21883,7 +23470,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 12.38
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!23 &4765061436655600739
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -21970,7 +23559,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!223 &4901068942328147139
 Canvas:
   m_ObjectHideFlags: 0
@@ -22207,7 +23798,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!4 &5151716008646633500
 Transform:
   m_ObjectHideFlags: 0
@@ -22239,7 +23832,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!4 &5222733616029378589
 Transform:
   m_ObjectHideFlags: 0
@@ -22385,7 +23980,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!33 &5423590515516018340
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -22606,7 +24203,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!33 &5791819160459274540
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -22629,7 +24228,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 6
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!4 &5811123935543130325
 Transform:
   m_ObjectHideFlags: 0
@@ -22661,7 +24262,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 12.38
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!4 &5869600082284185526
 Transform:
   m_ObjectHideFlags: 0
@@ -22833,7 +24436,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 6
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!4 &6132089607923563885
 Transform:
   m_ObjectHideFlags: 0
@@ -22933,11 +24538,80 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5c2bd78c2bb8d34e94b259072cec305, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveAmplitude: 1
+  waveAmplitude: 1.7
   waveFrequency: 5
   timer: 0
   waveSpeed: 0.71
   waterMaterial: {fileID: 2100000, guid: cceb944df8a65994e9f6225cb971222d, type: 2}
+--- !u!114 &6185807283422244031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275529035860807098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dd120eb6ca40b9479aa10ec34346b80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  paused: 0
+  iceFragments:
+  - {fileID: 5682340250949791266}
+  - {fileID: 2588656197615613803}
+  - {fileID: 7946673796397178676}
+  - {fileID: 4206568432578092865}
+  - {fileID: 4643550320726558700}
+  - {fileID: 585119993182259028}
+  - {fileID: 7879684878966150380}
+  - {fileID: 6132089607923563885}
+  - {fileID: 8750828073152913844}
+  - {fileID: 5016259405721534048}
+  - {fileID: 7259493268589712269}
+  - {fileID: 8051523229498377679}
+  - {fileID: 4931119647239239653}
+  - {fileID: 8434988492701561942}
+  - {fileID: 485142059066610299}
+  - {fileID: 2824865494283155586}
+  - {fileID: 2633159587561172999}
+  - {fileID: 4011764626962532519}
+  - {fileID: 840898742987626725}
+  - {fileID: 3448856832924863051}
+  - {fileID: 663074913004058263}
+  - {fileID: 8555441139456049277}
+  - {fileID: 4613211103875548627}
+  - {fileID: 3806328386042676571}
+  - {fileID: 8490154139081885808}
+  - {fileID: 3505926674884713392}
+  - {fileID: 4270422335632432715}
+  - {fileID: 1376457452918472671}
+  - {fileID: 8353230149615804790}
+  - {fileID: 7822719856159350681}
+  - {fileID: 2516245356850229586}
+  - {fileID: 8245519409184125555}
+  - {fileID: 7328597242844821956}
+  - {fileID: 6950767071615848278}
+  - {fileID: 3034691792850602488}
+  - {fileID: 5151716008646633500}
+  - {fileID: 8367634133452486285}
+  - {fileID: 6341063082156824638}
+  - {fileID: 9056820616373308138}
+  - {fileID: 725920098899869103}
+  - {fileID: 5869600082284185526}
+  - {fileID: 6326678005252635759}
+  - {fileID: 630787613630382185}
+  - {fileID: 8417100031387558249}
+  - {fileID: 5811123935543130325}
+  - {fileID: 5888700469460751462}
+  - {fileID: 732232564023835424}
+  - {fileID: 4430341737077791780}
+  - {fileID: 7581254879616712154}
+  - {fileID: 8670871031431781386}
+  startDelay: 2
+  fractureDelay: 3
+  sinkPosition: -1.6
+  moveSpeed: 1
+  unpauseDelay: 4
 --- !u!114 &6241461190226760900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22999,7 +24673,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!4 &6341063082156824638
 Transform:
   m_ObjectHideFlags: 0
@@ -23050,7 +24726,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!33 &6487020667669858622
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -23136,7 +24814,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!1 &6651331892933833397
 GameObject:
   m_ObjectHideFlags: 0
@@ -23188,7 +24868,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!23 &6742596964338747380
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -23403,7 +25085,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!4 &6950767071615848278
 Transform:
   m_ObjectHideFlags: 0
@@ -23435,7 +25119,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 12.38
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!23 &6965333517302013659
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -23495,7 +25181,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!33 &7013605637860963603
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -23526,7 +25214,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!4 &7055893301462620253
 Transform:
   m_ObjectHideFlags: 0
@@ -23755,7 +25445,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!1 &7284796278078949824
 GameObject:
   m_ObjectHideFlags: 0
@@ -23858,7 +25550,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!1 &7365138805697057081
 GameObject:
   m_ObjectHideFlags: 0
@@ -23900,7 +25594,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!33 &7455958871734811883
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -24148,7 +25844,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &7628191344752753312
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -24235,7 +25931,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!23 &7710806794975698513
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -24320,7 +26018,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!4 &7879684878966150380
 Transform:
   m_ObjectHideFlags: 0
@@ -24352,7 +26052,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!1 &7893471986845070584
 GameObject:
   m_ObjectHideFlags: 0
@@ -24455,7 +26157,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!1 &8015327305774188048
 GameObject:
   m_ObjectHideFlags: 0
@@ -24474,7 +26178,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &8032048258575147646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24536,7 +26240,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 12.38
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!23 &8087981634919432644
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -24596,7 +26302,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!23 &8119604135773758154
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -24701,7 +26409,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!23 &8196244511295402725
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -24822,7 +26532,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!4 &8245519409184125555
 Transform:
   m_ObjectHideFlags: 0
@@ -24854,7 +26566,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!33 &8335446144677102496
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -24877,7 +26591,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!33 &8344377177454366327
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -24962,7 +26678,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 12.38
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!4 &8367634133452486285
 Transform:
   m_ObjectHideFlags: 0
@@ -24994,7 +26712,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!23 &8368319939580950023
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -25073,7 +26793,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!4 &8417100031387558249
 Transform:
   m_ObjectHideFlags: 0
@@ -25105,7 +26827,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!4 &8434988492701561942
 Transform:
   m_ObjectHideFlags: 0
@@ -25137,7 +26861,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!4 &8490154139081885808
 Transform:
   m_ObjectHideFlags: 0
@@ -25169,7 +26895,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 12.38
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!1 &8551427742229749960
 GameObject:
   m_ObjectHideFlags: 0
@@ -25203,7 +26931,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!4 &8555441139456049277
 Transform:
   m_ObjectHideFlags: 0
@@ -25235,7 +26965,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 12.38
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!4 &8572846480871417502
 Transform:
   m_ObjectHideFlags: 0
@@ -25310,7 +27042,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!33 &8647859843051801723
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -25333,7 +27067,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!224 &8652570623894108267
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25404,7 +27140,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!33 &8716222969961539403
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -25427,7 +27165,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!4 &8750828073152913844
 Transform:
   m_ObjectHideFlags: 0
@@ -25504,7 +27244,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 12.38
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!23 &8777733851796098290
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -25564,7 +27306,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!4 &8838908864410236231
 Transform:
   m_ObjectHideFlags: 0
@@ -25730,7 +27474,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!23 &8919019712636241282
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -25790,7 +27536,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!33 &9035535016163147422
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -25813,7 +27561,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!1 &9043222148127336677
 GameObject:
   m_ObjectHideFlags: 0
@@ -25847,7 +27597,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 7.36
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!4 &9056820616373308138
 Transform:
   m_ObjectHideFlags: 0
@@ -25879,7 +27631,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!1 &9064275512409274295
 GameObject:
   m_ObjectHideFlags: 0
@@ -26013,7 +27767,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 4.92
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!33 &9213614137952884307
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -26036,7 +27792,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveSample: {fileID: 6185807283422244030}
   maxRotation: 12.38
+  yInitialPos: 0
   sinking: 0
+  lerpSpeed: 5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
