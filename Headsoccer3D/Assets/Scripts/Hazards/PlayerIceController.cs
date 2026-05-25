@@ -4,6 +4,8 @@ using UnityEngine;
 public class PlayerIceController : MonoBehaviour
 {
     [SerializeField] GameObject iceBlock;
+    
+
     [SerializeField] float yVal;
     [SerializeField] float moveYSpeed;
     [SerializeField] int maxIceHP;
@@ -13,6 +15,11 @@ public class PlayerIceController : MonoBehaviour
     [SerializeField] float iceHitCooldown;
     [SerializeField] bool canHitIce = true;
     Rigidbody rb;
+
+    [Header("Block Break")]
+    [SerializeField] GameObject iceBlockFracture;
+    [SerializeField] float forceStrength;
+
 
     private void Start()
     {
@@ -30,6 +37,9 @@ public class PlayerIceController : MonoBehaviour
 
     public void SetFrozen()
     {
+
+
+
         iceBlock.GetComponent<Renderer>().material.SetFloat("_Break_Intensity", 0);
         iceBlock.SetActive(true);
 
@@ -42,6 +52,15 @@ public class PlayerIceController : MonoBehaviour
         GameSceneManager.Instance.GetComponent<IceController>().ResetIce();
 
         MoveBlock();
+
+        if (iceBlockFracture == null) return;
+        foreach (Transform child in iceBlockFracture.transform)
+        {
+            child.GetComponent<Rigidbody>().isKinematic = true;
+            child.transform.localPosition = Vector3.zero;
+            child.transform.localRotation = Quaternion.Euler(-89.98f, 0, 0);
+            child.transform.localScale = Vector3.one;
+        }
     }
 
     void MoveBlock()
@@ -93,6 +112,19 @@ public class PlayerIceController : MonoBehaviour
         iceBlock.SetActive(false);
         if (CameraController.Instance != null)
             CameraController.Instance.ShakeCamera(0.5f, 0.1f, 25);
+
+        if (iceBlockFracture == null) return;
+
+        iceBlockFracture.SetActive(true);
+        foreach (Transform child in iceBlockFracture.transform)
+        {
+            child.GetComponent<Rigidbody>().isKinematic = false;
+            child.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+            child.parent = null;
+            child.GetComponent<Rigidbody>().AddForce((transform.position - child.position).normalized * forceStrength, ForceMode.Impulse);
+            child.DOScale(0.001f, 5).OnComplete(() => iceBlockFracture.SetActive(false));
+        }
+
     }
 
     void ResetIceHit()
