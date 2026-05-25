@@ -186,6 +186,18 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     public bool isFrozen = false;
 
+    private Vector3 lastPlatformPosition;
+    private Transform currentPlatform;
+    Quaternion lastPlatformRotation;
+
+
+    [Space]
+    [SerializeField] private float dribbleBallRadius = 0.2f;
+    [SerializeField] private float dribbleGroundOffset = 0.2f;
+    [SerializeField] private LayerMask dribbleGroundLayer;
+
+    float dribbleAnchorY;
+    [SerializeField] private float dribbleYLerpSpeed = 8f;
 
 
     void Awake()
@@ -201,6 +213,8 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         currentStamina = maxStamina;
         originalYScale = transform.localScale.y;
         originalSpeed = moveSpeed;
+
+        dribbleAnchorY = transform.position.y;
     }
 
     public void SetStaminaBar(Slider bar)
@@ -231,9 +245,6 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         }*/
 
 
-    // At the top of your class, add:
-    private Vector3 lastPlatformPosition;
-    private Transform currentPlatform;
     void FixedUpdate()
     {
         
@@ -310,7 +321,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
 
 
-        // Apply movement + knockback
+       
         Vector3 velocity = (moveDir * moveSpeed) + knockbackVelocity + (Vector3.up * verticalVelocity);
 
         anim.SetFloat("Velocity", Mathf.Abs(velocity.x) + Mathf.Abs(velocity.z));
@@ -334,7 +345,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             controller.Move((velocity * Time.fixedDeltaTime) + platformDelta);*/
 
 
-        // Face movement direction
+        
         if (rotateToMovement && moveDir.sqrMagnitude > 0.001f)
         {
             Quaternion target = Quaternion.LookRotation(moveDir, Vector3.up);
@@ -357,19 +368,40 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         else
             kickHeldSpeedMultiplier = 1f;
 
-        if (dribbleEnabled && possessedBall != null)
+        /*if (dribbleEnabled && possessedBall != null)
         {
             Vector3 anchor = transform.TransformPoint(dribbleOffset);
             //possessedBall.TweenToAnchor(anchor, this);
             possessedBall.MoveTowardAnchor(anchor, this);
+        }*/
+        if (dribbleEnabled && possessedBall != null)
+        {
+            Vector3 anchor = transform.TransformPoint(dribbleOffset);
+
+            RaycastHit dribbleHit;
+            float groundY = anchor.y;
+            if (Physics.Raycast(anchor + Vector3.up * 0.5f, Vector3.down, out dribbleHit, 10f, dribbleGroundLayer))
+            {
+                groundY = dribbleHit.point.y + dribbleBallRadius + dribbleGroundOffset;
+            }
+
+            float targetY = Mathf.Max(anchor.y, groundY);
+
+            
+            dribbleAnchorY = Mathf.Lerp(dribbleAnchorY, targetY, dribbleYLerpSpeed * Time.fixedDeltaTime);
+
+            anchor.y = dribbleAnchorY;
+
+            possessedBall.MoveTowardAnchor(anchor, this);
         }
+
 
 
         Debug.DrawRay(transform.position, Vector3.down * 100, Color.blue);
 
         // ground / parent check
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 100f, groundLayer) && controller.isGrounded)
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.5f, groundLayer) && controller.isGrounded)
         {
             if (currentPlatform != hit.transform)
             {
@@ -377,12 +409,20 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
                 lastPlatformPosition = hit.transform.position;
             }
         }
+        else if (!controller.isGrounded)
+        {
+            currentPlatform = null;
+        }
 
         Vector3 platformDelta = Vector3.zero;
         if (currentPlatform != null)
         {
             platformDelta = currentPlatform.position - lastPlatformPosition;
             lastPlatformPosition = currentPlatform.position;
+
+            
+            platformDelta.x = 0f;
+            platformDelta.z = 0f;
         }
 
         if (controller.enabled)
@@ -440,7 +480,6 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         else
         {
             kickHeldSpeedMultiplier = 1f;
-            // Reset the flag when the button is released
             isChargeSoundPlaying = false; 
         }
 
@@ -841,7 +880,6 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         knockbackTimer = knockbackDuration;
 
-        // start reduction window
         reduceKnockBackTimer = reduceKnockBackTime;
     }
     public void OnGainedPossession(SoccerBall ball)
