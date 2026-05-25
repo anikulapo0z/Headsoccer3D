@@ -6,15 +6,13 @@ public class IceTrigger : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log("ice trigger");
 
-        if (other.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<PlayerIceController>().SetFrozen();
+            other.GetComponent<PlayerIceController>().SetFrozen();
         }
-
-        // splash sfx
-
+        else if (other.CompareTag("Ball"))
+            other.GetComponent<BallIceController>().SetFrozen();
     }
 
 

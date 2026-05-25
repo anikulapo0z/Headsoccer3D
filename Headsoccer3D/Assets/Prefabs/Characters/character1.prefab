@@ -1269,6 +1269,12 @@ MonoBehaviour:
   shakeVibrato: 1
   shakeReduceAmount: 5
   isFrozen: 0
+  dribbleBallRadius: 0.2
+  dribbleGroundOffset: 0.2
+  dribbleGroundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  dribbleYLerpSpeed: 8
 --- !u!114 &2982971697010060558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1463,7 +1469,7 @@ MonoBehaviour:
   maxIceHP: 8
   currentIceHP: 0
   allowHurtIce: 0
-  iceHitCooldown: 0.5
+  iceHitCooldown: 0.2
   canHitIce: 1
 --- !u!1 &2226667314074175103
 GameObject:
@@ -8833,7 +8839,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6304088918195126543}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: b408056c1574a6040ae69d247d50b916, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

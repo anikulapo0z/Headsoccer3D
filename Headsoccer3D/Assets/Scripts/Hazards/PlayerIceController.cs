@@ -24,8 +24,8 @@ public class PlayerIceController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.B))
             HurtIce();
-        Debug.LogWarning("linear vel: " + GetComponent<Rigidbody>().linearVelocity);
-        Debug.LogWarning("angular vel: " + GetComponent<Rigidbody>().angularVelocity);
+        //Debug.LogWarning("linear vel: " + GetComponent<Rigidbody>().linearVelocity);
+        //Debug.LogWarning("angular vel: " + GetComponent<Rigidbody>().angularVelocity);
     }
 
     public void SetFrozen()
@@ -39,6 +39,8 @@ public class PlayerIceController : MonoBehaviour
         allowHurtIce = false;
 
         GetComponent<PlayerController>().LockPlayerMove();
+        GameSceneManager.Instance.GetComponent<IceController>().ResetIce();
+
         MoveBlock();
     }
 
@@ -76,6 +78,7 @@ public class PlayerIceController : MonoBehaviour
         canHitIce = false;
         Invoke("ResetIceHit", iceHitCooldown);
     }
+
     void BreakIce()
     {
         GetComponent<PlayerController>().isFrozen = false;
