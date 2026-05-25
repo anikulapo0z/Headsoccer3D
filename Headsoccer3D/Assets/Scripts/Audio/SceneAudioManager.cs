@@ -16,13 +16,13 @@ public class SceneAudioManager : MonoBehaviour
     [SerializeField] private AudioSource[] trainPlayerImpactSfx;
     [SerializeField] private AudioSource announcementSfx;
     [Header("Bell map")]
-    [SerializeField] private AudioSource[] bellRingSfx;
+    [SerializeField] private AudioSource bellRingSfx;
     [SerializeField] private AudioSource bellBreakSfx;
 
     // general
     private void Start()
     {
-        if (backgroundMusic != null)
+        if (backgroundMusic.resource)
         {
             backgroundMusic.Play();
         }
@@ -30,7 +30,7 @@ public class SceneAudioManager : MonoBehaviour
         {
             Debug.Log("Background music clip is not assigned");
         }
-        if (crowdAmbience != null)
+        if (crowdAmbience.resource)
         {
             crowdAmbience.Play();
         }
@@ -45,7 +45,7 @@ public class SceneAudioManager : MonoBehaviour
         {
             int randomIndex = Random.Range(0, confettiSfx.Length);
             AudioSource source = confettiSfx[randomIndex];
-            if (source != null)
+            if (source.resource)
             {
                 // source.panStereo = pan;
                 source.Play();
@@ -146,10 +146,9 @@ public class SceneAudioManager : MonoBehaviour
     // bell
     public void PlayBellRingSfx()
     {
-        if (bellRingSfx.Length > 0)
+        if (bellRingSfx.resource)
         {
-            int randomIndex = Random.Range(0, bellRingSfx.Length);
-            bellRingSfx[randomIndex].Play();
+            bellRingSfx.Play();
         }
         else
         {

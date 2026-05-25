@@ -95,7 +95,7 @@ public class Bell : MonoBehaviour
             }
             //}
             currentHitUntilBreak--;
-            audioManager.PlayChaosSfx();
+            audioManager.PlayBellRingSfx();
 
             if(currentHitUntilBreak <= 0 && !isBreaking)
                 StartCoroutine(BreakBell());
@@ -108,7 +108,6 @@ public class Bell : MonoBehaviour
         bellCollider.enabled = false;
         CameraController.Instance.ShakeCamera(shakeDuration_break, shakeStrength_break, shakeVibrato_break);
 
-        audioManager.PlayBellRingSfx();
         audioManager.PlayBellBreakSfx();
 
         isBreaking = true;
