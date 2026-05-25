@@ -28372,8 +28372,16 @@ MonoBehaviour:
   currentStartCoundown: 0
   maxStartCoundown: 3
   startCountdownText: {fileID: 80093672}
+  numToStartAddingTime: 13
+  minTimeToAdd: 0.1
+  maxTimeToAdd: 1.5
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  outOTimeColor: {r: 1, g: 0, b: 0, a: 1}
+  colorChangeSpeed: 1
   startDelay: 3
   currentGameTime: 0
+  timeToAddWhenScoreAndLowTime: 1
+  lowTimeThreshold: 10
   maxGameTime: 150
   pausedGameTime: 0
   delayBeforeScoreScreen: 0
@@ -28700,10 +28708,9 @@ MonoBehaviour:
   backgroundMusic: {fileID: 1951291695}
   crowdAmbience: {fileID: 1951291694}
   crowdCheers: {fileID: 1951291694}
-  crowdGasp: {fileID: 1951291698}
-  crowdBoos: {fileID: 1951291699}
-  confetti:
-  - {fileID: 1951291695}
+  chaosSequenceSfx: {fileID: 0}
+  crowdBoosSfx: {fileID: 0}
+  confettiSfx: []
   whistleSfx: {fileID: 1951291697}
   busSfx: {fileID: 0}
   trainHornSfx: {fileID: 0}
@@ -28711,7 +28718,6 @@ MonoBehaviour:
   announcementSfx: {fileID: 0}
   bellRingSfx: []
   bellBreakSfx: {fileID: 0}
-  jawnSfx: {fileID: 0}
 --- !u!82 &1951291697
 AudioSource:
   m_ObjectHideFlags: 0

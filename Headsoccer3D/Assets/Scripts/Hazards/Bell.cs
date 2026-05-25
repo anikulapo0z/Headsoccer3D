@@ -95,9 +95,7 @@ public class Bell : MonoBehaviour
             }
             //}
             currentHitUntilBreak--;
-
-            audioManager.PlayBellRingSfx();
-                audioManager.PlayBellBreakSfx();
+            audioManager.PlayChaosSfx();
 
             if(currentHitUntilBreak <= 0 && !isBreaking)
                 StartCoroutine(BreakBell());
@@ -128,7 +126,7 @@ public class Bell : MonoBehaviour
 
         gameMusic.mute = true;
         yield return new WaitForSeconds(.5f);
-        audioManager.PlayGaspSfx();
+        audioManager.PlayChaosSfx();
         yield return new WaitForSeconds(.5f);
 
 

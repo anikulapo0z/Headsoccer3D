@@ -5,9 +5,9 @@ public class SceneAudioManager : MonoBehaviour
     [SerializeField] private AudioSource backgroundMusic;
     [SerializeField] private AudioSource crowdAmbience;
     [SerializeField] private AudioSource crowdCheers;
-    [SerializeField] private AudioSource crowdGasp;
-    [SerializeField] private AudioSource crowdBoos;
-    [SerializeField] private AudioSource[] confetti;
+    [SerializeField] private AudioSource chaosSequenceSfx;
+    [SerializeField] private AudioSource crowdBoosSfx;
+    [SerializeField] private AudioSource[] confettiSfx;
     [SerializeField] private AudioSource whistleSfx;
     [Header("Bus map")]
     [SerializeField] private AudioSource busSfx;
@@ -18,7 +18,6 @@ public class SceneAudioManager : MonoBehaviour
     [Header("Bell map")]
     [SerializeField] private AudioSource[] bellRingSfx;
     [SerializeField] private AudioSource bellBreakSfx;
-    [SerializeField] private AudioSource jawnSfx;
 
     // general
     private void Start()
@@ -42,10 +41,10 @@ public class SceneAudioManager : MonoBehaviour
     }
     public void PlayConfettiCheersSfx()
     {
-        if (confetti.Length > 0)
+        if (confettiSfx.Length > 0)
         {
-            int randomIndex = Random.Range(0, confetti.Length);
-            AudioSource source = confetti[randomIndex];
+            int randomIndex = Random.Range(0, confettiSfx.Length);
+            AudioSource source = confettiSfx[randomIndex];
             if (source != null)
             {
                 // source.panStereo = pan;
@@ -65,15 +64,15 @@ public class SceneAudioManager : MonoBehaviour
             Debug.Log("Crowd cheers or confetti SFX clip is not assigned");
         }
     }
-    public void PlayGaspSfx()
+    public void PlayChaosSfx()
     {
-        if (crowdGasp.resource)
+        if (chaosSequenceSfx.resource)
         {
-            crowdGasp.Play();
+            chaosSequenceSfx.Play();
         }
         else
         {
-            Debug.Log("Crowd gasp SFX clip is not assigned");
+            Debug.Log("chaos SFX clip is not assigned");
         }
     }
     public void PlayWhistleSfx()
@@ -166,17 +165,6 @@ public class SceneAudioManager : MonoBehaviour
         else
         {
             Debug.Log("Bell Break SFX clip is not assigned");
-        }
-    }
-    public void PlayJawnSfx()
-    {
-        if (jawnSfx.resource)
-        {
-            jawnSfx.Play();
-        }
-        else
-        {
-            Debug.Log("Jawn SFX clip is not assigned");
         }
     }
 }
