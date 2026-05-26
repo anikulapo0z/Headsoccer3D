@@ -187,6 +187,12 @@ public class GameSceneManager : MonoBehaviour
         scoreTracker.canScore = true;
 
         gameTimeCoroutine = StartCoroutine(GameTimer());
+
+        if(GetComponent<WaterWaveSample>() != null && GetComponent<IceController>() != null)
+        {
+            GetComponent<WaterWaveSample>().enabled = true;
+            GetComponent<IceController>().enabled = true;
+        }
     }
 
 

@@ -19,6 +19,7 @@ public class PlayerIceController : MonoBehaviour
     [Header("Block Break")]
     [SerializeField] GameObject iceBlockFracture;
     [SerializeField] float forceStrength;
+    [SerializeField] AnimationCurve iceTossSpeed;
 
 
     private void Start()
@@ -65,7 +66,7 @@ public class PlayerIceController : MonoBehaviour
 
     void MoveBlock()
     {
-        transform.DOMove(new Vector3(transform.position.x, yVal, transform.position.z), moveYSpeed).OnComplete(()
+        transform.DOMove(new Vector3(transform.position.x, yVal, transform.position.z), moveYSpeed).SetEase(iceTossSpeed).OnComplete(()
             => UnlockPlayers());
     }
 

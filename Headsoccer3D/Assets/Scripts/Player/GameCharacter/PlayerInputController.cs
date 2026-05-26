@@ -7,7 +7,7 @@ public class PlayerInputController : MonoBehaviour
     public int PlayerIndex { get; private set; }
     public InputDevice AssignedDevice { get; private set; }
 
-    public string ControllerId { get; private set; }
+    public string ControllerId;
     public bool IsConnected { get; private set; }
 
     public int selectedCharacterID = -2;
@@ -26,6 +26,10 @@ public class PlayerInputController : MonoBehaviour
     InputAction abilityAction;
     InputAction sprintAction;
 
+    InputActionAsset sourceActionsReference;
+
+
+    public InputActionAsset GetSourceInputActions() => sourceActionsReference;
 
     public void Initialize(
         int playerIndex,
@@ -40,6 +44,8 @@ public class PlayerInputController : MonoBehaviour
 
     public void AssignDevice(InputDevice device, InputActionAsset sourceActions, string actionMapName)
     {
+        sourceActionsReference = sourceActions;
+
         if (actionsInstance != null)
         {
             UnsubscribeActions();
@@ -211,6 +217,6 @@ public class PlayerInputController : MonoBehaviour
     static string BuildControllerId(InputDevice device)
     {
         var d = device.description;
-        return $"{d.interfaceName}_{d.product}_{device.deviceId}";
+        return $"{d.interfaceName}_{d.product}";
     }
 }

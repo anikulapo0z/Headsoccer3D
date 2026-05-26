@@ -17,6 +17,10 @@ public class BallIceController : MonoBehaviour
     [SerializeField] float yVal;
     [SerializeField] float moveYSpeed;
 
+    [SerializeField] AnimationCurve iceTossSpeed;
+
+
+
 
     void Start()
     {
@@ -39,7 +43,7 @@ public class BallIceController : MonoBehaviour
 
     void MoveBlock()
     {
-        transform.DOMove(new Vector3(transform.position.x, yVal, transform.position.z), moveYSpeed).OnComplete(() => SetVals());
+        transform.DOMove(new Vector3(transform.position.x, yVal, transform.position.z), moveYSpeed).SetEase(iceTossSpeed).OnComplete(() => SetVals());
     }
     void SetVals()
     {

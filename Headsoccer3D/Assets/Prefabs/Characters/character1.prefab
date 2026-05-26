@@ -2835,15 +2835,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iceBlock: {fileID: 6304088918195126543}
-  yVal: 7
-  moveYSpeed: 5
+  yVal: 6
+  moveYSpeed: 1.5
   maxIceHP: 8
   currentIceHP: 0
   allowHurtIce: 0
   iceHitCooldown: 0.2
   canHitIce: 1
-  iceBlockFracture: {fileID: 7479045568755230345}
+  iceBlockFracture: {fileID: 0}
   forceStrength: 10
+  iceTossSpeed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.003829956
+      value: 0.0016479492
+      inSlope: 1.6540071
+      outSlope: 1.6540071
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.12688065
+    - serializedVersion: 3
+      time: 0.28065664
+      value: 0.48401433
+      inSlope: 1.1164942
+      outSlope: 0.947116
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.52405584
+      outWeight: 0.078779265
+    - serializedVersion: 3
+      time: 0.7
+      value: 0.6963188
+      inSlope: 0.016150463
+      outSlope: -6.760984
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.14236598
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &2226667314074175103
 GameObject:
   m_ObjectHideFlags: 0
