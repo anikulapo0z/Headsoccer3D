@@ -895,6 +895,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 173643452}
   m_CullTransparentMesh: 1
+--- !u!1 &214413780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 214413782}
+  - component: {fileID: 214413781}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &214413781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214413780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06b2c5b37f80a934db92a13523c9be0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionMapName: Player
+--- !u!4 &214413782
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214413780}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.08814399, y: -12.675274, z: 35.44908}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &247613311 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7369525178913090990, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
@@ -13860,8 +13905,16 @@ MonoBehaviour:
   currentStartCoundown: 0
   maxStartCoundown: 3
   startCountdownText: {fileID: 247613311}
+  numToStartAddingTime: 13
+  minTimeToAdd: 0.1
+  maxTimeToAdd: 1.5
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  outOTimeColor: {r: 1, g: 0, b: 0, a: 1}
+  colorChangeSpeed: 1
   startDelay: 3
   currentGameTime: 0
+  timeToAddWhenScoreAndLowTime: 1
+  lowTimeThreshold: 10
   maxGameTime: 150
   pausedGameTime: 0
   delayBeforeScoreScreen: 0
@@ -14399,10 +14452,9 @@ MonoBehaviour:
   backgroundMusic: {fileID: 0}
   crowdAmbience: {fileID: 0}
   crowdCheers: {fileID: 1951291706}
-  crowdGasp: {fileID: 1951291705}
-  crowdBoos: {fileID: 1951291704}
-  confetti:
-  - {fileID: 0}
+  chaosSequenceSfx: {fileID: 0}
+  crowdBoosSfx: {fileID: 0}
+  confettiSfx: []
   whistleSfx: {fileID: 1951291697}
   busSfx: {fileID: 0}
   trainHornSfx: {fileID: 1951291696}
@@ -14413,9 +14465,8 @@ MonoBehaviour:
   - {fileID: 1951291700}
   - {fileID: 1951291699}
   announcementSfx: {fileID: 1951291703}
-  bellRingSfx: []
+  bellRingSfx: {fileID: 0}
   bellBreakSfx: {fileID: 0}
-  jawnSfx: {fileID: 0}
 --- !u!82 &1951291699
 AudioSource:
   m_ObjectHideFlags: 0
@@ -16817,3 +16868,4 @@ SceneRoots:
   - {fileID: 352282277}
   - {fileID: 1312897891}
   - {fileID: 1749373053}
+  - {fileID: 214413782}

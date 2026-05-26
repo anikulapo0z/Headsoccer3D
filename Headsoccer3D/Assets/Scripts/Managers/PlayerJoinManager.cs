@@ -237,6 +237,6 @@ public class PlayerJoinManager : MonoBehaviour
     static string BuildControllerId(InputDevice device)
     {
         var d = device.description;
-        return $"{d.interfaceName}_{d.product}_{device.deviceId}";
+        return $"{d.interfaceName}_{d.product}";
     }
 }
