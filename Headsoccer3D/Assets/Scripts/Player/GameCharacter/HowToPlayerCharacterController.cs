@@ -144,7 +144,7 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
     }
     public void OnCancel() { }
     public void OnConfirm() { }
-    public void OnJoin()
+    public void OnStart()
     {
         MenuManager.Instance.CloseHowToPlay();
         MenuManager.Instance.joinManager.playerSlots[playerIndex].GetComponent<PlayerInputController>().RemoveControlledObject(this, false);

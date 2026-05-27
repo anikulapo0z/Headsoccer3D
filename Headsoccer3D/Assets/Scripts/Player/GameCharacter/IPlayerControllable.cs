@@ -4,7 +4,7 @@ public interface IPlayerControllable
     void OnSprint(bool held);
     void OnJump();
     void OnKick(bool held);
-    void OnJoin();
+    void OnStart();
     void OnConfirm();
     void OnCancel();
     void OnAbility();

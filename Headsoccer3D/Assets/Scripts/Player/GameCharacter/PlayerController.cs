@@ -515,9 +515,10 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         //throw new System.NotImplementedException();
     }
 
-    public void OnJoin()
+    public void OnStart()
     {
-        //throw new System.NotImplementedException();
+        if(PauseMenu.Instance != null)
+            PauseMenu.Instance.PauseGame();
     }
     public void OnSprint(bool held)
     {
