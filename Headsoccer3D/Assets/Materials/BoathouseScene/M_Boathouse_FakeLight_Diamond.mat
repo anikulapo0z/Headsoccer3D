@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1937609620706707601
+--- !u!114 &-2600579182865377649
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,13 +20,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_Boathouse_Door2
-  m_Shader: {fileID: 4800000, guid: d67c0f1751ae0724ea7be98cfd6110cb, type: 3}
+  m_Name: M_Boathouse_FakeLight_Diamond
+  m_Shader: {fileID: -6465566751694194690, guid: dee09de22621cd447b87764c652d1479, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _HALFTONELIGHT
-  - _MASKING
+  m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -68,8 +66,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _HalftonePattern:
-        m_Texture: {fileID: 2800000, guid: 1a91d7f76edb9324bb03a318c0282f0e, type: 3}
-        m_Scale: {x: 120, y: 120}
+        m_Texture: {fileID: 2800000, guid: f792c5aded2ba1c4690d4c4923ea561a, type: 3}
+        m_Scale: {x: 30, y: 30}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: ba90e0d681c598644910bd718f5fc1b3, type: 3}
@@ -91,12 +89,20 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_aa1e2189314c41428997337658e1be63_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: e6703f06e659165419e7bebc35c2e73c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _ShadowTexture:
         m_Texture: {fileID: 2800000, guid: ba90e0d681c598644910bd718f5fc1b3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2D:
+        m_Texture: {fileID: 2800000, guid: 6af29c82e78b09340acf409c31c23c07, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -126,9 +132,11 @@ Material:
     - _DesaturationValue: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _Dim_Val: 0.418
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
+    - _Flicker_Speed: 4.81
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -136,11 +144,12 @@ Material:
     - _HalftoneMaskToggle: 0
     - _HalftoneToggle: 1
     - _Lightness: 0
-    - _MaskToggle: 1
+    - _MaskToggle: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _RemapInputMax: 1
@@ -165,12 +174,14 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.5041339, g: 0.9063354, b: 0.88441664, a: 1}
-    - _Color: {r: 0.5041339, g: 0.9063354, b: 0.88441664, a: 1}
+    - _BaseColor: {r: 0.90588236, g: 0.5863473, b: 0.39999998, a: 1}
+    - _Color: {r: 2.4335718, g: 1.4888114, b: 1.0697969, a: 1}
+    - _Color_1: {r: 1.8205786, g: 0.9014981, b: 0.11163931, a: 0}
+    - _Color_2: {r: 0.20174553, g: 1.6815528, b: 3.3960507, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
-    - _FirstMaskColor: {r: 0.8392157, g: 0.25098044, b: 0.50489086, a: 1}
-    - _HalftoneColor: {r: 0.4259902, g: 0.40413332, b: 0.93333334, a: 1}
-    - _SecondMaskColor: {r: 0.0033756732, g: 0, b: 0.009433985, a: 1}
+    - _FirstMaskColor: {r: 0.8392157, g: 0.25098044, b: 0.41823637, a: 1}
+    - _HalftoneColor: {r: 1, g: 0.6703187, b: 0, a: 1}
+    - _SecondMaskColor: {r: 0.64340085, g: 0.07075471, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
