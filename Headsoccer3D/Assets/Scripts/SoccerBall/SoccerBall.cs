@@ -63,6 +63,7 @@ public class SoccerBall : MonoBehaviour
     [SerializeField] bool useSlerp;
 
 
+    public bool isFrozen = false;
 
 
     private void Start()
@@ -108,7 +109,14 @@ public class SoccerBall : MonoBehaviour
         dir.Normalize();
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        rb.AddForce(dir * force, ForceMode.Impulse);    
+        rb.AddForce(dir * force, ForceMode.Impulse);
+
+        if (isFrozen)
+        {
+            GetComponent<BallIceController>().HurtIce();
+
+        }
+
     }
 
     public void AttractTowards(Vector3 targetPos, float force, PlayerController requester)
@@ -321,6 +329,7 @@ public class SoccerBall : MonoBehaviour
     }
     public bool TryClaimPossession(PlayerController player)
     {
+        if (isFrozen) return false;
         //Debug.LogWarning($"[POSSESSION] TryClaim called | player={(player ? player.name : "NULL")} | current={(currentActivePlayer ? currentActivePlayer.name : "NULL")} | t={Time.time:F2} next={nextPossessionTime:F2}");
         if (!CanClaimHere()) return false;
         if (player == null) return false;
@@ -376,7 +385,7 @@ public class SoccerBall : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
-        // SNAP ON CLAIM so there is no huge first tween
+
         if (player != null)
         {
             rb.linearVelocity = Vector3.zero;

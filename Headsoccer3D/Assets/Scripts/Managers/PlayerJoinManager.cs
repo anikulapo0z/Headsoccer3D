@@ -101,6 +101,19 @@ public class PlayerJoinManager : MonoBehaviour
         if (!characterSelectOpen) return;
         if (ctx.control.device == null) return;
 
+        if (MenuManager.Instance.currentScreen == MenuManager.MenuScreen.MapSelect)
+        {
+            InputDevice d = ctx.control.device;
+            if (!IsDeviceAlreadyAssigned(d))
+            {
+                TryReconnectInMapSelect(d);
+            }
+            return;
+        }
+
+
+
+
         InputDevice device = ctx.control.device;
         string controllerId = BuildControllerId(device);
 
@@ -148,6 +161,11 @@ public class PlayerJoinManager : MonoBehaviour
 
         playerSlots[index] = newController;
         PlayerInputHolder.Instance.playerList.Add(newController);
+
+
+        PlayerInputHolder.Instance.sourceInputActions = inputActions;
+        PlayerInputHolder.Instance.actionMapName = actionMapName;
+
         DontDestroyOnLoad(newController);
 
         Debug.Log($"New Player {index + 1} joined with controller {controllerId}.");
@@ -160,6 +178,32 @@ public class PlayerJoinManager : MonoBehaviour
             MenuManager.Instance.Force2v2(true);
     }
 
+    void TryReconnectInMapSelect(InputDevice device)
+    {
+        string incomingId = BuildControllerId(device);
+
+        for (int i = 0; i < playerSlots.Length; i++)
+        {
+            var slot = playerSlots[i];
+            if (slot == null || slot.IsConnected) continue;
+            if (slot.ControllerId != incomingId) continue;
+
+
+
+
+
+            slot.AssignDevice(device, inputActions, actionMapName);
+
+
+            Debug.Log($"Player {slot.PlayerIndex + 1} reconnected on map select.");
+            return;
+        }
+
+        Debug.Log("Device pressed a button on map select but has no disconnected slot to reclaim.");
+    }
+
+
+
     void OnDeviceChange(InputDevice device, InputDeviceChange change)
     {
         if (change != InputDeviceChange.Disconnected) return;
@@ -169,17 +213,23 @@ public class PlayerJoinManager : MonoBehaviour
             var controller = playerSlots[i];
             if (controller == null || controller.AssignedDevice != device) continue;
 
-            Debug.Log($"Player {controller.PlayerIndex + 1} disconnected � removing slot.");
+            Debug.Log($"Player {controller.PlayerIndex + 1} disconnected.");
+            controller.PlayerDisconnect();
 
-            PlayerInputHolder.Instance.playerList.Remove(controller);
-            playerSlots[i] = null;
+            if (MenuManager.Instance.currentScreen == MenuManager.MenuScreen.MapSelect)
+            {
+                Debug.Log($"Player {controller.PlayerIndex + 1} disconnected on map select — slot preserved.");
+            }
+            else
+            {
+                PlayerInputHolder.Instance.playerList.Remove(controller);
+                playerSlots[i] = null;
+                MenuManager.Instance.PlayerLeft(controller);
+                Destroy(controller.gameObject);
 
-            MenuManager.Instance.PlayerLeft(controller);
-
-            Destroy(controller.gameObject);
-
-            if (GetActivePlayerCount() <= 2)
-                MenuManager.Instance.Force2v2(false);
+                if (GetActivePlayerCount() <= 2)
+                    MenuManager.Instance.Force2v2(false);
+            }
 
             break;
         }
@@ -237,6 +287,6 @@ public class PlayerJoinManager : MonoBehaviour
     static string BuildControllerId(InputDevice device)
     {
         var d = device.description;
-        return $"{d.interfaceName}_{d.product}_{device.deviceId}";
+        return $"{d.interfaceName}_{d.product}";
     }
 }

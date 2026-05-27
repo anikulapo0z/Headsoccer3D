@@ -5,9 +5,9 @@ public class SceneAudioManager : MonoBehaviour
     [SerializeField] private AudioSource backgroundMusic;
     [SerializeField] private AudioSource crowdAmbience;
     [SerializeField] private AudioSource crowdCheers;
-    [SerializeField] private AudioSource crowdGasp;
-    [SerializeField] private AudioSource crowdBoos;
-    [SerializeField] private AudioSource[] confetti;
+    [SerializeField] private AudioSource chaosSequenceSfx;
+    [SerializeField] private AudioSource crowdBoosSfx;
+    [SerializeField] private AudioSource[] confettiSfx;
     [SerializeField] private AudioSource whistleSfx;
     [Header("Bus map")]
     [SerializeField] private AudioSource busSfx;
@@ -16,14 +16,13 @@ public class SceneAudioManager : MonoBehaviour
     [SerializeField] private AudioSource[] trainPlayerImpactSfx;
     [SerializeField] private AudioSource announcementSfx;
     [Header("Bell map")]
-    [SerializeField] private AudioSource[] bellRingSfx;
+    [SerializeField] private AudioSource bellRingSfx;
     [SerializeField] private AudioSource bellBreakSfx;
-    [SerializeField] private AudioSource jawnSfx;
 
     // general
     private void Start()
     {
-        if (backgroundMusic != null)
+        if (backgroundMusic && backgroundMusic.resource)
         {
             backgroundMusic.Play();
         }
@@ -31,7 +30,7 @@ public class SceneAudioManager : MonoBehaviour
         {
             Debug.Log("Background music clip is not assigned");
         }
-        if (crowdAmbience != null)
+        if (crowdAmbience && crowdAmbience.resource)
         {
             crowdAmbience.Play();
         }
@@ -42,11 +41,11 @@ public class SceneAudioManager : MonoBehaviour
     }
     public void PlayConfettiCheersSfx()
     {
-        if (confetti.Length > 0)
+        if (confettiSfx.Length > 0)
         {
-            int randomIndex = Random.Range(0, confetti.Length);
-            AudioSource source = confetti[randomIndex];
-            if (source != null)
+            int randomIndex = Random.Range(0, confettiSfx.Length);
+            AudioSource source = confettiSfx[randomIndex];
+            if (source.resource)
             {
                 // source.panStereo = pan;
                 source.Play();
@@ -56,7 +55,7 @@ public class SceneAudioManager : MonoBehaviour
         {
             Debug.Log("Crowd cheers or confetti SFX clip is not assigned");
         }
-        if (crowdCheers.resource)
+        if (crowdCheers && crowdCheers.resource)
         {
             crowdCheers.Play();
         }
@@ -65,20 +64,20 @@ public class SceneAudioManager : MonoBehaviour
             Debug.Log("Crowd cheers or confetti SFX clip is not assigned");
         }
     }
-    public void PlayGaspSfx()
+    public void PlayChaosSfx()
     {
-        if (crowdGasp.resource)
+        if (chaosSequenceSfx && chaosSequenceSfx.resource)
         {
-            crowdGasp.Play();
+            chaosSequenceSfx.Play();
         }
         else
         {
-            Debug.Log("Crowd gasp SFX clip is not assigned");
+            Debug.Log("chaos SFX clip is not assigned");
         }
     }
     public void PlayWhistleSfx()
     {
-        if (whistleSfx.resource)
+        if (whistleSfx && whistleSfx.resource)
         {
             whistleSfx.Play();
         }
@@ -91,7 +90,7 @@ public class SceneAudioManager : MonoBehaviour
     // bus
     public void PlayBusSfx()
     {
-        if (busSfx.resource)
+        if (busSfx && busSfx.resource)
         {
             busSfx.Play();
         }
@@ -104,7 +103,7 @@ public class SceneAudioManager : MonoBehaviour
     // train
     public void PlayTrainHornSfx(float pan)
     {
-        if (trainHornSfx != null && trainHornSfx.clip != null)
+        if (trainHornSfx && trainHornSfx.resource)
         {
             trainHornSfx.panStereo = pan;
             trainHornSfx.Play();
@@ -133,7 +132,7 @@ public class SceneAudioManager : MonoBehaviour
     }
     public void PlayAnnouncementSfx(float pan)
     {
-        if (announcementSfx != null && announcementSfx.clip != null)
+        if (announcementSfx && announcementSfx.resource)
         {
             announcementSfx.panStereo = pan; // -0.75 for left, 0.75 for right
             announcementSfx.Play();
@@ -147,10 +146,9 @@ public class SceneAudioManager : MonoBehaviour
     // bell
     public void PlayBellRingSfx()
     {
-        if (bellRingSfx.Length > 0)
+        if (bellRingSfx && bellRingSfx.resource)
         {
-            int randomIndex = Random.Range(0, bellRingSfx.Length);
-            bellRingSfx[randomIndex].Play();
+            bellRingSfx.Play();
         }
         else
         {
@@ -159,24 +157,13 @@ public class SceneAudioManager : MonoBehaviour
     }
     public void PlayBellBreakSfx()
     {
-        if (bellBreakSfx.resource)
+        if (bellBreakSfx && bellBreakSfx.resource)
         {
             bellBreakSfx.Play();
         }
         else
         {
             Debug.Log("Bell Break SFX clip is not assigned");
-        }
-    }
-    public void PlayJawnSfx()
-    {
-        if (jawnSfx.resource)
-        {
-            jawnSfx.Play();
-        }
-        else
-        {
-            Debug.Log("Jawn SFX clip is not assigned");
         }
     }
 }

@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 3852579704238106998}
   - component: {fileID: 8137673982295462921}
   - component: {fileID: 4177541232852164232}
+  - component: {fileID: 8736656932127038475}
   m_Layer: 8
   m_Name: Ball_Type1
   m_TagString: Ball
@@ -126,6 +127,7 @@ Transform:
   m_Children:
   - {fileID: 1826423484336799888}
   - {fileID: 4657944706737757909}
+  - {fileID: 3466660924354328604}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2151176824059090564
@@ -241,6 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4813d7564bb19848a48e6166c3a465b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minVelocityToHitBell: 0
   grounded: 0
   xz_Drag: 0.1
   y_Drag: 0.15
@@ -401,6 +404,7 @@ MonoBehaviour:
   maxScale: 250
   rotationOffset: {x: 0, y: 0, z: 0}
   useSlerp: 0
+  isFrozen: 0
 --- !u!82 &8137673982295462921
 AudioSource:
   m_ObjectHideFlags: 0
@@ -595,6 +599,169 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8736656932127038475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675428509796539959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f0b5243b66690d44ad85bc44f90275c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iceBlock: {fileID: 4276129443852690086}
+  maxIceHP: 3
+  currentIceHP: 0
+  allowHurtIce: 0
+  iceHitCooldown: 0.1
+  canHitIce: 1
+  frozenMass: 3
+  defaultMass: 0.5
+  yVal: 6
+  moveYSpeed: 1.5
+  iceTossSpeed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.003829956
+      value: 0.0016479492
+      inSlope: 1.6540071
+      outSlope: 1.6540071
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.12688065
+    - serializedVersion: 3
+      time: 0.28065664
+      value: 0.48401433
+      inSlope: 1.1164942
+      outSlope: 0.947116
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.52405584
+      outWeight: 0.078779265
+    - serializedVersion: 3
+      time: 0.7
+      value: 0.6963188
+      inSlope: 0.016150463
+      outSlope: -6.760984
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.14236598
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!1 &4276129443852690086
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3466660924354328604}
+  - component: {fileID: 555022659785783225}
+  - component: {fileID: 2330368041084388211}
+  - component: {fileID: 6151214783727612656}
+  m_Layer: 0
+  m_Name: IceBlock_Broken
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &3466660924354328604
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4276129443852690086}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 5334494734738338620}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &555022659785783225
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4276129443852690086}
+  m_Mesh: {fileID: -2748122039205728653, guid: 21237e61eeaf35548a1060f09bc01372, type: 3}
+--- !u!23 &2330368041084388211
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4276129443852690086}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 81ca8fc852004844ea12e1f1d6fb7d05, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6151214783727612656
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4276129443852690086}
+  m_Material: {fileID: 13400000, guid: b408056c1574a6040ae69d247d50b916, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.029745, y: 2.0241735, z: 2.0244284}
+  m_Center: {x: 0.025831595, y: -0.008288503, z: 0.0046230555}
 --- !u!1 &5471742313291285615
 GameObject:
   m_ObjectHideFlags: 0

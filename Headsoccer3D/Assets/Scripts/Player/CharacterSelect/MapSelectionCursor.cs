@@ -84,7 +84,7 @@ public class MapSelectionCursor : MonoBehaviour, IPlayerControllable
         Debug.Log("OnKickPressed");
     }
 
-    public void OnJoin()
+    public void OnStart()
     {
         Debug.Log("OnJoinPressed");
 

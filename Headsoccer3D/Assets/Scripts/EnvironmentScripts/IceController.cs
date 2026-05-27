@@ -1,6 +1,7 @@
+using DG.Tweening;
+//using System;
 using System.Collections;
 using UnityEngine;
-using DG.Tweening;
 
 public class IceController : MonoBehaviour
 {
@@ -13,11 +14,21 @@ public class IceController : MonoBehaviour
 
     Coroutine fractureRoutine;
 
+    Transform startPos;
+    [SerializeField] float unpauseDelay;
+
 
     public void Start()
     {
         fractureRoutine = StartCoroutine(Fracture());
     }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.B))
+            ResetIce();
+    }
+
 
     IEnumerator Fracture()
     {
@@ -35,9 +46,26 @@ public class IceController : MonoBehaviour
 
             yield return new WaitForSeconds(fractureDelay);
         }
-
-
+        StartCoroutine(Fracture());
     }
 
+    public void ResetIce()
+    {
+        paused = true;
 
+        foreach (var fragment in iceFragments)
+        {
+            fragment.DOLocalMoveY(0.33f, moveSpeed * 2f);
+        }
+        Invoke("Unpause", unpauseDelay);
+    }
+    
+    void Unpause()
+    {
+        foreach (var fragment in iceFragments)
+        {
+            fragment.GetComponent<IceShard>().sinking = false;
+        }
+        paused = false;
+    }
 }

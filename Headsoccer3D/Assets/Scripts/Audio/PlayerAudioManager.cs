@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using UnityEngine;
 
 public class PlayerAudioManager : MonoBehaviour
@@ -9,6 +10,8 @@ public class PlayerAudioManager : MonoBehaviour
     [SerializeField] private AudioSource[] hitBallSfx;
     [SerializeField] private AudioSource[] footstepsSfx;
     [SerializeField] private AudioSource jumpSfx;
+    [SerializeField] private AudioSource cloneKickSfx;
+    [SerializeField] private AudioSource cloneJumpSfx;
     [SerializeField] private AudioSource landSfx;
     [SerializeField] private AudioSource pickupSfx;
     [SerializeField] private AudioSource empoweredKickSfx;
@@ -23,7 +26,7 @@ public class PlayerAudioManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Kick Ball SFX clips are not assigned.");
+            UnityEngine.Debug.Log("Kick Ball SFX clips are not assigned.");
         }
     }
     public void PlayChargeSfx()
@@ -35,7 +38,7 @@ public class PlayerAudioManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Charge SFX clips are not assigned.");
+            UnityEngine.Debug.Log("Charge SFX clips are not assigned.");
         }
     }
     public void PlayWhooshSfx()
@@ -47,7 +50,7 @@ public class PlayerAudioManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Kick Whoosh SFX clips are not assigned.");
+            UnityEngine.Debug.Log("Kick Whoosh SFX clips are not assigned.");
         }
     }
     public void PlayHitBall()
@@ -59,29 +62,41 @@ public class PlayerAudioManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Hit Ball SFX clips are not assigned.");
+            UnityEngine.Debug.Log("Hit Ball SFX clips are not assigned.");
         }
     }
     public void PlayJumpSfx()
     {
-        if (jumpSfx.resource)
+        if (jumpSfx && jumpSfx.resource)
         {
             jumpSfx.Play();
         }
         else
         {
-            Debug.Log("Jump SFX clip is not assigned.");
+            UnityEngine.Debug.Log("Jump SFX clip is not assigned.");
+        }
+        if (GetComponent<PlayerAbility>().currentAbility == AbilityTrigger.AbilityTypes.ShadowClone)
+        {
+            UnityEngine.Debug.Log("shadow clone yes");
+            if (cloneJumpSfx && cloneJumpSfx.resource)
+            {
+                cloneJumpSfx.Play();
+            }
+            else
+            {
+                UnityEngine.Debug.Log("Clone Jump SFX clip is not assigned.");
+            }
         }
     }
     public void PlayLandSfx()
     {
-        if (landSfx.resource)
+        if (landSfx && landSfx.resource)
         {
             landSfx.Play();
         }
         else
         {
-            Debug.Log("Land SFX clip is not assigned.");
+            UnityEngine.Debug.Log("Land SFX clip is not assigned.");
         }
     }
 
@@ -94,7 +109,7 @@ public class PlayerAudioManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Footstep SFX clips are not assigned.");
+            UnityEngine.Debug.Log("Footstep SFX clips are not assigned.");
         }
     }
     public void PlayPickupSfx()
@@ -105,7 +120,7 @@ public class PlayerAudioManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("empoweredKickSfx is not assigned.");
+            UnityEngine.Debug.Log("empoweredKickSfx is not assigned.");
 
         }
     }
@@ -119,12 +134,12 @@ public class PlayerAudioManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("empoweredKickSfx clip is not assigned.");
+                UnityEngine.Debug.Log("empoweredKickSfx clip is not assigned.");
             }
         }
         else
         {
-            Debug.Log("empoweredKickSfx is not assigned.");
+            UnityEngine.Debug.Log("empoweredKickSfx is not assigned.");
 
         }
     }
@@ -138,12 +153,12 @@ public class PlayerAudioManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("multiBallSfx clip is not assigned.");
+                UnityEngine.Debug.Log("multiBallSfx clip is not assigned.");
             }
         }
         else
         {
-            Debug.Log("multiBallSfx is not assigned.");
+            UnityEngine.Debug.Log("multiBallSfx is not assigned.");
 
         }
 

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class PlayerGroundMarker : MonoBehaviour
 {
@@ -201,6 +202,8 @@ public class PlayerGroundMarker : MonoBehaviour
         {
             playerPositionIndicator.transform.position = hit.point + new Vector3(0, canvasOffset, 0);
         }
+        else
+            playerPositionIndicator.transform.position = transform.position + new Vector3(0, 0.2f, 0);
     }
 
 

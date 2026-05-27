@@ -5,8 +5,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static MenuManager;
-using static UnityEngine.Rendering.DebugUI;
 
 public class GameSceneManager : MonoBehaviour
 {
@@ -36,15 +34,28 @@ public class GameSceneManager : MonoBehaviour
     public List<GameObject> TwoP_SpawnPoints = new List<GameObject>();
 
     // starting countdown
+    [Space]
     [SerializeField] int currentStartCoundown = 0;
     [SerializeField] int maxStartCoundown;
     [SerializeField] TMP_Text startCountdownText;
+    [SerializeField] int numToStartAddingTime = 13;
+    [SerializeField] float minTimeToAdd = 0.1f;
+    [SerializeField] float maxTimeToAdd = 1.5f;
+
+    [Space]
+    [SerializeField] Color defaultColor = Color.white;
+    [SerializeField] Color outOTimeColor = Color.red;
+    [SerializeField] float colorChangeSpeed = 1f;
+    Coroutine colorRoutine;
 
     // delay before starting countdown
+    [Space]
     [SerializeField] float startDelay;
 
     // game time
     [SerializeField] int currentGameTime = 0;
+    [SerializeField] int timeToAddWhenScoreAndLowTime = 1;
+    [SerializeField] int lowTimeThreshold = 10;
     [SerializeField] int maxGameTime;
     [SerializeField] int pausedGameTime;
     Coroutine gameTimeCoroutine;
@@ -106,6 +117,7 @@ public class GameSceneManager : MonoBehaviour
     void Start()
     {
         Instance = this;
+        Cursor.visible = false;
         audioManager = GetComponent<SceneAudioManager>();
 
         //reset materials
@@ -123,14 +135,14 @@ public class GameSceneManager : MonoBehaviour
 
         SetUpGameLevel(MenuManager.Instance.GetTeamSize(), MenuManager.Instance.GetGameMode());
 
-        Debug.Log("HUIS");
+        //Debug.Log("HUIS");
         StartCoroutine(fadeTransitionThenLoad());
     }
 
     IEnumerator fadeTransitionThenLoad()
     {
 
-        Debug.Log("FDEYHP*AEHFP uisyhfep i");
+        //Debug.Log("FDEYHP*AEHFP uisyhfep i");
 
         //make sure its on, in case we disable it in editor while working and we forget
         transitionImage.gameObject.SetActive(true);
@@ -176,6 +188,12 @@ public class GameSceneManager : MonoBehaviour
         scoreTracker.canScore = true;
 
         gameTimeCoroutine = StartCoroutine(GameTimer());
+
+        if(GetComponent<WaterWaveSample>() != null && GetComponent<IceController>() != null)
+        {
+            GetComponent<WaterWaveSample>().enabled = true;
+            GetComponent<IceController>().enabled = true;
+        }
     }
 
 
@@ -212,6 +230,7 @@ public class GameSceneManager : MonoBehaviour
         {
             currentStartCoundown--;
             startCountdownText.text = currentStartCoundown.ToString();
+
             yield return new WaitForSeconds(1);
         }
 
@@ -226,9 +245,19 @@ public class GameSceneManager : MonoBehaviour
         foreach (var player in playerCharacters)
         {
             if (playerCharacters.Count == 2)
-                player.transform.position = TwoP_SpawnPoints[playerCharacters.IndexOf(player)].transform.position;
+            {
+                player.transform.SetParent(TwoP_SpawnPoints[playerCharacters.IndexOf(player)].transform);
+                player.transform.localPosition = Vector3.zero;
+
+                //player.transform.position = TwoP_SpawnPoints[playerCharacters.IndexOf(player)].transform.position;
+            }
             else
-                player.transform.position = FourP_SpawnPoints[playerCharacters.IndexOf(player)].transform.position;
+            {
+                player.transform.SetParent(FourP_SpawnPoints[playerCharacters.IndexOf(player)].transform);
+                player.transform.localPosition = Vector3.zero;
+
+                //player.transform.position = FourP_SpawnPoints[playerCharacters.IndexOf(player)].transform.position;
+            }
         }
     }
 
@@ -237,7 +266,17 @@ public class GameSceneManager : MonoBehaviour
     {
         while (currentGameTime > 0)
         {
-            yield return new WaitForSeconds(1);
+
+            float timeToAdd = 0;
+            if (currentGameTime <= numToStartAddingTime)
+            {
+                timeToAdd = Mathf.Lerp(maxTimeToAdd, minTimeToAdd, (float)currentGameTime / (float)numToStartAddingTime);
+                Debug.LogWarning((float)currentGameTime / (float)numToStartAddingTime + " : " + timeToAdd);
+                //if(colorRoutine != null)
+                  //  StopCoroutine(colorRoutine);
+                colorRoutine = StartCoroutine(ColorText());
+            }
+            yield return new WaitForSeconds(1 + timeToAdd);
 
             currentGameTime--;
             startCountdownText.text = currentGameTime.ToString();
@@ -246,6 +285,20 @@ public class GameSceneManager : MonoBehaviour
         gameTimeCoroutine = null;
         TryEndGame();
     }
+
+    IEnumerator ColorText()
+    {
+        startCountdownText.color = outOTimeColor;
+        float tick = 0f;
+        while (startCountdownText.color != defaultColor)
+        {
+            tick += Time.deltaTime * colorChangeSpeed;
+            startCountdownText.color = Color.Lerp(outOTimeColor, defaultColor, tick);
+            yield return null;
+        }
+        startCountdownText.color = defaultColor;
+    }
+
 
 
     void TryEndGame()
@@ -469,6 +522,8 @@ public class GameSceneManager : MonoBehaviour
         sideThatScored = c;
 
         scoreTracker.canScore = false;
+        if (currentGameTime <= lowTimeThreshold)
+            currentGameTime += timeToAddWhenScoreAndLowTime;
 
         StartCoroutine(ResetBall());
     }
@@ -507,6 +562,7 @@ public class GameSceneManager : MonoBehaviour
         foreach (var player in playerCharacters)
         {
             player.GetComponent<PlayerController>().UnlockPlayerMove();
+            player.transform.SetParent(null);
         }
     }
 

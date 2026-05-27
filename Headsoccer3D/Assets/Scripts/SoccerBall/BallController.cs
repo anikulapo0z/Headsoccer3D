@@ -29,6 +29,7 @@ public class BallController : MonoBehaviour
     [SerializeField] float fakeBallAliveTime;
 
 
+
     void Awake()
     {
         if(gameObject.name.Contains("Fake"))

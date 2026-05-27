@@ -40,8 +40,8 @@ public class AbilityThrower : MonoBehaviour
     {
         if (GameSceneManager.Instance.inputControllers.Count < 3)
         {
-            minThrowTime = 5;
-            maxThrowTime = 8;
+            minThrowTime = 6;
+            maxThrowTime = 9;
         }
         start = true;
     }

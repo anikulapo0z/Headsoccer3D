@@ -261,6 +261,6 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
     public void OnJump() { }
     public void OnKick(bool val) { }
     public void OnSprint(bool val) { }
-    public void OnJoin() { }
+    public void OnStart() { }
     public void OnAbility() { }
 }

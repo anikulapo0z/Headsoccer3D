@@ -141,7 +141,7 @@ public class PinballFlipper : MonoBehaviour, IPlayerControllable
         else UnFlipFlipper();
     }
 
-    public void OnJoin(){}
+    public void OnStart(){}
 
     public void OnConfirm(){}
 
