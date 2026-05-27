@@ -518,7 +518,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     public void OnStart()
     {
         if(PauseMenu.Instance != null)
-            PauseMenu.Instance.PauseGame();
+            PauseMenu.Instance.TogglePause();
     }
     public void OnSprint(bool held)
     {
