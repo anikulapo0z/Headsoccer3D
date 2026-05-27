@@ -117,6 +117,7 @@ public class GameSceneManager : MonoBehaviour
     void Start()
     {
         Instance = this;
+        Cursor.visible = false;
         audioManager = GetComponent<SceneAudioManager>();
 
         //reset materials
