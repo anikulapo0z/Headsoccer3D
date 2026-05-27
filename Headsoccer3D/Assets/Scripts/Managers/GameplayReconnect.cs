@@ -53,7 +53,7 @@ public class GameplayReconnect : MonoBehaviour
 
             if (controller.ControllerId != incomingId) continue;
 
-            controller.AssignDevice(device, GetInputActions(controller), actionMapName);
+            controller.AssignDevice(device, GetInputActions(), PlayerInputHolder.Instance.actionMapName);
 
             Debug.Log($"Player {controller.PlayerIndex + 1} reconnected with their original controller ({incomingId}).");
             OnPlayerReconnected(controller);
@@ -106,16 +106,9 @@ public class GameplayReconnect : MonoBehaviour
     }
 
 
-    InputActionAsset GetInputActions(PlayerInputController controller)
+    InputActionAsset GetInputActions()
     {
-
-        foreach (var c in PlayerInputHolder.Instance.playerList)
-        {
-            if (c != null && c.IsConnected)
-                return c.GetSourceInputActions();
-        }
-
-        return null;
+        return PlayerInputHolder.Instance?.sourceInputActions;
     }
 
     static string BuildControllerId(InputDevice device)

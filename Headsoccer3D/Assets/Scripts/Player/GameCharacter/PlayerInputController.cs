@@ -65,7 +65,7 @@ public class PlayerInputController : MonoBehaviour
         moveAction = map.FindAction("Move");
         confirmAction = map.FindAction("Confirm");
         cancelAction = map.FindAction("Cancel");
-        joinAction = map.FindAction("Join");
+        joinAction = map.FindAction("Start");
         jumpAction = map.FindAction("Jump");
         kickAction = map.FindAction("Kick");
         abilityAction = map.FindAction("Ability");
@@ -128,7 +128,7 @@ public class PlayerInputController : MonoBehaviour
         moveAction.canceled += OnMoveCancelled;
         confirmAction.performed += OnConfirm;
         cancelAction.performed += OnCancel;
-        joinAction.performed += OnJoin;
+        joinAction.performed += OnStart;
         jumpAction.performed += OnJump;
         kickAction.performed += OnKick;
         abilityAction.performed += OnAbility;
@@ -140,7 +140,7 @@ public class PlayerInputController : MonoBehaviour
         if (moveAction != null) { moveAction.performed -= OnMove; moveAction.canceled -= OnMoveCancelled; }
         if (confirmAction != null) confirmAction.performed -= OnConfirm;
         if (cancelAction != null) cancelAction.performed -= OnCancel;
-        if (joinAction != null) joinAction.performed -= OnJoin;
+        if (joinAction != null) joinAction.performed -= OnStart;
         if (jumpAction != null) jumpAction.performed -= OnJump;
         if (kickAction != null) kickAction.performed -= OnKick;
         if (abilityAction != null) abilityAction.performed -= OnAbility;
@@ -190,10 +190,10 @@ public class PlayerInputController : MonoBehaviour
             p?.OnKick(ctx.ReadValueAsButton());
     }
 
-    void OnJoin(InputAction.CallbackContext ctx)
+    void OnStart(InputAction.CallbackContext ctx)
     {
         foreach (var p in controlledObject)
-            p?.OnJoin();
+            p?.OnStart();
     }
 
     void OnAbility(InputAction.CallbackContext ctx)
