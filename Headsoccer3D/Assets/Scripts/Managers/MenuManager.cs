@@ -92,7 +92,7 @@ public class MenuManager : MonoBehaviour
     {
         Instance = this;
         //DontDestroyOnLoad(this);
-
+        Cursor.visible = false;
         ResetMenu();
     }
 
