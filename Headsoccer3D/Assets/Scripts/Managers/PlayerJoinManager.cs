@@ -148,6 +148,11 @@ public class PlayerJoinManager : MonoBehaviour
 
         playerSlots[index] = newController;
         PlayerInputHolder.Instance.playerList.Add(newController);
+
+
+        PlayerInputHolder.Instance.sourceInputActions = inputActions;
+        PlayerInputHolder.Instance.actionMapName = actionMapName;
+
         DontDestroyOnLoad(newController);
 
         Debug.Log($"New Player {index + 1} joined with controller {controllerId}.");
