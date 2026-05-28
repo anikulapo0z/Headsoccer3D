@@ -15,9 +15,9 @@ public class PlayerAbility : MonoBehaviour
     [SerializeField] Vector3 growSize;
 
     public GameObject kickWave;
-
-
     Vector3 originalScale;
+
+    public float currentGrowMultiplier = 1f;
 
     [Space(3)]
     [Header("Multi Ball")]
@@ -53,6 +53,8 @@ public class PlayerAbility : MonoBehaviour
     public void Awake()
     {
         audioManager = GetComponent<PlayerAudioManager>();
+        originalScale = transform.localScale;
+
     }
     public void TryTriggerAbility()
     {
@@ -103,8 +105,8 @@ public class PlayerAbility : MonoBehaviour
                 //GetComponent<PlayerController>().empoweredKickPlayerMultiplier = empoweredKickStrength * 0.6f;
                 GetComponent<PlayerGroundMarker>().ToggleEKActive();
 
-                originalScale = transform.localScale;
-                transform.DOScale(growSize, scaleTime);
+                currentGrowMultiplier = growSize.x / originalScale.x; // or however growSize relates to original
+                GetComponent<PlayerController>().ApplyCombinedScale(scaleTime);
                 break;
 
             case AbilityTrigger.AbilityTypes.MultiBall:
@@ -165,8 +167,8 @@ public class PlayerAbility : MonoBehaviour
 
             case AbilityTrigger.AbilityTypes.EmpoweredKick:
                 GetComponent<EmpoweredKick>().ResetAbilityUse(originalScale, scaleTime);
-                //GetComponent<PlayerController>().hasEmpoweredKick = false;
-                //GetComponent<PlayerController>().empoweredKickStrength = 1f;
+                currentGrowMultiplier = 1f;
+                GetComponent<PlayerController>().ApplyCombinedScale(scaleTime); // reapply without big
                 GetComponent<PlayerGroundMarker>().ToggleEKActive();
                 Destroy(GetComponent<EmpoweredKick>());
                 break;
