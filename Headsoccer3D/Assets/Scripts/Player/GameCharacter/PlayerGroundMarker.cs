@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using DG.Tweening;
 
 public class PlayerGroundMarker : MonoBehaviour
 {
@@ -33,6 +32,14 @@ public class PlayerGroundMarker : MonoBehaviour
     GameObject earthquakeObject;
     [SerializeField] GameObject shadowCloneText;
     GameObject shadowCloneObject;
+    [SerializeField] GameObject abilityReminder;
+    GameObject abilityReminderObject;
+    [SerializeField] float timeUntilStartReminder;
+    [SerializeField] float reminderDuration;
+
+    float abilityActiveTimer;
+    bool reminderShowing = false;
+    float reminderTimer;
 
     [SerializeField] Vector3 mbOffset;
     [SerializeField] Vector3 mbRotation;
@@ -83,21 +90,138 @@ public class PlayerGroundMarker : MonoBehaviour
     {
         UpdateFloatingUIPosition();
         UpdateGroundIndicatorPosition();
-        if (mbActive)
-            UpdateMBText();
-        else if (ekActive)
-            UpdateEKText();
-        else if (earthquakeActive)
-            UpdateEarthquakeText();
-        else if (shadowCloneActive)
-            UpdateShadowCloneText();
+
+        bool anyAbilityActive = mbActive || ekActive || earthquakeActive || shadowCloneActive;
+
+        if (anyAbilityActive)
+        {
+            UpdateReminderTimer();
+
+            if (!reminderShowing)
+            {
+                if (mbActive) UpdateMBText();
+                else if (ekActive) UpdateEKText();
+                else if (earthquakeActive) UpdateEarthquakeText();
+                else if (shadowCloneActive) UpdateShadowCloneText();
+            }
+            else
+            {
+                UpdateReminderPosition();
+            }
+        }
+
         if (controllingFlipper)
             UpdateFlipperLine();
     }
 
+
+    void UpdateReminderTimer()
+    {
+        if (!reminderShowing)
+        {
+            abilityActiveTimer += Time.fixedDeltaTime;
+
+            if (abilityActiveTimer >= timeUntilStartReminder)
+            {
+                StartReminder();
+            }
+        }
+        else
+        {
+            reminderTimer += Time.fixedDeltaTime;
+
+            if (reminderTimer >= reminderDuration)
+            {
+                StopReminder();
+            }
+        }
+    }
+
+
+    void StartReminder()
+    {
+        reminderShowing = true;
+        reminderTimer = 0f;
+
+
+        SetActiveAbilityTextVisible(false);
+
+
+        if (abilityReminderObject == null)
+            abilityReminderObject = Instantiate(abilityReminder);
+
+        UpdateReminderPosition();
+    }
+
+
+    void StopReminder()
+    {
+        reminderShowing = false;
+        abilityActiveTimer = 0f;
+
+        if (abilityReminderObject != null)
+        {
+            Destroy(abilityReminderObject);
+            abilityReminderObject = null;
+        }
+
+        SetActiveAbilityTextVisible(true);
+    }
+
+    void SetActiveAbilityTextVisible(bool visible)
+    {
+        GameObject target = null;
+        if (mbActive) target = multiBallObject;
+        else if (ekActive) target = empoweredKickObject;
+        else if (earthquakeActive) target = earthquakeObject;
+        else if (shadowCloneActive) target = shadowCloneObject;
+
+        if (target != null)
+            target.SetActive(visible);
+    }
+
+    void UpdateReminderPosition()
+    {
+        if (abilityReminderObject == null) return;
+
+        Vector3 offset = ekOffset;
+        Vector3 rotation = Vector3.zero;
+
+        if (mbActive) { offset = mbOffset; rotation = mbRotation; }
+        else if (ekActive) { offset = ekOffset; rotation = ekRotation; }
+        else if (earthquakeActive) { offset = earthquakeOffset; rotation = earthquakeRotation; }
+        else if (shadowCloneActive) { offset = shadowCloneOffset; rotation = shadowCloneRotation; }
+
+        Vector3 targetPos =
+            transform.position
+            + (mainCam.transform.right * offset.z)
+            + (Vector3.up * offset.y);
+
+        abilityReminderObject.transform.position = targetPos;
+        abilityReminderObject.transform.forward = mainCam.transform.forward;
+        abilityReminderObject.transform.rotation = Quaternion.Euler(
+            abilityReminderObject.transform.rotation.x + rotation.x,
+            abilityReminderObject.transform.rotation.y + rotation.y,
+            abilityReminderObject.transform.rotation.z + rotation.z
+        );
+    }
+
+    void ResetReminderState()
+    {
+        abilityActiveTimer = 0f;
+        reminderShowing = false;
+        reminderTimer = 0f;
+
+        if (abilityReminderObject != null)
+        {
+            Destroy(abilityReminderObject);
+            abilityReminderObject = null;
+        }
+    }
+
     void UpdateFlipperLine()
     {
-        foreach(GameObject t in controlledFlippers)
+        foreach (GameObject t in controlledFlippers)
         {
             t.GetComponent<LineRenderer>().SetPosition(0, new Vector3(t.transform.position.x, lrYHeight, t.transform.position.z));
             t.GetComponent<LineRenderer>().SetPosition(1, new Vector3(transform.position.x, lrYHeight, transform.position.z));
@@ -116,8 +240,6 @@ public class PlayerGroundMarker : MonoBehaviour
             + (Vector3.up * mbOffset.y);
 
         multiBallObject.transform.position = targetPos;
-        //multiBallObject.transform.rotation = Quaternion.Euler(mbRotation);
-
         multiBallObject.transform.forward = mainCam.transform.forward;
         multiBallObject.transform.rotation = Quaternion.Euler(multiBallObject.transform.rotation.x + mbRotation.x, multiBallObject.transform.rotation.y + mbRotation.y, multiBallObject.transform.rotation.z + mbRotation.z);
 
@@ -134,8 +256,6 @@ public class PlayerGroundMarker : MonoBehaviour
             + (Vector3.up * ekOffset.y);
 
         empoweredKickObject.transform.position = targetPos;
-        //empoweredKickObject.transform.rotation = Quaternion.Euler(ekRotation);
-
         empoweredKickObject.transform.forward = mainCam.transform.forward;
         empoweredKickObject.transform.rotation = Quaternion.Euler(empoweredKickObject.transform.rotation.x + ekRotation.x, empoweredKickObject.transform.rotation.y + ekRotation.y, empoweredKickObject.transform.rotation.z + ekRotation.z);
     }
@@ -150,8 +270,6 @@ public class PlayerGroundMarker : MonoBehaviour
             + (Vector3.up * ekOffset.y);
 
         earthquakeObject.transform.position = targetPos;
-        //empoweredKickObject.transform.rotation = Quaternion.Euler(ekRotation);
-
         earthquakeObject.transform.forward = mainCam.transform.forward;
         earthquakeObject.transform.rotation = Quaternion.Euler(earthquakeObject.transform.rotation.x + earthquakeRotation.x, earthquakeObject.transform.rotation.y + earthquakeRotation.y, earthquakeObject.transform.rotation.z + earthquakeRotation.z);
     }
@@ -166,14 +284,9 @@ public class PlayerGroundMarker : MonoBehaviour
             + (Vector3.up * shadowCloneOffset.y);
 
         shadowCloneObject.transform.position = targetPos;
-        //empoweredKickObject.transform.rotation = Quaternion.Euler(ekRotation);
-
         shadowCloneObject.transform.forward = mainCam.transform.forward;
         shadowCloneObject.transform.rotation = Quaternion.Euler(shadowCloneObject.transform.rotation.x + shadowCloneRotation.x, shadowCloneObject.transform.rotation.y + shadowCloneRotation.y, shadowCloneObject.transform.rotation.z + shadowCloneRotation.z);
     }
-
-
-
 
 
     void UpdateFloatingUIPosition()
@@ -212,12 +325,14 @@ public class PlayerGroundMarker : MonoBehaviour
         if (mbActive)
         {
             mbActive = false;
+            ResetReminderState();
             if (multiBallObject != null)
                 Destroy(multiBallObject);
         }
         else
         {
             mbActive = true;
+            ResetReminderState();
             if (multiBallObject == null)
                 multiBallObject = Instantiate(multiBallText);
 
@@ -228,14 +343,16 @@ public class PlayerGroundMarker : MonoBehaviour
         if (ekActive)
         {
             ekActive = false;
+            ResetReminderState();
             if (empoweredKickObject != null)
                 Destroy(empoweredKickObject);
         }
         else
         {
             ekActive = true;
+            ResetReminderState();
             if (empoweredKickObject == null)
-               empoweredKickObject = Instantiate(empoweredKickText);
+                empoweredKickObject = Instantiate(empoweredKickText);
 
         }
     }
@@ -244,12 +361,14 @@ public class PlayerGroundMarker : MonoBehaviour
         if (earthquakeActive)
         {
             earthquakeActive = false;
+            ResetReminderState();
             if (earthquakeObject != null)
                 Destroy(earthquakeObject);
         }
         else
         {
             earthquakeActive = true;
+            ResetReminderState();
             if (earthquakeObject == null)
                 earthquakeObject = Instantiate(earthquakeText);
 
@@ -260,12 +379,14 @@ public class PlayerGroundMarker : MonoBehaviour
         if (shadowCloneActive)
         {
             shadowCloneActive = false;
+            ResetReminderState();
             if (shadowCloneObject != null)
                 Destroy(shadowCloneObject);
         }
         else
         {
             shadowCloneActive = true;
+            ResetReminderState();
             if (shadowCloneObject == null)
                 shadowCloneObject = Instantiate(shadowCloneText);
 
