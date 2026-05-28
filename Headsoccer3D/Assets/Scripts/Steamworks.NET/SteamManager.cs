@@ -36,7 +36,9 @@ public class SteamManager : MonoBehaviour {
 		}
 	}
 
-	protected bool m_bInitialized = false;
+    private Callback<GameOverlayActivated_t> gameOverlayActivated;
+
+    protected bool m_bInitialized = false;
 	public static bool Initialized {
 		get {
 			return Instance.m_bInitialized;
@@ -60,7 +62,13 @@ public class SteamManager : MonoBehaviour {
 	}
 #endif
 
-	protected virtual void Awake() {
+    private void Start()
+    {
+        // Register callback
+        gameOverlayActivated = Callback<GameOverlayActivated_t>.Create(OnOverlayChanged);
+    }
+
+    protected virtual void Awake() {
 		// Only one instance of SteamManager at a time!
 		if (s_instance != null) {
 			Destroy(gameObject);
@@ -172,6 +180,28 @@ public class SteamManager : MonoBehaviour {
 		// Run Steam client callbacks
 		SteamAPI.RunCallbacks();
 	}
+
+    private void OnOverlayChanged(GameOverlayActivated_t callback)
+    {
+        if (callback.m_bActive != 0)
+        {
+            if (PauseMenu.Instance)
+                PauseMenu.Instance.PauseGame(true);
+            Debug.Log("Steam Overlay opened");
+
+            //Time.timeScale = 0f; // pause game
+        }
+        else
+        {
+			if(PauseMenu.Instance)
+				PauseMenu.Instance.PauseGame(false);
+
+            Debug.Log("Steam Overlay closed");
+
+            //Time.timeScale = 1f; // resume game
+        }
+    }
+
 #else
 	public static bool Initialized {
 		get {

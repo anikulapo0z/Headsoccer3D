@@ -65,6 +65,16 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] MenuAudioManager menuAudioManager;
 
+
+    public enum MenuScreen
+    {
+        CharacterSelect,
+        MapSelect
+    }
+    public MenuScreen currentScreen { get; private set; } = MenuScreen.CharacterSelect;
+
+
+
     public enum TeamSizes
     {
         v1,
@@ -82,7 +92,7 @@ public class MenuManager : MonoBehaviour
     {
         Instance = this;
         //DontDestroyOnLoad(this);
-
+        Cursor.visible = false;
         ResetMenu();
     }
 
@@ -156,6 +166,9 @@ public class MenuManager : MonoBehaviour
     }
     void MoveToNextScreen()
     {
+        currentScreen = MenuScreen.MapSelect;
+
+
         canMoveToNextScreen = false;
         characterSelectMenu.SetActive(false);
         mapSelectMenu.SetActive(true);

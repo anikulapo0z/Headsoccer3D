@@ -35,6 +35,12 @@ public class AbilityThrower : MonoBehaviour
     [SerializeField] Transform bus2;
     [SerializeField] Collider bus2Collider;
 
+    [Space]
+    [Header("Max Abilities")]
+    [SerializeField] int maxAbilitiesOnField;
+    [SerializeField] int currentAbilitiesOnField = 0;
+
+
 
     public void StartThrow()
     {
@@ -48,18 +54,21 @@ public class AbilityThrower : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(Input.GetKey(KeyCode.M)) start = true;
         if (!start) return;
 
         throwTime -= Time.deltaTime;
 
         if(throwTime < 0)
         {
-            if(isBusMap)
+            throwTime = Random.Range(minThrowTime, maxThrowTime);
+
+            if (currentAbilitiesOnField >= maxAbilitiesOnField) return;
+
+            currentAbilitiesOnField++;
+            if (isBusMap)
                 ThrowRandomAbilityOnBus();
             else
                 ThrowRandomAbility();
-            throwTime = Random.Range(minThrowTime, maxThrowTime);
         }
     }
 
@@ -71,6 +80,8 @@ public class AbilityThrower : MonoBehaviour
         GameObject abilityPrefab = abilities[Random.Range(0, abilities.Length)];
 
         GameObject abilityInstance = Instantiate(abilityPrefab, spawnPoint[point].position, Quaternion.identity);
+        abilityInstance.GetComponent<AbilityPickup>().thrower = this;
+
 
         float randomX = Random.Range(minX, maxX);
         float randomZ = Random.Range(minZ, maxZ);
@@ -99,7 +110,7 @@ public class AbilityThrower : MonoBehaviour
         GameObject abilityPrefab = abilities[Random.Range(0, abilities.Length)];
 
         GameObject abilityInstance = Instantiate(abilityPrefab, spawnPoint[point].position, Quaternion.identity);
-
+        abilityInstance.GetComponent<AbilityPickup>().thrower = this;
 
 
         float randomX;
@@ -141,5 +152,9 @@ public class AbilityThrower : MonoBehaviour
 
     }
 
+    public void ItemPickedUp()
+    {
+        currentAbilitiesOnField--;
+    }
 
 }
