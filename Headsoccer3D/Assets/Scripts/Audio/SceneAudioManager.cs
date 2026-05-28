@@ -19,11 +19,8 @@ public class SceneAudioManager : MonoBehaviour
     [SerializeField] private AudioSource bellBreakSfx;
     [SerializeField] private AudioSource chaosSequenceSfx;
     [Header("River map")]
-    [SerializeField] private AudioSource waveSfx;
+    [SerializeField] private AudioSource[] waveSfx;
     [SerializeField] private AudioSource splashSfx;
-    [SerializeField] private AudioSource freezeSfx;
-    [SerializeField] private AudioSource chipIceSfx;
-    [SerializeField] private AudioSource breakIceSfx;
 
     // general
     private void Start()
@@ -169,13 +166,14 @@ public class SceneAudioManager : MonoBehaviour
     // river splashSfx
     public void PlayWaveSfx()
     {
-        if (waveSfx && waveSfx.resource)
+        if (waveSfx.Length > 0)
         {
-            waveSfx.Play();
+            int randomIndex = Random.Range(0, waveSfx.Length);
+            waveSfx[randomIndex].Play();
         }
         else
         {
-            Debug.Log("Wave SFX clip is not assigned");
+            UnityEngine.Debug.Log("Wave SFX clips are not assigned.");
         }
     }
     public void PlayPlayerSplashSfx()
@@ -198,39 +196,6 @@ public class SceneAudioManager : MonoBehaviour
         else
         {
             Debug.Log("slash SFX clip is not assigned");
-        }
-    }
-    public void PlayPlayerFreezeSfx()
-    {
-        if (freezeSfx && freezeSfx.resource)
-        {
-            freezeSfx.Play();
-        }
-        else
-        {
-            Debug.Log("Freeze SFX clip is not assigned");
-        }
-    }
-    public void PlayChipIceSfx()
-    {
-        if (chipIceSfx && chipIceSfx.resource)
-        {
-            chipIceSfx.Play();
-        }
-        else
-        {
-            Debug.Log("Chip Ice SFX clip is not assigned");
-        }
-    }
-    public void PlayBreakIceSfx()
-    {
-        if (breakIceSfx && breakIceSfx.resource)
-        {
-            breakIceSfx.Play();
-        }
-        else
-        {
-            Debug.Log("Break Ice SFX clip is not assigned");
         }
     }
 }

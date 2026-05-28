@@ -180,6 +180,7 @@ public class GameSceneManager : MonoBehaviour
 
     void StartGame()
     {
+        audioManager.PlayWhistleSfx();
         currentGameTime = maxGameTime;
         startCountdownText.text = currentGameTime.ToString();
         canScore = true;

@@ -18,19 +18,21 @@ public class BallIceController : MonoBehaviour
     [SerializeField] float moveYSpeed;
 
     [SerializeField] AnimationCurve iceTossSpeed;
-
-
+    private PlayerAudioManager audioManager;
 
 
     void Start()
     {
         currentIceHP = maxIceHP;
+        audioManager = GetComponent<PlayerAudioManager>();
         rb = GetComponent<Rigidbody>();
         soccerBall = GetComponent<SoccerBall>();
     }
 
     public void SetFrozen()
     {
+        audioManager.PlayPlayerFreezeSfx();
+
         iceBlock.GetComponent<Renderer>().material.SetFloat("_Break_Intensity", 0);
         iceBlock.SetActive(true);
 
@@ -56,6 +58,8 @@ public class BallIceController : MonoBehaviour
     {
         if (!allowHurtIce || !canHitIce) return;
 
+        audioManager.PlayChipIceSfx();
+
         currentIceHP--;
         if (currentIceHP <= 0)
         {
@@ -79,6 +83,7 @@ public class BallIceController : MonoBehaviour
 
     void BreakIce()
     {
+        audioManager.PlayBreakIceSfx();
         iceBlock.SetActive(false);
         rb.mass = defaultMass;
         canHitIce = false;

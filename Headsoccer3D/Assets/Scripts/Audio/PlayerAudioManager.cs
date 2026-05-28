@@ -16,6 +16,9 @@ public class PlayerAudioManager : MonoBehaviour
     [SerializeField] private AudioSource pickupSfx;
     [SerializeField] private AudioSource empoweredKickSfx;
     [SerializeField] private AudioSource multiBallSfx;
+    [SerializeField] private AudioSource freezeSfx;
+    [SerializeField] private AudioSource[] chipIceSfx;
+    [SerializeField] private AudioSource breakIceSfx;
 
     public void PlayKickBallSfx()
     {
@@ -162,5 +165,41 @@ public class PlayerAudioManager : MonoBehaviour
 
         }
 
+    }
+
+    //river map
+    public void PlayPlayerFreezeSfx()
+    {
+        if (freezeSfx && freezeSfx.resource)
+        {
+            freezeSfx.Play();
+        }
+        else
+        {
+            UnityEngine.Debug.Log("Freeze SFX clip is not assigned");
+        }
+    }
+    public void PlayChipIceSfx()
+    {
+        if (chipIceSfx.Length > 0)
+        {
+            int randomIndex = Random.Range(0, chipIceSfx.Length);
+            chipIceSfx[randomIndex].Play();
+        }
+        else
+        {
+            UnityEngine.Debug.Log("Chip Ice SFX clips are not assigned.");
+        }
+    }
+    public void PlayBreakIceSfx()
+    {
+        if (breakIceSfx && breakIceSfx.resource)
+        {
+            breakIceSfx.Play();
+        }
+        else
+        {
+            UnityEngine.Debug.Log("Break Ice SFX clip is not assigned");
+        }
     }
 }
