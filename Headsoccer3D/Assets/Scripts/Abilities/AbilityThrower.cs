@@ -1,10 +1,14 @@
 using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 
 public class AbilityThrower : MonoBehaviour
 {
     [SerializeField] private GameObject[] abilities;
     [SerializeField] private Transform[] spawnPoint;
+    [Tooltip("The order of the chars must be the same as the order of the spawnPoints for the anim to match up. Leave empty if no animation needed.")]
+    [SerializeField] private GameObject[] throwerChars;
+    private Animator[] throwerAnims;
 
     [Header("Destination Range")]
     [SerializeField] float minX;
@@ -44,12 +48,23 @@ public class AbilityThrower : MonoBehaviour
 
     public void StartThrow()
     {
+        
         if (GameSceneManager.Instance.inputControllers.Count < 3)
         {
             minThrowTime = 6;
             maxThrowTime = 9;
         }
         start = true;
+
+        //if we have animation, set the animator refs
+        if(throwerChars.Length > 0)
+        {
+            throwerAnims = new Animator[throwerChars.Length];
+            for(int i = 0; i < throwerChars.Length; i++)
+            {
+                throwerAnims[i] = throwerChars[i].GetComponentInChildren<Animator>();
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -68,13 +83,22 @@ public class AbilityThrower : MonoBehaviour
             if (isBusMap)
                 ThrowRandomAbilityOnBus();
             else
-                ThrowRandomAbility();
+                StartCoroutine(ThrowRandomAbility());
         }
     }
 
-    void ThrowRandomAbility()
+    IEnumerator ThrowRandomAbility()
     {
         int point = Random.Range(0, spawnPoint.Length);
+
+        //if there is anim, wait a bit, other wise wait less
+        yield return new WaitForSeconds(throwerAnims.Length > 0 ? 0.67458f : 0.1186f);
+
+        if(throwerAnims.Length > 0 )
+        {
+            throwerAnims[point].SetTrigger("Throw");
+            //throwerChars[point].transform.DOMoveZ(throwerChars[point].transform.position.z + 0.8f, 0.1f);
+        }
 
 
         GameObject abilityPrefab = abilities[Random.Range(0, abilities.Length)];
