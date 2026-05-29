@@ -103,6 +103,8 @@ public class PlayerJoinManager : MonoBehaviour
         
         MenuManager.Instance.OnInactivityReset();
 
+        GameLogs.EndTimer(1);
+        GameLogs.WriteMessage("Reset To Attract Mode");
         
         for (int i = 0; i < playerSlots.Length; i++)
         {
@@ -140,6 +142,9 @@ public class PlayerJoinManager : MonoBehaviour
         }
 
         pressAnyButtonScreen.SetActive(false);
+
+        GameLogs.StartTimer(1, "Start Character Select");
+
         StartCoroutine(OpenCharacterSelect());
     }
 

@@ -7,7 +7,7 @@ public class WaterWaveSample : MonoBehaviour
     public float waveFrequency = 1.0f;
 
     private float actualWaveFrequency;
-    [SerializeField] private float timer;
+    public float timer;
     [SerializeField] float waveSpeed;
 
     [SerializeField] private Material waterMaterial;

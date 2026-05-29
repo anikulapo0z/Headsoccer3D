@@ -168,6 +168,7 @@ public class MenuManager : MonoBehaviour
     {
         currentScreen = MenuScreen.MapSelect;
 
+        GameLogs.StartTimer(2, "Map Select Menu");
 
         canMoveToNextScreen = false;
         characterSelectMenu.SetActive(false);
@@ -281,6 +282,8 @@ public class MenuManager : MonoBehaviour
 
     public void LoadGameLevel(string sceneName)
     {
+        GameLogs.EndTimer(2);
+
         StartCoroutine(fadeTransitionThenLoad(sceneName));
     }
 
