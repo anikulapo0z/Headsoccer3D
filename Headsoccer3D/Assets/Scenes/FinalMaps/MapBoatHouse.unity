@@ -837,7 +837,7 @@ GameObject:
   m_Component:
   - component: {fileID: 103679451}
   m_Layer: 0
-  m_Name: Window Food Thrower (3)
+  m_Name: Window Food Thrower 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1911,7 +1911,7 @@ GameObject:
   m_Component:
   - component: {fileID: 186937801}
   m_Layer: 0
-  m_Name: Window Food Thrower
+  m_Name: Window Food Thrower 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2622,7 +2622,7 @@ GameObject:
   m_Component:
   - component: {fileID: 262152135}
   m_Layer: 0
-  m_Name: Window Food Thrower (1)
+  m_Name: Window Food Thrower 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11127,7 +11127,7 @@ GameObject:
   m_Component:
   - component: {fileID: 883557886}
   m_Layer: 0
-  m_Name: Window Food Thrower (2)
+  m_Name: Window Food Thrower 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19168,10 +19168,15 @@ MonoBehaviour:
   - {fileID: 7314400718525558973, guid: 916a3e2a271c7bc45b5360ba3521ab1f, type: 3}
   - {fileID: 7314400718525558973, guid: 66e1517f66f3238488dbdb9667b05a0c, type: 3}
   spawnPoint:
+  - {fileID: 791223612}
   - {fileID: 1896432067}
   - {fileID: 87665517}
   - {fileID: 1805378608}
-  - {fileID: 791223612}
+  throwerChars:
+  - {fileID: 186937800}
+  - {fileID: 883557885}
+  - {fileID: 103679450}
+  - {fileID: 262152134}
   minX: -5.5
   maxX: 5.5
   minZ: -6
