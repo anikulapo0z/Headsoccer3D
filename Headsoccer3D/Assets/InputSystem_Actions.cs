@@ -411,7 +411,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""ed79cb10-ba5a-4fd5-a26d-9f07a31ac33e"",
-                    ""path"": ""<HID::HAPP EP1 Interrupt>/button5"",
+                    ""path"": ""<HID::HAPP EP1 Interrupt>/button3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -422,7 +422,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""right"",
                     ""id"": ""43fa0ba6-4a84-4b3d-b483-cc8d8c7bc2b9"",
-                    ""path"": ""<HID::HAPP EP1 Interrupt>/button3"",
+                    ""path"": ""<HID::HAPP EP1 Interrupt>/button5"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
