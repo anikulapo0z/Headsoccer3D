@@ -11,8 +11,8 @@ public class MenuManager : MonoBehaviour
     // players joining
     [SerializeField] int totalPlayerCount;
     [SerializeField] bool canMoveToNextScreen = false;
-    [SerializeField] GameObject pressConfirmPrompt;
-    [SerializeField] GameObject wrongPlayerCountPrompt;
+    public GameObject pressConfirmPrompt;
+    public GameObject wrongPlayerCountPrompt;
     [SerializeField] int lockedPlayerCount;
 
 
@@ -446,5 +446,36 @@ public class MenuManager : MonoBehaviour
     public MenuManager.GameMode GetGameMode()
     {
         return currentGameMode;
+    }
+
+
+    public void OnInactivityReset()
+    {
+        totalPlayerCount = 0;
+        lockedPlayerCount = 0;
+        canMoveToNextScreen = false;
+
+        
+        pressConfirmPrompt.SetActive(false);
+        wrongPlayerCountPrompt.SetActive(false);
+
+        
+        foreach (var p in portraits)
+            p.SetNotJoined();
+
+        
+        force2v2 = false;
+        StopForce2v2();
+        currentTeamSize = TeamSizes.v1;
+
+
+        currentScreen = MenuScreen.CharacterSelect;
+        characterSelectMenu.SetActive(true);
+        mapSelectMenu.SetActive(false);
+    }
+
+    public void SetCurrentScreen(MenuScreen screen)
+    {
+        currentScreen = screen;
     }
 }

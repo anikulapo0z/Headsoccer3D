@@ -9,13 +9,15 @@ public class PlayerJoinManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] GameObject pressAnyButtonScreen;
     [SerializeField] GameObject characterSelectScreen;
-    
-    [SerializeField] private MenuAudioManager menuAudioManager;
 
+    [SerializeField] private MenuAudioManager menuAudioManager;
 
     [Header("Settings")]
     [SerializeField] float characterSelectOpenDelay = 3f;
     [SerializeField] int maxPlayers = 4;
+
+    [Header("Inactivity")]
+    [SerializeField] float inactivityTimeout;
 
     [Header("Cursor")]
     [SerializeField] GameObject[] characterCursorPrefab;
@@ -33,6 +35,12 @@ public class PlayerJoinManager : MonoBehaviour
     bool isLocked;
 
     InputAction joinAction;
+
+    float inactivityTimer;
+    bool trackingInactivity;
+    [SerializeField] Transform playerCursors;
+
+
 
     void Awake()
     {
@@ -55,13 +63,66 @@ public class PlayerJoinManager : MonoBehaviour
         ResetJoinManager();
     }
 
+    void Update()
+    {
+        if (!trackingInactivity) return;
+
+        inactivityTimer -= Time.deltaTime;
+        if (inactivityTimer <= 0f)
+        {
+            ResetToAttractScreen();
+        }
+    }
+
     void ResetJoinManager()
     {
         characterSelectOpen = false;
         isLocked = false;
+        trackingInactivity = false;
 
         pressAnyButtonScreen.SetActive(true);
         characterSelectScreen.SetActive(false);
+    }
+
+    void StartInactivityTracking()
+    {
+        inactivityTimer = inactivityTimeout;
+        trackingInactivity = true;
+    }
+
+    void ResetInactivityTimer()
+    {
+        inactivityTimer = inactivityTimeout;
+    }
+
+    void ResetToAttractScreen()
+    {
+        trackingInactivity = false;
+        StopAllCoroutines();
+
+        
+        MenuManager.Instance.OnInactivityReset();
+
+        
+        for (int i = 0; i < playerSlots.Length; i++)
+        {
+            var slot = playerSlots[i];
+            if (slot == null) continue;
+
+            foreach (var go in slot.controlledGameObject)
+                if (go != null) Destroy(go);
+
+            PlayerInputHolder.Instance.playerList.Remove(slot);
+            Destroy(slot.gameObject);
+            playerSlots[i] = null;
+        }
+
+        foreach(Transform t in playerCursors)
+        {
+            Destroy(t.gameObject);
+        }
+
+        ResetJoinManager();
     }
 
     void OnDestroy()
@@ -70,11 +131,13 @@ public class PlayerJoinManager : MonoBehaviour
         InputSystem.onDeviceChange -= OnDeviceChange;
     }
 
-
     void OnAnyButtonPressed(InputControl control)
     {
-        if (isLocked || characterSelectOpen)
+        if (characterSelectOpen || isLocked)
+        {
+            ResetInactivityTimer();
             return;
+        }
 
         pressAnyButtonScreen.SetActive(false);
         StartCoroutine(OpenCharacterSelect());
@@ -90,8 +153,8 @@ public class PlayerJoinManager : MonoBehaviour
         isLocked = false;
 
         joinAction.Enable();
+        StartInactivityTracking();
     }
-
 
     void OnJoinPerformed(InputAction.CallbackContext ctx)
     {
@@ -100,6 +163,9 @@ public class PlayerJoinManager : MonoBehaviour
 
         if (!characterSelectOpen) return;
         if (ctx.control.device == null) return;
+
+        
+        ResetInactivityTimer();
 
         if (MenuManager.Instance.currentScreen == MenuManager.MenuScreen.MapSelect)
         {
@@ -110,9 +176,6 @@ public class PlayerJoinManager : MonoBehaviour
             }
             return;
         }
-
-
-
 
         InputDevice device = ctx.control.device;
         string controllerId = BuildControllerId(device);
@@ -162,7 +225,6 @@ public class PlayerJoinManager : MonoBehaviour
         playerSlots[index] = newController;
         PlayerInputHolder.Instance.playerList.Add(newController);
 
-
         PlayerInputHolder.Instance.sourceInputActions = inputActions;
         PlayerInputHolder.Instance.actionMapName = actionMapName;
 
@@ -188,21 +250,13 @@ public class PlayerJoinManager : MonoBehaviour
             if (slot == null || slot.IsConnected) continue;
             if (slot.ControllerId != incomingId) continue;
 
-
-
-
-
             slot.AssignDevice(device, inputActions, actionMapName);
-
-
             Debug.Log($"Player {slot.PlayerIndex + 1} reconnected on map select.");
             return;
         }
 
         Debug.Log("Device pressed a button on map select but has no disconnected slot to reclaim.");
     }
-
-
 
     void OnDeviceChange(InputDevice device, InputDeviceChange change)
     {
@@ -269,7 +323,7 @@ public class PlayerJoinManager : MonoBehaviour
     (IPlayerControllable, GameObject) CreateCursor(int index)
     {
         menuAudioManager.PlayCharacterJoinSfx();
-        
+
         Vector3 centerPoint = mainCanvas.TransformPoint(mainCanvas.rect.center);
 
         GameObject obj = Instantiate(
