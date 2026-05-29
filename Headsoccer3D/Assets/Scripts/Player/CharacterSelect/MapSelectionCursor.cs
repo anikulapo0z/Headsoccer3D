@@ -94,6 +94,8 @@ public class MapSelectionCursor : MonoBehaviour, IPlayerControllable
     {
         Debug.Log("OnAbilityPressed");
     }
+    public void OnPoseTaunt() { }
+    public void OnTextTaunt() { }
 
     public void OnSprint(bool held)
     {

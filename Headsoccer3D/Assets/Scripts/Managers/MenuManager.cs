@@ -52,13 +52,29 @@ public class MenuManager : MonoBehaviour
     public Transform cursorHolder_map;
     public Transform cursorHolder_character;
 
+    [Space(10)]
+    public HowToPlayHighlights jumpHighlight1_controller;
+    public HowToPlayHighlights jumpHighlight2_controller;
+    public HowToPlayHighlights jumpHighlight_exit_controller;
+    public HowToPlayHighlights kickHighlight_controller;
+    public HowToPlayHighlights kickHighlight_exit_controller;
+    public HowToPlayHighlights moveHighlight_controller;
+    public HowToPlayHighlights abilityHighlight_controller;
+    public HowToPlayHighlights sprintHighlight_controller;
+    public HowToPlayHighlights poseTauntHighlight_controller;
+    public HowToPlayHighlights textTauntHighlight_controller;
 
-    public HowToPlayHighlights jumpHighlight1;
-    public HowToPlayHighlights jumpHighlight2;
-    public HowToPlayHighlights kickHighlight;
-    public HowToPlayHighlights moveHighlight;
-    public HowToPlayHighlights abilityHighlight;
-    public HowToPlayHighlights sprintHighlight;
+    [Space]
+    public HowToPlayHighlights jumpHighlight_arcade;
+    public HowToPlayHighlights jumpHighlight_exit_arcade;
+    public HowToPlayHighlights kickHighlight_arcade;
+    public HowToPlayHighlights kickHighlight_exit_arcade;
+    public HowToPlayHighlights moveHighlight_arcade;
+    public HowToPlayHighlights abilityHighlight_arcade;
+    public HowToPlayHighlights sprintHighlight_arcade;
+    public HowToPlayHighlights poseTauntHighlight_arcade;
+    public HowToPlayHighlights textTauntHighlight_arcade;
+
 
     public GameObject[] objectsToTurnBackOn;
     public GameObject[] objectsToTurnBackOff;

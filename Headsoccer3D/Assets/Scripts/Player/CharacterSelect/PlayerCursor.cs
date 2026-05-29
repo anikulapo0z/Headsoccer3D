@@ -264,4 +264,6 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
     public void OnSprint(bool val) { }
     public void OnStart() { }
     public void OnAbility() { }
+    public void OnPoseTaunt() { }
+    public void OnTextTaunt() { }
 }

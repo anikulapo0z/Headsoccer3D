@@ -148,6 +148,8 @@ public class PinballFlipper : MonoBehaviour, IPlayerControllable
     public void OnCancel(){}
 
     public void OnAbility(){}
+    public void OnPoseTaunt(){}
+    public void OnTextTaunt(){}
 
     public void OnMove(Vector2 input){}
     #endregion

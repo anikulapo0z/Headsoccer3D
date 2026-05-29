@@ -348,6 +348,8 @@ MonoBehaviour:
   hitBallSfx: []
   footstepsSfx: []
   jumpSfx: {fileID: 8979881466436029038}
+  cloneKickSfx: {fileID: 0}
+  cloneJumpSfx: {fileID: 0}
   landSfx: {fileID: 0}
   pickupSfx: {fileID: 0}
   empoweredKickSfx: {fileID: 0}
@@ -377,6 +379,7 @@ MonoBehaviour:
   playerIndex: 0
   sprint: {fileID: 1192310627823566268}
   objectsToTurnBackOn: []
+  combineButtonPressTime: 1
 --- !u!1 &2578436691414235925
 GameObject:
   m_ObjectHideFlags: 0

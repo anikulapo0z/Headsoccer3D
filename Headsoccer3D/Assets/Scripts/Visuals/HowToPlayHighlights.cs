@@ -24,6 +24,7 @@ public class HowToPlayHighlights : MonoBehaviour
 
     public void SetHighlight(bool val, bool autoTurnOff, float _dirX = 0, float _dirY = 0)
     {
+        if (rectTransform == null) return;
         Vector2 _dir = new Vector2(_dirX, _dirY);
         image.DOColor(targetColor, timeToTween);
 

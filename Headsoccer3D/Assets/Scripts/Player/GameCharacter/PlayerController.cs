@@ -650,6 +650,10 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         }
     }
 
+    public void OnPoseTaunt() { }
+    public void OnTextTaunt() { }
+
+
     public void HitBall(SoccerBall ball)
     {
 
