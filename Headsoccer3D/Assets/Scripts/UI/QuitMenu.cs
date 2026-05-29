@@ -51,6 +51,11 @@ public class QuitMenu : MonoBehaviour, IMenuItem
                 characterMenu.SetActive(true);
                 mapMenu.SetActive(false);
 
+                // Reset confirm/error prompts and screen state
+                MenuManager.Instance.pressConfirmPrompt.SetActive(false);
+                MenuManager.Instance.wrongPlayerCountPrompt.SetActive(false);
+                MenuManager.Instance.SetCurrentScreen(MenuManager.MenuScreen.CharacterSelect);
+
                 foreach (Transform t in MenuManager.Instance.cursorHolder_character)
                 {
                     t.gameObject.SetActive(true);
@@ -60,7 +65,6 @@ public class QuitMenu : MonoBehaviour, IMenuItem
                 {
                     t.gameObject.SetActive(false);
                 }
-
                 break;
 
             case ButtonType.HowToPlay:

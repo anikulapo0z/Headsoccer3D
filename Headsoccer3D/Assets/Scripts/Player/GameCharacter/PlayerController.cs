@@ -153,6 +153,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     // get pancake bitch
     [Space]
     [SerializeField] float goToYVal;
+    float flattenYMultiplier = 1f;
     [SerializeField] float flatenedDuration;
     [SerializeField] float currentFlatenedTime;
     [SerializeField] float goToFlatTime;
@@ -401,7 +402,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
         // ground / parent check
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.5f, groundLayer) && controller.isGrounded)
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 100f, groundLayer) && controller.isGrounded)
         {
             if (currentPlatform != hit.transform)
             {
@@ -409,20 +410,12 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
                 lastPlatformPosition = hit.transform.position;
             }
         }
-        else if (!controller.isGrounded)
-        {
-            currentPlatform = null;
-        }
 
         Vector3 platformDelta = Vector3.zero;
         if (currentPlatform != null)
         {
             platformDelta = currentPlatform.position - lastPlatformPosition;
             lastPlatformPosition = currentPlatform.position;
-
-            
-            platformDelta.x = 0f;
-            platformDelta.z = 0f;
         }
 
         if (controller.enabled)
@@ -434,9 +427,9 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         {
             currentFlatenedTime -= Time.deltaTime;
 
-            if(currentFlatenedTime < 0)
+            if (currentFlatenedTime < 0)
             {
-                transform.DOScaleY(originalYScale, goToFlatTime);
+                DOFlattenY(1f);
                 this.moveSpeed = originalSpeed;
                 isFlat = false;
             }
@@ -914,9 +907,27 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     {
         sprintHeld = false;
         isFlat = true;
-        transform.DOScaleY(goToYVal, goToFlatTime);
+        DOFlattenY(goToYVal / originalYScale);
         moveSpeed = flatSpeed;
         currentFlatenedTime = flatenedDuration;
 
+    }
+
+    private void DOFlattenY(float yMultiplier)
+    {
+        flattenYMultiplier = yMultiplier;
+        ApplyCombinedScale(goToFlatTime);
+    }
+
+    public void ApplyCombinedScale(float duration = 0f)
+    {
+        float bigScale = GetComponent<PlayerAbility>()?.currentGrowMultiplier ?? 1f;
+
+        Vector3 target = new Vector3(originalYScale * bigScale, originalYScale * flattenYMultiplier, originalYScale * bigScale);
+
+        if (duration > 0f)
+            transform.DOScale(target, duration);
+        else
+            transform.localScale = target;
     }
 }

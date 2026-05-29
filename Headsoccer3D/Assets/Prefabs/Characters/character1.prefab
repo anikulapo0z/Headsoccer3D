@@ -2522,7 +2522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aab1aac9d0bb6ed4b80164fd0c827344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2.5
+  moveSpeed: 3.6
   rotationSpeed: 25
   rotateToMovement: 1
   kickForce: 10
@@ -2596,9 +2596,9 @@ MonoBehaviour:
   kickActiveTime: 0.15
   headActiveTime: 0.7
   kickPlayerCooldown: 0.12
-  sprintMultiplier: 2.3
+  sprintMultiplier: 1.4
   maxStamina: 10
-  staminaDrainRate: 4
+  staminaDrainRate: 3
   staminaRegenRate: 4
   staminaRegenDelay: 0.3
   staminaBar: {fileID: 0}
@@ -2673,6 +2673,9 @@ MonoBehaviour:
   empoweredKickText: {fileID: 5041241853163221094, guid: f2d58010527d10c47b2a34888d282aca, type: 3}
   earthquakeText: {fileID: 2268949771022234786, guid: 080da404cfbf9e047854e6885e282a6d, type: 3}
   shadowCloneText: {fileID: 1005211866159699361, guid: 5ad97342895878b429e45ff5f301d34e, type: 3}
+  abilityReminder: {fileID: 1852157961192850818, guid: 59872aa1f95ec984cbcb038417206ebc, type: 3}
+  timeUntilStartReminder: 5
+  reminderDuration: 6
   mbOffset: {x: 0, y: 1.5, z: 0.7}
   mbRotation: {x: 0, y: 0, z: 17}
   ekOffset: {x: 0, y: 1.6, z: 0.6}
@@ -2753,8 +2756,9 @@ MonoBehaviour:
   currentAbility: 0
   empoweredKickStrength: 5
   scaleTime: 0.5
-  growSize: {x: 15, y: 15, z: 15}
+  growSize: {x: 17, y: 17, z: 17}
   kickWave: {fileID: 7966454566057911357, guid: 8a94511b6a724f34c9dd852756fdd36d, type: 3}
+  currentGrowMultiplier: 1
   upAmount: 3
   outAmount: 5
   ballAmount: 5
@@ -2818,6 +2822,8 @@ MonoBehaviour:
   - {fileID: 2436626438178255819}
   - {fileID: 577988541378061960}
   jumpSfx: {fileID: 8979881466436029038}
+  cloneKickSfx: {fileID: 0}
+  cloneJumpSfx: {fileID: 0}
   landSfx: {fileID: 2489858001358877832}
   pickupSfx: {fileID: 6088646779452326219}
   empoweredKickSfx: {fileID: 1777783957714740760}
@@ -2842,7 +2848,7 @@ MonoBehaviour:
   allowHurtIce: 0
   iceHitCooldown: 0.2
   canHitIce: 1
-  iceBlockFracture: {fileID: 0}
+  iceBlockFracture: {fileID: 7479045568755230345}
   forceStrength: 10
   iceTossSpeed:
     serializedVersion: 2

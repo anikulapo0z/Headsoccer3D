@@ -10341,6 +10341,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &835131202 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7369525178913090990, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+  m_PrefabInstance: {fileID: 1686241423}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &840474186
 GameObject:
   m_ObjectHideFlags: 0
@@ -18375,7 +18386,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.007, y: 0.0016, z: 0.006}
-  m_Center: {x: 0.000022621125, y: -0.00065, z: 0.0018}
+  m_Center: {x: 0.000022621125, y: -0.00065, z: 0.0003}
 --- !u!23 &1456105955
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -21560,6 +21571,26 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4624424009470115766, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624424009470115766, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624424009470115766, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624424009470115766, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624424009470115766, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 4932937589892937734, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.33
@@ -21778,7 +21809,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8329179674215307280, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_Center.z
-      value: -2.6
+      value: -2.61
       objectReference: {fileID: 0}
     - target: {fileID: 8556879201488508277, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_Enabled
@@ -27113,7 +27144,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2028032005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29921,7 +29952,7 @@ MonoBehaviour:
   - {fileID: 1686241428}
   currentStartCoundown: 0
   maxStartCoundown: 3
-  startCountdownText: {fileID: 1540861423}
+  startCountdownText: {fileID: 835131202}
   numToStartAddingTime: 13
   minTimeToAdd: 0.1
   maxTimeToAdd: 1.5
