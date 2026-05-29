@@ -558,8 +558,11 @@ public class GameSceneManager : MonoBehaviour
             player.GetComponent<PlayerController>().LockPlayerMove();
         }
 
-        GetComponent<WaterWaveSample>().timer = 2f;
-        GetComponent<WaterWaveSample>().enabled = false;
+        if (GetComponent<WaterWaveSample>() != null)
+        {
+            GetComponent<WaterWaveSample>().timer = 2f;
+            GetComponent<WaterWaveSample>().enabled = false;
+        }
     }
 
 
@@ -570,7 +573,8 @@ public class GameSceneManager : MonoBehaviour
             player.GetComponent<PlayerController>().UnlockPlayerMove();
             player.transform.SetParent(null);
         }
-        GetComponent<WaterWaveSample>().enabled = true;
+        if (GetComponent<WaterWaveSample>() != null)
+            GetComponent<WaterWaveSample>().enabled = true;
 
     }
 
