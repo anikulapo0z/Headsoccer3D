@@ -22,7 +22,7 @@ public class SceneAudioManager : MonoBehaviour
     // general
     private void Start()
     {
-        if (backgroundMusic.resource)
+        if (backgroundMusic && backgroundMusic.resource)
         {
             backgroundMusic.Play();
         }
@@ -30,7 +30,7 @@ public class SceneAudioManager : MonoBehaviour
         {
             Debug.Log("Background music clip is not assigned");
         }
-        if (crowdAmbience.resource)
+        if (crowdAmbience && crowdAmbience.resource)
         {
             crowdAmbience.Play();
         }
@@ -55,7 +55,7 @@ public class SceneAudioManager : MonoBehaviour
         {
             Debug.Log("Crowd cheers or confetti SFX clip is not assigned");
         }
-        if (crowdCheers.resource)
+        if (crowdCheers && crowdCheers.resource)
         {
             crowdCheers.Play();
         }
@@ -66,7 +66,7 @@ public class SceneAudioManager : MonoBehaviour
     }
     public void PlayChaosSfx()
     {
-        if (chaosSequenceSfx.resource)
+        if (chaosSequenceSfx && chaosSequenceSfx.resource)
         {
             chaosSequenceSfx.Play();
         }
@@ -77,7 +77,7 @@ public class SceneAudioManager : MonoBehaviour
     }
     public void PlayWhistleSfx()
     {
-        if (whistleSfx.resource)
+        if (whistleSfx && whistleSfx.resource)
         {
             whistleSfx.Play();
         }
@@ -90,7 +90,7 @@ public class SceneAudioManager : MonoBehaviour
     // bus
     public void PlayBusSfx()
     {
-        if (busSfx.resource)
+        if (busSfx && busSfx.resource)
         {
             busSfx.Play();
         }
@@ -103,7 +103,7 @@ public class SceneAudioManager : MonoBehaviour
     // train
     public void PlayTrainHornSfx(float pan)
     {
-        if (trainHornSfx != null && trainHornSfx.clip != null)
+        if (trainHornSfx && trainHornSfx.resource)
         {
             trainHornSfx.panStereo = pan;
             trainHornSfx.Play();
@@ -132,7 +132,7 @@ public class SceneAudioManager : MonoBehaviour
     }
     public void PlayAnnouncementSfx(float pan)
     {
-        if (announcementSfx != null && announcementSfx.clip != null)
+        if (announcementSfx && announcementSfx.resource)
         {
             announcementSfx.panStereo = pan; // -0.75 for left, 0.75 for right
             announcementSfx.Play();
@@ -146,7 +146,7 @@ public class SceneAudioManager : MonoBehaviour
     // bell
     public void PlayBellRingSfx()
     {
-        if (bellRingSfx.resource)
+        if (bellRingSfx && bellRingSfx.resource)
         {
             bellRingSfx.Play();
         }
@@ -157,7 +157,7 @@ public class SceneAudioManager : MonoBehaviour
     }
     public void PlayBellBreakSfx()
     {
-        if (bellBreakSfx.resource)
+        if (bellBreakSfx && bellBreakSfx.resource)
         {
             bellBreakSfx.Play();
         }

@@ -95,6 +95,7 @@ public class CameraController : MonoBehaviour
 
     void HandleRotation()
     {
+        if (target == null) return;
         Vector3 dirToTarget = target.position - transform.position;
         Quaternion lookRot = Quaternion.LookRotation(dirToTarget);
 

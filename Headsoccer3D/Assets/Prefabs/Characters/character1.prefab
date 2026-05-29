@@ -2673,6 +2673,9 @@ MonoBehaviour:
   empoweredKickText: {fileID: 5041241853163221094, guid: f2d58010527d10c47b2a34888d282aca, type: 3}
   earthquakeText: {fileID: 2268949771022234786, guid: 080da404cfbf9e047854e6885e282a6d, type: 3}
   shadowCloneText: {fileID: 1005211866159699361, guid: 5ad97342895878b429e45ff5f301d34e, type: 3}
+  abilityReminder: {fileID: 1852157961192850818, guid: 59872aa1f95ec984cbcb038417206ebc, type: 3}
+  timeUntilStartReminder: 5
+  reminderDuration: 6
   mbOffset: {x: 0, y: 1.5, z: 0.7}
   mbRotation: {x: 0, y: 0, z: 17}
   ekOffset: {x: 0, y: 1.6, z: 0.6}
@@ -2819,6 +2822,8 @@ MonoBehaviour:
   - {fileID: 2436626438178255819}
   - {fileID: 577988541378061960}
   jumpSfx: {fileID: 8979881466436029038}
+  cloneKickSfx: {fileID: 0}
+  cloneJumpSfx: {fileID: 0}
   landSfx: {fileID: 2489858001358877832}
   pickupSfx: {fileID: 6088646779452326219}
   empoweredKickSfx: {fileID: 1777783957714740760}
@@ -19672,6 +19677,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3014676512476233849}
     m_Modifications:
+    - target: {fileID: 2826871211292261292, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4615716246373951051, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 52c4a4c0a7a50ea4589b9c7cd93adc2c, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.61993
@@ -19743,14 +19756,6 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 52c4a4c0a7a50ea4589b9c7cd93adc2c, type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2826871211292261292, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4615716246373951051, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

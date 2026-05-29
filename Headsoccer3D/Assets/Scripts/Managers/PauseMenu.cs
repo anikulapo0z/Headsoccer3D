@@ -13,7 +13,25 @@ public class PauseMenu : MonoBehaviour
     }
 
 
-    public void PauseGame()
+    public void PauseGame(bool _setActive)
+    {
+        if (_setActive == false)
+        {
+            pauseMenu.SetActive(false);
+            Time.timeScale = 1f;
+
+            isPaused = false;
+        }
+        else
+        {
+            pauseMenu.SetActive(true);
+            Time.timeScale = 0f;
+
+            isPaused = true;
+        }
+    }
+
+    public void TogglePause()
     {
         if (isPaused)
         {
