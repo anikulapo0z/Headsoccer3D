@@ -266,8 +266,8 @@ public class PlayerGroundMarker : MonoBehaviour
 
         Vector3 targetPos =
             transform.position
-            + (mainCam.transform.right * ekOffset.z)
-            + (Vector3.up * ekOffset.y);
+            + (mainCam.transform.right * earthquakeOffset.z)
+            + (Vector3.up * earthquakeOffset.y);
 
         earthquakeObject.transform.position = targetPos;
         earthquakeObject.transform.forward = mainCam.transform.forward;
