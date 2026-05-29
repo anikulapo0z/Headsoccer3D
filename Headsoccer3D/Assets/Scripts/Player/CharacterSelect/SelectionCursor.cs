@@ -109,4 +109,7 @@ public class SelectionCursor : MonoBehaviour, IPlayerControllable
     {
         Debug.Log("OnSprintPressed");
     }
+    public void OnPoseTaunt() { }
+    public void OnTextTaunt() { }
+
 }

@@ -180,6 +180,8 @@ public class GameSceneManager : MonoBehaviour
 
     void StartGame()
     {
+        GameLogs.StartTimer(3, "Start Game");
+
         currentGameTime = maxGameTime;
         startCountdownText.text = currentGameTime.ToString();
         canScore = true;
@@ -314,6 +316,7 @@ public class GameSceneManager : MonoBehaviour
 
     IEnumerator EndGame()
     {
+        GameLogs.EndTimer(3);
         scoreTracker.canScore = false;
 
         audioManager.PlayWhistleSfx();
@@ -554,6 +557,12 @@ public class GameSceneManager : MonoBehaviour
         {
             player.GetComponent<PlayerController>().LockPlayerMove();
         }
+
+        if (GetComponent<WaterWaveSample>() != null)
+        {
+            GetComponent<WaterWaveSample>().timer = 2f;
+            GetComponent<WaterWaveSample>().enabled = false;
+        }
     }
 
 
@@ -564,6 +573,9 @@ public class GameSceneManager : MonoBehaviour
             player.GetComponent<PlayerController>().UnlockPlayerMove();
             player.transform.SetParent(null);
         }
+        if (GetComponent<WaterWaveSample>() != null)
+            GetComponent<WaterWaveSample>().enabled = true;
+
     }
 
 

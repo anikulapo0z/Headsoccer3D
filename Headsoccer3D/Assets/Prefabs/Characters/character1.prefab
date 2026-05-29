@@ -2522,7 +2522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aab1aac9d0bb6ed4b80164fd0c827344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2.5
+  moveSpeed: 3.6
   rotationSpeed: 25
   rotateToMovement: 1
   kickForce: 10
@@ -2596,9 +2596,9 @@ MonoBehaviour:
   kickActiveTime: 0.15
   headActiveTime: 0.7
   kickPlayerCooldown: 0.12
-  sprintMultiplier: 2.3
+  sprintMultiplier: 1.4
   maxStamina: 10
-  staminaDrainRate: 4
+  staminaDrainRate: 3
   staminaRegenRate: 4
   staminaRegenDelay: 0.3
   staminaBar: {fileID: 0}
@@ -2680,8 +2680,8 @@ MonoBehaviour:
   mbRotation: {x: 0, y: 0, z: 17}
   ekOffset: {x: 0, y: 1.6, z: 0.6}
   ekRotation: {x: 0, y: 0, z: 16}
-  earthquakeOffset: {x: 0, y: 0, z: 0}
-  earthquakeRotation: {x: 0, y: 0, z: 0}
+  earthquakeOffset: {x: 0, y: 1.4, z: 0.6}
+  earthquakeRotation: {x: 0, y: 0, z: 16}
   shadowCloneOffset: {x: 0, y: 1.5, z: 0.6}
   shadowCloneRotation: {x: 0, y: 0, z: 16}
   mbActive: 0
@@ -2848,7 +2848,7 @@ MonoBehaviour:
   allowHurtIce: 0
   iceHitCooldown: 0.2
   canHitIce: 1
-  iceBlockFracture: {fileID: 0}
+  iceBlockFracture: {fileID: 7479045568755230345}
   forceStrength: 10
   iceTossSpeed:
     serializedVersion: 2
@@ -19677,14 +19677,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3014676512476233849}
     m_Modifications:
-    - target: {fileID: 2826871211292261292, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4615716246373951051, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 52c4a4c0a7a50ea4589b9c7cd93adc2c, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.61993
@@ -19756,6 +19748,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 52c4a4c0a7a50ea4589b9c7cd93adc2c, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2826871211292261292, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4615716246373951051, guid: 960f20b417b7ce646be8037b6c7d948a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

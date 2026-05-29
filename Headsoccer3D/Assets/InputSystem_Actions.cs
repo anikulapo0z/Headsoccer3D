@@ -163,6 +163,24 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PoseTaunt"",
+                    ""type"": ""Button"",
+                    ""id"": ""a004f08e-7299-4b15-af76-5b2b07d98ea8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TextTaunt"",
+                    ""type"": ""Button"",
+                    ""id"": ""51137110-2fbe-4936-ac78-6fa37e9b49f3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -583,6 +601,72 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""33f49809-c96d-4dbf-9067-b7382f19d805"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PoseTaunt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d4740fa3-6fc4-4193-8cab-68a47bd0e922"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PoseTaunt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a4234e2-c00f-43f9-9afe-0cbc638ec0f6"",
+                    ""path"": ""<HID::HAPP EP1 Interrupt>/button11"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PoseTaunt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fdc89a1a-aeff-47a3-b112-380517c61767"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TextTaunt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2eb86ed4-033d-46cc-9989-f2a615b47a57"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TextTaunt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b28fc995-4897-4389-8dbd-f3f6cd0c2db5"",
+                    ""path"": ""<HID::HAPP EP1 Interrupt>/button12"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TextTaunt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -660,6 +744,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Kick = m_Player.FindAction("Kick", throwIfNotFound: true);
         m_Player_Ability = m_Player.FindAction("Ability", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
+        m_Player_PoseTaunt = m_Player.FindAction("PoseTaunt", throwIfNotFound: true);
+        m_Player_TextTaunt = m_Player.FindAction("TextTaunt", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
@@ -748,6 +834,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Kick;
     private readonly InputAction m_Player_Ability;
     private readonly InputAction m_Player_Sprint;
+    private readonly InputAction m_Player_PoseTaunt;
+    private readonly InputAction m_Player_TextTaunt;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -791,6 +879,14 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Sprint".
         /// </summary>
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/PoseTaunt".
+        /// </summary>
+        public InputAction @PoseTaunt => m_Wrapper.m_Player_PoseTaunt;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/TextTaunt".
+        /// </summary>
+        public InputAction @TextTaunt => m_Wrapper.m_Player_TextTaunt;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -841,6 +937,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
+            @PoseTaunt.started += instance.OnPoseTaunt;
+            @PoseTaunt.performed += instance.OnPoseTaunt;
+            @PoseTaunt.canceled += instance.OnPoseTaunt;
+            @TextTaunt.started += instance.OnTextTaunt;
+            @TextTaunt.performed += instance.OnTextTaunt;
+            @TextTaunt.canceled += instance.OnTextTaunt;
         }
 
         /// <summary>
@@ -876,6 +978,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
+            @PoseTaunt.started -= instance.OnPoseTaunt;
+            @PoseTaunt.performed -= instance.OnPoseTaunt;
+            @PoseTaunt.canceled -= instance.OnPoseTaunt;
+            @TextTaunt.started -= instance.OnTextTaunt;
+            @TextTaunt.performed -= instance.OnTextTaunt;
+            @TextTaunt.canceled -= instance.OnTextTaunt;
         }
 
         /// <summary>
@@ -1037,5 +1145,19 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSprint(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "PoseTaunt" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPoseTaunt(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "TextTaunt" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTextTaunt(InputAction.CallbackContext context);
     }
 }

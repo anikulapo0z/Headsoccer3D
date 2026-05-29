@@ -11,8 +11,8 @@ public class MenuManager : MonoBehaviour
     // players joining
     [SerializeField] int totalPlayerCount;
     [SerializeField] bool canMoveToNextScreen = false;
-    [SerializeField] GameObject pressConfirmPrompt;
-    [SerializeField] GameObject wrongPlayerCountPrompt;
+    public GameObject pressConfirmPrompt;
+    public GameObject wrongPlayerCountPrompt;
     [SerializeField] int lockedPlayerCount;
 
 
@@ -52,13 +52,29 @@ public class MenuManager : MonoBehaviour
     public Transform cursorHolder_map;
     public Transform cursorHolder_character;
 
+    [Space(10)]
+    public HowToPlayHighlights jumpHighlight1_controller;
+    public HowToPlayHighlights jumpHighlight2_controller;
+    public HowToPlayHighlights jumpHighlight_exit_controller;
+    public HowToPlayHighlights kickHighlight_controller;
+    public HowToPlayHighlights kickHighlight_exit_controller;
+    public HowToPlayHighlights moveHighlight_controller;
+    public HowToPlayHighlights abilityHighlight_controller;
+    public HowToPlayHighlights sprintHighlight_controller;
+    public HowToPlayHighlights poseTauntHighlight_controller;
+    public HowToPlayHighlights textTauntHighlight_controller;
 
-    public HowToPlayHighlights jumpHighlight1;
-    public HowToPlayHighlights jumpHighlight2;
-    public HowToPlayHighlights kickHighlight;
-    public HowToPlayHighlights moveHighlight;
-    public HowToPlayHighlights abilityHighlight;
-    public HowToPlayHighlights sprintHighlight;
+    [Space]
+    public HowToPlayHighlights jumpHighlight_arcade;
+    public HowToPlayHighlights jumpHighlight_exit_arcade;
+    public HowToPlayHighlights kickHighlight_arcade;
+    public HowToPlayHighlights kickHighlight_exit_arcade;
+    public HowToPlayHighlights moveHighlight_arcade;
+    public HowToPlayHighlights abilityHighlight_arcade;
+    public HowToPlayHighlights sprintHighlight_arcade;
+    public HowToPlayHighlights poseTauntHighlight_arcade;
+    public HowToPlayHighlights textTauntHighlight_arcade;
+
 
     public GameObject[] objectsToTurnBackOn;
     public GameObject[] objectsToTurnBackOff;
@@ -168,6 +184,7 @@ public class MenuManager : MonoBehaviour
     {
         currentScreen = MenuScreen.MapSelect;
 
+        GameLogs.StartTimer(2, "Map Select Menu");
 
         canMoveToNextScreen = false;
         characterSelectMenu.SetActive(false);
@@ -281,6 +298,8 @@ public class MenuManager : MonoBehaviour
 
     public void LoadGameLevel(string sceneName)
     {
+        GameLogs.EndTimer(2);
+
         StartCoroutine(fadeTransitionThenLoad(sceneName));
     }
 
@@ -446,5 +465,36 @@ public class MenuManager : MonoBehaviour
     public MenuManager.GameMode GetGameMode()
     {
         return currentGameMode;
+    }
+
+
+    public void OnInactivityReset()
+    {
+        totalPlayerCount = 0;
+        lockedPlayerCount = 0;
+        canMoveToNextScreen = false;
+
+        
+        pressConfirmPrompt.SetActive(false);
+        wrongPlayerCountPrompt.SetActive(false);
+
+        
+        foreach (var p in portraits)
+            p.SetNotJoined();
+
+        
+        force2v2 = false;
+        StopForce2v2();
+        currentTeamSize = TeamSizes.v1;
+
+
+        currentScreen = MenuScreen.CharacterSelect;
+        characterSelectMenu.SetActive(true);
+        mapSelectMenu.SetActive(false);
+    }
+
+    public void SetCurrentScreen(MenuScreen screen)
+    {
+        currentScreen = screen;
     }
 }
