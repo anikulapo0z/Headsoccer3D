@@ -11,6 +11,8 @@ public class WaterWaveSample : MonoBehaviour
     [SerializeField] float waveSpeed;
 
     [SerializeField] private Material waterMaterial;
+    private bool waveHasPassed;
+    private SceneAudioManager audioManager;
 
     private void Start()
     {
@@ -25,7 +27,6 @@ public class WaterWaveSample : MonoBehaviour
     {
         timer += Time.deltaTime * waveSpeed;
         waterMaterial.SetFloat("_Timer", timer);
-
     }
 
     //here will be the math for reference later
@@ -61,5 +62,16 @@ public class WaterWaveSample : MonoBehaviour
     {
         _in = Mathf.Abs(_in);
         return _in - Mathf.Floor(_in);
+    }
+
+    public void WaveEnterField()
+    {
+        Vector2 soundCueOffset = getWaveOffsetAndRotation(-10);
+        if (soundCueOffset.x > 0)
+        {
+            audioManager.PlayWaveSfx();
+        }
+
+        waveHasPassed = true;
     }
 }

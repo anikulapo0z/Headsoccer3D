@@ -133,6 +133,7 @@ public class MenuManager : MonoBehaviour
 
     public void PlayerJoined(int count)
     {
+        menuAudioManager.PlayCharacterJoinSfx();
         totalPlayerCount = PlayerInputHolder.Instance.playerList.Count;
         canMoveToNextScreen = false;
         pressConfirmPrompt.SetActive(false);
@@ -379,6 +380,8 @@ public class MenuManager : MonoBehaviour
         Destroy(target.gameObject);
 
         totalPlayerCount = PlayerInputHolder.Instance.playerList.Count;
+        
+        menuAudioManager.PlayUIBackSfx();
 
         Debug.Log(totalPlayerCount);
 

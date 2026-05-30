@@ -57,6 +57,7 @@ public class ShadowCloneActor : MonoBehaviour
         Vector3 originalScale = transform.localScale;
         transform.localScale = Vector3.zero;
         transform.DOScale(originalScale, spawnScaleTime).SetEase(Ease.OutBack);
+        GetComponent<PlayerAudioManager>().PlayCloneSpawnSfx();
     }
 
     private void DisableRealPlayerOnlyComponents()
@@ -168,6 +169,8 @@ public class ShadowCloneActor : MonoBehaviour
         }
 
         transform.DOKill();
+
+        GetComponent<PlayerAudioManager>().PlayCloneDespawnSfx();
 
         Sequence seq = DOTween.Sequence();
         seq.Append(transform.DOScale(transform.localScale * flashScale, 0.08f));
