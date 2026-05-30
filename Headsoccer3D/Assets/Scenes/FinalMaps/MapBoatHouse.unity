@@ -9029,7 +9029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9134978d0ddc11e4680fa5a225c72f1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioManager: {fileID: 0}
+  audioManager: {fileID: 6185807283422244032}
 --- !u!54 &721426238
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9368,7 +9368,7 @@ MonoBehaviour:
   maxRotation: 3
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 0
+  lerpSpeed: 4
 --- !u!1 &754381574
 GameObject:
   m_ObjectHideFlags: 0
@@ -12521,11 +12521,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 962142418}
   m_Mesh: {fileID: -153830957423991239, guid: b14440dbeba636d47b13650223145c0c, type: 3}
---- !u!4 &963785678 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d40e7e4b7281005468f5adab43004831, type: 3}
-  m_PrefabInstance: {fileID: 1412733613}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &969511936
 GameObject:
   m_ObjectHideFlags: 0
@@ -15330,7 +15325,7 @@ MonoBehaviour:
   maxRotation: 3
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 0
+  lerpSpeed: 4
 --- !u!1 &1192189052
 GameObject:
   m_ObjectHideFlags: 0
@@ -17817,79 +17812,41 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1412733613
-PrefabInstance:
+--- !u!114 &1412733615
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1978170851}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: d40e7e4b7281005468f5adab43004831, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 90.14856
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d40e7e4b7281005468f5adab43004831, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 89.91006
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d40e7e4b7281005468f5adab43004831, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 58.378468
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d40e7e4b7281005468f5adab43004831, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.47717616
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d40e7e4b7281005468f5adab43004831, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.03
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d40e7e4b7281005468f5adab43004831, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.1413854
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d40e7e4b7281005468f5adab43004831, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071178
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d40e7e4b7281005468f5adab43004831, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7070958
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d40e7e4b7281005468f5adab43004831, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d40e7e4b7281005468f5adab43004831, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d40e7e4b7281005468f5adab43004831, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d40e7e4b7281005468f5adab43004831, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d40e7e4b7281005468f5adab43004831, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -7511558181221131132, guid: d40e7e4b7281005468f5adab43004831, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: cceb944df8a65994e9f6225cb971222d, type: 2}
-    - target: {fileID: 919132149155446097, guid: d40e7e4b7281005468f5adab43004831, type: 3}
-      propertyPath: m_Name
-      value: Ice_Water
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d40e7e4b7281005468f5adab43004831, type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148285941756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4483e1456fbce104483704e7ef213790, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  splashVFX_IN: {fileID: 7399320957238191305, guid: 8f156541f609045499d9e928bce23ead, type: 3}
+  splashVFX_OUT: {fileID: 4764295182390436227, guid: a213a23bc8728c14fa54953e54331656, type: 3}
+--- !u!65 &1412733616
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148285941756}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.81542397, y: 0.44343734, z: 0.0020233379}
+  m_Center: {x: 0.000017724118, y: 0.0000013497064, z: 0.0006635107}
 --- !u!1 &1412798814
 GameObject:
   m_ObjectHideFlags: 0
@@ -20755,7 +20712,7 @@ MonoBehaviour:
   maxRotation: 3
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 0
+  lerpSpeed: 4
 --- !u!1 &1609632225
 GameObject:
   m_ObjectHideFlags: 0
@@ -23904,7 +23861,7 @@ MonoBehaviour:
   maxRotation: 3
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 0
+  lerpSpeed: 4
 --- !u!1 &1756965399
 GameObject:
   m_ObjectHideFlags: 0
@@ -24396,7 +24353,7 @@ MonoBehaviour:
   maxRotation: 3
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 0
+  lerpSpeed: 4
 --- !u!1 &1772888100
 GameObject:
   m_ObjectHideFlags: 0
@@ -27004,7 +26961,6 @@ Transform:
   m_LocalScale: {x: 0.56582874, y: 0.91732156, z: 0.56582874}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 963785678}
   - {fileID: 1756754369}
   - {fileID: 742763588}
   - {fileID: 1530745384}
@@ -27932,7 +27888,7 @@ MonoBehaviour:
   maxRotation: 3
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 0
+  lerpSpeed: 4
 --- !u!1 &2051845770
 GameObject:
   m_ObjectHideFlags: 0
@@ -29782,6 +29738,21 @@ Transform:
   - {fileID: 1658206007}
   m_Father: {fileID: 8838908864410236231}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &543450652287302982
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148285941756}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7070958, y: -0, z: -0, w: 0.7071178}
+  m_LocalPosition: {x: -0.18, y: -0.8575196, z: -2.76}
+  m_LocalScale: {x: 51.008644, y: 50.873695, z: 53.55183}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!23 &544322135023561186
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -30298,6 +30269,26 @@ GameObject:
   - component: {fileID: 5151716008646633501}
   m_Layer: 6
   m_Name: IceCrack_38
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &919132148285941756
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 543450652287302982}
+  - component: {fileID: 3469287838351553251}
+  - component: {fileID: 1711813854357751337}
+  - component: {fileID: 1412733616}
+  - component: {fileID: 1412733615}
+  m_Layer: 0
+  m_Name: Ice_Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30868,6 +30859,51 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!23 &1711813854357751337
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148285941756}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: cceb944df8a65994e9f6225cb971222d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!4 &1727950370945974275
 Transform:
   m_ObjectHideFlags: 0
@@ -32119,6 +32155,14 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &3469287838351553251
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148285941756}
+  m_Mesh: {fileID: 4493585093827132993, guid: d40e7e4b7281005468f5adab43004831, type: 3}
 --- !u!4 &3505926674884713392
 Transform:
   m_ObjectHideFlags: 0
@@ -32624,7 +32668,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!1 &4223800493513233360
 GameObject:
   m_ObjectHideFlags: 0
@@ -32990,7 +33034,7 @@ MonoBehaviour:
   maxRotation: 12.38
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!23 &4765061436655600739
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -33079,7 +33123,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!223 &4901068942328147139
 Canvas:
   m_ObjectHideFlags: 0
@@ -33318,7 +33362,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!4 &5151716008646633500
 Transform:
   m_ObjectHideFlags: 0
@@ -33352,7 +33396,7 @@ MonoBehaviour:
   maxRotation: 4.92
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!4 &5222733616029378589
 Transform:
   m_ObjectHideFlags: 0
@@ -33500,7 +33544,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!33 &5423590515516018340
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -33723,7 +33767,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!33 &5791819160459274540
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -33748,7 +33792,7 @@ MonoBehaviour:
   maxRotation: 6
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!4 &5811123935543130325
 Transform:
   m_ObjectHideFlags: 0
@@ -33782,7 +33826,7 @@ MonoBehaviour:
   maxRotation: 12.38
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!4 &5869600082284185526
 Transform:
   m_ObjectHideFlags: 0
@@ -33957,7 +34001,7 @@ MonoBehaviour:
   maxRotation: 6
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!4 &6132089607923563885
 Transform:
   m_ObjectHideFlags: 0
@@ -34150,8 +34194,10 @@ MonoBehaviour:
   crowdBoosSfx: {fileID: 0}
   confettiSfx: {fileID: 6185807283422244034}
   whistleSfx: {fileID: 6185807283422244042}
+  countdownBeepSfx: {fileID: 0}
   busSfx: {fileID: 0}
   trainHornSfx: {fileID: 0}
+  trainTracksSfx: {fileID: 0}
   trainPlayerImpactSfx: []
   announcementSfx: {fileID: 0}
   bellRingSfx: {fileID: 0}
@@ -35294,7 +35340,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!4 &6341063082156824638
 Transform:
   m_ObjectHideFlags: 0
@@ -35347,7 +35393,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!33 &6487020667669858622
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -35435,7 +35481,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!1 &6651331892933833397
 GameObject:
   m_ObjectHideFlags: 0
@@ -35489,7 +35535,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!23 &6742596964338747380
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -35706,7 +35752,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!4 &6950767071615848278
 Transform:
   m_ObjectHideFlags: 0
@@ -35740,7 +35786,7 @@ MonoBehaviour:
   maxRotation: 12.38
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!23 &6965333517302013659
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -35802,7 +35848,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!33 &7013605637860963603
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -35835,7 +35881,7 @@ MonoBehaviour:
   maxRotation: 4.92
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!4 &7055893301462620253
 Transform:
   m_ObjectHideFlags: 0
@@ -36066,7 +36112,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!1 &7284796278078949824
 GameObject:
   m_ObjectHideFlags: 0
@@ -36171,7 +36217,7 @@ MonoBehaviour:
   maxRotation: 4.92
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!1 &7365138805697057081
 GameObject:
   m_ObjectHideFlags: 0
@@ -36215,7 +36261,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!33 &7455958871734811883
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -36552,7 +36598,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!23 &7710806794975698513
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -36639,7 +36685,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!4 &7879684878966150380
 Transform:
   m_ObjectHideFlags: 0
@@ -36673,7 +36719,7 @@ MonoBehaviour:
   maxRotation: 4.92
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!1 &7893471986845070584
 GameObject:
   m_ObjectHideFlags: 0
@@ -36778,7 +36824,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!1 &8015327305774188048
 GameObject:
   m_ObjectHideFlags: 0
@@ -36861,7 +36907,7 @@ MonoBehaviour:
   maxRotation: 12.38
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!23 &8087981634919432644
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -36923,7 +36969,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!23 &8119604135773758154
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -37030,7 +37076,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!23 &8196244511295402725
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -37153,7 +37199,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!4 &8245519409184125555
 Transform:
   m_ObjectHideFlags: 0
@@ -37187,7 +37233,7 @@ MonoBehaviour:
   maxRotation: 4.92
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!33 &8335446144677102496
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -37212,7 +37258,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!33 &8344377177454366327
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -37299,7 +37345,7 @@ MonoBehaviour:
   maxRotation: 12.38
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!4 &8367634133452486285
 Transform:
   m_ObjectHideFlags: 0
@@ -37333,7 +37379,7 @@ MonoBehaviour:
   maxRotation: 4.92
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!23 &8368319939580950023
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -37414,7 +37460,7 @@ MonoBehaviour:
   maxRotation: 4.92
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!4 &8417100031387558249
 Transform:
   m_ObjectHideFlags: 0
@@ -37448,7 +37494,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!4 &8434988492701561942
 Transform:
   m_ObjectHideFlags: 0
@@ -37482,7 +37528,7 @@ MonoBehaviour:
   maxRotation: 4.92
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!4 &8490154139081885808
 Transform:
   m_ObjectHideFlags: 0
@@ -37516,7 +37562,7 @@ MonoBehaviour:
   maxRotation: 12.38
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!1 &8551427742229749960
 GameObject:
   m_ObjectHideFlags: 0
@@ -37552,7 +37598,7 @@ MonoBehaviour:
   maxRotation: 4.92
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!4 &8555441139456049277
 Transform:
   m_ObjectHideFlags: 0
@@ -37586,7 +37632,7 @@ MonoBehaviour:
   maxRotation: 12.38
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!4 &8572846480871417502
 Transform:
   m_ObjectHideFlags: 0
@@ -37663,7 +37709,7 @@ MonoBehaviour:
   maxRotation: 4.92
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!33 &8647859843051801723
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -37688,7 +37734,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!224 &8652570623894108267
 RectTransform:
   m_ObjectHideFlags: 0
@@ -37761,7 +37807,7 @@ MonoBehaviour:
   maxRotation: 4.92
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!33 &8716222969961539403
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -37786,7 +37832,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!4 &8750828073152913844
 Transform:
   m_ObjectHideFlags: 0
@@ -37865,7 +37911,7 @@ MonoBehaviour:
   maxRotation: 12.38
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!23 &8777733851796098290
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -37927,7 +37973,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!4 &8838908864410236231
 Transform:
   m_ObjectHideFlags: 0
@@ -38095,7 +38141,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!23 &8919019712636241282
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -38157,7 +38203,7 @@ MonoBehaviour:
   maxRotation: 4.92
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!33 &9035535016163147422
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -38182,7 +38228,7 @@ MonoBehaviour:
   maxRotation: 4.92
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!1 &9043222148127336677
 GameObject:
   m_ObjectHideFlags: 0
@@ -38218,7 +38264,7 @@ MonoBehaviour:
   maxRotation: 7.36
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!4 &9056820616373308138
 Transform:
   m_ObjectHideFlags: 0
@@ -38252,7 +38298,7 @@ MonoBehaviour:
   maxRotation: 4.92
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!1 &9064275512409274295
 GameObject:
   m_ObjectHideFlags: 0
@@ -38388,7 +38434,7 @@ MonoBehaviour:
   maxRotation: 4.92
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!33 &9213614137952884307
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -38413,7 +38459,7 @@ MonoBehaviour:
   maxRotation: 12.38
   yInitialPos: 0
   sinking: 0
-  lerpSpeed: 5
+  lerpSpeed: 4
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -38431,6 +38477,7 @@ SceneRoots:
   - {fileID: 8838908864410236231}
   - {fileID: 1978170851}
   - {fileID: 901714736}
+  - {fileID: 543450652287302982}
   - {fileID: 186937801}
   - {fileID: 883557886}
   - {fileID: 103679451}

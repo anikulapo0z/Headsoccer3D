@@ -21,6 +21,8 @@ public class PlayerIceController : MonoBehaviour
     [SerializeField] float forceStrength;
     [SerializeField] AnimationCurve iceTossSpeed;
     private PlayerAudioManager audioManager;
+    [SerializeField] GameObject iceBreakVFX;
+
 
     private void Start()
     {
@@ -118,6 +120,9 @@ public class PlayerIceController : MonoBehaviour
         if (CameraController.Instance != null)
             CameraController.Instance.ShakeCamera(0.5f, 0.1f, 25);
 
+        if (iceBreakVFX)
+            Instantiate(iceBreakVFX, transform.position, Quaternion.identity);
+
         if (iceBlockFracture == null) return;
 
         iceBlockFracture.SetActive(true);
@@ -129,6 +134,8 @@ public class PlayerIceController : MonoBehaviour
             child.GetComponent<Rigidbody>().AddForce((transform.position - child.position).normalized * forceStrength, ForceMode.Impulse);
             child.DOScale(0.001f, 5).OnComplete(() => iceBlockFracture.SetActive(false));
         }
+
+        
 
     }
 

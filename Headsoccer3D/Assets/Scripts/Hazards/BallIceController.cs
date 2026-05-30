@@ -17,6 +17,8 @@ public class BallIceController : MonoBehaviour
     [SerializeField] float yVal;
     [SerializeField] float moveYSpeed;
 
+    [SerializeField] GameObject iceBreakVFX;
+
     [SerializeField] AnimationCurve iceTossSpeed;
     private PlayerAudioManager audioManager;
 
@@ -89,6 +91,9 @@ public class BallIceController : MonoBehaviour
         canHitIce = false;
         allowHurtIce = false;
         soccerBall.isFrozen = false;
+
+        if (iceBreakVFX)
+            Instantiate(iceBreakVFX, transform.position, Quaternion.identity);
 
     }
 
