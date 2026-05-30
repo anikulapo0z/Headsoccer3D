@@ -57,7 +57,7 @@ public class AbilityThrower : MonoBehaviour
         start = true;
 
         //if we have animation, set the animator refs
-        if(throwerChars.Length > 0)
+        if(throwerChars != null && throwerChars.Length > 0)
         {
             throwerAnims = new Animator[throwerChars.Length];
             for(int i = 0; i < throwerChars.Length; i++)
@@ -92,9 +92,9 @@ public class AbilityThrower : MonoBehaviour
         int point = Random.Range(0, spawnPoint.Length);
 
         //if there is anim, wait a bit, other wise wait less
-        yield return new WaitForSeconds(throwerAnims.Length > 0 ? 0.67458f : 0.1186f);
+        yield return new WaitForSeconds((throwerAnims != null && throwerAnims.Length > 0) ? 0.67458f : 0.1186f);
 
-        if(throwerAnims.Length > 0 )
+        if (throwerAnims != null && throwerAnims.Length > 0)
         {
             throwerAnims[point].SetTrigger("Throw");
             //throwerChars[point].transform.DOMoveZ(throwerChars[point].transform.position.z + 0.8f, 0.1f);
