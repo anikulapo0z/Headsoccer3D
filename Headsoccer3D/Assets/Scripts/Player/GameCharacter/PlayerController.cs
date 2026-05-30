@@ -489,6 +489,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     public void OnAbility()
     {
+        anim.SetInteger("Taunt", (10));
         if (isFrozen)
         {
             GetComponent<PlayerIceController>().HurtIce();
@@ -515,6 +516,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     }
     public void OnSprint(bool held)
     {
+        anim.SetInteger("Taunt", (10));
         if (playerLocked || isFlat)
             return;
         sprintHeld = held;
@@ -532,6 +534,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     }
     public void OnJump()
     {
+        anim.SetInteger("Taunt", (10));
         if (isFrozen)
         {
             GetComponent<PlayerIceController>().HurtIce();
@@ -585,6 +588,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     public void OnMove(Vector2 input)
     {
+        anim.SetInteger("Taunt", (10));
         if (isFrozen)
         {
             GetComponent<PlayerIceController>().HurtIce();
@@ -614,6 +618,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     }
     public void OnKick(bool held)
     {
+        anim.SetInteger("Taunt", (10));
         if (isFrozen)
         {
             GetComponent<PlayerIceController>().HurtIce();
@@ -650,7 +655,19 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         }
     }
 
-    public void OnPoseTaunt() { }
+    public void OnPoseTaunt() 
+    {
+        int GetRandomTauntDifferentFromCurrent()
+        {
+            int newTaunt = Random.Range(1, 6);
+            while (newTaunt == anim.GetInteger("Taunt"))
+            {
+                newTaunt = Random.Range(1, 6);
+            }
+            return newTaunt;
+        }
+        anim.SetInteger("Taunt", GetRandomTauntDifferentFromCurrent());
+    }
     public void OnTextTaunt() { }
 
 
