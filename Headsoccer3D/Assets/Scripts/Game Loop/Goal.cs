@@ -24,7 +24,7 @@ public class Goal : MonoBehaviour
             }
             //if (goalScoredAudioSource != null)
             //{
-                goalScoredAudioSource.Play();
+            //    goalScoredAudioSource.Play();
             //}
             //else
             //{

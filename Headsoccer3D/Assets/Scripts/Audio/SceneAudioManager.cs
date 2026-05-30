@@ -4,20 +4,26 @@ public class SceneAudioManager : MonoBehaviour
 {
     [SerializeField] private AudioSource backgroundMusic;
     [SerializeField] private AudioSource crowdAmbience;
-    [SerializeField] private AudioSource crowdCheers;
-    [SerializeField] private AudioSource chaosSequenceSfx;
+    [SerializeField] private AudioSource crowdCheersSfx;
     [SerializeField] private AudioSource crowdBoosSfx;
-    [SerializeField] private AudioSource[] confettiSfx;
+    [SerializeField] private AudioSource confettiSfx;
     [SerializeField] private AudioSource whistleSfx;
+    [SerializeField] private AudioSource countdownBeepSfx;
+
     [Header("Bus map")]
     [SerializeField] private AudioSource busSfx;
     [Header("Train map")]
     [SerializeField] private AudioSource trainHornSfx;
+    [SerializeField] private AudioSource trainTracksSfx;
     [SerializeField] private AudioSource[] trainPlayerImpactSfx;
     [SerializeField] private AudioSource announcementSfx;
     [Header("Bell map")]
     [SerializeField] private AudioSource bellRingSfx;
     [SerializeField] private AudioSource bellBreakSfx;
+    [SerializeField] private AudioSource chaosSequenceSfx;
+    [Header("River map")]
+    [SerializeField] private AudioSource[] waveSfx;
+    [SerializeField] private AudioSource splashSfx;
 
     // general
     private void Start()
@@ -41,38 +47,21 @@ public class SceneAudioManager : MonoBehaviour
     }
     public void PlayConfettiCheersSfx()
     {
-        if (confettiSfx.Length > 0)
+        if (confettiSfx && confettiSfx.resource)
         {
-            int randomIndex = Random.Range(0, confettiSfx.Length);
-            AudioSource source = confettiSfx[randomIndex];
-            if (source.resource)
-            {
-                // source.panStereo = pan;
-                source.Play();
-            }
+            confettiSfx.Play();
         }
         else
         {
-            Debug.Log("Crowd cheers or confetti SFX clip is not assigned");
+            Debug.Log("confetti SFX clip is not assigned");
         }
-        if (crowdCheers && crowdCheers.resource)
+        if (crowdCheersSfx && crowdCheersSfx.resource)
         {
-            crowdCheers.Play();
-        }
-        else
-        {
-            Debug.Log("Crowd cheers or confetti SFX clip is not assigned");
-        }
-    }
-    public void PlayChaosSfx()
-    {
-        if (chaosSequenceSfx && chaosSequenceSfx.resource)
-        {
-            chaosSequenceSfx.Play();
+            crowdCheersSfx.Play();
         }
         else
         {
-            Debug.Log("chaos SFX clip is not assigned");
+            Debug.Log("Crowd cheers SFX clip is not assigned");
         }
     }
     public void PlayWhistleSfx()
@@ -84,6 +73,17 @@ public class SceneAudioManager : MonoBehaviour
         else
         {
             Debug.Log("Whistle SFX clip is not assigned");
+        }
+    }
+    public void PlayCountdownSfx()
+    {
+        if (countdownBeepSfx && countdownBeepSfx.resource)
+        {
+            countdownBeepSfx.Play();
+        }
+        else
+        {
+            Debug.Log("Countdown SFX clip is not assigned");
         }
     }
 
@@ -111,6 +111,18 @@ public class SceneAudioManager : MonoBehaviour
         else
         {
             Debug.Log("Train Horn SFX clip is not assigned");
+        }
+    }
+    public void PlayTrainTracksSfx(float pan)
+    {
+        if (trainTracksSfx && trainTracksSfx.resource)
+        {
+            trainTracksSfx.panStereo = pan;
+            trainTracksSfx.Play();
+        }
+        else
+        {
+            Debug.Log("Train Tracks SFX clip is not assigned");
         }
     }
     public void PlayTrainPlayerImpactSfx(float pan)
@@ -164,6 +176,52 @@ public class SceneAudioManager : MonoBehaviour
         else
         {
             Debug.Log("Bell Break SFX clip is not assigned");
+        }
+    }
+    public void PlayChaosSfx()
+    {
+        if (chaosSequenceSfx && chaosSequenceSfx.resource)
+        {
+            chaosSequenceSfx.Play();
+        }
+        else
+        {
+            Debug.Log("chaos SFX clip is not assigned");
+        }
+    }
+    // river splashSfx
+    public void PlayWaveSfx()
+    {
+        if (waveSfx.Length > 0)
+        {
+            int randomIndex = Random.Range(0, waveSfx.Length);
+            waveSfx[randomIndex].Play();
+        }
+        else
+        {
+            UnityEngine.Debug.Log("Wave SFX clips are not assigned.");
+        }
+    }
+    public void PlayPlayerSplashSfx()
+    {
+        if (splashSfx && splashSfx.resource)
+        {
+            splashSfx.Play();
+        }
+        else
+        {
+            Debug.Log("slash SFX clip is not assigned");
+        }
+    }
+    public void PlayBallSplashSfx()
+    {
+        if (splashSfx && splashSfx.resource)
+        {
+            splashSfx.Play();
+        }
+        else
+        {
+            Debug.Log("slash SFX clip is not assigned");
         }
     }
 }
