@@ -10,8 +10,9 @@ public class PlayerAudioManager : MonoBehaviour
     [SerializeField] private AudioSource[] hitBallSfx;
     [SerializeField] private AudioSource[] footstepsSfx;
     [SerializeField] private AudioSource jumpSfx;
+    [SerializeField] private AudioSource cloneSpawnSfx;
+    [SerializeField] private AudioSource cloneDespawnSfx;
     [SerializeField] private AudioSource cloneKickSfx;
-    [SerializeField] private AudioSource cloneJumpSfx;
     [SerializeField] private AudioSource landSfx;
     [SerializeField] private AudioSource pickupSfx;
     [SerializeField] private AudioSource empoweredKickSfx;
@@ -30,6 +31,18 @@ public class PlayerAudioManager : MonoBehaviour
         else
         {
             UnityEngine.Debug.Log("Kick Ball SFX clips are not assigned.");
+        }
+        if (GetComponent<PlayerAbility>().currentAbility == AbilityTrigger.AbilityTypes.ShadowClone)
+        {
+            UnityEngine.Debug.Log("shadow clone yes");
+            if (cloneKickSfx && cloneKickSfx.resource)
+            {
+                cloneKickSfx.Play();
+            }
+            else
+            {
+                UnityEngine.Debug.Log("Clone Kick SFX clip is not assigned.");
+            }
         }
     }
     public void PlayChargeSfx()
@@ -78,18 +91,6 @@ public class PlayerAudioManager : MonoBehaviour
         {
             UnityEngine.Debug.Log("Jump SFX clip is not assigned.");
         }
-        if (GetComponent<PlayerAbility>().currentAbility == AbilityTrigger.AbilityTypes.ShadowClone)
-        {
-            UnityEngine.Debug.Log("shadow clone yes");
-            if (cloneJumpSfx && cloneJumpSfx.resource)
-            {
-                cloneJumpSfx.Play();
-            }
-            else
-            {
-                UnityEngine.Debug.Log("Clone Jump SFX clip is not assigned.");
-            }
-        }
     }
     public void PlayLandSfx()
     {
@@ -123,48 +124,52 @@ public class PlayerAudioManager : MonoBehaviour
         }
         else
         {
-            UnityEngine.Debug.Log("empoweredKickSfx is not assigned.");
-
+            UnityEngine.Debug.Log("Pick up SFX is not assigned.");
         }
     }
     public void PlayEmpoweredKickKickSfx()
     {
-        if (empoweredKickSfx)
+        if (empoweredKickSfx && empoweredKickSfx.resource)
         {
-            if (empoweredKickSfx.resource)
-            {
-                empoweredKickSfx.Play();
-            }
-            else
-            {
-                UnityEngine.Debug.Log("empoweredKickSfx clip is not assigned.");
-            }
+            empoweredKickSfx.Play();
         }
         else
         {
             UnityEngine.Debug.Log("empoweredKickSfx is not assigned.");
-
         }
     }
     public void PlayMultiBallSfx()
     {
-        if (multiBallSfx)
+        if (multiBallSfx && multiBallSfx.resource)
         {
-            if (multiBallSfx.resource)
-            {
-                multiBallSfx.Play();
-            }
-            else
-            {
-                UnityEngine.Debug.Log("multiBallSfx clip is not assigned.");
-            }
+            multiBallSfx.Play();
         }
         else
         {
             UnityEngine.Debug.Log("multiBallSfx is not assigned.");
-
         }
-
+    }
+    public void PlayCloneSpawnSfx()
+    {
+        if (multiBallSfx && multiBallSfx.resource)
+        {
+            multiBallSfx.Play();
+        }
+        else
+        {
+            UnityEngine.Debug.Log("multiBallSfx is not assigned.");
+        }
+    }
+    public void PlayCloneDespawnSfx()
+    {
+        if (cloneSpawnSfx && cloneSpawnSfx.resource)
+        {
+            cloneSpawnSfx.Play();
+        }
+        else
+        {
+            UnityEngine.Debug.Log("multiBallSfx is not assigned.");
+        }
     }
 
     //river map

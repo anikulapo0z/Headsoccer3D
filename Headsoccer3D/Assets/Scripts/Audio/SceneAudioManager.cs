@@ -8,10 +8,13 @@ public class SceneAudioManager : MonoBehaviour
     [SerializeField] private AudioSource crowdBoosSfx;
     [SerializeField] private AudioSource confettiSfx;
     [SerializeField] private AudioSource whistleSfx;
+    [SerializeField] private AudioSource countdownBeepSfx;
+
     [Header("Bus map")]
     [SerializeField] private AudioSource busSfx;
     [Header("Train map")]
     [SerializeField] private AudioSource trainHornSfx;
+    [SerializeField] private AudioSource trainTracksSfx;
     [SerializeField] private AudioSource[] trainPlayerImpactSfx;
     [SerializeField] private AudioSource announcementSfx;
     [Header("Bell map")]
@@ -72,6 +75,17 @@ public class SceneAudioManager : MonoBehaviour
             Debug.Log("Whistle SFX clip is not assigned");
         }
     }
+    public void PlayCountdownSfx()
+    {
+        if (countdownBeepSfx && countdownBeepSfx.resource)
+        {
+            countdownBeepSfx.Play();
+        }
+        else
+        {
+            Debug.Log("Countdown SFX clip is not assigned");
+        }
+    }
 
     // bus
     public void PlayBusSfx()
@@ -97,6 +111,18 @@ public class SceneAudioManager : MonoBehaviour
         else
         {
             Debug.Log("Train Horn SFX clip is not assigned");
+        }
+    }
+    public void PlayTrainTracksSfx(float pan)
+    {
+        if (trainTracksSfx && trainTracksSfx.resource)
+        {
+            trainTracksSfx.panStereo = pan;
+            trainTracksSfx.Play();
+        }
+        else
+        {
+            Debug.Log("Train Tracks SFX clip is not assigned");
         }
     }
     public void PlayTrainPlayerImpactSfx(float pan)

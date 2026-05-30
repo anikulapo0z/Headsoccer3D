@@ -17559,6 +17559,7 @@ MonoBehaviour:
   - {fileID: 7314400718525558973, guid: 596f52c30bc4a424fb002516b9c01daf, type: 3}
   spawnPoint:
   - {fileID: 840813320}
+  throwerChars: []
   minX: -5.5
   maxX: 5.5
   minZ: -6
@@ -28862,17 +28863,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundMusic: {fileID: 1951291695}
   crowdAmbience: {fileID: 1951291702}
-  crowdCheersSfx: {fileID: 0}
+  crowdCheersSfx: {fileID: 1951291694}
   crowdBoosSfx: {fileID: 0}
-  confettiSfx: {fileID: 0}
+  confettiSfx: {fileID: 1951291695}
   whistleSfx: {fileID: 1951291697}
-  busSfx: {fileID: 0}
+  busSfx: {fileID: 1951291702}
   trainHornSfx: {fileID: 0}
   trainPlayerImpactSfx: []
   announcementSfx: {fileID: 0}
   bellRingSfx: {fileID: 0}
   bellBreakSfx: {fileID: 0}
   chaosSequenceSfx: {fileID: 0}
+  waveSfx: []
+  splashSfx: {fileID: 0}
 --- !u!82 &1951291697
 AudioSource:
   m_ObjectHideFlags: 0

@@ -141,6 +141,8 @@ public class SeptaTrain : MonoBehaviour
         yield return null; // wait a frame
 
         sceneAudioManager.PlayTrainHornSfx(GetPan());
+        //move to like a second later
+        sceneAudioManager.PlayTrainTracksSfx(GetPan());
 
         //better to create a sequence and play
         railpath.DOShakePosition(1.764f, 0.0198f, 10, 90, false, false)// rail shake
