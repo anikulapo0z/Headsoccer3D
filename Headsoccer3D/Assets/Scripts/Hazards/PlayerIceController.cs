@@ -20,10 +20,13 @@ public class PlayerIceController : MonoBehaviour
     [SerializeField] GameObject iceBlockFracture;
     [SerializeField] float forceStrength;
     [SerializeField] AnimationCurve iceTossSpeed;
+    private PlayerAudioManager audioManager;
+    [SerializeField] GameObject iceBreakVFX;
 
 
     private void Start()
     {
+        audioManager = GetComponent<PlayerAudioManager>();
         currentIceHP = maxIceHP;
         rb = GetComponent<Rigidbody>();
     }
@@ -38,8 +41,7 @@ public class PlayerIceController : MonoBehaviour
 
     public void SetFrozen()
     {
-
-
+        audioManager.PlayPlayerFreezeSfx();
 
         iceBlock.GetComponent<Renderer>().material.SetFloat("_Break_Intensity", 0);
         iceBlock.SetActive(true);
@@ -80,6 +82,8 @@ public class PlayerIceController : MonoBehaviour
 
     public void HurtIce()
     {
+        audioManager.PlayChipIceSfx();
+
         if (!allowHurtIce || !canHitIce) return;
 
         currentIceHP--;
@@ -101,6 +105,8 @@ public class PlayerIceController : MonoBehaviour
 
     void BreakIce()
     {
+        audioManager.PlayBreakIceSfx();
+
         GetComponent<PlayerController>().isFrozen = false;
         GetComponent<PlayerController>().UnlockPlayerMove();
 
@@ -114,6 +120,9 @@ public class PlayerIceController : MonoBehaviour
         if (CameraController.Instance != null)
             CameraController.Instance.ShakeCamera(0.5f, 0.1f, 25);
 
+        if (iceBreakVFX)
+            Instantiate(iceBreakVFX, transform.position, Quaternion.identity);
+
         if (iceBlockFracture == null) return;
 
         iceBlockFracture.SetActive(true);
@@ -125,6 +134,8 @@ public class PlayerIceController : MonoBehaviour
             child.GetComponent<Rigidbody>().AddForce((transform.position - child.position).normalized * forceStrength, ForceMode.Impulse);
             child.DOScale(0.001f, 5).OnComplete(() => iceBlockFracture.SetActive(false));
         }
+
+        
 
     }
 

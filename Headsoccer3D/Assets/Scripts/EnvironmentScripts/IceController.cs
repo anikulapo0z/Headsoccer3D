@@ -16,6 +16,8 @@ public class IceController : MonoBehaviour
 
     Transform startPos;
     [SerializeField] float unpauseDelay;
+    
+    [SerializeField] private AudioSource sinkSfx;
 
 
     public void Start()
@@ -39,6 +41,8 @@ public class IceController : MonoBehaviour
         {
             int index = Random.Range(0, iceFragments.Length);
             iceFragments[index].GetComponent<IceShard>().sinking = true;
+
+            sinkSfx.Play();
 
             iceFragments[index].DOLocalMoveY(0.6f, moveSpeed)
                 .OnComplete(() => iceFragments[index].DOLocalMoveY(sinkPosition, moveSpeed * 5));

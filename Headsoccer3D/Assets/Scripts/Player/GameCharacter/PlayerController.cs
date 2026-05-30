@@ -934,6 +934,7 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
     }
 
+
     private void DOFlattenY(float yMultiplier)
     {
         flattenYMultiplier = yMultiplier;
@@ -944,7 +945,11 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     {
         float bigScale = GetComponent<PlayerAbility>()?.currentGrowMultiplier ?? 1f;
 
-        Vector3 target = new Vector3(originalYScale * bigScale, originalYScale * flattenYMultiplier, originalYScale * bigScale);
+        Vector3 target = new Vector3(
+            originalYScale * bigScale,
+            originalYScale * bigScale * flattenYMultiplier,
+            originalYScale * bigScale
+        );
 
         if (duration > 0f)
             transform.DOScale(target, duration);

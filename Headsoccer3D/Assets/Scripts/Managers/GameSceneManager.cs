@@ -182,6 +182,7 @@ public class GameSceneManager : MonoBehaviour
     {
         GameLogs.StartTimer(3, "Start Game");
 
+        audioManager.PlayWhistleSfx();
         currentGameTime = maxGameTime;
         startCountdownText.text = currentGameTime.ToString();
         canScore = true;
@@ -230,6 +231,7 @@ public class GameSceneManager : MonoBehaviour
 
         while (currentStartCoundown > 0)
         {
+            audioManager.PlayCountdownSfx();
             currentStartCoundown--;
             startCountdownText.text = currentStartCoundown.ToString();
 
@@ -277,6 +279,7 @@ public class GameSceneManager : MonoBehaviour
                 //if(colorRoutine != null)
                   //  StopCoroutine(colorRoutine);
                 colorRoutine = StartCoroutine(ColorText());
+                audioManager.PlayCountdownSfx();
             }
             yield return new WaitForSeconds(1 + timeToAdd);
 
