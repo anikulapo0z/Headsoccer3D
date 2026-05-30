@@ -24,7 +24,8 @@ public class QuitMenu : MonoBehaviour, IMenuItem
     [SerializeField] GameObject characterMenu;
     [SerializeField] GameObject mapMenu;
     [SerializeField] GameObject HowToPlayCamera;
-    [SerializeField] GameObject HowToPlayCanvas;
+    [SerializeField] GameObject HowToPlayCanvas_controller;
+    [SerializeField] GameObject HowToPlayCanvas_arcade;
     [SerializeField] GameObject CharacterSelectBackground;
     [SerializeField] GameObject CharacterSelectPreview;
 
@@ -77,7 +78,11 @@ public class QuitMenu : MonoBehaviour, IMenuItem
                     t.gameObject.SetActive(false);
                 }
                 HowToPlayCamera.SetActive(true);
-                HowToPlayCanvas.SetActive(true);
+
+                if (MenuManager.Instance.joinManager.playerSlots[playerIndex].ControllerId.Contains("EP1"))
+                    HowToPlayCanvas_arcade.SetActive(true);
+                else
+                    HowToPlayCanvas_controller.SetActive(true);
                 //CharacterSelectBackground.SetActive(false);
                 //CharacterSelectPreview.SetActive(false);
                 Debug.Log(playerIndex);

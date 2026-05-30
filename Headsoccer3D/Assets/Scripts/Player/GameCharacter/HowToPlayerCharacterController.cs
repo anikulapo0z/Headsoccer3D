@@ -47,6 +47,11 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
     //[SerializeField] Transform cursorHolder;
 
 
+    [Space]
+    [Header("kick + jump")]
+    [SerializeField] float combineButtonPressTime;
+    float pressedKickTime = 0f;
+    float pressedJumpTime = 0f;
 
 
     void Awake()
@@ -80,6 +85,11 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
 
         anim.SetFloat("Velocity", Mathf.Abs(moveInput.magnitude));
         anim.SetBool("onGround", controller.isGrounded);
+
+
+
+
+
     }
 
     public void OnMove(Vector2 input)
@@ -90,7 +100,8 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
             held = false;
         else
             held = true;
-        MenuManager.Instance.moveHighlight.SetHighlight(held, false, input.x, input.y);
+        MenuManager.Instance.moveHighlight_controller.SetHighlight(held, false, input.x, input.y);
+        MenuManager.Instance.moveHighlight_arcade.SetHighlight(held, false, input.x, input.y);
 
         moveInput = input;
         //anim.SetFloat("Velocity", 10f);
@@ -98,8 +109,12 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
 
     public void OnJump()
     {
-        MenuManager.Instance.jumpHighlight1.SetHighlight(true, true);
-        MenuManager.Instance.jumpHighlight2.SetHighlight(true, true);
+        MenuManager.Instance.jumpHighlight1_controller.SetHighlight(true, true);
+        MenuManager.Instance.jumpHighlight2_controller.SetHighlight(true, true);
+        MenuManager.Instance.jumpHighlight_exit_controller.SetHighlight(true, true);
+
+        MenuManager.Instance.jumpHighlight_arcade.SetHighlight(true, true);
+        MenuManager.Instance.jumpHighlight_exit_arcade.SetHighlight(true, true);
 
         //Debug.Log("sdfsdfgdfgdfg");
         if (controller.isGrounded)
@@ -107,12 +122,20 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
 
         //headTrigger.TurnOnCollider();
         //StartCoroutine(DisableHeadAfterTime());
+
+        pressedJumpTime = Time.time;
+        if (Mathf.Abs(pressedJumpTime - pressedKickTime) < combineButtonPressTime) ExitHowToPlay();
+
     }
 
     public void OnKick(bool held)
     {
-        MenuManager.Instance.kickHighlight.SetHighlight(held, false);
-        
+        MenuManager.Instance.kickHighlight_controller.SetHighlight(held, false);
+        MenuManager.Instance.kickHighlight_exit_controller.SetHighlight(held, false);
+
+        MenuManager.Instance.kickHighlight_arcade.SetHighlight(held, false);
+        MenuManager.Instance.kickHighlight_exit_arcade.SetHighlight(held, false);
+
         kickchargeAnim.gameObject.SetActive(held);
         kickchargeAnim.SetBool("charge", held);
 
@@ -135,25 +158,27 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
 
         }
 
+        pressedKickTime = Time.time;
+        if(Mathf.Abs(pressedJumpTime - pressedKickTime) < combineButtonPressTime) ExitHowToPlay();
     }
 
 
     public void OnAbility()
     {
-        MenuManager.Instance.abilityHighlight.SetHighlight(true, true);
+        MenuManager.Instance.abilityHighlight_controller.SetHighlight(true, true);
+        MenuManager.Instance.abilityHighlight_arcade.SetHighlight(true, true);
     }
     public void OnCancel() { }
     public void OnConfirm() { }
     public void OnStart()
     {
-        MenuManager.Instance.CloseHowToPlay();
-        MenuManager.Instance.joinManager.playerSlots[playerIndex].GetComponent<PlayerInputController>().RemoveControlledObject(this, false);
-        Destroy(gameObject);
+
 
     }
     public void OnSprint(bool held)
     {
-        MenuManager.Instance.sprintHighlight.SetHighlight(held, false);
+        MenuManager.Instance.sprintHighlight_controller.SetHighlight(held, false);
+        MenuManager.Instance.sprintHighlight_arcade.SetHighlight(held, false);
 
         if (held && moveInput.magnitude > 0)
         {
@@ -168,6 +193,17 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
 
 
 
+    }
+
+    public void OnPoseTaunt() { }
+    public void OnTextTaunt() { }
+
+
+    void ExitHowToPlay()
+    {
+        MenuManager.Instance.CloseHowToPlay();
+        MenuManager.Instance.joinManager.playerSlots[playerIndex].GetComponent<PlayerInputController>().RemoveControlledObject(this, false);
+        Destroy(gameObject);
     }
 
     void OnDestroy()

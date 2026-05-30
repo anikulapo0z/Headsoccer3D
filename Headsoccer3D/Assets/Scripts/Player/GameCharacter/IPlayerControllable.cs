@@ -8,5 +8,7 @@ public interface IPlayerControllable
     void OnConfirm();
     void OnCancel();
     void OnAbility();
+    void OnPoseTaunt();
+    void OnTextTaunt();
     void OnMove(Vector2 input);
 }

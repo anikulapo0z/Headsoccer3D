@@ -410,7 +410,8 @@ MonoBehaviour:
   characterMenu: {fileID: 0}
   mapMenu: {fileID: 0}
   HowToPlayCamera: {fileID: 0}
-  HowToPlayCanvas: {fileID: 0}
+  HowToPlayCanvas_controller: {fileID: 0}
+  HowToPlayCanvas_arcade: {fileID: 0}
   CharacterSelectBackground: {fileID: 0}
   CharacterSelectPreview: {fileID: 0}
 --- !u!114 &18376131
@@ -6301,7 +6302,8 @@ MonoBehaviour:
   characterMenu: {fileID: 1492972849}
   mapMenu: {fileID: 656467443}
   HowToPlayCamera: {fileID: 0}
-  HowToPlayCanvas: {fileID: 0}
+  HowToPlayCanvas_controller: {fileID: 0}
+  HowToPlayCanvas_arcade: {fileID: 0}
   CharacterSelectBackground: {fileID: 0}
   CharacterSelectPreview: {fileID: 0}
 --- !u!114 &544604522
@@ -15966,12 +15968,25 @@ MonoBehaviour:
   howToPlayerPosition: {fileID: 133457415}
   cursorHolder_map: {fileID: 1857006185}
   cursorHolder_character: {fileID: 1708430181}
-  jumpHighlight1: {fileID: 1185950330}
-  jumpHighlight2: {fileID: 298055694}
-  kickHighlight: {fileID: 1620739464}
-  moveHighlight: {fileID: 636299343}
-  abilityHighlight: {fileID: 1873050666}
-  sprintHighlight: {fileID: 84897427}
+  jumpHighlight1_controller: {fileID: 154265220}
+  jumpHighlight2_controller: {fileID: 0}
+  jumpHighlight_exit_controller: {fileID: 0}
+  kickHighlight_controller: {fileID: 0}
+  kickHighlight_exit_controller: {fileID: 0}
+  moveHighlight_controller: {fileID: 0}
+  abilityHighlight_controller: {fileID: 0}
+  sprintHighlight_controller: {fileID: 0}
+  poseTauntHighlight_controller: {fileID: 0}
+  textTauntHighlight_controller: {fileID: 0}
+  jumpHighlight_arcade: {fileID: 0}
+  jumpHighlight_exit_arcade: {fileID: 0}
+  kickHighlight_arcade: {fileID: 0}
+  kickHighlight_exit_arcade: {fileID: 0}
+  moveHighlight_arcade: {fileID: 0}
+  abilityHighlight_arcade: {fileID: 0}
+  sprintHighlight_arcade: {fileID: 0}
+  poseTauntHighlight_arcade: {fileID: 0}
+  textTauntHighlight_arcade: {fileID: 0}
   objectsToTurnBackOn:
   - {fileID: 684243175}
   - {fileID: 1522218992}
@@ -18881,7 +18896,8 @@ MonoBehaviour:
   characterMenu: {fileID: 0}
   mapMenu: {fileID: 0}
   HowToPlayCamera: {fileID: 0}
-  HowToPlayCanvas: {fileID: 0}
+  HowToPlayCanvas_controller: {fileID: 0}
+  HowToPlayCanvas_arcade: {fileID: 0}
   CharacterSelectBackground: {fileID: 0}
   CharacterSelectPreview: {fileID: 0}
 --- !u!114 &1687647396
@@ -22310,7 +22326,8 @@ MonoBehaviour:
   characterMenu: {fileID: 0}
   mapMenu: {fileID: 0}
   HowToPlayCamera: {fileID: 1369722531}
-  HowToPlayCanvas: {fileID: 2134799173}
+  HowToPlayCanvas_controller: {fileID: 643211099}
+  HowToPlayCanvas_arcade: {fileID: 0}
   CharacterSelectBackground: {fileID: 684243175}
   CharacterSelectPreview: {fileID: 1522218992}
 --- !u!114 &1978195073
@@ -24873,7 +24890,8 @@ MonoBehaviour:
   characterMenu: {fileID: 0}
   mapMenu: {fileID: 0}
   HowToPlayCamera: {fileID: 0}
-  HowToPlayCanvas: {fileID: 0}
+  HowToPlayCanvas_controller: {fileID: 0}
+  HowToPlayCanvas_arcade: {fileID: 0}
   CharacterSelectBackground: {fileID: 0}
   CharacterSelectPreview: {fileID: 0}
 --- !u!114 &2140883895
