@@ -25,6 +25,7 @@ public class PlayerInputController : MonoBehaviour
     InputAction kickAction;
     InputAction abilityAction;
     InputAction sprintAction;
+    InputAction tauntAction;
 
     InputActionAsset sourceActionsReference;
 
@@ -70,6 +71,7 @@ public class PlayerInputController : MonoBehaviour
         kickAction = map.FindAction("Kick");
         abilityAction = map.FindAction("Ability");
         sprintAction = map.FindAction("Sprint");
+        tauntAction = map.FindAction("PoseTaunt");
 
         SubscribeActions();
 
@@ -133,6 +135,7 @@ public class PlayerInputController : MonoBehaviour
         kickAction.performed += OnKick;
         abilityAction.performed += OnAbility;
         sprintAction.performed += OnSprint;
+        tauntAction.performed += OnPoseTaunt;
     }
 
     void UnsubscribeActions()
@@ -145,6 +148,7 @@ public class PlayerInputController : MonoBehaviour
         if (kickAction != null) kickAction.performed -= OnKick;
         if (abilityAction != null) abilityAction.performed -= OnAbility;
         if (sprintAction != null) sprintAction.performed -= OnSprint;
+        if (tauntAction != null) tauntAction.performed -= OnPoseTaunt;
     }
 
 
@@ -202,7 +206,11 @@ public class PlayerInputController : MonoBehaviour
             p?.OnAbility();
     }
 
-
+    void OnPoseTaunt(InputAction.CallbackContext ctx)
+    {
+        foreach (var p in controlledObject)
+            p?.OnPoseTaunt();
+    }
     void OnDestroy()
     {
         UnsubscribeActions();

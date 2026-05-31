@@ -94,6 +94,8 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
 
     public void OnMove(Vector2 input)
     {
+        anim.SetInteger("Taunt", (10));
+
         bool held;
 
         if(input.magnitude == 0f)
@@ -109,6 +111,7 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
 
     public void OnJump()
     {
+        anim.SetInteger("Taunt", (10));
         MenuManager.Instance.jumpHighlight1_controller.SetHighlight(true, true);
         MenuManager.Instance.jumpHighlight2_controller.SetHighlight(true, true);
         MenuManager.Instance.jumpHighlight_exit_controller.SetHighlight(true, true);
@@ -130,6 +133,7 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
 
     public void OnKick(bool held)
     {
+        anim.SetInteger("Taunt", (10));
         MenuManager.Instance.kickHighlight_controller.SetHighlight(held, false);
         MenuManager.Instance.kickHighlight_exit_controller.SetHighlight(held, false);
 
@@ -165,6 +169,7 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
 
     public void OnAbility()
     {
+        anim.SetInteger("Taunt", (10));
         MenuManager.Instance.abilityHighlight_controller.SetHighlight(true, true);
         MenuManager.Instance.abilityHighlight_arcade.SetHighlight(true, true);
     }
@@ -177,6 +182,7 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
     }
     public void OnSprint(bool held)
     {
+        anim.SetInteger("Taunt", (10));
         MenuManager.Instance.sprintHighlight_controller.SetHighlight(held, false);
         MenuManager.Instance.sprintHighlight_arcade.SetHighlight(held, false);
 
@@ -195,12 +201,16 @@ public class HowToPlayerCharacterController : MonoBehaviour, IPlayerControllable
 
     }
 
-    public void OnPoseTaunt() { }
+    public void OnPoseTaunt()
+    {
+        anim.SetInteger("Taunt", Random.Range(1, 6));
+    }
     public void OnTextTaunt() { }
 
 
     void ExitHowToPlay()
     {
+        anim.SetInteger("Taunt", (10));
         MenuManager.Instance.CloseHowToPlay();
         MenuManager.Instance.joinManager.playerSlots[playerIndex].GetComponent<PlayerInputController>().RemoveControlledObject(this, false);
         Destroy(gameObject);
