@@ -208,9 +208,9 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
 
 
     [Header("Scale Targets")]
-    [SerializeField] private Vector3 normalScale = new Vector3(1f, 1f, 1f);
-    [SerializeField] private Vector3 grownScale = new Vector3(1.5f, 1.5f, 1.5f);
-    [SerializeField] private Vector3 flattenedScale = new Vector3(1f, 0.2f, 1f);
+    [SerializeField] private Vector3 normalScale;
+    [SerializeField] private Vector3 grownScale;
+    [SerializeField] private Vector3 flattenedScale;
     
     private Vector3 GrownAndFlattenedScale =>
         new Vector3(grownScale.x, flattenedScale.y, grownScale.z);

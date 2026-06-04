@@ -17,7 +17,7 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
     GraphicRaycaster raycaster;
     EventSystem eventSystem;
 
-    [SerializeField] IMenuItem currentItem;
+    public IMenuItem currentItem;
 
     [SerializeField] Sprite defaultSpriteCursor;
     [SerializeField] Sprite selectedSpriteCursor;
@@ -177,7 +177,7 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
                 GetComponent<Image>().sprite = selectedSpriteCursor;
                 currentItem.OnConfirm(playerIndex);
                 PlayUISelectSfx();
-                GameLogs.WriteMessage($"Player [{playerIndex + 1}] selection [{currentItem}]");
+                //GameLogs.WriteMessage($"Player [{playerIndex + 1}] selection [{currentItem}]");
             }
         }
     }

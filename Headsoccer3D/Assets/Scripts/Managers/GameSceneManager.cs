@@ -688,11 +688,13 @@ public class GameSceneManager : MonoBehaviour
             {
                 playerObj.GetComponent<PlayerGroundMarker>().SetPlayerWorldUIAndColor(leftTeamPositionIndicator, characterMaterials[player.selectedCharacterID]);
                 leftTeam.Add(playerObj);
+                GameLogs.WriteMessage($"Player playing as [{characterMaterials[player.selectedCharacterID]}]");
             }
             else
             {
                 playerObj.GetComponent<PlayerGroundMarker>().SetPlayerWorldUIAndColor(rightTeamPositionIndicator, characterMaterials[player.selectedCharacterID]);
                 rightTeam.Add(playerObj);
+                GameLogs.WriteMessage($"Player playing as [{characterMaterials[player.selectedCharacterID]}]");
             }
 
 
