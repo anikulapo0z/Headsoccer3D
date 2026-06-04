@@ -2780,7 +2780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aab1aac9d0bb6ed4b80164fd0c827344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2.5
+  moveSpeed: 3.4
   rotationSpeed: 25
   rotateToMovement: 1
   kickForce: 10
@@ -2854,9 +2854,9 @@ MonoBehaviour:
   kickActiveTime: 0.15
   headActiveTime: 0.7
   kickPlayerCooldown: 0.12
-  sprintMultiplier: 2.3
+  sprintMultiplier: 1.6
   maxStamina: 10
-  staminaDrainRate: 4
+  staminaDrainRate: 3.2
   staminaRegenRate: 4
   staminaRegenDelay: 0.3
   staminaBar: {fileID: 0}
@@ -2904,6 +2904,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   dribbleYLerpSpeed: 8
+  normalScale: {x: 1, y: 1, z: 1}
+  grownScale: {x: 1.5, y: 1.5, z: 1.5}
+  flattenedScale: {x: 1, y: 0.2, z: 1}
 --- !u!114 &2982971697010060558
 MonoBehaviour:
   m_ObjectHideFlags: 0

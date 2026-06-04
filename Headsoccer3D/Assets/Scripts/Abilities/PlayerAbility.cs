@@ -53,7 +53,7 @@ public class PlayerAbility : MonoBehaviour
     public void Awake()
     {
         audioManager = GetComponent<PlayerAudioManager>();
-        originalScale = transform.localScale;
+        //originalScale = transform.localScale;
 
     }
     public void TryTriggerAbility()
@@ -99,14 +99,10 @@ public class PlayerAbility : MonoBehaviour
 
                 GetComponent<EmpoweredKick>().empoweredKickStrength = empoweredKickStrength;
                 GetComponent<EmpoweredKick>().player = gameObject;
-
-                //GetComponent<PlayerController>().hasEmpoweredKick = true;
-                //GetComponent<PlayerController>().empoweredKickStrength = empoweredKickStrength;
-                //GetComponent<PlayerController>().empoweredKickPlayerMultiplier = empoweredKickStrength * 0.6f;
                 GetComponent<PlayerGroundMarker>().ToggleEKActive();
 
-                currentGrowMultiplier = growSize.x / originalScale.x; // or however growSize relates to original
-                GetComponent<PlayerController>().ApplyCombinedScale(scaleTime);
+                currentGrowMultiplier = 1f;
+                GetComponent<PlayerController>().SetGrown(true, scaleTime);
                 break;
 
             case AbilityTrigger.AbilityTypes.MultiBall:
@@ -166,9 +162,10 @@ public class PlayerAbility : MonoBehaviour
                 break;
 
             case AbilityTrigger.AbilityTypes.EmpoweredKick:
-                GetComponent<EmpoweredKick>().ResetAbilityUse(originalScale, scaleTime);
+                GetComponent<EmpoweredKick>().ResetAbilityUse(
+                    GetComponent<PlayerController>().OriginalScale, scaleTime);
                 currentGrowMultiplier = 1f;
-                GetComponent<PlayerController>().ApplyCombinedScale(scaleTime); // reapply without big
+                GetComponent<PlayerController>().SetGrown(false, scaleTime);
                 GetComponent<PlayerGroundMarker>().ToggleEKActive();
                 Destroy(GetComponent<EmpoweredKick>());
                 break;

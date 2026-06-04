@@ -201,6 +201,26 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] private float dribbleYLerpSpeed = 8f;
 
 
+
+    //----------------
+    public enum ScaleState { Normal, Grown, Flattened, GrownAndFlattened }
+    private ScaleState currentScaleState = ScaleState.Normal;
+
+
+    [Header("Scale Targets")]
+    [SerializeField] private Vector3 normalScale = new Vector3(1f, 1f, 1f);
+    [SerializeField] private Vector3 grownScale = new Vector3(1.5f, 1.5f, 1.5f);
+    [SerializeField] private Vector3 flattenedScale = new Vector3(1f, 0.2f, 1f);
+    
+    private Vector3 GrownAndFlattenedScale =>
+        new Vector3(grownScale.x, flattenedScale.y, grownScale.z);
+
+    public Vector3 OriginalScale => normalScale;
+
+
+
+
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -426,10 +446,9 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         if (isFlat)
         {
             currentFlatenedTime -= Time.deltaTime;
-
             if (currentFlatenedTime < 0)
             {
-                DOFlattenY(1f);
+                SetFlattened(false, goToFlatTime);
                 this.moveSpeed = originalSpeed;
                 isFlat = false;
             }
@@ -924,36 +943,72 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     }
 
 
+
     public void GetFlattened()
     {
         sprintHeld = false;
         isFlat = true;
-        DOFlattenY(goToYVal / originalYScale);
         moveSpeed = flatSpeed;
         currentFlatenedTime = flatenedDuration;
-
+        SetFlattened(true, goToFlatTime);
     }
 
-
-    private void DOFlattenY(float yMultiplier)
+    private void DOFlattenY(float _ignored)
     {
-        flattenYMultiplier = yMultiplier;
-        ApplyCombinedScale(goToFlatTime);
+
+        SetFlattened(false, goToFlatTime);
     }
+
 
     public void ApplyCombinedScale(float duration = 0f)
     {
-        float bigScale = GetComponent<PlayerAbility>()?.currentGrowMultiplier ?? 1f;
-
-        Vector3 target = new Vector3(
-            originalYScale * bigScale,
-            originalYScale * bigScale * flattenYMultiplier,
-            originalYScale * bigScale
-        );
+        Vector3 target = currentScaleState switch
+        {
+            ScaleState.Normal => normalScale,
+            ScaleState.Grown => grownScale,
+            ScaleState.Flattened => flattenedScale,
+            ScaleState.GrownAndFlattened => GrownAndFlattenedScale,
+            _ => normalScale
+        };
 
         if (duration > 0f)
             transform.DOScale(target, duration);
         else
             transform.localScale = target;
+    }
+
+
+    public void SetGrown(bool grown, float duration = 0f)
+    {
+        if (grown)
+        {
+            currentScaleState = currentScaleState == ScaleState.Flattened
+                ? ScaleState.GrownAndFlattened
+                : ScaleState.Grown;
+        }
+        else
+        {
+            currentScaleState = currentScaleState == ScaleState.GrownAndFlattened
+                ? ScaleState.Flattened
+                : ScaleState.Normal;
+        }
+        ApplyCombinedScale(duration);
+    }
+
+    public void SetFlattened(bool flattened, float duration = 0f)
+    {
+        if (flattened)
+        {
+            currentScaleState = currentScaleState == ScaleState.Grown
+                ? ScaleState.GrownAndFlattened
+                : ScaleState.Flattened;
+        }
+        else
+        {
+            currentScaleState = currentScaleState == ScaleState.GrownAndFlattened
+                ? ScaleState.Grown
+                : ScaleState.Normal;
+        }
+        ApplyCombinedScale(duration);
     }
 }
