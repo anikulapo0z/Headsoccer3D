@@ -22,7 +22,8 @@ public class GameSceneManager : MonoBehaviour
 
     [SerializeField] GameObject normalField;
     [SerializeField] GameObject FFA_Field;
-    [SerializeField] GameObject goal4;
+    [SerializeField] List<GameObject> goal4stuff;
+    //[SerializeField] GameObject goal4score;
 
 
     [SerializeField] Image transitionImage;
@@ -846,7 +847,8 @@ public class GameSceneManager : MonoBehaviour
         //Debug.LogError(inputControllers.Count);
         if(isFFA && inputControllers.Count == 3)
         {
-            goal4.SetActive(false);
+            foreach(var p in goal4stuff)
+                p.SetActive(false);
         }
     }
 }

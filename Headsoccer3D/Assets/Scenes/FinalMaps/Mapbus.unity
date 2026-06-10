@@ -11285,6 +11285,26 @@ PrefabInstance:
       propertyPath: maxUpDownAngle
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8971258962591232327, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: targets.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971258962591232327, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: 'targets.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2119131415}
+    - target: {fileID: 8971258962591232327, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: 'targets.Array.data[1]'
+      value: 
+      objectReference: {fileID: 811724815}
+    - target: {fileID: 8971258962591232327, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: 'targets.Array.data[2]'
+      value: 
+      objectReference: {fileID: 295744333}
+    - target: {fileID: 8971258962591232327, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: 'targets.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1342812915}
     - target: {fileID: 9153552356154351629, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: field of view
       value: 50
@@ -14131,6 +14151,30 @@ PrefabInstance:
       propertyPath: maxUpDownAngle
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8971258962591232327, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: targets.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971258962591232327, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: 'targets.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2128426080}
+    - target: {fileID: 8971258962591232327, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: 'targets.Array.data[1]'
+      value: 
+      objectReference: {fileID: 108237260}
+    - target: {fileID: 8971258962591232327, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: 'targets.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1356598317}
+    - target: {fileID: 8971258962591232327, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: 'targets.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1096083377}
+    - target: {fileID: 8971258962591232327, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: 'targets.Array.data[4]'
+      value: 
+      objectReference: {fileID: 438411711}
     - target: {fileID: 9153552356154351629, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: field of view
       value: 50
@@ -20647,7 +20691,7 @@ MonoBehaviour:
   goal4Particles:
   - {fileID: 1550380154}
   - {fileID: 834879553}
-  timeUntilTurnParticlesOff: 0
+  timeUntilTurnParticlesOff: 3
   cameraController: {fileID: 790221998}
   shakeDuration: 0.1
   shakeStrength: 0.05
@@ -21567,8 +21611,7 @@ MonoBehaviour:
   shakeVibrato: 0
   shakeActive: 0
   isBusMap: 0
-  targetA: {fileID: 0}
-  targetB: {fileID: 0}
+  targets: []
   padding: 0
   speed: 0
   xOffset: 0
@@ -24583,8 +24626,7 @@ MonoBehaviour:
   shakeVibrato: 0
   shakeActive: 0
   isBusMap: 0
-  targetA: {fileID: 0}
-  targetB: {fileID: 0}
+  targets: []
   padding: 0
   speed: 0
   xOffset: 0
@@ -29864,8 +29906,7 @@ MonoBehaviour:
   shakeVibrato: 0
   shakeActive: 0
   isBusMap: 0
-  targetA: {fileID: 0}
-  targetB: {fileID: 0}
+  targets: []
   padding: 0
   speed: 0
   xOffset: 0
@@ -32961,8 +33002,7 @@ MonoBehaviour:
   shakeVibrato: 0
   shakeActive: 0
   isBusMap: 0
-  targetA: {fileID: 0}
-  targetB: {fileID: 0}
+  targets: []
   padding: 0
   speed: 0
   xOffset: 0
@@ -35664,7 +35704,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalField: {fileID: 605910385}
   FFA_Field: {fileID: 1179967299}
-  goal4: {fileID: 1356598316}
+  goal4stuff:
+  - {fileID: 1356598316}
+  - {fileID: 1233796799}
   transitionImage: {fileID: 964933736}
   exitTransitionImage: {fileID: 1425661614}
   mapType: 0
@@ -35785,6 +35827,8 @@ MonoBehaviour:
   startFadeWinArea: 2
   redWinColor: {r: 0.7372549, g: 0.21960784, b: 0.18431373, a: 1}
   blueWinColor: {r: 0.43137255, g: 0.43137255, b: 0.8901961, a: 1}
+  yellowWinColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  greenWinColor: {r: 0, g: 1, b: 0, a: 1}
   drawColor: {r: 0.68235296, g: 0.68235296, b: 0.68235296, a: 1}
   backgroundMusic: {fileID: 1701321367}
   abilityThrower: {fileID: 1340832238}
