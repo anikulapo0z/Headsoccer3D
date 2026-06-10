@@ -5514,7 +5514,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 121180679605582305, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
   m_PrefabInstance: {fileID: 605910383}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1645985638}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ee31208cddd4ee4faac8661cd223a97, type: 3}
@@ -11909,6 +11909,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6880311320168147493, guid: 67a51cf838be0994b91f9dd073efd4c0, type: 3}
   m_PrefabInstance: {fileID: 1587934432}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1645985638 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4575460859845439653, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+  m_PrefabInstance: {fileID: 605910383}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1690518033
 GameObject:
   m_ObjectHideFlags: 0
@@ -13603,6 +13608,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f6eb5abd8e5c024b939764b0cd80788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normalField: {fileID: 1645985638}
+  FFA_Field: {fileID: 2037529221}
+  goal4: {fileID: 0}
   transitionImage: {fileID: 173643454}
   exitTransitionImage: {fileID: 503548565}
   mapType: 0
@@ -13617,6 +13625,7 @@ MonoBehaviour:
   TwoP_SpawnPoints:
   - {fileID: 605910386}
   - {fileID: 605910385}
+  FFA_SpawnPoints: []
   currentStartCoundown: 0
   maxStartCoundown: 3
   startCountdownText: {fileID: 247613311}
@@ -13642,6 +13651,7 @@ MonoBehaviour:
   ballDropHalftoneWalls: {fileID: 1347073551}
   ballStartingPos: {fileID: 605910384}
   scoreTracker: {fileID: 1226518549}
+  scoreTracker_FFA: {fileID: 0}
   camera: {fileID: 58505474}
   characterMaterials:
   - {fileID: 2100000, guid: e614107cad86c444b9aef22603da486f, type: 2}
@@ -13694,6 +13704,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: e9a12a0fb67e4ce48b3ccb9cbc75dd71, type: 2}
   leftTeamPositionIndicator: {fileID: 2272880412295671249, guid: 412ae84f259104d448b55a1e358b6694, type: 3}
   rightTeamPositionIndicator: {fileID: 2272880412295671249, guid: 1cbc517d48694874a830577297739654, type: 3}
+  ffaPositionIndicators: []
   fakeballList: []
   winAreaSpawnPoints:
   - {fileID: 870212011}
@@ -15183,6 +15194,37 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &2037529221
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2037529222}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2037529222
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2037529221}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.060287133, y: 1.2920501, z: -2.9471388}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2067711595
 GameObject:
   m_ObjectHideFlags: 0
@@ -16911,3 +16953,4 @@ SceneRoots:
   - {fileID: 1312897891}
   - {fileID: 1749373053}
   - {fileID: 7367402473098362509}
+  - {fileID: 2037529222}

@@ -99,6 +99,7 @@ public class MenuManager : MonoBehaviour
     public enum GameMode
     {
         Classic,
+        FFA,
         RandomBall,
         StageHazards,
         RandomBallAndStageHazards
@@ -149,13 +150,21 @@ public class MenuManager : MonoBehaviour
 
         if (!isLocked)
         {
-            
+
 
 
 
             lockedPlayerCount++;
             if (lockedPlayerCount == totalPlayerCount && totalPlayerCount % 2 == 0)
             {
+                currentGameMode = GameMode.Classic;
+
+                canMoveToNextScreen = true;
+                pressConfirmPrompt.SetActive(true);
+            }
+            else if (lockedPlayerCount == totalPlayerCount && lockedPlayerCount == 3)
+            {
+                currentGameMode = GameMode.FFA;
                 canMoveToNextScreen = true;
                 pressConfirmPrompt.SetActive(true);
             }

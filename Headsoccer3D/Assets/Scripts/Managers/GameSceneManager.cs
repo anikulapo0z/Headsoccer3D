@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -19,6 +20,11 @@ public class GameSceneManager : MonoBehaviour
 
     [Header("Map Setup")]
 
+    [SerializeField] GameObject normalField;
+    [SerializeField] GameObject FFA_Field;
+    [SerializeField] GameObject goal4;
+
+
     [SerializeField] Image transitionImage;
     private Material transitionMaterial;
     [SerializeField] Image exitTransitionImage;
@@ -32,12 +38,15 @@ public class GameSceneManager : MonoBehaviour
     public GameObject characterPrefab;
     public List<GameObject> FourP_SpawnPoints = new List<GameObject>();
     public List<GameObject> TwoP_SpawnPoints = new List<GameObject>();
+    public List<GameObject> FFA_SpawnPoints = new List<GameObject>();
+    [SerializeField] bool isFFA = false;
 
     // starting countdown
     [Space]
     [SerializeField] int currentStartCoundown = 0;
     [SerializeField] int maxStartCoundown;
     [SerializeField] TMP_Text startCountdownText;
+    [SerializeField] TMP_Text ffa_CountdownText;
     [SerializeField] int numToStartAddingTime = 13;
     [SerializeField] float minTimeToAdd = 0.1f;
     [SerializeField] float maxTimeToAdd = 1.5f;
@@ -75,6 +84,7 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] BallDropHalftone ballDropHalftoneWalls;
     [SerializeField] Transform ballStartingPos;
     [SerializeField] ScoreTracker scoreTracker;
+    [SerializeField] ScoreTracker_FFA scoreTracker_FFA;
 
     [SerializeField] CameraController camera;
 
@@ -83,6 +93,7 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] Material[] characterMaterials;
     [SerializeField] GameObject leftTeamPositionIndicator;
     [SerializeField] GameObject rightTeamPositionIndicator;
+    [SerializeField] GameObject[] ffaPositionIndicators;
 
     public List<GameObject> fakeballList = new List<GameObject>();
 
@@ -95,7 +106,9 @@ public class GameSceneManager : MonoBehaviour
     List<GameObject> leftTeam = new List<GameObject>();
     List<GameObject> rightTeam = new List<GameObject>();
     [SerializeField] GameObject winAreaCamera;
+    [SerializeField] GameObject ffa_winAreaCamera;
     [SerializeField] RawImage winAreaImage;
+    [SerializeField] RawImage ffa_winAreaImage;
     [SerializeField] Material blurMaterial;
     Material winAreaMaterial;
     bool gameOver = false;
@@ -106,6 +119,8 @@ public class GameSceneManager : MonoBehaviour
     Coroutine winAreaCoroutine;
     [SerializeField] Color redWinColor = Color.red;
     [SerializeField] Color blueWinColor = Color.blue;
+    [SerializeField] Color yellowWinColor = Color.yellow;
+    [SerializeField] Color greenWinColor = Color.green;
     [SerializeField] Color drawColor = Color.white;
 
     [SerializeField] MenuMusic backgroundMusic;
@@ -121,7 +136,11 @@ public class GameSceneManager : MonoBehaviour
         audioManager = GetComponent<SceneAudioManager>();
 
         //reset materials
-        winAreaMaterial = winAreaImage.material;
+        if(!isFFA)
+            winAreaMaterial = winAreaImage.material;
+        else
+            winAreaMaterial = ffa_winAreaImage.material;
+
         if (winAreaMaterial)
             winAreaMaterial.SetFloat("_Transition", 0f);
         if (blurMaterial)
@@ -185,10 +204,14 @@ public class GameSceneManager : MonoBehaviour
         audioManager.PlayWhistleSfx();
         currentGameTime = maxGameTime;
         startCountdownText.text = currentGameTime.ToString();
+        ffa_CountdownText.text = currentGameTime.ToString();
         canScore = true;
         UnlockPlayers();
         UnlockBall();
-        scoreTracker.canScore = true;
+        if(!isFFA)
+            scoreTracker.canScore = true;
+        else
+            scoreTracker_FFA.canScore = true;
 
         gameTimeCoroutine = StartCoroutine(GameTimer());
 
@@ -221,6 +244,7 @@ public class GameSceneManager : MonoBehaviour
     IEnumerator StartGameCountDown()
     {
         startCountdownText.text = "";
+        ffa_CountdownText.text = "";
         yield return new WaitForSeconds(startDelay);
 
         ResetPlayers();
@@ -228,12 +252,14 @@ public class GameSceneManager : MonoBehaviour
 
         currentStartCoundown = maxStartCoundown;
         startCountdownText.text = currentStartCoundown.ToString();
+        ffa_CountdownText.text = currentStartCoundown.ToString();
 
         while (currentStartCoundown > 0)
         {
             audioManager.PlayCountdownSfx();
             currentStartCoundown--;
             startCountdownText.text = currentStartCoundown.ToString();
+            ffa_CountdownText.text = currentStartCoundown.ToString();
 
             yield return new WaitForSeconds(1);
         }
@@ -248,7 +274,12 @@ public class GameSceneManager : MonoBehaviour
 
         foreach (var player in playerCharacters)
         {
-            if (playerCharacters.Count == 2)
+            if (isFFA)
+            {
+                player.transform.SetParent(FFA_SpawnPoints[playerCharacters.IndexOf(player)].transform);
+                player.transform.localPosition = Vector3.zero;
+            }
+            else if (playerCharacters.Count == 2 && !isFFA)
             {
                 player.transform.SetParent(TwoP_SpawnPoints[playerCharacters.IndexOf(player)].transform);
                 player.transform.localPosition = Vector3.zero;
@@ -285,6 +316,7 @@ public class GameSceneManager : MonoBehaviour
 
             currentGameTime--;
             startCountdownText.text = currentGameTime.ToString();
+            ffa_CountdownText.text = currentGameTime.ToString();
             gameTimeTick?.Invoke();
         }
         gameTimeCoroutine = null;
@@ -294,14 +326,17 @@ public class GameSceneManager : MonoBehaviour
     IEnumerator ColorText()
     {
         startCountdownText.color = outOTimeColor;
+        ffa_CountdownText.color = outOTimeColor;
         float tick = 0f;
-        while (startCountdownText.color != defaultColor)
+        while (startCountdownText.color != defaultColor || ffa_CountdownText.color != defaultColor)
         {
             tick += Time.deltaTime * colorChangeSpeed;
             startCountdownText.color = Color.Lerp(outOTimeColor, defaultColor, tick);
+            ffa_CountdownText.color = Color.Lerp(outOTimeColor, defaultColor, tick);
             yield return null;
         }
         startCountdownText.color = defaultColor;
+        ffa_CountdownText.color = defaultColor;
     }
 
 
@@ -310,7 +345,10 @@ public class GameSceneManager : MonoBehaviour
     {
         if (!gameOver)
         {
-            scoreTracker.canScore = false;
+            if (!isFFA)
+                scoreTracker.canScore = false;
+            else
+                scoreTracker_FFA.canScore = false;
             gameOver = true;
             StartCoroutine(EndGame());
         }
@@ -320,7 +358,10 @@ public class GameSceneManager : MonoBehaviour
     IEnumerator EndGame()
     {
         GameLogs.EndTimer(3);
-        scoreTracker.canScore = false;
+        if (!isFFA)
+            scoreTracker.canScore = false;
+        else
+            scoreTracker_FFA.canScore = false;
 
         audioManager.PlayWhistleSfx();
 
@@ -346,7 +387,9 @@ public class GameSceneManager : MonoBehaviour
 
         //init Win area 
         winAreaCamera.SetActive(true);
+        ffa_winAreaCamera.SetActive(true);
         winAreaImage.gameObject.SetActive(true);
+        ffa_winAreaImage.gameObject.SetActive(true);
 
         foreach (var p in playerCharacters)
         {
@@ -355,10 +398,16 @@ public class GameSceneManager : MonoBehaviour
         }
         foreach (var player in inputControllers)
         {
-            if (playerCharacters.Count == 2)
+            for(int x = 0; x < playerCharacters.Count; x++)
+            {
+                playerCharacters[x].transform.position = winAreaSpawnPoints[x].transform.position;
+            }
+
+
+            /*if (playerCharacters.Count == 2)
             {
                 playerCharacters[0].transform.position = winAreaSpawnPoints[0].transform.position;
-                playerCharacters[1].transform.position = winAreaSpawnPoints[2].transform.position;
+                playerCharacters[1].transform.position = winAreaSpawnPoints[1].transform.position;
 
             }
             else if (playerCharacters.Count == 4)
@@ -367,10 +416,71 @@ public class GameSceneManager : MonoBehaviour
                 playerCharacters[1].transform.position = winAreaSpawnPoints[1].transform.position;
                 playerCharacters[2].transform.position = winAreaSpawnPoints[2].transform.position;
                 playerCharacters[3].transform.position = winAreaSpawnPoints[3].transform.position;
-            }
+            }*/
         }
 
-        if (scoreTracker.WhichTeamWon() == "left")
+        if (isFFA)
+        {
+            List<int> winningIndexes = new List<int>();
+            int maxScore;
+            (winningIndexes, maxScore) = scoreTracker_FFA.WhoTeamWon();
+            for (int x = 0; x < playerCharacters.Count; x++)
+            {
+                if (winningIndexes.Contains(x)) {
+                    playerCharacters[x].GetComponent<PlayerController>().SetWin();
+                    playerCharacters[x].transform.localScale = playerCharacters[x].transform.localScale * 2f;
+                }
+            }
+
+            if (winningIndexes.Count == 1)
+            {
+                if (winningIndexes.Contains(0))
+                {
+                    GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().setMaterialColor(redWinColor);
+                    GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("red player", -1);
+                    GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("wins", 7);
+                    GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("with " + maxScore.ToString() + " points", 4);
+                }
+                else if (winningIndexes.Contains(1))
+                {
+                    GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().setMaterialColor(blueWinColor);
+                    GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("blue player", -1);
+                    GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("wins", 7);
+                    GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("with " + maxScore.ToString() + " points", 4);
+                }
+                else if (winningIndexes.Contains(2))
+                {
+                    GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().setMaterialColor(yellowWinColor);
+                    GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("yellow player", -1);
+                    GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("wins", 7);
+                    GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("with " + maxScore.ToString() + " points", 4);
+                }
+                else
+                {
+                    GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().setMaterialColor(greenWinColor);
+                    GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("green player", -1);
+                    GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("wins", 7);
+                    GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("with " + maxScore.ToString() + " points", 4);
+                }
+            }
+            else
+            {
+                GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().setMaterialColor(drawColor);
+                GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("tie between players", -1);
+                if(winningIndexes.Count == 2)
+                    GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord($"{winningIndexes[0] + 1} and {winningIndexes[1] + 1}", 7);
+                else if (winningIndexes.Count == 2)
+                    GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord($"{winningIndexes[0] + 1} and {winningIndexes[1] + 1} and {winningIndexes[2] + 1}", 7);
+                else
+                    GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord($"all players tied", 7);
+                GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord($"with {maxScore} points", 4);
+
+            }
+
+        }
+
+
+        if (!isFFA && scoreTracker.WhichTeamWon() == "left")
         {
             // winning team
             foreach(var p in leftTeam)
@@ -390,7 +500,7 @@ public class GameSceneManager : MonoBehaviour
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("wins", 7);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord(scoreTracker.GetScore(), 4);
         }
-        else if(scoreTracker.WhichTeamWon() == "right")
+        else if(!isFFA && scoreTracker.WhichTeamWon() == "right")
         {
             // winning team
             foreach (var p in rightTeam)
@@ -410,7 +520,7 @@ public class GameSceneManager : MonoBehaviour
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord("wins", 7);
             GameSceneManager.Instance.gameObject.GetComponent<WordSpawner>().SpawnWord(scoreTracker.GetScore(), 4);
         }
-        else
+        else if(!isFFA)
         {
 
             foreach (var p in rightTeam)
@@ -436,7 +546,11 @@ public class GameSceneManager : MonoBehaviour
 
             _Timer = 0f;
         _blurTime = 1.8736f;
-        winAreaMaterial = winAreaImage.material;
+        if(!isFFA)
+            winAreaMaterial = winAreaImage.material;
+        else
+            winAreaMaterial = ffa_winAreaImage.material;
+
         winAreaMaterial.SetFloat("_Transition", 0f);
         while (_Timer < _blurTime)
         {
@@ -527,7 +641,11 @@ public class GameSceneManager : MonoBehaviour
 
         sideThatScored = c;
 
-        scoreTracker.canScore = false;
+        if (!isFFA)
+            scoreTracker.canScore = false;
+        else
+            scoreTracker_FFA.canScore = false;
+
         if (currentGameTime <= lowTimeThreshold)
             currentGameTime += timeToAddWhenScoreAndLowTime;
 
@@ -549,7 +667,10 @@ public class GameSceneManager : MonoBehaviour
 
         sideThatScored = ' ';
 
-        scoreTracker.canScore = true;
+        if (!isFFA)
+            scoreTracker.canScore = true;
+        else
+            scoreTracker_FFA.canScore = true;
         ballObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
     }
 
@@ -609,10 +730,11 @@ public class GameSceneManager : MonoBehaviour
 
     public void SetUpGameLevel(MenuManager.TeamSizes teamSize, MenuManager.GameMode mode)
     {
+        SetupGameMode(mode);
+
         LoadGameStart();
 
         SetupTeamSize(teamSize);
-        SetupGameMode(mode);
 
         SetupMapSpecific();
     }
@@ -620,7 +742,7 @@ public class GameSceneManager : MonoBehaviour
 
     void SetupTeamSize(MenuManager.TeamSizes teamSize)
     {
-        InstanPlayers(teamSize);
+        InstanPlayers();
     }
 
 
@@ -629,9 +751,14 @@ public class GameSceneManager : MonoBehaviour
         switch (mode)
         {
             case MenuManager.GameMode.Classic:
+                normalField.SetActive(true);
+                FFA_Field.SetActive(false);
                 break;
 
-            case MenuManager.GameMode.RandomBall:
+            case MenuManager.GameMode.FFA:
+                isFFA = true;
+                normalField.SetActive(false);
+                FFA_Field.SetActive(true);
                 break;
 
             case MenuManager.GameMode.StageHazards:
@@ -665,7 +792,7 @@ public class GameSceneManager : MonoBehaviour
     }
 
 
-    void InstanPlayers(MenuManager.TeamSizes teamSizes)
+    void InstanPlayers()
     {
         foreach (var player in inputControllers)
         {
@@ -677,20 +804,28 @@ public class GameSceneManager : MonoBehaviour
 
             playerObj.GetComponent<CharacterController>().enabled = false;
 
-            if (inputControllers.Count == 2)
+
+            if (isFFA)
+                playerObj.transform.position = FFA_SpawnPoints[inputControllers.IndexOf(player)].transform.position;
+            else if (inputControllers.Count == 2)
                 playerObj.transform.position = TwoP_SpawnPoints[inputControllers.IndexOf(player)].transform.position;
             else
                 playerObj.transform.position = FourP_SpawnPoints[inputControllers.IndexOf(player)].transform.position;
 
 
+            if (isFFA)
+            {
+                playerObj.GetComponent<PlayerGroundMarker>().SetPlayerWorldUIAndColor(ffaPositionIndicators[inputControllers.IndexOf(player)], characterMaterials[player.selectedCharacterID]);
+                GameLogs.WriteMessage($"Player playing as [{characterMaterials[player.selectedCharacterID]}]");
 
-            if(playerObj.transform.position.x < 0)
+            }
+            if (!isFFA && playerObj.transform.position.x < 0)
             {
                 playerObj.GetComponent<PlayerGroundMarker>().SetPlayerWorldUIAndColor(leftTeamPositionIndicator, characterMaterials[player.selectedCharacterID]);
                 leftTeam.Add(playerObj);
                 GameLogs.WriteMessage($"Player playing as [{characterMaterials[player.selectedCharacterID]}]");
             }
-            else
+            else if(!isFFA)
             {
                 playerObj.GetComponent<PlayerGroundMarker>().SetPlayerWorldUIAndColor(rightTeamPositionIndicator, characterMaterials[player.selectedCharacterID]);
                 rightTeam.Add(playerObj);
@@ -707,6 +842,11 @@ public class GameSceneManager : MonoBehaviour
             player.SetControlledObject(playerController, playerObj, true);
 
             playerObj.GetComponent<CharacterController>().enabled = true;
+        }
+        //Debug.LogError(inputControllers.Count);
+        if(isFFA && inputControllers.Count == 3)
+        {
+            goal4.SetActive(false);
         }
     }
 }
