@@ -14,12 +14,15 @@ public class Goal : MonoBehaviour
         if (other.CompareTag("Ball"))
         {
             //Debug.LogError(other.tag);
-            scoreTracker.GetComponent<ScoreTracker_FFA>().ShakeCamera(other.GetComponent<Rigidbody>().linearVelocity.magnitude);
-            if(side == GoalSide.Right)
+            if(side == GoalSide.FFA)
+                scoreTracker.GetComponent<ScoreTracker_FFA>().ShakeCamera(other.GetComponent<Rigidbody>().linearVelocity.magnitude);
+            else
+                scoreTracker.GetComponent<ScoreTracker>().ShakeCamera(other.GetComponent<Rigidbody>().linearVelocity.magnitude);
+            if (side == GoalSide.Right)
             {
                 scoreTracker.GetComponent<ScoreTracker>().PointForLeft();
             }
-            else if(side == GoalSide.Left)
+            else if (side == GoalSide.Left)
             {
                 scoreTracker.GetComponent<ScoreTracker>().PointForRight();
             }

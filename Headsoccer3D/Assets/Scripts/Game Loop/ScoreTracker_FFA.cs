@@ -121,12 +121,15 @@ public class ScoreTracker_FFA : MonoBehaviour
 
     public (List<int>, int) WhoTeamWon()
     {
-        int maxScore = Mathf.Max(goal1Score, goal2Score, goal3Score, goal4Score);
-        int[] scores = { goal1Score, goal2Score, goal3Score, goal4Score };
+        int maxScore = Mathf.Min(goal1Score, goal2Score, goal3Score, goal4Score);
+        List<int> scores = new List<int>{ goal1Score, goal2Score, goal3Score };
+
+        if (GameSceneManager.Instance.playerCharacters.Count == 4)
+            scores.Add(goal4Score);
 
         List<int> winningIndexes = new List<int>();
 
-        for (int i = 0; i < scores.Length; i++)
+        for (int i = 0; i < scores.Count; i++)
         {
             if (scores[i] == maxScore)
             {

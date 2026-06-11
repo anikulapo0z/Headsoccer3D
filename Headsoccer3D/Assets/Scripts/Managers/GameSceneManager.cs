@@ -21,7 +21,7 @@ public class GameSceneManager : MonoBehaviour
     [Header("Map Setup")]
 
     [SerializeField] GameObject normalField;
-    [SerializeField] GameObject FFA_Field;
+    [SerializeField] List<GameObject> FFA_Field;
     [SerializeField] List<GameObject> goal4stuff;
     //[SerializeField] GameObject goal4score;
 
@@ -128,6 +128,8 @@ public class GameSceneManager : MonoBehaviour
     private SceneAudioManager audioManager;
 
     [SerializeField] AbilityThrower abilityThrower;
+    [SerializeField] GameObject ffaInstructions;
+    [SerializeField] float ffaInstructionsTime;
 
 
     void Start()
@@ -184,6 +186,9 @@ public class GameSceneManager : MonoBehaviour
 
     void LoadGameStart()
     {
+        if(isFFA)
+            ffaInstructions.SetActive(true);
+
         inputControllers = PlayerInputHolder.Instance.playerList;
 
         ballObject = Instantiate(ballPrefab, ballStartingPos.position, Quaternion.identity);
@@ -204,8 +209,10 @@ public class GameSceneManager : MonoBehaviour
 
         audioManager.PlayWhistleSfx();
         currentGameTime = maxGameTime;
-        startCountdownText.text = currentGameTime.ToString();
-        ffa_CountdownText.text = currentGameTime.ToString();
+        if(!isFFA)
+            startCountdownText.text = currentGameTime.ToString();
+        else
+            ffa_CountdownText.text = currentGameTime.ToString();
         canScore = true;
         UnlockPlayers();
         UnlockBall();
@@ -244,23 +251,34 @@ public class GameSceneManager : MonoBehaviour
 
     IEnumerator StartGameCountDown()
     {
-        startCountdownText.text = "";
-        ffa_CountdownText.text = "";
+        if(!isFFA)
+            startCountdownText.text = "";
+        else
+            ffa_CountdownText.text = "";
+
         yield return new WaitForSeconds(startDelay);
+
+        if(isFFA)
+            yield return new WaitForSeconds(ffaInstructionsTime);
+        ffaInstructions.SetActive(false);
 
         ResetPlayers();
         LockBall();
 
         currentStartCoundown = maxStartCoundown;
-        startCountdownText.text = currentStartCoundown.ToString();
-        ffa_CountdownText.text = currentStartCoundown.ToString();
+        if(!isFFA)
+            startCountdownText.text = currentStartCoundown.ToString();
+        else
+            ffa_CountdownText.text = currentStartCoundown.ToString();
 
         while (currentStartCoundown > 0)
         {
             audioManager.PlayCountdownSfx();
             currentStartCoundown--;
-            startCountdownText.text = currentStartCoundown.ToString();
-            ffa_CountdownText.text = currentStartCoundown.ToString();
+            if(!isFFA)
+                startCountdownText.text = currentStartCoundown.ToString();
+            else
+                ffa_CountdownText.text = currentStartCoundown.ToString();
 
             yield return new WaitForSeconds(1);
         }
@@ -316,8 +334,10 @@ public class GameSceneManager : MonoBehaviour
             yield return new WaitForSeconds(1 + timeToAdd);
 
             currentGameTime--;
-            startCountdownText.text = currentGameTime.ToString();
-            ffa_CountdownText.text = currentGameTime.ToString();
+            if(!isFFA)
+                startCountdownText.text = currentGameTime.ToString();
+            else
+                ffa_CountdownText.text = currentGameTime.ToString();
             gameTimeTick?.Invoke();
         }
         gameTimeCoroutine = null;
@@ -753,13 +773,15 @@ public class GameSceneManager : MonoBehaviour
         {
             case MenuManager.GameMode.Classic:
                 normalField.SetActive(true);
-                FFA_Field.SetActive(false);
+                foreach (var p in FFA_Field)
+                    p.SetActive(false);
                 break;
 
             case MenuManager.GameMode.FFA:
                 isFFA = true;
                 normalField.SetActive(false);
-                FFA_Field.SetActive(true);
+                foreach(var p in FFA_Field)
+                    p.SetActive(true);
                 break;
 
             case MenuManager.GameMode.StageHazards:
