@@ -17,7 +17,7 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
     GraphicRaycaster raycaster;
     EventSystem eventSystem;
 
-    [SerializeField] IMenuItem currentItem;
+    public IMenuItem currentItem;
 
     [SerializeField] Sprite defaultSpriteCursor;
     [SerializeField] Sprite selectedSpriteCursor;
@@ -30,10 +30,17 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
     Vector2 moveInput;
     public bool isLocked = false;
 
+    [Space]
+    [SerializeField] float inactivityTimeout = 30f;
+    float inactivityTimer;
+    bool trackingInactivity = false;
+
 
 
     void Awake()
     {
+        ResetInactivityTimer();
+
         cursorRect = GetComponent<RectTransform>();
 
         canvas = GetComponentInParent<Canvas>();
@@ -49,6 +56,19 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
 
         if (TryGetComponent<Graphic>(out var g))
             g.raycastTarget = false;
+    }
+
+    void Update()
+    {
+        if (!trackingInactivity) return;
+        if (isLocked) return;
+        if (MenuManager.Instance.currentScreen != MenuManager.MenuScreen.CharacterSelect) return;
+
+        inactivityTimer -= Time.deltaTime;
+        if (inactivityTimer <= 0f)
+        {
+            MenuManager.Instance.DisconnectPlayer(playerIndex);
+        }
     }
 
     void FixedUpdate()
@@ -68,6 +88,8 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
         if (!gameObject.activeSelf)
             return;
         moveInput = dir;
+        if (dir.sqrMagnitude > 0.1f)
+            ResetInactivityTimer();
     }
 
     void MoveCursor(Vector2 dir)
@@ -139,11 +161,20 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
         }
     }
 
+    void ResetInactivityTimer()
+    {
+        inactivityTimer = inactivityTimeout;
+        trackingInactivity = true;
+    }
+
     public void OnConfirm()
     {
+        ResetInactivityTimer();
+
         //Debug.Log(gameObject);
         if (!gameObject.activeSelf)
             return;
+
         if (currentItem != null)
         {
             //currentItem.OnConfirm(playerIndex);
@@ -177,13 +208,16 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
                 GetComponent<Image>().sprite = selectedSpriteCursor;
                 currentItem.OnConfirm(playerIndex);
                 PlayUISelectSfx();
-                GameLogs.WriteMessage($"Player [{playerIndex + 1}] selection [{currentItem}]");
+                //GameLogs.WriteMessage($"Player [{playerIndex + 1}] selection [{currentItem}]");
             }
         }
+
     }
 
     public void OnCancel()
     {
+        ResetInactivityTimer();
+
         if (!gameObject.activeSelf)
             return;
         MenuManager.Instance.PlayerCancel(isLocked);

@@ -201,6 +201,26 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     [SerializeField] private float dribbleYLerpSpeed = 8f;
 
 
+
+    //----------------
+    public enum ScaleState { Normal, Grown, Flattened, GrownAndFlattened }
+    private ScaleState currentScaleState = ScaleState.Normal;
+
+
+    [Header("Scale Targets")]
+    [SerializeField] private Vector3 normalScale;
+    [SerializeField] private Vector3 grownScale;
+    [SerializeField] private Vector3 flattenedScale;
+    
+    private Vector3 GrownAndFlattenedScale =>
+        new Vector3(grownScale.x, flattenedScale.y, grownScale.z);
+
+    public Vector3 OriginalScale => normalScale;
+
+
+
+
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -426,10 +446,9 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
         if (isFlat)
         {
             currentFlatenedTime -= Time.deltaTime;
-
             if (currentFlatenedTime < 0)
             {
-                DOFlattenY(1f);
+                SetFlattened(false, goToFlatTime);
                 this.moveSpeed = originalSpeed;
                 isFlat = false;
             }
@@ -830,7 +849,9 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     {
         playerLocked = false;
         GetComponent<CharacterController>().enabled = true;
+        ApplyCombinedScale();
     }
+
     public void GetHit(SoccerBall ball, float momentum, Vector3 hitDirection, float threshold1, float threshold2)
     {
         if (momentum < threshold1)
@@ -924,36 +945,136 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     }
 
 
+
     public void GetFlattened()
     {
         sprintHeld = false;
         isFlat = true;
-        DOFlattenY(goToYVal / originalYScale);
         moveSpeed = flatSpeed;
         currentFlatenedTime = flatenedDuration;
-
+        SetFlattened(true, goToFlatTime);
     }
 
-
-    private void DOFlattenY(float yMultiplier)
+    private void DOFlattenY(float _ignored)
     {
-        flattenYMultiplier = yMultiplier;
-        ApplyCombinedScale(goToFlatTime);
+
+        SetFlattened(false, goToFlatTime);
     }
+
+
+    private Coroutine activeScaleTween = null;
 
     public void ApplyCombinedScale(float duration = 0f)
     {
-        float bigScale = GetComponent<PlayerAbility>()?.currentGrowMultiplier ?? 1f;
+        Vector3 worldTarget = currentScaleState switch
+        {
+            ScaleState.Normal => normalScale,
+            ScaleState.Grown => grownScale,
+            ScaleState.Flattened => flattenedScale,
+            ScaleState.GrownAndFlattened => GrownAndFlattenedScale,
+            _ => normalScale
+        };
 
-        Vector3 target = new Vector3(
-            originalYScale * bigScale,
-            originalYScale * bigScale * flattenYMultiplier,
-            originalYScale * bigScale
-        );
+
+        if (activeScaleTween != null)
+        {
+            StopCoroutine(activeScaleTween);
+            activeScaleTween = null;
+        }
+        transform.DOKill();
 
         if (duration > 0f)
-            transform.DOScale(target, duration);
+            activeScaleTween = StartCoroutine(ScaleToWorldSpace(worldTarget, duration));
         else
-            transform.localScale = target;
+            transform.localScale = WorldToLocalScale(worldTarget);
+    }
+
+
+    private IEnumerator ScaleToWorldSpace(Vector3 worldTarget, float duration)
+    {
+        float elapsed = 0f;
+
+
+        Vector3 worldStart = transform.lossyScale;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+
+            Vector3 worldCurrent = Vector3.Lerp(worldStart, worldTarget, t);
+            transform.localScale = WorldToLocalScale(worldCurrent);
+
+            yield return null;
+        }
+
+
+        transform.localScale = WorldToLocalScale(worldTarget);
+        activeScaleTween = null;
+    }
+
+    private Vector3 WorldToLocalScale(Vector3 worldScale)
+    {
+        if (transform.parent == null)
+            return worldScale;
+
+        Vector3 parentWorld = transform.parent.lossyScale;
+
+        return new Vector3(
+            parentWorld.x != 0f ? worldScale.x / parentWorld.x : worldScale.x,
+            parentWorld.y != 0f ? worldScale.y / parentWorld.y : worldScale.y,
+            parentWorld.z != 0f ? worldScale.z / parentWorld.z : worldScale.z
+        );
+    }
+
+    // Converts a desired world-space scale into the correct local scale
+    // given the current parent chain, handling non-uniform parents safely.
+/*    private Vector3 WorldToLocalScale(Vector3 worldScale)
+    {
+        if (transform.parent == null)
+            return worldScale;
+
+        Vector3 parentWorld = transform.parent.lossyScale;
+
+        return new Vector3(
+            parentWorld.x != 0f ? worldScale.x / parentWorld.x : worldScale.x,
+            parentWorld.y != 0f ? worldScale.y / parentWorld.y : worldScale.y,
+            parentWorld.z != 0f ? worldScale.z / parentWorld.z : worldScale.z
+        );
+    }*/
+
+
+    public void SetGrown(bool grown, float duration = 0f)
+    {
+        if (grown)
+        {
+            currentScaleState = currentScaleState == ScaleState.Flattened
+                ? ScaleState.GrownAndFlattened
+                : ScaleState.Grown;
+        }
+        else
+        {
+            currentScaleState = currentScaleState == ScaleState.GrownAndFlattened
+                ? ScaleState.Flattened
+                : ScaleState.Normal;
+        }
+        ApplyCombinedScale(duration);
+    }
+
+    public void SetFlattened(bool flattened, float duration = 0f)
+    {
+        if (flattened)
+        {
+            currentScaleState = currentScaleState == ScaleState.Grown
+                ? ScaleState.GrownAndFlattened
+                : ScaleState.Flattened;
+        }
+        else
+        {
+            currentScaleState = currentScaleState == ScaleState.GrownAndFlattened
+                ? ScaleState.Grown
+                : ScaleState.Normal;
+        }
+        ApplyCombinedScale(duration);
     }
 }

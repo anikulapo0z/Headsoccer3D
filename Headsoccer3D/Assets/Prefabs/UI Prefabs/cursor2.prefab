@@ -94,9 +94,11 @@ MonoBehaviour:
   moveSpeed: 200
   defaultSpriteCursor: {fileID: 21300000, guid: c3db1bf840a2476408e128e7101576e0, type: 3}
   selectedSpriteCursor: {fileID: 21300000, guid: 6a5bab7e1452b1f468eab624be0c9143, type: 3}
-  uiSelectSound: {fileID: 2387981194893925580}
-  uiDeselectSound: {fileID: 5392365903345642042}
+  uiSelectSfx: {fileID: 0}
+  uiHoverSfx: {fileID: 0}
+  uiBackSfx: {fileID: 0}
   isLocked: 0
+  inactivityTimeout: 12
 --- !u!82 &2387981194893925580
 AudioSource:
   m_ObjectHideFlags: 0

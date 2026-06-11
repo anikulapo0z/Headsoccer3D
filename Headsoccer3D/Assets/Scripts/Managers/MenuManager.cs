@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -80,7 +82,8 @@ public class MenuManager : MonoBehaviour
     public GameObject[] objectsToTurnBackOff;
 
     [SerializeField] MenuAudioManager menuAudioManager;
-
+    public bool isHowToPlayOpen = false;
+    [SerializeField] List<GameObject> maps = new List<GameObject>();
 
     public enum MenuScreen
     {
@@ -99,6 +102,7 @@ public class MenuManager : MonoBehaviour
     public enum GameMode
     {
         Classic,
+        FFA,
         RandomBall,
         StageHazards,
         RandomBallAndStageHazards
@@ -149,13 +153,21 @@ public class MenuManager : MonoBehaviour
 
         if (!isLocked)
         {
-            
+
 
 
 
             lockedPlayerCount++;
             if (lockedPlayerCount == totalPlayerCount && totalPlayerCount % 2 == 0)
             {
+                currentGameMode = GameMode.Classic;
+
+                canMoveToNextScreen = true;
+                pressConfirmPrompt.SetActive(true);
+            }
+            else if (lockedPlayerCount == totalPlayerCount && lockedPlayerCount == 3)
+            {
+                currentGameMode = GameMode.FFA;
                 canMoveToNextScreen = true;
                 pressConfirmPrompt.SetActive(true);
             }
@@ -190,6 +202,17 @@ public class MenuManager : MonoBehaviour
         canMoveToNextScreen = false;
         characterSelectMenu.SetActive(false);
         mapSelectMenu.SetActive(true);
+
+        if (currentGameMode == GameMode.FFA) {
+            foreach (var p in maps)
+            {
+                if (p.GetComponentInChildren<CharacterButton>().ffa_supported == false)
+                    p.SetActive(false);
+                else
+                    p.SetActive(true);
+            }
+        }
+
 
         // -------------------------------------------------------------
         foreach(Transform t in cursorHolder_character)
@@ -444,6 +467,7 @@ public class MenuManager : MonoBehaviour
     }
     public void CloseHowToPlay()
     {
+        isHowToPlayOpen = false;
         foreach (GameObject g in objectsToTurnBackOn)
         {
             g.SetActive(true);
@@ -458,6 +482,10 @@ public class MenuManager : MonoBehaviour
         }
 
         menuAudioManager.PlayUIBackSfx();
+    }
+    public void OpenHowToPlay()
+    {
+        isHowToPlayOpen = true;
     }
 
     public MenuManager.TeamSizes GetTeamSize()
