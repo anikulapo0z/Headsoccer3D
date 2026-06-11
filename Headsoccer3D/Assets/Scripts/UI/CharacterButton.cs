@@ -29,6 +29,7 @@ public class CharacterButton : MonoBehaviour, IMenuItem
     [Header("Maps")]
     [SerializeField] Sprite backGroundImage;
     [SerializeField] MapSelectBackground selectBackground;
+    public bool ffa_supported = false;
 
 
 

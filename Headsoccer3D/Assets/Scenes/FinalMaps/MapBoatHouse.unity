@@ -11024,8 +11024,7 @@ MonoBehaviour:
   shakeVibrato: 0
   shakeActive: 0
   isBusMap: 0
-  targetA: {fileID: 0}
-  targetB: {fileID: 0}
+  targets: []
   padding: 0
   speed: 0
   xOffset: 0
@@ -19215,8 +19214,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9304ba049178faf4e98aa12316aadb0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreTracker: {fileID: 1686241435}
+  scoreTracker: {fileID: 1495593585}
   side: 0
+  goalIndex: -1
   goalScoredAudioSource: {fileID: 1456105948}
 --- !u!65 &1456105951
 BoxCollider:
@@ -19897,6 +19897,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1495593585 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4575460859845439653, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+  m_PrefabInstance: {fileID: 1686241423}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1506301956
 GameObject:
   m_ObjectHideFlags: 0
@@ -20528,8 +20533,7 @@ MonoBehaviour:
   shakeVibrato: 0
   shakeActive: 0
   isBusMap: 0
-  targetA: {fileID: 0}
-  targetB: {fileID: 0}
+  targets: []
   padding: 0
   speed: 0
   xOffset: 0
@@ -22971,7 +22975,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 121180679605582305, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
   m_PrefabInstance: {fileID: 1686241423}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1495593585}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ee31208cddd4ee4faac8661cd223a97, type: 3}
@@ -25878,8 +25882,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9304ba049178faf4e98aa12316aadb0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreTracker: {fileID: 1686241435}
+  scoreTracker: {fileID: 1495593585}
   side: 1
+  goalIndex: -1
   goalScoredAudioSource: {fileID: 1798881851}
 --- !u!65 &1798881854
 BoxCollider:
@@ -31457,6 +31462,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f6eb5abd8e5c024b939764b0cd80788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normalField: {fileID: 1495593585}
+  FFA_Field: []
+  goal4stuff: []
   transitionImage: {fileID: 6241461190226760900}
   exitTransitionImage: {fileID: 8032048258575147646}
   mapType: 0
@@ -31471,9 +31479,12 @@ MonoBehaviour:
   TwoP_SpawnPoints:
   - {fileID: 1686241429}
   - {fileID: 1686241428}
+  FFA_SpawnPoints: []
+  isFFA: 0
   currentStartCoundown: 0
   maxStartCoundown: 3
   startCountdownText: {fileID: 1289724630}
+  ffa_CountdownText: {fileID: 1289724630}
   numToStartAddingTime: 13
   minTimeToAdd: 0.1
   maxTimeToAdd: 1.5
@@ -31496,6 +31507,7 @@ MonoBehaviour:
   ballDropHalftoneWalls: {fileID: 1277227299}
   ballStartingPos: {fileID: 1686241434}
   scoreTracker: {fileID: 1686241435}
+  scoreTracker_FFA: {fileID: 0}
   camera: {fileID: 1686241436}
   characterMaterials:
   - {fileID: 2100000, guid: e614107cad86c444b9aef22603da486f, type: 2}
@@ -31548,6 +31560,11 @@ MonoBehaviour:
   - {fileID: 2100000, guid: e9a12a0fb67e4ce48b3ccb9cbc75dd71, type: 2}
   leftTeamPositionIndicator: {fileID: 2272880412295671249, guid: 412ae84f259104d448b55a1e358b6694, type: 3}
   rightTeamPositionIndicator: {fileID: 2272880412295671249, guid: 1cbc517d48694874a830577297739654, type: 3}
+  ffaPositionIndicators:
+  - {fileID: 2272880412295671249, guid: 412ae84f259104d448b55a1e358b6694, type: 3}
+  - {fileID: 2272880412295671249, guid: 1cbc517d48694874a830577297739654, type: 3}
+  - {fileID: 2272880412295671249, guid: d09750ededb707f4da663aab9729e0cf, type: 3}
+  - {fileID: 2272880412295671249, guid: 4e78943f6828b4943bfe4f33432e2703, type: 3}
   fakeballList: []
   winAreaSpawnPoints:
   - {fileID: 1277227297}
@@ -31555,13 +31572,17 @@ MonoBehaviour:
   - {fileID: 1277227295}
   - {fileID: 1686241427}
   winAreaCamera: {fileID: 1686241426}
+  ffa_winAreaCamera: {fileID: 1686241426}
   winAreaImage: {fileID: 1686241425}
+  ffa_winAreaImage: {fileID: 1686241425}
   blurMaterial: {fileID: 2100000, guid: 32a7477d5a46e07468c6b80dee2635ce, type: 2}
   totalWinAreaTime: 13
   currentWinAreaTime: 0
   startFadeWinArea: 2
   redWinColor: {r: 0.7372549, g: 0.21960784, b: 0.18431373, a: 1}
   blueWinColor: {r: 0.43137255, g: 0.43137255, b: 0.8901961, a: 1}
+  yellowWinColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  greenWinColor: {r: 0, g: 1, b: 0, a: 1}
   drawColor: {r: 0.68235296, g: 0.68235296, b: 0.68235296, a: 1}
   backgroundMusic: {fileID: 285227033}
   abilityThrower: {fileID: 1481915846}

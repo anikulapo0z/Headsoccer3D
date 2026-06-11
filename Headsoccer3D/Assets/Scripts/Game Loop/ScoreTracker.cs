@@ -50,7 +50,7 @@ public class ScoreTracker : MonoBehaviour
             return;
         leftScore++;
         leftScoreText.text = leftScore.ToString();
-        gameSceneManager.GoalScored('l');
+        gameSceneManager.GoalScored('r');
 
         //Debug.LogWarning(leftGoalParticles.Count);
 
@@ -76,7 +76,7 @@ public class ScoreTracker : MonoBehaviour
             return;
         rightScore++;
         rightScoreText.text = rightScore.ToString();
-        gameSceneManager.GoalScored('r');
+        gameSceneManager.GoalScored('l');
 
         //rightGoalParticles[0].Play();
 

@@ -275,6 +275,11 @@ public class PlayerJoinManager : MonoBehaviour
             Debug.Log($"Player {controller.PlayerIndex + 1} disconnected.");
             controller.PlayerDisconnect();
 
+            if (MenuManager.Instance.isHowToPlayOpen)
+            {
+                MenuManager.Instance.CloseHowToPlay();
+            }
+
             if (MenuManager.Instance.currentScreen == MenuManager.MenuScreen.MapSelect)
             {
                 Debug.Log($"Player {controller.PlayerIndex + 1} disconnected on map select — slot preserved.");

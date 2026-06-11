@@ -87,6 +87,7 @@ public class QuitMenu : MonoBehaviour, IMenuItem
                 //CharacterSelectPreview.SetActive(false);
                 Debug.Log(playerIndex);
                 MenuManager.Instance.SetHowToPlayer(playerIndex);
+                MenuManager.Instance.OpenHowToPlay();
 
                 break;
         }
