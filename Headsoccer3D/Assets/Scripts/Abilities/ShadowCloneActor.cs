@@ -171,7 +171,8 @@ public class ShadowCloneActor : MonoBehaviour
 
         transform.DOKill();
 
-        GetComponent<PlayerAudioManager>().PlayCloneDespawnSfx();
+        if(GetComponent<PlayerAudioManager>() != null)
+            GetComponent<PlayerAudioManager>().PlayCloneDespawnSfx();
 
         Sequence seq = DOTween.Sequence();
         seq.Append(transform.DOScale(transform.localScale * flashScale, 0.08f));
