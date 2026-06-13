@@ -293,9 +293,18 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
     }
 
     // Requirements for controllable object
-    public void OnJump() { }
-    public void OnKick(bool val) { }
-    public void OnSprint(bool val) { }
+    public void OnJump() {
+        OnConfirm();
+
+    }
+    public void OnKick(bool val)
+    {
+        OnConfirm();
+    }
+    public void OnSprint(bool val) {
+        OnConfirm();
+
+    }
     public void OnStart() { }
     public void OnAbility() { }
     public void OnPoseTaunt() { }
