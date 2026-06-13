@@ -57,7 +57,8 @@ public class ShadowCloneActor : MonoBehaviour
         Vector3 originalScale = transform.localScale;
         transform.localScale = Vector3.zero;
         transform.DOScale(originalScale, spawnScaleTime).SetEase(Ease.OutBack);
-        GetComponent<PlayerAudioManager>().PlayCloneSpawnSfx();
+        if(GetComponent<PlayerAudioManager>() != null)
+            GetComponent<PlayerAudioManager>().PlayCloneSpawnSfx();
     }
 
     private void DisableRealPlayerOnlyComponents()
