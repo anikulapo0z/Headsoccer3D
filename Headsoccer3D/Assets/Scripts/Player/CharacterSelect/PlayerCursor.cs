@@ -67,7 +67,13 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
         inactivityTimer -= Time.deltaTime;
         if (inactivityTimer <= 0f)
         {
-            MenuManager.Instance.DisconnectPlayer(playerIndex);
+            trackingInactivity = false;
+
+            var joinManager = MenuManager.Instance.joinManager;
+            var slot = joinManager.playerSlots[playerIndex];
+            if (slot == null) return;
+
+            MenuManager.Instance.PlayerTimedOut(playerIndex);
         }
     }
 
@@ -299,10 +305,12 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
     }
     public void OnKick(bool val)
     {
-        OnConfirm();
+        //if (val)
+            //OnConfirm();
     }
     public void OnSprint(bool val) {
-        OnConfirm();
+       // if(val)
+            //OnConfirm();
 
     }
     public void OnStart() { }

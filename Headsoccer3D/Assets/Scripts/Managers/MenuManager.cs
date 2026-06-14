@@ -145,6 +145,7 @@ public class MenuManager : MonoBehaviour
     }
     public void CheckPlayerConfirm(bool isLocked)
     {
+        Debug.LogError("dddddddddddd");
         if (canMoveToNextScreen)
         {
             MoveToNextScreen();
@@ -180,6 +181,35 @@ public class MenuManager : MonoBehaviour
 
 
     }
+
+
+    public void BackToCharacterSelect()
+    {
+        // Destroy the map cursor(s)
+        foreach (Transform t in cursorHolder_map)
+            Destroy(t.gameObject);
+
+        // Reset lock state
+        lockedPlayerCount = 0;
+        canMoveToNextScreen = false;
+        pressConfirmPrompt.SetActive(false);
+        wrongPlayerCountPrompt.SetActive(false);
+
+        // Reset portraits to unlocked state
+        foreach (var p in portraits)
+        {
+            if (p.IsOccupied)
+                p.ResetLockState();
+        }
+
+        // Recreate and reassign character cursors through the join manager
+        joinManager.RecreateCharacterCursors();
+
+        currentScreen = MenuScreen.CharacterSelect;
+    }
+
+
+
     public void PlayerCancel(bool isLocked)
     {
         if (isLocked)
@@ -412,6 +442,56 @@ public class MenuManager : MonoBehaviour
         }
 
     }
+
+    public void PlayerTimedOut(int playerIndex)
+    {
+        var joinManager = this.joinManager;
+        if (joinManager == null) return;
+
+        PlayerInputController slot = joinManager.playerSlots[playerIndex];
+        if (slot == null) return;
+
+        // Disconnect the device
+        slot.PlayerDisconnect();
+
+        // Destroy controlled objects (the cursor)
+        foreach (var go in slot.controlledGameObject)
+            if (go != null) Destroy(go);
+        slot.controlledObject.Clear();
+        slot.controlledGameObject.Clear();
+
+        // Reset portrait
+        if (slot.portraitIndex >= 0 && slot.portraitIndex < portraits.Length)
+        {
+            portraits[slot.portraitIndex].SetNotJoined();
+            slot.portraitIndex = -1;
+        }
+
+        // Remove from persistent list and null the slot
+        PlayerInputHolder.Instance.playerList.Remove(slot);
+        joinManager.playerSlots[playerIndex] = null;
+        Destroy(slot.gameObject);
+
+        // Now update counts after removal so they are accurate
+        totalPlayerCount = PlayerInputHolder.Instance.playerList.Count;
+        lockedPlayerCount = Mathf.Min(lockedPlayerCount, totalPlayerCount);
+
+        canMoveToNextScreen = false;
+        pressConfirmPrompt.SetActive(false);
+        wrongPlayerCountPrompt.SetActive(false);
+
+        if (totalPlayerCount > 2)
+            Force2v2(true);
+        else
+        {
+            force2v2 = false;
+            StopForce2v2();
+        }
+
+        Debug.Log($"Player {playerIndex + 1} timed out. Active players: {totalPlayerCount}");
+    }
+
+
     public void PlayerLeft(PlayerInputController controller)
     {
         if (controller == null) return;

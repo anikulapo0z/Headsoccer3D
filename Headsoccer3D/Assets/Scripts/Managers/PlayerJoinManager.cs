@@ -137,6 +137,36 @@ public class PlayerJoinManager : MonoBehaviour
         InputSystem.onDeviceChange -= OnDeviceChange;
     }
 
+    public void RecreateCharacterCursors()
+    {
+        // Clean up any lingering cursors first
+        foreach (Transform t in characterCursorParent)
+            Destroy(t.gameObject);
+
+        foreach (var slot in playerSlots)
+        {
+            if (slot == null) continue;
+
+            // Clear the controlled object lists without destroying anything
+            // (map cursor was already destroyed by BackToCharacterSelect)
+            slot.controlledObject.Clear();
+            slot.controlledGameObject.Clear();
+
+            Vector3 centerPoint = mainCanvas.TransformPoint(mainCanvas.rect.center);
+
+            GameObject obj = Instantiate(
+                characterCursorPrefab[slot.PlayerIndex],
+                centerPoint,
+                Quaternion.identity,
+                characterCursorParent
+            );
+
+            var cursor = obj.GetComponent<PlayerCursor>();
+            cursor.playerIndex = slot.PlayerIndex;
+
+            slot.SetControlledObject(cursor, obj, false);
+        }
+    }
     void OnAnyButtonPressed(InputControl control)
     {
         if (characterSelectOpen || isLocked)
@@ -320,7 +350,20 @@ public class PlayerJoinManager : MonoBehaviour
     int GetNextAvailableSlot()
     {
         for (int i = 0; i < playerSlots.Length; i++)
-            if (playerSlots[i] == null) return i;
+        {
+            // Treat null OR disconnected-and-abandoned slots as free
+            if (playerSlots[i] == null || !playerSlots[i].IsConnected)
+            {
+                // Clean up any lingering disconnected slot before reusing the index
+                if (playerSlots[i] != null)
+                {
+                    PlayerInputHolder.Instance.playerList.Remove(playerSlots[i]);
+                    Destroy(playerSlots[i].gameObject);
+                    playerSlots[i] = null;
+                }
+                return i;
+            }
+        }
         return -1;
     }
 
