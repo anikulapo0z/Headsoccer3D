@@ -197,49 +197,32 @@ public class MenuManager : MonoBehaviour
     void MoveToNextScreen()
     {
         currentScreen = MenuScreen.MapSelect;
-
         GameLogs.StartTimer(2, "Map Select Menu");
 
         canMoveToNextScreen = false;
         characterSelectMenu.SetActive(false);
         mapSelectMenu.SetActive(true);
 
-        if (currentGameMode == GameMode.FFA) {
+        if (currentGameMode == GameMode.FFA)
+        {
             foreach (var p in maps)
             {
-                if (p.GetComponentInChildren<CharacterButton>().ffa_supported == false)
-                    p.SetActive(false);
-                else
-                    p.SetActive(true);
+                bool supported = p.GetComponentInChildren<CharacterButton>().ffa_supported;
+                p.SetActive(supported);
             }
         }
 
-
-        // -------------------------------------------------------------
-        foreach(Transform t in cursorHolder_character)
-        {
+        foreach (Transform t in cursorHolder_character)
             t.gameObject.SetActive(false);
-        }
 
         Vector3 centerPoint = mainCanvas.TransformPoint(mainCanvas.rect.center);
-
-
         GameObject playerControllable = Instantiate(mapCursorPrefab, centerPoint, Quaternion.identity, cursorHolder_map);
         IPlayerControllable controller = playerControllable.GetComponent<PlayerCursor>();
 
-        //PlayerInputHolder.Instance.playerList[0].SetControlledObject(controller);
-
-/*
-        foreach(PlayerInputController t in PlayerInputHolder.Instance.playerList)
-        {
-            t.SetControlledObject(controller, playerControllable, true);
-        }*/
         foreach (var t in joinManager.playerSlots)
         {
             if (t != null)
-            {
-                t.SetControlledObject(controller, playerControllable, false);
-            }
+                t.SetControlledObject(controller, playerControllable, true);
         }
     }
 

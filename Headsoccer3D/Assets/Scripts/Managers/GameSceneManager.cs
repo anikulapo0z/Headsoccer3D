@@ -161,6 +161,13 @@ public class GameSceneManager : MonoBehaviour
         StartCoroutine(fadeTransitionThenLoad());
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+            SceneManager.LoadScene("MainMenu");
+    }
+
+
     IEnumerator fadeTransitionThenLoad()
     {
 
