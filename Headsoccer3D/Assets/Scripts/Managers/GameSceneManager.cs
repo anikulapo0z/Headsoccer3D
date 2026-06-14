@@ -202,9 +202,12 @@ public class GameSceneManager : MonoBehaviour
         ballObject = Instantiate(ballPrefab, ballStartingPos.position, Quaternion.identity);
 
         ballDropHalftone.setBallTransform(ballObject.transform);
-        ballDropHalftone_FFA.setBallTransform(ballObject.transform);
+        if(ballDropHalftone_FFA)
+            ballDropHalftone_FFA.setBallTransform(ballObject.transform);
+
         ballDropHalftoneWalls.setBallTransform(ballObject.transform);
-        ballDropHalftoneWalls_FFA.setBallTransform(ballObject.transform);
+        if (ballDropHalftoneWalls_FFA)
+            ballDropHalftoneWalls_FFA.setBallTransform(ballObject.transform);
 
 
         camera.target = ballObject.transform;
@@ -750,9 +753,11 @@ public class GameSceneManager : MonoBehaviour
         ballObject = Instantiate(ballPrefab, ballStartingPos.position, Quaternion.identity);
 
         ballDropHalftone.setBallTransform(ballObject.transform);
-        ballDropHalftone_FFA.setBallTransform(ballObject.transform);
+        if (ballDropHalftone_FFA)
+            ballDropHalftone_FFA.setBallTransform(ballObject.transform);
         ballDropHalftoneWalls.setBallTransform(ballObject.transform);
-        ballDropHalftoneWalls_FFA.setBallTransform(ballObject.transform);
+        if (ballDropHalftoneWalls_FFA)
+            ballDropHalftoneWalls_FFA.setBallTransform(ballObject.transform);
 
         ballObject.GetComponent<SphereCollider>().enabled = true;
         ballObject.GetComponent<Rigidbody>().isKinematic = false;
