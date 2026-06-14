@@ -10399,6 +10399,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4176021496890234021, guid: 07dcd9d59236e9843a75baece04da12d, type: 3}
   m_PrefabInstance: {fileID: 592827346}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &593614383 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3404582675674179269, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+  m_PrefabInstance: {fileID: 790221996}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e834e68c26ac345ac1c5d5149b0ead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &593614384 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7649094326105891699, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+  m_PrefabInstance: {fileID: 790221996}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e834e68c26ac345ac1c5d5149b0ead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &601110640
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13708,6 +13730,22 @@ PrefabInstance:
     - target: {fileID: 1923879513437370701, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_Center.y
       value: 4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1934758164297339092, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 43.14634
+      objectReference: {fileID: 0}
+    - target: {fileID: 1934758164297339092, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.458
+      objectReference: {fileID: 0}
+    - target: {fileID: 1934758164297339092, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.016
+      objectReference: {fileID: 0}
+    - target: {fileID: 1934758164297339092, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.002
       objectReference: {fileID: 0}
     - target: {fileID: 2644335407101162335, guid: a464741c554c6ac4493db5d941d3aa82, type: 3}
       propertyPath: m_TargetTexture
@@ -36121,7 +36159,9 @@ MonoBehaviour:
   ballPrefab: {fileID: 675428509796539959, guid: ca4c47f2e6aaf174b89e550198a0efd7, type: 3}
   ballObject: {fileID: 0}
   ballDropHalftone: {fileID: 1114947388}
+  ballDropHalftone_FFA: {fileID: 593614384}
   ballDropHalftoneWalls: {fileID: 1347073551}
+  ballDropHalftoneWalls_FFA: {fileID: 593614383}
   ballStartingPos: {fileID: 605910384}
   scoreTracker: {fileID: 1226518549}
   scoreTracker_FFA: {fileID: 1179967300}

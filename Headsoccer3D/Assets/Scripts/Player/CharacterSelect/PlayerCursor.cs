@@ -305,8 +305,8 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
     }
     public void OnKick(bool val)
     {
-        //if (val)
-            //OnConfirm();
+        if (val)
+            OnConfirm();
     }
     public void OnSprint(bool val) {
        // if(val)

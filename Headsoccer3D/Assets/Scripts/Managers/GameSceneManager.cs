@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -82,7 +81,9 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] GameObject ballPrefab;
     [SerializeField] GameObject ballObject;
     [SerializeField] BallDropHalftone ballDropHalftone;
+    [SerializeField] BallDropHalftone ballDropHalftone_FFA;
     [SerializeField] BallDropHalftone ballDropHalftoneWalls;
+    [SerializeField] BallDropHalftone ballDropHalftoneWalls_FFA;
     [SerializeField] Transform ballStartingPos;
     [SerializeField] ScoreTracker scoreTracker;
     [SerializeField] ScoreTracker_FFA scoreTracker_FFA;
@@ -201,7 +202,10 @@ public class GameSceneManager : MonoBehaviour
         ballObject = Instantiate(ballPrefab, ballStartingPos.position, Quaternion.identity);
 
         ballDropHalftone.setBallTransform(ballObject.transform);
+        ballDropHalftone_FFA.setBallTransform(ballObject.transform);
         ballDropHalftoneWalls.setBallTransform(ballObject.transform);
+        ballDropHalftoneWalls_FFA.setBallTransform(ballObject.transform);
+
 
         camera.target = ballObject.transform;
 
@@ -746,7 +750,9 @@ public class GameSceneManager : MonoBehaviour
         ballObject = Instantiate(ballPrefab, ballStartingPos.position, Quaternion.identity);
 
         ballDropHalftone.setBallTransform(ballObject.transform);
+        ballDropHalftone_FFA.setBallTransform(ballObject.transform);
         ballDropHalftoneWalls.setBallTransform(ballObject.transform);
+        ballDropHalftoneWalls_FFA.setBallTransform(ballObject.transform);
 
         ballObject.GetComponent<SphereCollider>().enabled = true;
         ballObject.GetComponent<Rigidbody>().isKinematic = false;
