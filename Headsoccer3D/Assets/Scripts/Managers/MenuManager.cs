@@ -165,13 +165,13 @@ public class MenuManager : MonoBehaviour
                 canMoveToNextScreen = true;
                 pressConfirmPrompt.SetActive(true);
             }
-            /*
+            
             else if (lockedPlayerCount == totalPlayerCount && lockedPlayerCount == 3)
             {
                 currentGameMode = GameMode.FFA;
                 canMoveToNextScreen = true;
                 pressConfirmPrompt.SetActive(true);
-            }*/
+            }
             else if (lockedPlayerCount == totalPlayerCount)
             {
                 wrongPlayerCountPrompt.SetActive(true);
