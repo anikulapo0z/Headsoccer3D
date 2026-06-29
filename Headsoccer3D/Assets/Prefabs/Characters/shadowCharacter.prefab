@@ -274,7 +274,6 @@ GameObject:
   - component: {fileID: 5864520699391055450}
   - component: {fileID: 3642166222951863763}
   - component: {fileID: 2982971697010060558}
-  - component: {fileID: -1422199461870558157}
   m_Layer: 7
   m_Name: shadowCharacter
   m_TagString: Player
@@ -463,6 +462,16 @@ MonoBehaviour:
   shakeStrength: 0.008
   shakeVibrato: 1
   shakeReduceAmount: 5
+  isFrozen: 0
+  dribbleBallRadius: 0.2
+  dribbleGroundOffset: 0.2
+  dribbleGroundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  dribbleYLerpSpeed: 8
+  normalScale: {x: 1, y: 1, z: 1}
+  grownScale: {x: 1.5, y: 1.5, z: 1.5}
+  flattenedScale: {x: 1, y: 0.2, z: 1}
 --- !u!54 &8232834016103739514
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -581,6 +590,9 @@ MonoBehaviour:
   empoweredKickText: {fileID: 5041241853163221094, guid: f2d58010527d10c47b2a34888d282aca, type: 3}
   earthquakeText: {fileID: 2268949771022234786, guid: 080da404cfbf9e047854e6885e282a6d, type: 3}
   shadowCloneText: {fileID: 0}
+  abilityReminder: {fileID: 0}
+  timeUntilStartReminder: 0
+  reminderDuration: 0
   mbOffset: {x: 0, y: 1.5, z: 0.7}
   mbRotation: {x: 0, y: 0, z: 17}
   ekOffset: {x: 0, y: 1.6, z: 0.6}
@@ -596,34 +608,6 @@ MonoBehaviour:
   controllingFlipper: 0
   controlledFlippers: []
   lrYHeight: 0
---- !u!114 &-1422199461870558157
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2105791413608084587}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0001fa97e799f594ea7defdfec235ba2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  kickBallSfx:
-  - {fileID: 1675169700247278354}
-  - {fileID: 1010397433741439737}
-  - {fileID: 9203590312329077973}
-  chargeSfx: []
-  kickWhooshSfx: []
-  hitBallSfx: []
-  footstepsSfx:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  jumpSfx: {fileID: 8979881466436029038}
-  landSfx: {fileID: 0}
-  pickupSfx: {fileID: 0}
-  empoweredKickSfx: {fileID: 1777783957714740760}
-  multiBallSfx: {fileID: 2713583405545530211}
 --- !u!1 &2578436691414235925
 GameObject:
   m_ObjectHideFlags: 0
@@ -1166,7 +1150,7 @@ MonoBehaviour:
   isHeadTrigger: 1
   letterKickForce: 5
   yLetterForce: 1
-  playerAudioManager: {fileID: -1422199461870558157}
+  playerAudioManager: {fileID: 0}
 --- !u!1 &3819930409189412885
 GameObject:
   m_ObjectHideFlags: 0
@@ -1238,7 +1222,7 @@ MonoBehaviour:
   isHeadTrigger: 0
   letterKickForce: 5
   yLetterForce: 1
-  playerAudioManager: {fileID: -1422199461870558157}
+  playerAudioManager: {fileID: 0}
 --- !u!1 &4474375261030203454
 GameObject:
   m_ObjectHideFlags: 0

@@ -30,10 +30,17 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
     Vector2 moveInput;
     public bool isLocked = false;
 
+    [Space]
+    [SerializeField] float inactivityTimeout = 30f;
+    float inactivityTimer;
+    bool trackingInactivity = false;
+
 
 
     void Awake()
     {
+        ResetInactivityTimer();
+
         cursorRect = GetComponent<RectTransform>();
 
         canvas = GetComponentInParent<Canvas>();
@@ -49,6 +56,25 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
 
         if (TryGetComponent<Graphic>(out var g))
             g.raycastTarget = false;
+    }
+
+    void Update()
+    {
+        if (!trackingInactivity) return;
+        if (isLocked) return;
+        if (MenuManager.Instance.currentScreen != MenuManager.MenuScreen.CharacterSelect) return;
+
+        inactivityTimer -= Time.deltaTime;
+        if (inactivityTimer <= 0f)
+        {
+            trackingInactivity = false;
+
+            var joinManager = MenuManager.Instance.joinManager;
+            var slot = joinManager.playerSlots[playerIndex];
+            if (slot == null) return;
+
+            MenuManager.Instance.PlayerTimedOut(playerIndex);
+        }
     }
 
     void FixedUpdate()
@@ -68,6 +94,8 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
         if (!gameObject.activeSelf)
             return;
         moveInput = dir;
+        if (dir.sqrMagnitude > 0.1f)
+            ResetInactivityTimer();
     }
 
     void MoveCursor(Vector2 dir)
@@ -139,11 +167,20 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
         }
     }
 
+    void ResetInactivityTimer()
+    {
+        inactivityTimer = inactivityTimeout;
+        trackingInactivity = true;
+    }
+
     public void OnConfirm()
     {
+        ResetInactivityTimer();
+
         //Debug.Log(gameObject);
         if (!gameObject.activeSelf)
             return;
+
         if (currentItem != null)
         {
             //currentItem.OnConfirm(playerIndex);
@@ -180,10 +217,13 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
                 //GameLogs.WriteMessage($"Player [{playerIndex + 1}] selection [{currentItem}]");
             }
         }
+
     }
 
     public void OnCancel()
     {
+        ResetInactivityTimer();
+
         if (!gameObject.activeSelf)
             return;
         MenuManager.Instance.PlayerCancel(isLocked);
@@ -259,9 +299,20 @@ public class PlayerCursor : MonoBehaviour, IPlayerControllable
     }
 
     // Requirements for controllable object
-    public void OnJump() { }
-    public void OnKick(bool val) { }
-    public void OnSprint(bool val) { }
+    public void OnJump() {
+        OnConfirm();
+
+    }
+    public void OnKick(bool val)
+    {
+        if (val)
+            OnConfirm();
+    }
+    public void OnSprint(bool val) {
+       // if(val)
+            //OnConfirm();
+
+    }
     public void OnStart() { }
     public void OnAbility() { }
     public void OnPoseTaunt() { }

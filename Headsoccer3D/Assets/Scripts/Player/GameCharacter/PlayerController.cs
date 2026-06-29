@@ -849,7 +849,9 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     {
         playerLocked = false;
         GetComponent<CharacterController>().enabled = true;
+        ApplyCombinedScale();
     }
+
     public void GetHit(SoccerBall ball, float momentum, Vector3 hitDirection, float threshold1, float threshold2)
     {
         if (momentum < threshold1)
@@ -960,9 +962,11 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
     }
 
 
+    private Coroutine activeScaleTween = null;
+
     public void ApplyCombinedScale(float duration = 0f)
     {
-        Vector3 target = currentScaleState switch
+        Vector3 worldTarget = currentScaleState switch
         {
             ScaleState.Normal => normalScale,
             ScaleState.Grown => grownScale,
@@ -971,11 +975,73 @@ public class PlayerController : MonoBehaviour, IPlayerControllable
             _ => normalScale
         };
 
+
+        if (activeScaleTween != null)
+        {
+            StopCoroutine(activeScaleTween);
+            activeScaleTween = null;
+        }
+        transform.DOKill();
+
         if (duration > 0f)
-            transform.DOScale(target, duration);
+            activeScaleTween = StartCoroutine(ScaleToWorldSpace(worldTarget, duration));
         else
-            transform.localScale = target;
+            transform.localScale = WorldToLocalScale(worldTarget);
     }
+
+
+    private IEnumerator ScaleToWorldSpace(Vector3 worldTarget, float duration)
+    {
+        float elapsed = 0f;
+
+
+        Vector3 worldStart = transform.lossyScale;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+
+            Vector3 worldCurrent = Vector3.Lerp(worldStart, worldTarget, t);
+            transform.localScale = WorldToLocalScale(worldCurrent);
+
+            yield return null;
+        }
+
+
+        transform.localScale = WorldToLocalScale(worldTarget);
+        activeScaleTween = null;
+    }
+
+    private Vector3 WorldToLocalScale(Vector3 worldScale)
+    {
+        if (transform.parent == null)
+            return worldScale;
+
+        Vector3 parentWorld = transform.parent.lossyScale;
+
+        return new Vector3(
+            parentWorld.x != 0f ? worldScale.x / parentWorld.x : worldScale.x,
+            parentWorld.y != 0f ? worldScale.y / parentWorld.y : worldScale.y,
+            parentWorld.z != 0f ? worldScale.z / parentWorld.z : worldScale.z
+        );
+    }
+
+    // Converts a desired world-space scale into the correct local scale
+    // given the current parent chain, handling non-uniform parents safely.
+/*    private Vector3 WorldToLocalScale(Vector3 worldScale)
+    {
+        if (transform.parent == null)
+            return worldScale;
+
+        Vector3 parentWorld = transform.parent.lossyScale;
+
+        return new Vector3(
+            parentWorld.x != 0f ? worldScale.x / parentWorld.x : worldScale.x,
+            parentWorld.y != 0f ? worldScale.y / parentWorld.y : worldScale.y,
+            parentWorld.z != 0f ? worldScale.z / parentWorld.z : worldScale.z
+        );
+    }*/
 
 
     public void SetGrown(bool grown, float duration = 0f)

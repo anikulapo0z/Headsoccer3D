@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -80,7 +82,8 @@ public class MenuManager : MonoBehaviour
     public GameObject[] objectsToTurnBackOff;
 
     [SerializeField] MenuAudioManager menuAudioManager;
-
+    public bool isHowToPlayOpen = false;
+    [SerializeField] List<GameObject> maps = new List<GameObject>();
 
     public enum MenuScreen
     {
@@ -99,6 +102,7 @@ public class MenuManager : MonoBehaviour
     public enum GameMode
     {
         Classic,
+        FFA,
         RandomBall,
         StageHazards,
         RandomBallAndStageHazards
@@ -141,6 +145,7 @@ public class MenuManager : MonoBehaviour
     }
     public void CheckPlayerConfirm(bool isLocked)
     {
+        Debug.LogError("dddddddddddd");
         if (canMoveToNextScreen)
         {
             MoveToNextScreen();
@@ -149,13 +154,22 @@ public class MenuManager : MonoBehaviour
 
         if (!isLocked)
         {
-            
+
 
 
 
             lockedPlayerCount++;
             if (lockedPlayerCount == totalPlayerCount && totalPlayerCount % 2 == 0)
             {
+                currentGameMode = GameMode.Classic;
+
+                canMoveToNextScreen = true;
+                pressConfirmPrompt.SetActive(true);
+            }
+            
+            else if (lockedPlayerCount == totalPlayerCount && lockedPlayerCount == 3)
+            {
+                currentGameMode = GameMode.FFA;
                 canMoveToNextScreen = true;
                 pressConfirmPrompt.SetActive(true);
             }
@@ -167,6 +181,35 @@ public class MenuManager : MonoBehaviour
 
 
     }
+
+
+    public void BackToCharacterSelect()
+    {
+        // Destroy the map cursor(s)
+        foreach (Transform t in cursorHolder_map)
+            Destroy(t.gameObject);
+
+        // Reset lock state
+        lockedPlayerCount = 0;
+        canMoveToNextScreen = false;
+        pressConfirmPrompt.SetActive(false);
+        wrongPlayerCountPrompt.SetActive(false);
+
+        // Reset portraits to unlocked state
+        foreach (var p in portraits)
+        {
+            if (p.IsOccupied)
+                p.ResetLockState();
+        }
+
+        // Recreate and reassign character cursors through the join manager
+        joinManager.RecreateCharacterCursors();
+
+        currentScreen = MenuScreen.CharacterSelect;
+    }
+
+
+
     public void PlayerCancel(bool isLocked)
     {
         if (isLocked)
@@ -184,38 +227,32 @@ public class MenuManager : MonoBehaviour
     void MoveToNextScreen()
     {
         currentScreen = MenuScreen.MapSelect;
-
         GameLogs.StartTimer(2, "Map Select Menu");
 
         canMoveToNextScreen = false;
         characterSelectMenu.SetActive(false);
         mapSelectMenu.SetActive(true);
 
-        // -------------------------------------------------------------
-        foreach(Transform t in cursorHolder_character)
+        if (currentGameMode == GameMode.FFA)
         {
-            t.gameObject.SetActive(false);
+            foreach (var p in maps)
+            {
+                bool supported = p.GetComponentInChildren<CharacterButton>().ffa_supported;
+                p.SetActive(supported);
+            }
         }
 
+        foreach (Transform t in cursorHolder_character)
+            t.gameObject.SetActive(false);
+
         Vector3 centerPoint = mainCanvas.TransformPoint(mainCanvas.rect.center);
-
-
         GameObject playerControllable = Instantiate(mapCursorPrefab, centerPoint, Quaternion.identity, cursorHolder_map);
         IPlayerControllable controller = playerControllable.GetComponent<PlayerCursor>();
 
-        //PlayerInputHolder.Instance.playerList[0].SetControlledObject(controller);
-
-/*
-        foreach(PlayerInputController t in PlayerInputHolder.Instance.playerList)
-        {
-            t.SetControlledObject(controller, playerControllable, true);
-        }*/
         foreach (var t in joinManager.playerSlots)
         {
             if (t != null)
-            {
-                t.SetControlledObject(controller, playerControllable, false);
-            }
+                t.SetControlledObject(controller, playerControllable, true);
         }
     }
 
@@ -405,6 +442,56 @@ public class MenuManager : MonoBehaviour
         }
 
     }
+
+    public void PlayerTimedOut(int playerIndex)
+    {
+        var joinManager = this.joinManager;
+        if (joinManager == null) return;
+
+        PlayerInputController slot = joinManager.playerSlots[playerIndex];
+        if (slot == null) return;
+
+        // Disconnect the device
+        slot.PlayerDisconnect();
+
+        // Destroy controlled objects (the cursor)
+        foreach (var go in slot.controlledGameObject)
+            if (go != null) Destroy(go);
+        slot.controlledObject.Clear();
+        slot.controlledGameObject.Clear();
+
+        // Reset portrait
+        if (slot.portraitIndex >= 0 && slot.portraitIndex < portraits.Length)
+        {
+            portraits[slot.portraitIndex].SetNotJoined();
+            slot.portraitIndex = -1;
+        }
+
+        // Remove from persistent list and null the slot
+        PlayerInputHolder.Instance.playerList.Remove(slot);
+        joinManager.playerSlots[playerIndex] = null;
+        Destroy(slot.gameObject);
+
+        // Now update counts after removal so they are accurate
+        totalPlayerCount = PlayerInputHolder.Instance.playerList.Count;
+        lockedPlayerCount = Mathf.Min(lockedPlayerCount, totalPlayerCount);
+
+        canMoveToNextScreen = false;
+        pressConfirmPrompt.SetActive(false);
+        wrongPlayerCountPrompt.SetActive(false);
+
+        if (totalPlayerCount > 2)
+            Force2v2(true);
+        else
+        {
+            force2v2 = false;
+            StopForce2v2();
+        }
+
+        Debug.Log($"Player {playerIndex + 1} timed out. Active players: {totalPlayerCount}");
+    }
+
+
     public void PlayerLeft(PlayerInputController controller)
     {
         if (controller == null) return;
@@ -444,6 +531,7 @@ public class MenuManager : MonoBehaviour
     }
     public void CloseHowToPlay()
     {
+        isHowToPlayOpen = false;
         foreach (GameObject g in objectsToTurnBackOn)
         {
             g.SetActive(true);
@@ -458,6 +546,10 @@ public class MenuManager : MonoBehaviour
         }
 
         menuAudioManager.PlayUIBackSfx();
+    }
+    public void OpenHowToPlay()
+    {
+        isHowToPlayOpen = true;
     }
 
     public MenuManager.TeamSizes GetTeamSize()

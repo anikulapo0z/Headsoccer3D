@@ -1,10 +1,10 @@
-using UnityEngine;
 using DG.Tweening;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
     public static CameraController Instance;
-
 
     [Header("Target")]
     public Transform target;
@@ -32,10 +32,9 @@ public class CameraController : MonoBehaviour
     public bool shakeActive = false;
 
     [Space]
-    [Header("bus map framing")]
+    [Header("Bus Map Framing")]
     [SerializeField] bool isBusMap = false;
-    [SerializeField] Transform targetA;
-    [SerializeField] Transform targetB;
+    [SerializeField] List<Transform> targets;
 
     [SerializeField] float padding;
     [SerializeField] float speed;
@@ -58,7 +57,6 @@ public class CameraController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.M))
             ShakeCamera(shakeDuration, shakeStrength, shakeVibrato);
-
     }
 
     void FixedUpdate()
@@ -69,14 +67,22 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        //if (!target) return;
+        if (targets == null || targets.Count < 2) return;
 
-        Vector3 midpoint = (targetA.position + targetB.position) * 0.5f;
+        // Compute bounds across all targets
+        Bounds bounds = new Bounds(targets[0].position, Vector3.zero);
+        foreach (Transform t in targets)
+        {
+            if (t != null)
+                bounds.Encapsulate(t.position);
+        }
 
-        float xSep = Mathf.Abs(targetA.position.x - targetB.position.x);
-        float zSep = Mathf.Abs(targetA.position.z - targetB.position.z);
+        Vector3 midpoint = bounds.center;
 
-        float horizontalDist = Mathf.Sqrt(xSep * xSep + zSep * zSep);
+        float horizontalDist = Mathf.Sqrt(
+            bounds.size.x * bounds.size.x +
+            bounds.size.z * bounds.size.z
+        );
 
         float fov = cam.fieldOfView * Mathf.Deg2Rad;
         float aspect = cam.aspect;

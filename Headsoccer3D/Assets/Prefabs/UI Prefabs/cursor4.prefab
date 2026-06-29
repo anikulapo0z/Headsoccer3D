@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 179ec90768dce9041aa229c8c697e565, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 83848ad54de913043acfe0229ff921f6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -92,11 +92,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerIndex: 4
   moveSpeed: 200
-  defaultSpriteCursor: {fileID: 21300000, guid: 179ec90768dce9041aa229c8c697e565, type: 3}
-  selectedSpriteCursor: {fileID: 21300000, guid: 85495ff1edcb05240ad22e6c0730eb13, type: 3}
-  uiSelectSound: {fileID: -3891109349267942892}
-  uiDeselectSound: {fileID: 1237631873154730232}
+  defaultSpriteCursor: {fileID: 21300000, guid: 4d9aba48a2e314e4ba70ef71d9e3a27f, type: 3}
+  selectedSpriteCursor: {fileID: 21300000, guid: 4d9aba48a2e314e4ba70ef71d9e3a27f, type: 3}
+  uiSelectSfx: {fileID: 0}
+  uiHoverSfx: {fileID: 0}
+  uiBackSfx: {fileID: 0}
   isLocked: 0
+  inactivityTimeout: 12
 --- !u!82 &-3891109349267942892
 AudioSource:
   m_ObjectHideFlags: 0

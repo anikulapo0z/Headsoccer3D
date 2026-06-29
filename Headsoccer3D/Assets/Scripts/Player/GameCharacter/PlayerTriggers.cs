@@ -35,7 +35,8 @@ public class PlayerTriggers : MonoBehaviour
             if (ballHit) return;
             ballHit = true;
 
-            playerAudioManager.PlayKickBallSfx();
+            if(playerAudioManager != null)
+                playerAudioManager.PlayKickBallSfx();
 
             if (isKickTrigger)
             {

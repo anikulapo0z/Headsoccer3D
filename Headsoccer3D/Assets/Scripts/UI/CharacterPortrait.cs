@@ -54,4 +54,15 @@ public class CharacterPortrait : MonoBehaviour
 
         }
     }
+
+    public void ResetLockState()
+    {
+        if (assignedPlayerIndex == -1) return;
+
+        border.sprite = joinedBorder[assignedPlayerIndex];
+        characterName.text = $"PLAYER_{assignedPlayerIndex + 1}".ToUpper();
+
+        // If your character select sets the portrait image, clear it back to default
+        portrait.sprite = notJoinedSprite; // or a generic "choosing" sprite if you have one
+    }
 }

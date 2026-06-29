@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
+using UnityEngine.SceneManagement;
 
 public class PlayerJoinManager : MonoBehaviour
 {
@@ -65,6 +66,9 @@ public class PlayerJoinManager : MonoBehaviour
 
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.M))
+            SceneManager.LoadScene("MainMenu");
+
         if (!trackingInactivity) return;
 
         inactivityTimer -= Time.deltaTime;
@@ -133,6 +137,36 @@ public class PlayerJoinManager : MonoBehaviour
         InputSystem.onDeviceChange -= OnDeviceChange;
     }
 
+    public void RecreateCharacterCursors()
+    {
+        // Clean up any lingering cursors first
+        foreach (Transform t in characterCursorParent)
+            Destroy(t.gameObject);
+
+        foreach (var slot in playerSlots)
+        {
+            if (slot == null) continue;
+
+            // Clear the controlled object lists without destroying anything
+            // (map cursor was already destroyed by BackToCharacterSelect)
+            slot.controlledObject.Clear();
+            slot.controlledGameObject.Clear();
+
+            Vector3 centerPoint = mainCanvas.TransformPoint(mainCanvas.rect.center);
+
+            GameObject obj = Instantiate(
+                characterCursorPrefab[slot.PlayerIndex],
+                centerPoint,
+                Quaternion.identity,
+                characterCursorParent
+            );
+
+            var cursor = obj.GetComponent<PlayerCursor>();
+            cursor.playerIndex = slot.PlayerIndex;
+
+            slot.SetControlledObject(cursor, obj, false);
+        }
+    }
     void OnAnyButtonPressed(InputControl control)
     {
         if (characterSelectOpen || isLocked)
@@ -161,6 +195,7 @@ public class PlayerJoinManager : MonoBehaviour
         StartInactivityTracking();
     }
 
+    // Fix 1: use PlayerInputHolder's authoritative check instead of the local slot array
     void OnJoinPerformed(InputAction.CallbackContext ctx)
     {
         if (ctx.control.device is Keyboard || ctx.control.device is Mouse)
@@ -169,32 +204,32 @@ public class PlayerJoinManager : MonoBehaviour
         if (!characterSelectOpen) return;
         if (ctx.control.device == null) return;
 
-        
         ResetInactivityTimer();
 
         if (MenuManager.Instance.currentScreen == MenuManager.MenuScreen.MapSelect)
         {
             InputDevice d = ctx.control.device;
-            if (!IsDeviceAlreadyAssigned(d))
-            {
+            if (!PlayerInputHolder.Instance.IsDeviceAssigned(d))  // ← was IsDeviceAlreadyAssigned(d)
                 TryReconnectInMapSelect(d);
-            }
             return;
         }
 
         InputDevice device = ctx.control.device;
         string controllerId = BuildControllerId(device);
 
-        if (IsDeviceAlreadyAssigned(device))
+        if (PlayerInputHolder.Instance.IsDeviceAssigned(device))  // ← was IsDeviceAlreadyAssigned(device)
         {
             Debug.Log($"Device {controllerId} is already assigned. Ignoring.");
             return;
         }
 
+        // Fix 2: only match reconnect slots where ControllerId is non-null and connected=false
         for (int i = 0; i < playerSlots.Length; i++)
         {
             var slot = playerSlots[i];
-            if (slot != null && !slot.IsConnected && slot.ControllerId == controllerId)
+            if (slot != null && !slot.IsConnected
+                && slot.ControllerId != null          // ← add this guard
+                && slot.ControllerId == controllerId)
             {
                 slot.AssignDevice(device, inputActions, actionMapName);
                 Debug.Log($"Player {i + 1} reconnected with their original controller.");
@@ -205,12 +240,12 @@ public class PlayerJoinManager : MonoBehaviour
         for (int i = 0; i < playerSlots.Length; i++)
         {
             var slot = playerSlots[i];
-            if (slot != null && !slot.IsConnected)
+            if (slot != null && !slot.IsConnected
+                && slot.ControllerId != null)
             {
                 string oldId = slot.ControllerId;
                 slot.AssignDevice(device, inputActions, actionMapName);
-                Debug.Log($"Player {i + 1} slot taken over by a different controller " +
-                          $"(was: {oldId}, now: {controllerId}).");
+                Debug.Log($"Player {i + 1} slot taken over (was: {oldId}, now: {controllerId}).");
                 return;
             }
         }
@@ -223,16 +258,13 @@ public class PlayerJoinManager : MonoBehaviour
         }
 
         PlayerInputController newController = CreatePlayerController(index, device);
-
         var (cursor, obj) = CreateCursor(index);
         newController.SetControlledObject(cursor, obj, true);
 
         playerSlots[index] = newController;
         PlayerInputHolder.Instance.playerList.Add(newController);
-
         PlayerInputHolder.Instance.sourceInputActions = inputActions;
         PlayerInputHolder.Instance.actionMapName = actionMapName;
-
         DontDestroyOnLoad(newController);
 
         Debug.Log($"New Player {index + 1} joined with controller {controllerId}.");
@@ -275,6 +307,11 @@ public class PlayerJoinManager : MonoBehaviour
             Debug.Log($"Player {controller.PlayerIndex + 1} disconnected.");
             controller.PlayerDisconnect();
 
+            if (MenuManager.Instance.isHowToPlayOpen)
+            {
+                MenuManager.Instance.CloseHowToPlay();
+            }
+
             if (MenuManager.Instance.currentScreen == MenuManager.MenuScreen.MapSelect)
             {
                 Debug.Log($"Player {controller.PlayerIndex + 1} disconnected on map select — slot preserved.");
@@ -313,7 +350,20 @@ public class PlayerJoinManager : MonoBehaviour
     int GetNextAvailableSlot()
     {
         for (int i = 0; i < playerSlots.Length; i++)
-            if (playerSlots[i] == null) return i;
+        {
+            // Treat null OR disconnected-and-abandoned slots as free
+            if (playerSlots[i] == null || !playerSlots[i].IsConnected)
+            {
+                // Clean up any lingering disconnected slot before reusing the index
+                if (playerSlots[i] != null)
+                {
+                    PlayerInputHolder.Instance.playerList.Remove(playerSlots[i]);
+                    Destroy(playerSlots[i].gameObject);
+                    playerSlots[i] = null;
+                }
+                return i;
+            }
+        }
         return -1;
     }
 

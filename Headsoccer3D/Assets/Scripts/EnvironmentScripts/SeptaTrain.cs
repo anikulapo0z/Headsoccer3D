@@ -29,6 +29,9 @@ public class SeptaTrain : MonoBehaviour
     [SerializeField] private TextMeshProUGUI UI_destinationName;
     [SerializeField] private TextMeshProUGUI UI_destinationTimer;
     [SerializeField] private TextMeshProUGUI UI_destinationTimeNumber;
+    [SerializeField] private TextMeshProUGUI UI_destinationName_FFA;
+    [SerializeField] private TextMeshProUGUI UI_destinationTimer_FFA;
+    [SerializeField] private TextMeshProUGUI UI_destinationTimeNumber_FFA;
     [SerializeField] private string trainUIDestination;
 
     [Space]
@@ -166,29 +169,42 @@ public class SeptaTrain : MonoBehaviour
     public void UpdateUI()
     {
         UI_destinationName.text = trainUIDestination;
+        UI_destinationName_FFA.text = trainUIDestination;
 
         if (trainArriving)
         {
             UI_destinationTimer.color = Color.white;
+            UI_destinationTimer_FFA.color = Color.white;
             UI_destinationTimeNumber.color = Color.white;
+            UI_destinationTimeNumber_FFA.color = Color.white;
             UI_destinationTimer.text = "In Platform";
+            UI_destinationTimer_FFA.text = "In Platform";
             UI_destinationTimeNumber.text = "";
+            UI_destinationTimeNumber_FFA.text = "";
             return;
         }
 
         if (isLate)
         {
             UI_destinationTimer.color = Color.yellow;
+            UI_destinationTimer_FFA.color = Color.yellow;
             UI_destinationTimeNumber.color = Color.yellow;
+            UI_destinationTimeNumber_FFA.color = Color.yellow;
             UI_destinationTimer.text = "LATE ";
+            UI_destinationTimer_FFA.text = "LATE ";
             UI_destinationTimeNumber.text = lateDisplayCounter.ToString();
+            UI_destinationTimeNumber_FFA.text = lateDisplayCounter.ToString();
         }
         else
         {
             UI_destinationTimer.color = Color.green;
+            UI_destinationTimer_FFA.color = Color.green;
             UI_destinationTimeNumber.color = Color.green;
+            UI_destinationTimeNumber_FFA.color = Color.green;
             UI_destinationTimer.text = "ON TIME ";
+            UI_destinationTimer_FFA.text = "ON TIME ";
             UI_destinationTimeNumber.text = trainTicksRemaining.ToString();
+            UI_destinationTimeNumber_FFA.text = trainTicksRemaining.ToString();
         }
     }
 

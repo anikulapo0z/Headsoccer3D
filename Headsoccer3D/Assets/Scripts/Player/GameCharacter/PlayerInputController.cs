@@ -77,12 +77,13 @@ public class PlayerInputController : MonoBehaviour
 
         map.Enable();
     }
-    
+
 
     public void PlayerDisconnect()
     {
         IsConnected = false;
         AssignedDevice = null;
+        ControllerId = null;
 
         if (actionsInstance != null)
         {
